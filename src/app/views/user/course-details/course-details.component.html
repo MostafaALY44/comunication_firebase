@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" routerLink="post" role="tab" aria-controls="post"
+            aria-selected="true">Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" routerLink="material" role="tab" aria-controls="profile"
+            aria-selected="false">Material</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" routerLink="assingment" role="tab" aria-controls="contact"
+            aria-selected="false">Assingment</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent" style="margin: 10px;">
+    <router-outlet></router-outlet>
+    <!-- {{course_id}} -->
+</div>

@@ -1,0 +1,71 @@
+<div class="card text-center">
+    <div class="card-body">
+        <div class="row">
+            <div class="col md-2">
+                <img src="" alt="photo ">{{post.postOwner}}
+            </div>
+            <div class="col md-6">
+                <h5>{{post.title}}</h5>
+            </div>
+            <div class="col md-4">
+                <p>{{getDate(post.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+            </div>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPost(post)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
+
+        <p class="card-text">
+            {{ post.body }}
+        </p>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-2">
+                <a href="#" style="margin-top: 20px;">
+                    <span class="badge badge-pill badge-success">Like</span>
+                </a> {{ post.like }}
+                    
+            </div>
+            <div class="col-md-8">
+                <a href="#" style="margin-top: 20px;">
+                    <span class="badge badge-pill badge-danger">Dislike</span>
+                   
+                </a> {{ post.dislike }}
+                
+
+            </div>
+            <div class="col-md-2">
+                <a href="#" style="margin-top: 20px;">
+                    <span class="badge badge-pill badge-dark">Report</span>
+                </a> 0
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="padding: 20px;">
+                <div class="input-group mb-3" >
+                    <div class="input-group-prepend" >
+                      <button style="margin-right: 10px;" class="btn btn-outline-secondary" type="button" id="button-addon1">Comment</button>
+                    </div>
+                    <input style="margin-left: 10px;" type="text" class="form-control" placeholder="comment ...">
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editPost()"> 
+      <i class="material-icons md-light">edit</i> edit 
+    </button>
+
+      <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deletePost()">
+        <i class="material-icons" style="align-content: center;">
+        delete_forever
+        </i> delete  </button>         
+</mat-menu>

@@ -1,0 +1,25 @@
+<form [formGroup] = "newPost" (ngSubmit)="onSubmit()">
+<div class="card">
+    <h5 class="card-header">What's in your mind? 
+        <mat-form-field >
+            <input matInput
+            formControlName="title" placeholder="title" type="text">
+          </mat-form-field>
+    </h5>
+    <div class="form-group container row">        
+    <div class="card-body">
+        <div class="input-group">
+            <textarea class="form-control" aria-label="With textarea"
+                [class.is-invalid]="newPost.get('body').invalid && 
+                newPost.get('body').touched"
+                placeholder="Type your post content here ..." formControlName="body" ></textarea>
+        </div>
+        <small
+        [class.d-none]="newPost.get('body').valid || 
+                newPost.get('body').untouched"
+         class="text-danger">invalid input</small><br>
+        <button type="submit" class="btn btn-success" [disabled]="!newPost.valid" style="margin-top: 20px;">Share</button>
+    </div>
+</div>
+</div>
+</form>

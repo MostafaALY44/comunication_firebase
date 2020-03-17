@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "faculty-project",
+      "public": "dist/faculty-project",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

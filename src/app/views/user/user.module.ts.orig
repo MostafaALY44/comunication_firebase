@@ -1,0 +1,51 @@
+import { NewPostComponent } from './post/new-post/new-post.component';
+import { PostItemComponent } from './post/post-item/post-item.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { UserRoutingModule } from './user-routing.module';
+import { UserBodyComponent } from './user-body/user-body.component';
+import { CourseDetailsComponent } from './course-details/course-details.component';
+import { PostComponent } from './post/post.component';
+import { MaterialComponent } from './material/material.component';
+import { AssignmentComponent } from './assignment/assignment.component';
+import { MaterialModule } from 'src/app/material.module';
+import { MaterialCategoryComponent } from './material/material-category/material-category.component';
+import { MaterialItemsComponent } from './material/material-items/material-items.component';
+import { AssignmentItemsComponent } from './assignment/assignment-items/assignment-items.component';
+import { AssignmentSolutionComponent } from './assignment/assignment-solution/assignment-solution.component';
+import { ReviewSolutionComponent } from './assignment/review-solution/review-solution.component';
+import { AddAssignmentComponent } from './assignment/add-assignment/add-assignment.component';
+import { AddMaterialComponent } from './material/add-material/add-material.component';
+
+
+
+
+@NgModule({
+  declarations: 
+  [
+    UserBodyComponent,
+    CourseDetailsComponent,
+    PostComponent, 
+    MaterialComponent, 
+    AssignmentComponent ,
+    MaterialCategoryComponent,
+    MaterialItemsComponent,
+    PostItemComponent,
+    NewPostComponent
+    AssignmentItemsComponent,
+    AssignmentSolutionComponent,
+    ReviewSolutionComponent,
+    AddAssignmentComponent,
+    AddMaterialComponent
+  
+  ],
+
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    MaterialModule
+  ]
+  
+})
+export class UserModule { }

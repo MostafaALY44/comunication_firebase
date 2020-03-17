@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "communication-19601": {
+      "hosting": {
+        "faculty-project": [
+          "communication-19601"
+        ]
+      }
+    }
+  }
+}
