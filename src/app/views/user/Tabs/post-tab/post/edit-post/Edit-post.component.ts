@@ -20,7 +20,7 @@ export class EditPostComponent implements OnInit {
   });
 
 
-  ngOnInit() {
+  ngOnInit() { 
   }
   isEmpty(text:string):boolean{
     for(let i=0;i<text.length;i++)

@@ -15,27 +15,18 @@
                     <th scope="col">Name</th>
                     <th scope="col">recieve</th>
                     <th scope="col">Link</th>
+                    <th scope="col">Note</th>
                   </tr>
-                </thead>
+                </thead> 
                 <tbody>
-                  <tr>
+                  <tr *ngFor="let solution of solutions | async">
                     
                     <td>Ahmed</td>
                     <td>before end</td>
-                    <td><a href="#">Download</a></td>
+                    <td><a href="{{solution.link}}">Download</a></td>
+                    <td>{{solution.note}}</td>
                   </tr>
-                  <tr>
-                    
-                    <td>khaled</td>
-                    <td>after end</td>
-                    <td><a href="#">Download</a></td>
-                  </tr>
-                  <tr>
-                    
-                    <td>Mostafa</td>
-                    <td>before end</td>
-                    <td><a href="#">Download</a></td>
-                  </tr>
+                 
                 </tbody>
               </table>
                         

@@ -9,6 +9,9 @@ import * as firebase from 'firebase';
   providedIn: 'root'
 })
 export class AssignmentService {
+  addCoursePost(courseId: any, data: { like: number; dislike: number; postOwner: string; title: any; body: any; }) {
+    throw new Error("Method not implemented.");
+  }
 
   constructor(private firestore: AngularFirestore) { }
 

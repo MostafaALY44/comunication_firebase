@@ -1,4 +1,5 @@
-<div class="modal fade" id="add-assignment" tabindex="-1" role="dialog" aria-labelledby="solvesolution" aria-hidden="true">
+<form [formGroup] = "newAssignment" (ngSubmit)="onSubmit()">
+  <div class="modal fade" id="add-assignment" tabindex="-1" role="dialog" aria-labelledby="solvesolution" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -6,32 +7,40 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div> 
         <div class="modal-body">
-          <input type="text" class="form-control" id="url" placeholder="Title">
-          <input type="text" class="form-control my-2" id="note" placeholder="Notes">
-          <input type="text" class="form-control my-2" id="Qurl" placeholder="URL">
+          <input type="text" [class.is-invalid]="newAssignment.get('title').invalid && newAssignment.get('title').touched"
+               formControlName="title" class="form-control" id="url" placeholder="Title">
+          <input type="text" [class.is-invalid]="newAssignment.get('note').invalid "
+              formControlName="note" class="form-control my-2" id="note" placeholder="Notes">
+          <input type="text" [class.is-invalid]="newAssignment.get('Qurl').invalid && newAssignment.get('Qurl').touched"
+            formControlName="Qurl" class="form-control my-2" id="Qurl" placeholder="URL">
           <div class="form-group row">
             <label for="example-datetime-local-input" class="col-2 col-form-label">StartDate</label>
             <div class="col-10">
-              <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+              <input class="form-control" [class.is-invalid]="newAssignment.get('start').invalid && newAssignment.get('start').touched"
+              formControlName="start" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
             </div>
           </div>
           <div class="form-group row">
             <label for="example-datetime-local-input" class="col-2 col-form-label">EndDate</label>
             <div class="col-10">
-              <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+              <input class="form-control" [class.is-invalid]="newAssignment.get('end').invalid && newAssignment.get('end').touched"
+                formControlName="end" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
             </div>
           </div>
           <label class="checkbox-inline">
-            <input type="checkbox"  data-toggle="toggle"> AcceptAfterEnd
+            <input type="checkbox" [class.is-invalid]="newAssignment.get('accept').invalid && newAssignment.get('accept').touched"
+              formControlName="accept" data-toggle="toggle"> AcceptAfterEnd
           </label>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Add-new</button>
+          <button type="submit" [disabled]="!newAssignment.valid" class="btn btn-success">Add-new</button>
         </div>
+        
       </div>
     </div>
   </div>
+</form>
 
