@@ -1,15 +1,6 @@
 <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a routerLink="lectures" class="nav-link" routerLinkActive="active">Lectures</a>
-    </li>
-    <li class="nav-item">
-        <a routerLink="exams" class="nav-link" routerLinkActive="active">Exams</a>
-    </li>
-    <li class="nav-item">
-        <a routerLink="textbooks" class="nav-link" routerLinkActive="active">Text Books</a>
-    </li>
-    <li class="nav-item">
-        <a routerLink="labs" class="nav-link" routerLinkActive="active">Labs</a>
+    <li class="nav-item"  *ngFor="let category of categories | async">
+        <a routerLink="{{category.name}}" class="nav-link" routerLinkActive="active">{{ category.name }}</a>
     </li>
     <li class="nav-item nav-link">
         <a href="" class="nav-link badge badge-success"  data-toggle="modal" data-target="#add-tab"> 
@@ -19,6 +10,7 @@
 </ul>
   
   <!-- Modal -->
+<form [formGroup]="newCategory" (ngSubmit)="onSubmit()">
   <div class="modal fade" id="add-tab" tabindex="-1" role="dialog" aria-labelledby="addnewtab" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -29,13 +21,13 @@
           </button>
         </div>
         <div class="modal-body">
-          <input type="text" class="form-control" id="add" placeholder="Enter new Category">
+          <input type="text" class="form-control" id="name" placeholder="Enter new Category's name" formControlName="name">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Add</button>
+          <button type="submit" class="btn btn-success">Add</button>
         </div>
       </div>
     </div>
-  <button type="button" class="btn btn-success">Success</button>
 </div>
+</form>

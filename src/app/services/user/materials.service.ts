@@ -23,6 +23,22 @@ export class MaterialsService {
     );
   }
 
+  public getCategory(idCategory):Observable<Category[]>{
+    //console.log('courses/'+idCourse+'/assignment');
+    return this.firestore.collection<Category>('courses/'+idCategory+'/materials/categories/category').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() ;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
+  public addCategory(idMaterial, data){ 
+    data["date"]=firebase.firestore.FieldValue.serverTimestamp();
+    return this.firestore.collection<Material>('courses/'+idMaterial+'/materials/categories/category').add(data);
+  }
+
   public addMaterial(idMaterial, data){ 
     data["date"]=firebase.firestore.FieldValue.serverTimestamp();
     return this.firestore.collection<Material>('courses/'+idMaterial+'/materials/lectures/lecture').add(data);
