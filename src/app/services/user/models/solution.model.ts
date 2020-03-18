@@ -1,4 +1,4 @@
 class AssignmentSolution{
-    link : string;
+    url : string;
     note :string;
 }

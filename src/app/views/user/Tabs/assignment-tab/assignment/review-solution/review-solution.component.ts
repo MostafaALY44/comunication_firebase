@@ -17,7 +17,7 @@ export class ReviewSolutionComponent implements OnInit {
   constructor(private service:AssignmentSolutionService, route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
     //console.log(this.data);
     this.solutions = service.getAssingmentSolution(this.data.courseId, this.data.assignmentId);
-    this.solutions.subscribe(x=>console.log(x))
+   //this.solutions.subscribe(x=>console.log(x))
    }
  
   ngOnInit() {

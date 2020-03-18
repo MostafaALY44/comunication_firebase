@@ -31,7 +31,7 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.newAssignment.value);
+    //console.log(this.newAssignment.value);
     if(!this.isEmpty(this.newAssignment.value.title)){
 
       let data={"acceptAfterEnd" :this.newAssignment.value.accept,

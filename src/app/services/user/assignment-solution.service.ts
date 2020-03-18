@@ -23,16 +23,16 @@ export class AssignmentSolutionService {
     );
   }
 
-  public addAssignmentSolution(assignmentId, data){ 
+  public addAssignmentSolution(idCourse,assignmentId, data){ 
     //data["date"]=firebase.firestore.FieldValue.serverTimestamp();
-    return this.firestore.collection<AssignmentSolution>('assignment/'+assignmentId+'/solution').add(data);
+    return this.firestore.collection<AssignmentSolution>('courses/'+idCourse+'/assignment/'+assignmentId+'/solution').add(data);
   }
 
-  public editAssignmentSolution(assignmentId, solutionId, data){
-    return this.firestore.collection<AssignmentSolution>('assignment/'+assignmentId+'/solution').doc(solutionId).update(data);
+  public editAssignmentSolution(idCourse,assignmentId, solutionId, data){
+    return this.firestore.collection<AssignmentSolution>('courses/'+idCourse+'/assignment/'+assignmentId+'/solution').doc(solutionId).update(data);
   }
-  public deleteAssignmentSolution(assignmentId,solutionId){
+  public deleteAssignmentSolution(idCourse,assignmentId,solutionId){
     //console.log('courses/'+courseId+'/posts/'+id);
-    return this.firestore.collection<AssignmentSolution>('assignment/'+assignmentId+'/solution').doc(solutionId).delete();
+    return this.firestore.collection<AssignmentSolution>('courses/'+idCourse+'/assignment/'+assignmentId+'/solution').doc(solutionId).delete();
   }
 }
