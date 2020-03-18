@@ -45,7 +45,8 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
     
   ],
   entryComponents: [
-    EditPostComponent
+    EditPostComponent,
+    ReviewSolutionComponent
   ],
   imports: [
     CommonModule,
