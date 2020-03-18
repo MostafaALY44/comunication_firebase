@@ -17,9 +17,9 @@
         <td>{{assignment.title}}</td>
         <td>{{assignment.startDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
         <td>{{assignment.endDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
-        <td><a href={{assignment.link}}>Download</a></td>
+        <td><a href={{assignment.link}}>Download</a></td> 
         <td>{{assignment.note}}</td>
-        <td><button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#solve">
+        <td><button type="button" class="btn btn-success my-2" (click)="addSolution(assignment.id)">
             Solve
           </button>&nbsp;
           <button type="button" class="btn btn-primary my-2" (click)="showSolutions(assignment.id)">
@@ -41,7 +41,7 @@
   <mat-menu #menu="matMenu">
     <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editAssignment()"> 
       <i class="material-icons md-light">edit</i> edit 
-    </button>
+    </button> 
 
       <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteAssignment()">
         <i class="material-icons" style="align-content: center;">

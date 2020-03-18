@@ -34,6 +34,6 @@ export class PostItemComponent implements OnInit {
   }
   deletePost(){
     this.ser.deletePost(this.courseId,this.CurrPost["id"]);
-  }
+  } 
 
 }

@@ -1,27 +1,22 @@
-<form [formGroup] = "newSolution" (ngSubmit)="onSubmit()">
-<div class="modal fade" id="solve" tabindex="-1" role="dialog" aria-labelledby="solvesolution" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnewtab">Solution Form</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" [class.is-invalid]="newSolution.get('Aurl').invalid && newSolution.get('Aurl').touched"
+
+
+  <form [formGroup] = "newSolution" (ngSubmit)="onSubmit()">
+  
+    <div mat-dialog-title align="center"><b>Solution Form</b></div>
+  
+  <mat-dialog-content>
+    <input type="text" [class.is-invalid]="newSolution.get('Aurl').invalid && newSolution.get('Aurl').touched"
                 formControlName="Aurl"
                 class="form-control" id="url" placeholder="Enter URL Solution">
           <input type="text" 
             [class.is-invalid]="newSolution.get('note').invalid && newSolution.get('note').touched"
             formControlName="note"
             class="form-control my-2" id="note" placeholder="Notes">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" [disabled]="!newSolution.valid" class="btn btn-success">Add-soln</button>
-        </div>
-      </div>
-    </div> 
-  </div>
-</form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" >
+    <button  mat-button mat-dialog-close>Close</button>
+     <button type="submit" [disabled]="!newSolution.valid"  mat-button>Add-soln</button>
+    
+  </mat-dialog-actions>
+  </form>
+

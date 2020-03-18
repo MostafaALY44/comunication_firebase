@@ -20,6 +20,8 @@ import { AddMaterialComponent } from './Tabs/material-tab/material/add-material/
 import { CoursesService } from 'src/app/services/user/courses.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.component';
+import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
+
 
 
 
@@ -41,12 +43,17 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
     AddMaterialComponent,
     PostItemComponent,
     NewPostComponent,
-    EditPostComponent
+    EditPostComponent,
+    EditAssignmentComponent
+   
     
   ],
   entryComponents: [
     EditPostComponent,
-    ReviewSolutionComponent
+    ReviewSolutionComponent,
+    AssignmentSolutionComponent,
+    EditAssignmentComponent
+    
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewSolutionComponent } from '../review-solution/review-solution.component';
+import { AssignmentSolutionComponent } from '../assignment-solution/assignment-solution.component';
+import { AddAssignmentComponent } from '../add-assignment/add-assignment.component';
+import { EditAssignmentComponent } from '../edit-assignment/edit-assignment.component';
 
 @Component({
   selector: 'assignment-items',
@@ -32,6 +35,20 @@ export class AssignmentItemsComponent implements OnInit {
   showSolutions(id:string){
     this.dialog.open(ReviewSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id}})
   }
-
-  
+  addSolution(id:string){
+    this.dialog.open(AssignmentSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id},
+                                                    height: '250px',
+                                                    width: '400px',
+                                                  })
+  }
+  currentAssign;
+  setAssignment(assignment){
+    this.currentAssign=assignment;
+  }
+  deleteAssignment(){
+    this.service.deleteAssignment(this.courseId,this.currentAssign["id"]);
+  } 
+  editAssignment(){
+    this.dialog.open(EditAssignmentComponent,{data:{"assignment":this.currentAssign,"courseId":this.courseId}})
+  }
 }

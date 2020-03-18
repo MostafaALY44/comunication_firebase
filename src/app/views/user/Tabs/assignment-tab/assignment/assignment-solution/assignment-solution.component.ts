@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AssignmentSolutionService } from 'src/app/services/user/assignment-solution.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'assignment-solution',
@@ -16,7 +17,7 @@ export class AssignmentSolutionComponent implements OnInit {
     
     
   });
-  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute) { }
+  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) { }
 
   ngOnInit() {
   }
@@ -28,17 +29,13 @@ export class AssignmentSolutionComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.newSolution.value); 
+    //console.log(this.newSolution.value); 
     if(!this.isEmpty(this.newSolution.value.Aurl)){
 
       let data={"note":this.newSolution.value.note,
                  "url":this.newSolution.value.Aurl
                  };
-      let solutionId;
-      let assignmentId;
-      this.route.parent.paramMap.subscribe((params : ParamMap) =>  assignmentId=params.get('id'));
-      this.route.paramMap.subscribe((params : ParamMap) =>  solutionId=params.get('id'));
-      this.service.addAssignmentSolution( assignmentId,solutionId,data);
+      this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data);
       this.newSolution.reset();
     } 
   }
