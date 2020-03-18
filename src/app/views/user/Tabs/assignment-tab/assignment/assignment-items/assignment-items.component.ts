@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AssignmentService } from 'src/app/services/user/assignment.service';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'assignment-items',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssignmentItemsComponent implements OnInit {
 
-  constructor() { }
+  assignments:Observable<Assignment[]>;
+  constructor(private service:AssignmentService, route:ActivatedRoute) {
+    route.parent.paramMap.subscribe((params : ParamMap) =>  this.assignments = service.getAssingment(params.get('id')));
+   }
 
   ngOnInit() {
+  }
+
+  getDate(date){
+    if(date != null)
+      return date.toDate();
   }
 
 }

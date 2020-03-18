@@ -4,5 +4,4 @@ class PostComment{
     ownerName:string;
     like:number;
     dislike:number;
-    replyOnReplyId:string;
 }

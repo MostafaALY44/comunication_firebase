@@ -3,19 +3,22 @@
       <tr>
         
         <th scope="col">Name</th>
-        <th scope="col">Date</th>
+        <th scope="col">Start_Date</th>
+        <th scope="col">End_Date</th>
         <th scope="col">Link</th>
+        <th scope="col">Note</th>
         <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment">
           Add-assign
         </button></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        
-        <td>Assignment 1</td>
-        <td>2020</td>
-        <td><a href="#">Download</a></td>
+      <tr *ngFor="let assignment of assignments | async"> 
+        <td>{{assignment.title}}</td>
+        <td>{{getDate(assignment.startDate) |date:'yyyy/MM/dd h:mm:ss a'}}</td>
+        <td>{{getDate(assignment.endDate) |date:'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td><a href={{assignment.link}}>Download</a></td>
+        <td>{{assignment.note}}</td>
         <td><button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#solve">
             Solve
           </button>&nbsp;
@@ -23,34 +26,7 @@
             Review
           </button>
           </td>
-      </tr>
-      <tr>
-        
-        <td>Assignment 2</td>
-        <td>2020</td>
-        <td><a href="#">Download</a></td>
-        <td><button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#solve">
-            Solve
-          </button>&nbsp;
-          <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#review">
-            Review
-          </button>
-          </td>
-      </tr>
-      <tr>
-        
-        <td>Assignment 3</td>
-        <td>2020</td>
-        <td><a href="#">Download</a></td>
-        <td><button type="button" class="btn btn-success my-1" data-toggle="modal" data-target="#solve">
-            Solve
-          </button>&nbsp;
-          <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#review">
-            Review
-          </button>
-          </td>
-      </tr>
-     
+      </tr>  
     </tbody>
   </table>
  
