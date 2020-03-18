@@ -43,6 +43,7 @@ export class AddAssignmentComponent implements OnInit {
       let assignmentId;
       this.route.parent.paramMap.subscribe((params : ParamMap) =>  assignmentId=params.get('id'));
       this.ser.addAssignment( assignmentId,data);
+      this.newAssignment.reset();
     } 
   }
 

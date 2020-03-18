@@ -9,15 +9,12 @@ import * as firebase from 'firebase';
   providedIn: 'root'
 })
 export class AssignmentSolutionService {
-addCoursePost(courseId: any, data: { like: number; dislike: number; postOwner: string; title: any; body: any; }) {
-    throw new Error("Method not implemented.");
-  }
 
   constructor(private firestore: AngularFirestore) { }
 
-  public getAssingmentSolution(idAssignment):Observable<AssignmentSolution[]>{
+  public getAssingmentSolution(idCourse, idAssignment):Observable<AssignmentSolution[]>{
     //console.log('courses/'+idCourse+'/assignment');
-    return this.firestore.collection<AssignmentSolution>('assignment/'+idAssignment+'/solution').snapshotChanges().pipe(
+    return this.firestore.collection<AssignmentSolution>('courses/'+idCourse+'/assignment/'+idAssignment+'/solution').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() ;
         const id = a.payload.doc.id;

@@ -15,8 +15,8 @@
     <tbody>
       <tr *ngFor="let assignment of assignments | async"> 
         <td>{{assignment.title}}</td>
-        <td>{{getDate(assignment.startDate) |date:'yyyy/MM/dd h:mm:ss a'}}</td>
-        <td>{{getDate(assignment.endDate) |date:'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td>{{assignment.startDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td>{{assignment.endDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
         <td><a href={{assignment.link}}>Download</a></td>
         <td>{{assignment.note}}</td>
         <td><button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#solve">
