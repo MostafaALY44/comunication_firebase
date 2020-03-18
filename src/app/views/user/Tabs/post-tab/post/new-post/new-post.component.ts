@@ -32,7 +32,7 @@ export class NewPostComponent implements OnInit {
       let courseId;
       this.route.parent.paramMap.subscribe((params : ParamMap) => courseId=params.get('id'));
       this.ser.addCoursePost(courseId,data);
-    }
+    } 
   }
 
 }

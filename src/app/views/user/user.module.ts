@@ -23,6 +23,7 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
 
 
 
+
 @NgModule({
   declarations: 
   [
@@ -41,9 +42,11 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
     PostItemComponent,
     NewPostComponent,
     EditPostComponent
+    
   ],
   entryComponents: [
-    EditPostComponent
+    EditPostComponent,
+    ReviewSolutionComponent
   ],
   imports: [
     CommonModule,

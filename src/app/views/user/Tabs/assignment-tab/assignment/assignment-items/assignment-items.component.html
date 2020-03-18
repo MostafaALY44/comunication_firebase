@@ -15,18 +15,36 @@
     <tbody>
       <tr *ngFor="let assignment of assignments | async"> 
         <td>{{assignment.title}}</td>
-        <td>{{getDate(assignment.startDate) |date:'yyyy/MM/dd h:mm:ss a'}}</td>
-        <td>{{getDate(assignment.endDate) |date:'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td>{{assignment.startDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td>{{assignment.endDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
         <td><a href={{assignment.link}}>Download</a></td>
         <td>{{assignment.note}}</td>
         <td><button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#solve">
             Solve
           </button>&nbsp;
-          <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#review">
+          <button type="button" class="btn btn-primary my-2" (click)="showSolutions(assignment.id)">
             Review
           </button>
+          </td>
+          <td>
+            <div>
+              <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setAssignment(assignment)">
+              <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>  
           </td>
       </tr>  
     </tbody>
   </table>
  
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editAssignment()"> 
+      <i class="material-icons md-light">edit</i> edit 
+    </button>
+
+      <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteAssignment()">
+        <i class="material-icons" style="align-content: center;">
+        delete_forever
+        </i> delete  </button>         
+</mat-menu>
