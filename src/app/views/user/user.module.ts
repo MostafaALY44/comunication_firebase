@@ -1,3 +1,4 @@
+import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
 import { NewPostComponent } from './Tabs/post-tab/post/new-post/new-post.component';
 import { PostItemComponent } from './Tabs/post-tab/post/post-item/post-item.component';
 import { NgModule } from '@angular/core';
@@ -44,7 +45,8 @@ import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-a
     PostItemComponent,
     NewPostComponent,
     EditPostComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    EditMaterialComponent
    
     
   ],
@@ -52,7 +54,8 @@ import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-a
     EditPostComponent,
     ReviewSolutionComponent,
     AssignmentSolutionComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    EditMaterialComponent
     
   ],
   imports: [
