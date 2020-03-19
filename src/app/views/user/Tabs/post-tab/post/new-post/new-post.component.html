@@ -14,7 +14,7 @@
                 newPost.get('body').touched"
                 placeholder="Type your post content here ..." formControlName="body" ></textarea>
         </div>
-        <small
+        <small 
         [class.d-none]="newPost.get('body').valid ||  
                 newPost.get('body').untouched"
          class="text-danger">invalid input</small><br>
