@@ -54,6 +54,34 @@
             </div>
         </div>
     </div>
+    
+    <div class="row" *ngFor="let comment of comments | async">
+        <div class="col-md-12" style="padding: 20px;">
+            <div class="input-group mb-3" >
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col md-2">
+                                <img src="" alt="photo ">{{comment.commentOwner}}
+                            </div>
+                            
+                            <div class="col md-4">
+                                <p>{{getDate(comment.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+                            </div>
+                
+                            <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setComment(comment)">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+                
+                        <p class="card-text">
+                            {{ comment.text }}
+                        </p>
+                    </div>
+              </div>
+        </div>
+    </div>
+
 </div>
 <hr>
 
