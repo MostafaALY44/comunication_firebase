@@ -17,6 +17,7 @@ export class AssignmentItemsComponent implements OnInit {
 
   assignments:Observable<Assignment[]>;
   courseId;
+  
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id');

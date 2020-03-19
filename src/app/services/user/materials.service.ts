@@ -44,11 +44,11 @@ export class MaterialsService {
     return this.firestore.collection<Material>('courses/'+idMaterial+'/materials/lectures/lecture').add(data);
   }
 
-  // public editAssignment(courseId, assignmentId, data){
-  //   return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).update(data);
-  // }
-  // public deleteAssignment(courseId,assignmentId){
-  //   //console.log('courses/'+courseId+'/posts/'+id);
-  //   return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).delete();
-  // }
+  public editMaterial(courseId, materialId, data){
+    return this.firestore.collection<Material>('courses/'+courseId+'/materials/lectures/lecture').doc(materialId).update(data);
+  }
+  public deleteMaterial(courseId,materialId){
+    //console.log('courses/'+courseId+'/posts/'+id);
+    return this.firestore.collection<Material>('courses/'+courseId+'/materials/lectures/lecture').doc(materialId).delete();
+  }
 }

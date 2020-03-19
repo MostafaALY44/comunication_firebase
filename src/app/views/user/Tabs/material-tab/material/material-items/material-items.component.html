@@ -4,20 +4,37 @@
       <th scope="col">Name</th>
       <th scope="col">Date</th>
       <th scope="col">Link</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let material of materials | async">
       <td>{{ material.name }}</td>
-      <td>{{getDate(material.date) |date:'yyyy/MM/dd h:mm:ss a'}}</td>
+      <td>{{ material.date }}</td>
       <td><a [href]="material.link">Download</a></td>
+      <td>
+        <div>
+          <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setMaterial(material)">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td>
-        <button type="button" class="btn btn-primary btn form-control" data-toggle="modal" data-target="#add-material">
-          Add-material
-        </button>
-      </td>
+      <th scope="col">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-material">Add-Material</button>
+      </th>
     </tr>
   </tbody>
 </table>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editMaterial()">
+    <i class="material-icons md-light">edit</i> edit
+  </button>
+
+  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteMaterial()">
+    <i class="material-icons" style="align-content: center;">
+      delete_forever
+    </i> delete </button>
+</mat-menu>

@@ -10,13 +10,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <input type="text" class="form-control" id="name" placeholder="name" formControlName="name">
-          <input type="text" class="form-control my-2" id="date" placeholder="date" formControlName="date">
-          <input type="text" class="form-control my-2" id="link" placeholder="link" formControlName="link">
+          <input type="text" [class.is-invalid]="newMaterial.get('name').invalid && newMaterial.get('name').touched"
+            formControlName="name" class="form-control" id="name" placeholder="Name">
+          <input class="form-control"
+            [class.is-invalid]="newMaterial.get('date').invalid && newMaterial.get('date').touched"
+            formControlName="date" type="datetime-local" placeholder="Date" id="date">
+          <input type="text" [class.is-invalid]="newMaterial.get('link').invalid && newMaterial.get('link').touched"
+            formControlName="link" class="form-control" id="link" placeholder="Link">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Add-new</button>
+          <button type="submit" [disabled]="!newMaterial.valid" class="btn btn-success">Add-new</button>
         </div>
       </div>
     </div>

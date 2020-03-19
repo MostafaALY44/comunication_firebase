@@ -1,3 +1,5 @@
+import { EditMaterialComponent } from './../edit-material/edit-material.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -12,10 +14,15 @@ export class MaterialItemsComponent implements OnInit {
 
 
   materials:Observable<Material[]>;
+  courseId;
 
-  constructor(private service:MaterialsService, route:ActivatedRoute) {
-    route.parent.paramMap.subscribe((params : ParamMap) =>  this.materials = service.getMaterial(params.get('id')));
-   }
+  constructor(private service: MaterialsService, route: ActivatedRoute, private dialog: MatDialog) {
+    route.parent.paramMap.subscribe((params: ParamMap) => {
+      this.courseId = params.get('id');
+      this.materials = service.getMaterial(this.courseId)
+    }
+    );
+  }
 
   ngOnInit() {
   }
@@ -23,5 +30,16 @@ export class MaterialItemsComponent implements OnInit {
   getDate(date){
     if(date != null)
       return date.toDate();
+  }
+
+  currentMaterial;
+  setMaterial(material){
+    this.currentMaterial = material;
+  }
+  deleteMaterial(){
+    this.service.deleteMaterial(this.courseId,this.currentMaterial["id"]);
+  } 
+  editMaterial(){
+    this.dialog.open(EditMaterialComponent,{data:{"material":this.currentMaterial,"courseId":this.courseId}})
   }
 }
