@@ -1,10 +1,9 @@
 <ul class="nav nav-tabs">
   <li class="nav-item" *ngFor="let category of categories | async">
-    <a routerLink="{{category.name}}" class="nav-link" routerLinkActive="active">
+    <a routerLink="{{category.name}}" class="nav-link" routerLinkActive="active" (click)="setCategory(category)">
       {{ category.name }}
-      <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setCategory(category)">
-        <mat-icon>arrow_drop_down</mat-icon>
-      </button>
+        <mat-icon (click)="editCategory()">edit</mat-icon>
+        <mat-icon (click)="deleteCategory()">close</mat-icon>
     </a>
   </li>
   <li class="nav-item nav-link">
@@ -37,7 +36,7 @@
     </div>
   </div>
 </form>
-
+<!-- 
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="editCategory()">
     <mat-icon>edit</mat-icon>Edit
@@ -45,7 +44,7 @@
   <button mat-menu-item (click)="deleteCategory()">
     <mat-icon>delete_forever</mat-icon> Delete
   </button>
-</mat-menu>
+</mat-menu> -->
 
 <!-- 
 <mat-menu #menu="matMenu">

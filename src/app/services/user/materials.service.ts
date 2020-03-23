@@ -46,9 +46,9 @@ export class MaterialsService {
       }))
     );
   }
-  public addMaterial(idMaterial, data){ 
-    data["date"]=firebase.firestore.FieldValue.serverTimestamp();
-    return this.firestore.collection<Material>('courses/'+idMaterial+'/materials/lectures/lecture').add(data);
+  public addMaterial(courseId, data){ 
+    data["date"]=firebase.firestore.FieldValue.serverTimestamp(); 
+    return this.firestore.collection<Material>('courses/'+courseId+'/materials/lectures/lecture').add(data);
   }
   public editMaterial(courseId, materialId, data){
     return this.firestore.collection<Material>('courses/'+courseId+'/materials/lectures/lecture').doc(materialId).update(data);
