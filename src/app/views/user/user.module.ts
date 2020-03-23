@@ -1,3 +1,4 @@
+import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
 import { NewPostComponent } from './Tabs/post-tab/post/new-post/new-post.component';
 import { PostItemComponent } from './Tabs/post-tab/post/post-item/post-item.component';
@@ -48,9 +49,8 @@ import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-com
     EditPostComponent,
     EditAssignmentComponent,
     EditCommentComponent,
-    EditMaterialComponent
-   
-    
+    EditMaterialComponent,
+    EditCategoryComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -58,7 +58,8 @@ import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-com
     AssignmentSolutionComponent,
     EditAssignmentComponent,
     EditCommentComponent,
-    EditMaterialComponent
+    EditMaterialComponent,
+    EditCategoryComponent
     
   ],
   imports: [

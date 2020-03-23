@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
@@ -12,17 +14,19 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class MaterialCategoryComponent implements OnInit {
 
   categories: Observable<Category[]>;
+  courseId;
 
   newCategory = new FormGroup({
     name: new FormControl('', Validators.required)
   });
 
   constructor(
-    private materialsService: MaterialsService,
-    private route: ActivatedRoute
-  ) {
-    route.parent.paramMap.subscribe((params: ParamMap) => this.categories =
-      materialsService.getCategory(params.get('id')));
+    private materialsService: MaterialsService, private route: ActivatedRoute, private dialog: MatDialog) {
+    route.parent.paramMap.subscribe((params: ParamMap) => {
+    this.courseId = params.get('id');
+    this.categories = materialsService.getCategory(this.courseId);
+    }
+    );
   }
 
   ngOnInit() {
@@ -35,4 +39,15 @@ export class MaterialCategoryComponent implements OnInit {
     this.materialsService.addCategory(categoryId, data);
   }
 
+
+  currentCategory;
+  setCategory(category: any){
+    this.currentCategory = category;
+  }
+  deleteCategory(){
+    this.materialsService.deleteCategory(this.courseId,this.currentCategory["id"]);
+  } 
+  editCategory(){
+    this.dialog.open(EditCategoryComponent,{data:{"category":this.currentCategory,"courseId":this.courseId}});
+  }
 }

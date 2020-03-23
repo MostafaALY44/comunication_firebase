@@ -6,11 +6,17 @@ import { MaterialRoutingModule } from './material-routing.module';
 import { MaterialCategoryComponent } from './material-category/material-category.component';
 import { MaterialItemsComponent } from './material-items/material-items.component';
 import { EditMaterialComponent } from './edit-material/edit-material.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 
 
 @NgModule({
-  declarations: [MaterialCategoryComponent, MaterialItemsComponent, AddMaterialComponent, EditMaterialComponent],
+  declarations: [
+    MaterialCategoryComponent, 
+    MaterialItemsComponent, 
+    AddMaterialComponent, 
+    EditMaterialComponent, 
+    EditCategoryComponent],
   imports: [
     CommonModule,
     MaterialRoutingModule
