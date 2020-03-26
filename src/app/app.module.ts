@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AuthenticationService } from './services/auth/authentication.service';
 import { FormsModule } from '@angular/forms';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -23,10 +24,11 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     AngularFirestore,
+    AuthGuard,  
     AuthenticationService
   ],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LayoutsModule } from './components/layouts/layouts.module';
 
+
 @NgModule({
   declarations: [],
   imports: [

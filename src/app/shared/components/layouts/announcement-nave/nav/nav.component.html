@@ -1,0 +1,62 @@
+
+<!--nav class="navbar navbar-expand-sm navbar-dark  bg-dark  shadow">
+    <a class="navbar-brand" routerLink="/welcome" style="color: black;">FC</a>
+    <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon "></span>ttttttttttttttttttt
+    </button-->
+
+    <!--div class="collapse navbar-collapse" id="navbarsExampleDefault"-->
+
+        <!--ul class="navbar-nav mr-auto my-2 my-lg-0">
+            <li class="nav-item my-2 my-sm-0">
+                <a class="nav-link" routerLink="/auth/signup" routerLinkActive="active" style="color: black;">Sign Up</a>
+            </li>
+
+
+            <li class="nav-item" mr-sm-2>
+                <a class="nav-link" routerLink="/auth/login" routerLinkActive="active" style="color: black;">Login</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/contact" routerLinkActive="active" style="color: black;">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about" routerLinkActive="active" style="color: black;">About</a>
+            </li>
+        </ul>
+
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search for a specific announcement"
+                aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    <!--/div-->
+<!--/nav-->
+<div *ngIf="(authenticationService.userData |async) && !authenticationService.isEmailVerified()"  style="background-color: yellow;" class="navbar; ">
+    <div style=" text-align: center;" >you must confirm your email first</div>
+</div>
+<div class="d-flex flex-column flex-md-row align-items-center p-2 bg-light shadow">
+    &nbsp;&nbsp;&nbsp;<a class="my-0 mr-md-auto font-weight-normal" routerLink="/"><font size="5">FC</font></a>
+    <a *ngIf="(authenticationService.userData |async)" class="my-0 mr-md-auto font-weight-normal" routerLink="/user"><font size="4">{{ (authenticationService.userData | async)?.email }}</font></a>
+    <form *ngIf="displaySearchInput" class="my-0 mr-md-auto font-weight-normal" >
+            <mat-form-field style="width: 330px;">
+            <input name="searchWord" [(ngModel)]="searchWord" matInput placeholder="Search for a specific announcement" (input)="wordSearch($event.target.value)" (focus)="focusSearch()" >
+            <button mat-button *ngIf="searchWord" matSuffix mat-icon-button aria-label="Clear" (click)="searchWord=''">
+                <mat-icon>close</mat-icon>
+              </button>
+        </mat-form-field>
+        <button class="btn btn-outline-primary my-2 my-sm-0" *ngIf="searchService.isFocus" (click)="focusoutSearch()">End Search</button>
+
+    </form>
+    <nav class="my-2 my-md-0 mr-md-3" *ngIf= "!(authenticationService.userData |async)">
+        <a class=" p-2 text-dark" routerLink="/auth/login" routerLinkActive="active" >Login</a>
+        <a class="p-2 text-dark" routerLink="/auth/signup" routerLinkActive="active" >Sign Up</a>
+    </nav>
+    <nav class="my-2 my-md-0 mr-md-3"  *ngIf="(authenticationService.userData |async)">
+        <a class=" p-2 text-dark" (click)="logout()" routerLink="/" >Logout</a>
+    </nav>
+  </div>

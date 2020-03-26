@@ -1,0 +1,41 @@
+<p>announcements works!</p>
+{{word}}
+<div class="container">
+
+<div *ngIf="(authenticationService.userData |async)">
+    <a *ngIf="(localAngleRight)" routerLink="/announcements/local" (click)="changeGlobalAngle()">
+        Local announcement on your college <fa name="angle-double-right"></fa></a>
+
+    <a *ngIf="!(localAngleRight)" routerLink="/announcements/global" (click)="changeGlobalAngle()">
+        Local announcement on your college <fa name="angle-double-down"></fa></a>
+    <hr align="left" width="268px">
+<div *ngIf="!(globalAngleBottom)">
+        <mat-checkbox *ngFor="let localTag of localTags | async">{{localTag.id}}&nbsp;&nbsp;&nbsp;</mat-checkbox>
+</div>
+</div>
+<hr>
+<div *ngIf="(authenticationService.userData | async)">
+    <a *ngIf="!(globalAngleRight)" routerLink="/announcements/local" (click)="changeGlobalAngle()">
+        Global announcement <fa name="angle-double-down"></fa></a>
+
+    <a *ngIf="(globalAngleRight)" routerLink="/announcements/global" (click)="changeGlobalAngle()">
+        Global announcement <fa name="angle-double-right"></fa></a>
+</div>
+<div *ngIf="!(authenticationService.userData | async)">
+    <a *ngIf="!(globalAngleRight)" routerLink="/announcements/global" (click)="changeGlobalAngle()">
+        Global announcement <fa name="angle-double-down"></fa></a>
+    
+    <a *ngIf="(globalAngleRight)" routerLink="/announcements/global" (click)="changeGlobalAngle()">
+        Global announcement <fa name="angle-double-right"></fa></a>
+</div> 
+    <hr align="left" width="160px">
+<div *ngIf="(globalAngleBottom)">
+    <mat-checkbox *ngFor="let globalTag of globalTags | async">{{globalTag.id}}&nbsp;&nbsp;&nbsp;</mat-checkbox>
+</div>
+<hr>
+
+
+
+
+    <router-outlet></router-outlet>
+</div>

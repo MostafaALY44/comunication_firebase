@@ -24,9 +24,6 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 
 
-
-
-
 @NgModule({
   declarations: 
   [

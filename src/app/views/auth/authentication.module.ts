@@ -5,7 +5,8 @@ import { AuthRoutingModule } from './authentication-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SignupComponent } from './signup/signup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -13,13 +14,14 @@ import { FormsModule } from '@angular/forms';
   [
     LoginComponent, 
     LogoutComponent, 
-    SignupComponent
+    SignupComponent, ForgotPasswordComponent
   ],
 
   imports: [
     CommonModule,
     AuthRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }
