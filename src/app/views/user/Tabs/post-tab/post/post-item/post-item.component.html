@@ -1,4 +1,4 @@
-<div class="card text-center">
+<div class="card text-center" style="margin-top: 20px;">
     <div class="card-body">
         <div class="row">
             <div class="col md-2">
@@ -26,14 +26,14 @@
                 <a href="#" style="margin-top: 20px;">
                     <span class="badge badge-pill badge-success">Like</span>
                 </a> {{ post.like }}
-                    
+
             </div>
             <div class="col-md-8">
                 <a href="#" style="margin-top: 20px;">
                     <span class="badge badge-pill badge-danger">Dislike</span>
-                   
+
                 </a> {{ post.dislike }}
-                
+
 
             </div>
             <div class="col-md-2">
@@ -43,14 +43,54 @@
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" style="padding: 20px;">
-                <div class="input-group mb-3" >
-                    <div class="input-group-prepend" >
-                      <button style="margin-right: 10px;" class="btn btn-outline-secondary" type="button" id="button-addon1">Comment</button>
+        <form [formGroup]="newComment" (ngSubmit)="onSubmit(post.id)">
+            <div class="row">
+                <div class="col-md-12" style="padding: 20px;">
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-prepend">
+                            <button style="margin-right: 10px;" class="btn btn-outline-secondary" type="submit"
+                                [disabled]="!newComment.valid" id="button-addon1">Comment</button>
+                        </div>
+                        <input style="margin-left: 10px;" type="text" formControlName="text" [class.is-invalid]="newComment.get('text').invalid && 
+                        newComment.get('text').touched" class="form-control" placeholder="comment ...">
                     </div>
-                    <input style="margin-left: 10px;" type="text" class="form-control" placeholder="comment ...">
-                  </div>
+                </div>
+            </div>
+        </form>
+
+
+        <button (click)="getComment(post.id)">show Comments</button>
+        <div *ngIf="displayComments(post.id)">
+            <div class="row" *ngFor="let comment of comments | async">
+               
+                <div class="col-md-12" style="padding: 20px;">
+                    <div class="input-group mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col md-2">
+                                        <img src="" alt="photo ">{{comment.commentOwner}}
+                                    </div>
+
+                                    <div class="col md-4">
+                                        <p>{{getDate(comment.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+                                    </div>
+
+                                    <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
+                                        (click)="setComment(comment)">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+
+                                <p class="card-text">
+                                    {{ comment.text }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -58,13 +98,25 @@
 
 
 
-<mat-menu #menu="matMenu">
-    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editPost()"> 
-      <i class="material-icons md-light">edit</i> edit 
-    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editPost()">
+            <i class="material-icons md-light">edit</i> edit
+        </button>
 
-      <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deletePost()">
-        <i class="material-icons" style="align-content: center;">
-        delete_forever
-        </i> delete  </button>         
-</mat-menu>
+        <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete"
+            (click)="deletePost()">
+            <i class="material-icons" style="align-content: center;">
+                delete_forever
+            </i> delete </button>
+    </mat-menu>
+    <mat-menu #menu1="matMenu">
+        <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editComment(post.id)">
+            <i class="material-icons md-light">edit</i> edit
+        </button>
+
+        <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete"
+            (click)="deleteComments(post.id)">
+            <i class="material-icons" style="align-content: center;">
+                delete_forever
+            </i> delete </button>
+    </mat-menu>

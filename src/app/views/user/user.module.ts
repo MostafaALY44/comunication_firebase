@@ -1,3 +1,4 @@
+import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
 import { NewPostComponent } from './Tabs/post-tab/post/new-post/new-post.component';
 import { PostItemComponent } from './Tabs/post-tab/post/post-item/post-item.component';
@@ -22,6 +23,7 @@ import { CoursesService } from 'src/app/services/user/courses.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.component';
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
+import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
 
 
 @NgModule({
@@ -43,16 +45,18 @@ import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-a
     NewPostComponent,
     EditPostComponent,
     EditAssignmentComponent,
-    EditMaterialComponent
-   
-    
+    EditCommentComponent,
+    EditMaterialComponent,
+    EditCategoryComponent
   ],
   entryComponents: [
     EditPostComponent,
     ReviewSolutionComponent,
     AssignmentSolutionComponent,
     EditAssignmentComponent,
-    EditMaterialComponent
+    EditCommentComponent,
+    EditMaterialComponent,
+    EditCategoryComponent
     
   ],
   imports: [

@@ -16,10 +16,10 @@ export class MaterialItemsComponent implements OnInit {
   materials:Observable<Material[]>;
   courseId;
 
-  constructor(private service: MaterialsService, route: ActivatedRoute, private dialog: MatDialog) {
+  constructor(private materialsService: MaterialsService, route: ActivatedRoute, private dialog: MatDialog) {
     route.parent.paramMap.subscribe((params: ParamMap) => {
       this.courseId = params.get('id');
-      this.materials = service.getMaterial(this.courseId)
+      this.materials = materialsService.getMaterial(this.courseId)
     }
     );
   }
@@ -37,7 +37,7 @@ export class MaterialItemsComponent implements OnInit {
     this.currentMaterial = material;
   }
   deleteMaterial(){
-    this.service.deleteMaterial(this.courseId,this.currentMaterial["id"]);
+    this.materialsService.deleteMaterial(this.courseId,this.currentMaterial["id"]);
   } 
   editMaterial(){
     this.dialog.open(EditMaterialComponent,{data:{"material":this.currentMaterial,"courseId":this.courseId}})
