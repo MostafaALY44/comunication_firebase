@@ -31,6 +31,7 @@ export class AuthenticationService  {
     )
   }
 
+  isVerificateEmail:boolean=false;
   /* Sign up */
   async SignUp(email: string, password: string) {
     const credential = await this.angularFireAuth.createUserWithEmailAndPassword(email, password)
@@ -58,14 +59,15 @@ export class AuthenticationService  {
     return userRef.set(data, { merge: true })
   }
   isEmailVerified():boolean{
-    if(!firebase.auth().currentUser)
-      return false;
-    return firebase.auth().currentUser.emailVerified;
+    console.log(this.isVerificateEmail)
+    return this.isVerificateEmail
   }
 
   /* Sign in */
   async SignIn(email: string, password: string) {
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
+    console.log("+++ : "+credential.user.emailVerified)
+    this.isVerificateEmail=credential.user.emailVerified;
     return this.updateUserData(credential.user);
   }
 

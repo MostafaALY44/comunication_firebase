@@ -1,5 +1,5 @@
 class Material{
-    name :string;
+    id:string
     date : any;
     link : string;
 }
