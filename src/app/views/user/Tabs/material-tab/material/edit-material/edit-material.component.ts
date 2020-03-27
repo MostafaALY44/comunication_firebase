@@ -19,20 +19,20 @@ export class EditMaterialComponent implements OnInit {
 
   ngOnInit() {
   }
-  isEmpty(text:string):boolean{
-    for(let i=0;i<text.length;i++)
-      if(text[i] != " ")
-        return false;
-    return true;
-  }
+  // isEmpty(text:string):boolean{
+  //   for(let i=0;i<text.length;i++)
+  //     if(text[i] != " ")
+  //       return false;
+  //   return true;
+  // }
  
-  onSubmit(){
-      let courseId=this.data.courseId;
-      let idMaterial= this.data.material.id
-      this.data.material= {"name" :this.newMaterial.value.name,
-                            "date":this.newMaterial.value.date,
-                            "link":this.newMaterial.value.link,
-                          };
-      this.ser.editMaterial(courseId, idMaterial, this.data.material);
-  }
+  // onSubmit(){
+  //     let courseId=this.data.courseId;
+  //     let idMaterial= this.data.material.id
+  //     this.data.material= {"name" :this.newMaterial.value.name,
+  //                           "date":this.newMaterial.value.date,
+  //                           "link":this.newMaterial.value.link,
+  //                         };
+  //     this.ser.editMaterial(courseId, idMaterial, this.data.material);
+  // }
 }

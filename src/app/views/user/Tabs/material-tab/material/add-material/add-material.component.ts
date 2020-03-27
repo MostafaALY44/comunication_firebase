@@ -30,11 +30,11 @@ export class AddMaterialComponent implements OnInit {
   //   return true;
   // }
 
-  onSubmit() {
-    let data = { "name": this.newMaterial.value.name, "date": this.newMaterial.value.date, "link": this.newMaterial.value.link };
-    let materialId;
-    this.route.parent.paramMap.subscribe((params: ParamMap) => materialId = params.get('id'));
-    this.materialService.addMaterial(materialId, data);
-  }
+  // onSubmit() {
+  //   let data = { "name": this.newMaterial.value.name, "date": this.newMaterial.value.date, "link": this.newMaterial.value.link };
+  //   let materialId;
+  //   this.route.parent.paramMap.subscribe((params: ParamMap) => materialId = params.get('id'));
+  //   this.materialService.addMaterial(materialId, data);
+  // }
 
 }

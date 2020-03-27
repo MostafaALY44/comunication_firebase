@@ -25,10 +25,10 @@ export class EditCategoryComponent implements OnInit {
     return true;
   }
  
-  onSubmit(){
-      let courseId=this.data.courseId;
-      let idCategory= this.data.category.id;
-      this.data.category= {"name" :this.newCategory.value.name};
-      this.materialService.editCategory(courseId, idCategory, this.data.category);
-  }
+  // onSubmit(){
+  //     let courseId=this.data.courseId;
+  //     let idCategory= this.data.category.id;
+  //     this.data.category= {"name" :this.newCategory.value.name};
+  //     this.materialService.editCategory(courseId, idCategory, this.data.category);
+  // }
 }
