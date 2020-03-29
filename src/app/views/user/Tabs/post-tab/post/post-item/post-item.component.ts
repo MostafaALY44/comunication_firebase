@@ -17,6 +17,7 @@ import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 })
 export class PostItemComponent implements OnInit {
   @Input() post:PostComment;
+  
   courseId;
   constructor(private ser:PostService, private route:ActivatedRoute, public dialog:MatDialog, private commentservice:CommentService) {
     route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));

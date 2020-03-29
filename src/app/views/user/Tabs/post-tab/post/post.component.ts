@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PostService } from 'src/app/services/user/post.service';
-import { PostFactoryService } from 'src/app/services/user/oop/factories/post-factory.service';
 import { Post } from 'src/app/services/user/oop/class/Post';
 import { CourseService } from 'src/app/services/user/oop/course.service';
-import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 
 @Component({
   selector: 'app-post',
@@ -15,14 +13,12 @@ import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 export class PostComponent implements OnInit,OnDestroy {
   
   posts:Observable<Post[]>;
+
   removeSubscribe;
   constructor(private ser: PostService, route:ActivatedRoute) {
-    //route.parent.paramMap.subscribe((params : ParamMap) =>  this.posts=this.ser.getCoursePosts( params.get('id')));
-    //this.posts.subscribe(x=>console.log(x));
-    //this.posts=this.postFactory.getPosts('/courses/comp204/posts');
-    this.removeSubscribe=route.parent.paramMap.subscribe(() =>{this.posts=CourseService.posts
+    this.removeSubscribe=route.parent.paramMap.subscribe(() =>{
+      this.posts=CourseService.posts
     })
-    //})
   }
   ngOnDestroy(): void {
     this.removeSubscribe.unsubscribe();

@@ -10,6 +10,7 @@ export class Post implements CRUD{
 
 	comments:Observable<Comment[]>
 	private postService:PostService=new PostService(this.firestore)
+	
 	constructor(private url:string, public post:PostModel, private firestore: AngularFirestore){
         url+='/posts';
     }
