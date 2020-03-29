@@ -20,9 +20,9 @@
     </div>
 </div-->
 <div *ngFor="let category of categories |async">
-    {{category.name}} : 
-    <div *ngFor="let material of category.materials |async ">
-        {{material | json}} 
-    </div>
+    {{category.name}} :
+        <div *ngFor="let material of category.materials |async">
+            {{material.material|json}}
+        </div>
      
 </div>

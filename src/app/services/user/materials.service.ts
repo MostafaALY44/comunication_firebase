@@ -4,14 +4,14 @@ import 'firebase/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
-import { Category } from './models/category';
+//import { Category } from './models/category';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaterialsService implements OnDestroy {
- private categories: BehaviorSubject<Category[]>=new BehaviorSubject([]);
- allCAtegories: Observable<Category[]>;
+ /*private categories: BehaviorSubject<Category[]>=new BehaviorSubject([]);
+ allCAtegories: Observable<Category[]>;*/
   constructor(private firestore: AngularFirestore) {
     //for show idea only
    /* this.getCategories('').forEach(x=>
@@ -88,7 +88,7 @@ export class MaterialsService implements OnDestroy {
     //       })
     //     return categories;
     // }
-    categoriesTemp :Category[]=[];
+    /*categoriesTemp :Category[]=[];
     getCategories(url:string): Observable<Category[]>{//console.log("from Categories service")
       url+="/categories";
       console.log(url)
@@ -115,7 +115,7 @@ export class MaterialsService implements OnDestroy {
          })
          this.allCAtegories=this.categories.asObservable();
        return this.allCAtegories;
-   }
+   }*/
 
   
 }
