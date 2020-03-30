@@ -6,6 +6,7 @@ import { PostFactoryService } from 'src/app/services/user/oop/factories/post-fac
 import { Post } from 'src/app/services/user/oop/class/Post';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
+import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 
 @Component({
   selector: 'app-post',
@@ -14,14 +15,14 @@ import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 })
 export class PostComponent implements OnInit,OnDestroy {
   
-  posts:Observable<Post[]>;
+  coursePosts:Post;
   removeSubscribe;
   constructor(private ser: PostService, route:ActivatedRoute) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.posts=this.ser.getCoursePosts( params.get('id')));
     //this.posts.subscribe(x=>console.log(x));
     //this.posts=this.postFactory.getPosts('/courses/comp204/posts');
-    this.removeSubscribe=route.parent.paramMap.subscribe(() =>{this.posts=CourseService.posts
-    })
+    this.removeSubscribe=route.parent.paramMap.subscribe(() =>this.coursePosts=CourseService.posts)
+    
     //})
   }
   ngOnDestroy(): void {
@@ -29,7 +30,11 @@ export class PostComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
+  }
 
+  
+  getComments(id){
+    return this.coursePosts.getComments(id);
   }
 
 }

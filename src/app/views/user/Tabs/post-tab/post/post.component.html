@@ -13,11 +13,16 @@
     </div>
 </div-->
 
-<div *ngFor="let post of posts | async">
+<div *ngFor="let post of coursePosts.posts ">
     <br>===================================<br>
-    {{post.post|json}} has comments: <br>
-    
-    <div *ngFor="let commen of post.comments | async">
-        {{commen.comment|json}} 
+    {{post|json}} has comments: <br>
+    <button (click)="coursePosts.getComments(post.id)">show </button>
+    <div *ngIf="post.id == coursePosts.currentPostId">
+        <div *ngFor="let comment of coursePosts.currentComment.comments | async">
+            {{comment|json}} 
+        </div>
     </div>
+    <!--div *ngFor="let comment of getComment(post.id) | async">
+        {{comment|json}} 
+    </div-->
 </div>

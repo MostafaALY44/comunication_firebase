@@ -21,6 +21,7 @@ export class MaterialService implements CRUDForfirebase{
     }
 
     getAll(url:string):Observable<MaterialModel[]>{
+        console.log("form material service getAll() url: "+url)
         return this.firestore.collection<MaterialModel>(url).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;

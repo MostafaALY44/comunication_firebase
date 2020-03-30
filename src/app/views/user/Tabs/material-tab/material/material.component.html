@@ -19,10 +19,19 @@
         </div>
     </div>
 </div-->
-<div *ngFor="let category of categories |async">
+<!--div *ngFor="let category of categories |async">
     {{category.name}} :
         <div *ngFor="let material of category.materials |async">
             {{material.material|json}}
         </div>
      
-</div>
+</div-->
+
+<ul>
+    <li *ngFor="let recipient of categories | keyvalue">
+        {{recipient.key}} --><button (click)="recipient.value.subscribeMaterialsFireStore()">subscribe on tab {{recipient.key}} </button>
+            <div *ngFor="let material of recipient.value.material ">
+                    {{material|json}}
+            </div>
+    </li>
+</ul>

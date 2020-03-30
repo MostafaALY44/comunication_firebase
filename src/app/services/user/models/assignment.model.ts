@@ -1,4 +1,4 @@
-class Assignment{
+interface Assignment{
     title :string;
     link : string;
     startDate : any;
