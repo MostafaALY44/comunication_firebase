@@ -3,11 +3,13 @@ import { PostService } from 'src/app/services/user/post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPostComponent } from '../edit-post/Edit-post.component';
-import { CommentService } from 'src/app/services/user/comment.service';
 import { Comment } from '@angular/compiler';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
+import { CourseService } from 'src/app/services/user/oop/course.service';
+import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
+import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 
 
 @Component({
@@ -19,8 +21,9 @@ export class PostItemComponent implements OnInit {
   @Input() post:PostComment;
   
   courseId;
-  constructor(private ser:PostService, private route:ActivatedRoute, public dialog:MatDialog, private commentservice:CommentService) {
-    route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
+  constructor( public dialog:MatDialog) {
+    //route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
+    
    }
    currentIdPostComment;
   ngOnInit() {
@@ -30,24 +33,33 @@ export class PostItemComponent implements OnInit {
       return date.toDate();
   }
 
-  CurrPost;
+  CurrPost:PostModel;
   setPost(post){
     this.CurrPost=post;
   }
 
   editPost(){//console.log(this.CurrPost);
-    this.dialog.open(EditPostComponent,{data:{"post":this.CurrPost,"courseId":this.courseId}})
+    this.dialog.open(EditPostComponent,{data:this.CurrPost})
   }
   deletePost(){
-    this.ser.deletePost(this.courseId,this.CurrPost["id"]);
+   // this.ser.deletePost(this.courseId,this.CurrPost["id"]);
+   CourseService.posts.delete(this.CurrPost.id);
   } 
-  displayComments(postId):boolean{
-    return postId==this.currentIdPostComment;
-  }
-  comments:Observable <Comments[]>;
+  // displayComments(postId):boolean{
+  //   return postId==this.currentIdPostComment;
+  // }
+  comments:Observable <CommentModel[]>;
+  flagDisplayComment:boolean = false;
   getComment(postId){
-    this.currentIdPostComment=postId;
-    this.comments=this.commentservice.getPostComments(this.courseId,this.currentIdPostComment);
+    //this.currentIdPostComment=postId;
+    //this.comments=this.commentservice.getPostComments(this.courseId,this.currentIdPostComment);
+    
+    if(!this.flagDisplayComment){
+     // console.log("from getdisplay comment"+this.flagDisplayComment);
+    this.comments= CourseService.posts.getComments(postId);
+    this.flagDisplayComment=true;
+  }else this.flagDisplayComment=false;
+   
   }
   newComment = new FormGroup({
     text : new FormControl('')
@@ -64,24 +76,30 @@ export class PostItemComponent implements OnInit {
 
     if(!this.isEmpty(this.newComment.value.text)){
 
-      let data={"text" :this.newComment.value.text,"commentOwner":"Mostafa Aly"};
+      let data:CommentModel={"id":"" ,"like":0,"dislike":0,"body" :this.newComment.value.text,"commentOwner":"Mostafa Aly"};
       
-      this.commentservice.addPostComment(this.courseId,postId,data);
+      //this.commentservice.addPostComment(this.courseId,postId,data);
+       CourseService.posts.comment.setCurrentIdPost(postId);
+       CourseService.posts.comment.create(data);
+
       this.newComment.reset();
     } 
 
 }
-Currcomment;
-setComment(comment){
+Currcomment:CommentModel;
+setComment(comment:CommentModel){
   this.Currcomment=comment;
 
 }
 
 editComment(idPost){console.log(this.Currcomment);
-  this.dialog.open(EditCommentComponent,{data:{"comment":this.Currcomment,"postId":idPost,"courseId":this.courseId}})
+  CourseService.posts.comment.setCurrentIdPost(idPost);
+  this.dialog.open(EditCommentComponent,{data:this.Currcomment})
 }
+
 deleteComments(idPost){
-  this.commentservice.deleteComment(this.courseId,idPost,this.Currcomment['id']); 
+  CourseService.posts.comment.setCurrentIdPost(idPost);
+  CourseService.posts.comment.delete(this.Currcomment.id); 
 } 
 
 }

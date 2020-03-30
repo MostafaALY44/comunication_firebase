@@ -1,4 +1,4 @@
-<!--div class="container" style="margin-top: 50px;">
+<div class="container" style="margin-top: 50px;">
     <div class="row">
         <div class="col-md-12">
             <app-new-post></app-new-post>
@@ -7,13 +7,13 @@
     <hr>
 
     <div class="row" style="text-align: center;" >
-        <div class="col-md-12" *ngFor="let post of posts | async">
-            <app-post-item [post]="post"></app-post-item>
+        <div class="col-md-12" *ngFor="let post of coursePosts.posts ">
+            <app-post-item [post]="post" ></app-post-item>
         </div>
     </div>
-</div-->
+</div>
 
-<div *ngFor="let post of coursePosts.posts ">
+<!-- <div *ngFor="let post of coursePosts.posts ">
     <br>===================================<br>
     {{post|json}} has comments: <br>
     <button (click)="coursePosts.getComments(post.id)">show </button>
@@ -22,7 +22,5 @@
             {{comment|json}} 
         </div>
     </div>
-    <!--div *ngFor="let comment of getComment(post.id) | async">
-        {{comment|json}} 
-    </div-->
-</div>
+   
+</div> -->

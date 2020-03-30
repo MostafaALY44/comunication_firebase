@@ -4,12 +4,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { CommentModel } from '../models/CommentModel';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase';
 
 export class CommentService implements CRUDForfirebase{
     constructor(private firestore: AngularFirestore){}
     create(url: string, comment) {
-        return this.firestore.collection(url).add(comment);
+        comment["date"]=firebase.firestore.FieldValue.serverTimestamp();
+        return this.firestore.collection<CommentModel>(url).add(comment);
     }
+
     read(url: string, id: string) {
         return this.firestore.doc(url+'/'+id).valueChanges()
     }
@@ -28,6 +31,7 @@ export class CommentService implements CRUDForfirebase{
               return { id, ...data };
             })) 
           );
+
     }
 
 }
