@@ -14,6 +14,11 @@ export class Post implements CRUD{
 	posts: PostModel[];
 	private postService:PostService=new PostService(this.firestore)
 	private url:string;
+	constructor(private firestore: AngularFirestore){
+		//this.url+='/posts';
+		this.currentComment=new Comment(this.firestore);
+	}
+
 	reset(){
 		this.posts=[];
 	}
@@ -21,10 +26,6 @@ export class Post implements CRUD{
 		this.url=url+'/posts';
 		this.currentComment.changeUrl(this.url);
 	}
-	
-	constructor(private url:string, public post:PostModel, private firestore: AngularFirestore){
-        url+='/posts';
-    }
 	create (post:PostModel){    
 	    this.postService.create(this.url, this.postForCreateAndUpdate(post))}
 	

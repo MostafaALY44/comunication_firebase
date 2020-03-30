@@ -46,12 +46,9 @@ export class PostFactoryService implements OnDestroy {
   //flag:boolean=false;
   /*getPosts(url?:string):Observable<PostModel[]>{
     let postNames=this.coursePost.getAll();
-
       if(this.removeUnsubscribe1)  
             this.removeUnsubscribe1.unsubscribe();
-
     this.removeUnsubscribe1=postNames.subscribe((posts)=>{this.allposts.next(posts);});
-
       return this.allposts.asObservable();
       
       /*this.flag =false;
@@ -94,6 +91,3 @@ export class PostFactoryService implements OnDestroy {
     }*/
 
   }
-
-  
-
