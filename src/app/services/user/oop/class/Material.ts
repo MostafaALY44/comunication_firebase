@@ -2,14 +2,27 @@ import { CRUD } from '../models/CRUD';
 import { MaterialModel } from '../models/MaterialModel.model';
 import { MaterialService } from '../firebaseService/MaterialService';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
-export class Material implements CRUD{    
-    //material:MaterialModel
+export class Material implements CRUD, OnDestroy{    
+
+	//allMaterials: BehaviorSubject<MaterialModel[]>=new BehaviorSubject([]);
+	//material:Observable< MaterialModel[]>
+	material: MaterialModel[];
     private materialService:MaterialService
-	constructor(private url:string, private firestore: AngularFirestore, public material:MaterialModel){
-		url+="/materials/";
+	constructor(private url:string, private firestore: AngularFirestore){
+		this.url+="/materials";
 		this.materialService = new MaterialService(this.firestore);
 	}
+	ngOnDestroy(): void {
+		if(Material.removeUnsubscribe1)  
+			Material.removeUnsubscribe1.unsubscribe();
+	}
+
+	/*changeUrl(url:string){
+		this.url=url+"/materials/"; 
+	}*/
 	create (material:MaterialModel){
         return this.materialService.create(this.url, material)
     }
@@ -26,9 +39,18 @@ export class Material implements CRUD{
 		return this.materialService.delete(this.url, id);		
 	}
 
-	getAll(url:string){
-		return this.materialService.getAll(url);
+	getAll(){
+		console.log("getAll() from material "+ this.url)
+		return this.materialService.getAll(this.url);
 	}
+
+	static removeUnsubscribe1;
+	subscribeMaterialsFireStore()//subscribe of materials for selected tab;
+	{
+		if(Material.removeUnsubscribe1)  
+			Material.removeUnsubscribe1.unsubscribe();
+		Material.removeUnsubscribe1=this.getAll().subscribe(materials=> this.material=materials)
+    }
 
 	materialForCreateAndUbdate(material:MaterialModel){return {"date":material.date, "link":material.link}}
 }

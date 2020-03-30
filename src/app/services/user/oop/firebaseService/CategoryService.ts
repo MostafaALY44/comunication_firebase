@@ -41,6 +41,7 @@ export class CategoryService implements CRUDForfirebase{
     }
 
     getAll(url:string):Observable<CategoryModel[]>{
+      //console.log("from service getAll() "+url);
         return this.firestore.collection<CategoryModel>(url).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;

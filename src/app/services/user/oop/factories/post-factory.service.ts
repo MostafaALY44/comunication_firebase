@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Post } from '../class/Post';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -11,33 +11,50 @@ import { PostModel } from '../models/PostModel';
 @Injectable({
   providedIn: 'root'
 })
-export class PostFactoryService {
+export class PostFactoryService implements OnDestroy {
  
   removeUnsubscribe1;
-  removeUnsubscribe2;
-  private allposts: BehaviorSubject<Post[]>=new BehaviorSubject([]);
-  posts: Observable<Post[]>;
-  private postsTemp :Post[]=[];
+  //removeUnsubscribe2;
+  public coursePost:Post=new Post(this.firestore) ;
+  //private allposts: BehaviorSubject<PostModel[]>=new BehaviorSubject([]);
+  //posts: Observable<Post[]>;
+  //private postsTemp :Post[]=[];
 
-  private postService:PostService =new PostService(this.firestore);
-  private commentService:CommentService = new CommentService(this.firestore);
-  constructor(private url:string, private firestore: AngularFirestore) {
-    this.url+='/posts/';
-    this.posts=this.getPosts();
+  //private postService:PostService =new PostService(this.firestore);
+  //private commentService:CommentService = new CommentService(this.firestore);
+  private url:string;
+  constructor( private firestore: AngularFirestore) {
+    //this.coursePost.posts=this.getPosts();
    }
+
+   changeUrl(url:string){
+    this.coursePost.reset();
+     this.url=url;
+     this.coursePost.changeUrl(this.url);
+     let postNames=this.coursePost.getAll();
+     this.removeUnsubscribe1=postNames.subscribe((posts)=>{this.coursePost.posts=posts;})
+   }
+
+  ngOnDestroy(): void {
+    if(this.removeUnsubscribe1)  
+          this.removeUnsubscribe1.unsubscribe();
+  }
 
    /*getPosts(url?:string):Observable<PostModel[]>{
      return this.postService.getAll(this.url);
    }*/
-  flag:boolean=false;
-  getPosts(url?:string):Observable<Post[]>{
-    let postNames=this.postService.getAll(this.url);
+  //flag:boolean=false;
+  /*getPosts(url?:string):Observable<PostModel[]>{
+    let postNames=this.coursePost.getAll();
 
-    if(this.removeUnsubscribe1)  
-          this.removeUnsubscribe1.unsubscribe();
+      if(this.removeUnsubscribe1)  
+            this.removeUnsubscribe1.unsubscribe();
 
-    this.removeUnsubscribe1=postNames.subscribe((posts)=>{
-      this.flag =false;
+    this.removeUnsubscribe1=postNames.subscribe((posts)=>{this.allposts.next(posts);});
+
+      return this.allposts.asObservable();
+      
+      /*this.flag =false;
       posts.forEach(post=>{        
       if(!(this.postsTemp.find(x=> x.post.id===post.id))){
           this.flag=true;  
@@ -48,13 +65,11 @@ export class PostFactoryService {
       if(this.flag){
         this.flag =false;
         this.allposts.next(this.postsTemp);
-      }})
+      }})*/
+      //return this.posts;
+    //}
 
-      this.posts=this.allposts.asObservable();
-      return this.posts;
-    }
-
-    getComments(id:string):Observable<Comment[]>{
+    /*getComments(id:string):Observable<Comment[]>{
       //console.log(this.url+'/categories/'+id+'/comments/');
       let  commentsTemp :Comment[]=[];
       let commentsBehavior: BehaviorSubject<Comment[]>=new BehaviorSubject([]);
@@ -76,7 +91,8 @@ export class PostFactoryService {
             //console.log(commentsTemp.length)
         
         return commentsBehavior.asObservable();
-    }
+    }*/
+
   }
 
   

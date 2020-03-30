@@ -7,6 +7,7 @@ import { ReviewSolutionComponent } from '../review-solution/review-solution.comp
 import { AssignmentSolutionComponent } from '../assignment-solution/assignment-solution.component';
 import { AddAssignmentComponent } from '../add-assignment/add-assignment.component';
 import { EditAssignmentComponent } from '../edit-assignment/edit-assignment.component';
+import { CourseService } from 'src/app/services/user/oop/course.service';
 
 @Component({
   selector: 'assignment-items',
@@ -19,10 +20,12 @@ export class AssignmentItemsComponent implements OnInit {
   courseId;
   
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
-    route.parent.paramMap.subscribe((params : ParamMap) =>{  
+    /*route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id');
       this.assignments = service.getAssingment(this.courseId) });
-    //this.assignments.subscribe(x=>console.log(x));
+    //this.assignments.subscribe(x=>console.log(x));*/
+    
+    this.assignments=CourseService.assignments;
    }
  
   ngOnInit() {

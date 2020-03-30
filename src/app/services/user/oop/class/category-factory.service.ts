@@ -3,7 +3,7 @@ import { Category } from './category';
 import { Material } from './Material';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { MaterialModel } from '../models/MaterialModel.model';
 import { CategoryService } from '../firebaseService/CategoryService';
@@ -14,28 +14,100 @@ import { MaterialService } from '../firebaseService/MaterialService';
 })
 export class CategoryFactoryService implements OnDestroy{
 
-  removeUnsubscribe1;
-  removeUnsubscribe2;
-  private allCategories: BehaviorSubject<Category[]>=new BehaviorSubject([]);
-  categories: Observable<Category[]>;
-  private categoriesTemp :Category[]=[];
-
-  private categoryService:CategoryService =new CategoryService(this.firestore);
-  private materialService:MaterialService = new MaterialService(this.firestore);
-  constructor(private url:string, private firestore: AngularFirestore){
-      this.url+='/categories/';
-
-      this.categories=this.getCategories();
-  }
-  ngOnDestroy(): void { 
+  removeUnsubscribe1
+  //private allMaterials: BehaviorSubject<Category[]>=new BehaviorSubject([]);
+  category: Category;
+  
+  private url:string
+  constructor( private firestore: AngularFirestore){
       if(this.removeUnsubscribe1)  
           this.removeUnsubscribe1.unsubscribe();
-      if(this.removeUnsubscribe2)  
-          this.removeUnsubscribe2.unsubscribe();
+    this.category=new Category(this.url, this.firestore)
+
   }
 
   
-  flag:boolean=false;
+
+  changeUrl(url:string){
+    this.category.reset();
+    this.category.changeUrl(url);
+     this.url=url;
+     this.setCategories();
+   }
+
+   doUnsubscribe(removeUnsubscribe:Subscription[]){
+    removeUnsubscribe.forEach(element => {
+      setTimeout(function(){element.unsubscribe()},5000);
+     });
+   }
+
+   setCategories(){
+    {
+      let categoryNames=this.category.getAll();
+     this.removeUnsubscribe1=categoryNames.subscribe(categories=>{
+              let removeUnsubscribe2:Subscription[]=[];
+ 
+              if(categories.length < this.category.categoriesMap.size){
+                  this.category.categoriesMap.forEach((value: Material, key: string) =>{
+                      if(!categories.find(element => element.id === key))
+                          this.category.categoriesMap.delete(key);
+                  })
+              }else if(categories.length > this.category.categoriesMap.keys.length){
+              categories.forEach(element=>{
+                  if(!this.category.categoriesMap.get(element.id)){    
+                      //console.log("url for material "+this.url+'/categories/'+category.id);
+                      let x = new Material(this.url+'/categories/'+element.id, this.firestore);
+                      removeUnsubscribe2.push(x.getAll().subscribe(materials=>{
+                      //console.log("sssssssssssssssssssssssss "+category.id)
+                      //console.log(materials);
+                      //x.allMaterials.next(materials) 
+                      x.material=materials;
+                      }));
+                      this.doUnsubscribe(removeUnsubscribe2)
+                      //x.material = x.allMaterials.asObservable();
+                      this.category.categoriesMap.set((element.id), x)   }})
+              } 
+          })
+      }
+   }
+
+  //  setCategories(){
+  //   let categoryNames=this.category.getAll();
+  //   this.removeUnsubscribe1=categoryNames.subscribe(categories=>{
+  //     let removeUnsubscribe2:Subscription[]=[];
+  //     categories.forEach(category=>{
+  //       //console.log("url for material "+this.url+'/categories/'+category.id);
+  //       let x = new Material(this.url+'/categories/'+category.id, this.firestore);
+  //       removeUnsubscribe2.push(x.getAll().subscribe(materials=>{
+  //         //console.log("sssssssssssssssssssssssss "+category.id)
+  //         //console.log(materials);
+  //         x.allMaterials.next(materials) 
+  //       }));
+  //       this.doUnsubscribe(removeUnsubscribe2)
+  //       x.material = x.allMaterials.asObservable();
+  //       this.category.categoriesMap.set((category.id), x)
+  //       this.category.categoriesMap.forEach((value: Material, key: string) => {
+  //         /*value.material.subscribe(x=>
+  //            console.log(x)
+  //         )*/
+  //         //console.log(key, value);
+  //       });
+  //     })
+  //     /*if(removeUnsubscribe2)
+  //       removeUnsubscribe2.unsubscribe();*/
+     
+  //   } )
+  //  }
+
+  ngOnDestroy(): void { 
+      if(this.removeUnsubscribe1)  
+          this.removeUnsubscribe1.unsubscribe();
+      /*if(this.removeUnsubscribe2)  
+          this.removeUnsubscribe2.unsubscribe();*/
+  }
+
+  
+  /*flag:boolean=false; 
   getCategories(url?:string): Observable<Category[]>{
       let categoryNames=this.categoryService.getAll(this.url).pipe(map(action=>action.map(category=>category.id)))
       
@@ -82,5 +154,5 @@ export class CategoryFactoryService implements OnDestroy{
           //console.log(materialsTemp.length)
       
       return materialsBehavior.asObservable();
-  }
+  }*/
 }
