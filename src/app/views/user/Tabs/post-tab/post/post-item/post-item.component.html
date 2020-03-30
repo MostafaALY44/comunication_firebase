@@ -61,7 +61,7 @@
 
 
         <button (click)="getComment(post.id)">show Comments</button>
-        <div *ngIf="displayComments(post.id)">
+        <div *ngIf="flagDisplayComment">
             <div class="row" *ngFor="let comment of comments | async">
                
                 <div class="col-md-12" style="padding: 20px;">
@@ -84,7 +84,7 @@
                                 </div>
 
                                 <p class="card-text">
-                                    {{ comment.text }}
+                                    {{ comment.body }}
                                 </p>
                             </div>
                         </div>

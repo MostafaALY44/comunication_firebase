@@ -9,14 +9,14 @@ import { CommentModel } from '../models/CommentModel';
 
 export class Post implements CRUD{
 
-	currentComment:Comment;
+	comment:Comment;
 	//posts: Observable<PostModel[]>;
 	posts: PostModel[];
 	private postService:PostService=new PostService(this.firestore)
 	private url:string;
 	constructor(private firestore: AngularFirestore){
 		//this.url+='/posts';
-		this.currentComment=new Comment(this.firestore);
+		this.comment=new Comment(this.firestore);
 	}
 
 	reset(){
@@ -24,7 +24,7 @@ export class Post implements CRUD{
 	}
 	changeUrl(url:string){
 		this.url=url+'/posts';
-		this.currentComment.changeUrl(this.url);
+		this.comment.changeUrl(this.url);
 	}
 	create (post:PostModel){    
 	    this.postService.create(this.url, this.postForCreateAndUpdate(post))}
@@ -56,8 +56,8 @@ export class Post implements CRUD{
 	currentPostId:string="";
 	getComments(postId:string):Observable<CommentModel[]>{
 		this.currentPostId=postId
-		this.currentComment.setIdCourse(postId);
-		return this.currentComment.comments;
+		this.comment.setIdCourse(postId);
+		return this.comment.comments;
 		
 	}
 	postForCreateAndUpdate(post:PostModel){return {"title":post.title, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}

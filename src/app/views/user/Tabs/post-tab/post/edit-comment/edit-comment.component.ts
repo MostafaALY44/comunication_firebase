@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CommentService } from 'src/app/services/user/comment.service';
-import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
+import { CourseService } from 'src/app/services/user/oop/course.service';
 
 @Component({
   selector: 'app-edit-comment',
@@ -12,9 +12,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditCommentComponent implements OnInit {
 
   editComment = new FormGroup({
-    text : new FormControl(this.data.comment.text)
+    body : new FormControl(this.data.body)
   });
-  constructor(private service: CommentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data:CommentModel) { }
 
   ngOnInit() {
   }
@@ -26,12 +26,10 @@ export class EditCommentComponent implements OnInit {
   }
  
   onSubmit(){
-    if(!this.isEmpty(this.editComment.value.text)){
-      let courseId=this.data.courseId;
-      let idPost= this.data.postId;
-     this.data.comment.text=this.editComment.value.text;
-     //console.log(this.data.comment);
-      this.service.editComment(courseId, idPost,this.data.comment.id,this.data.comment);
+    if(!this.isEmpty(this.editComment.value.body)){
+     this.data.body=this.editComment.value.body;
+     CourseService.posts.comment.update(this.data.id,this.data);
+   
     
     }
   }

@@ -15,10 +15,17 @@ export class Comment implements CRUD{
 		this.url=url
 	}
 
+	setCurrentIdPost(postId:string){
+		this.url+='/'+postId+'/comments';
+		//console.log("setCurrentIdPost  "+this.url);
+	}
+
 	setIdCourse(courseId:string){
 		this.comments=this.commentService.getAll(this.url+'/'+courseId +'/comments');
 	}
+	
 	create (comment:CommentModel){    
+		//console.log("from comment "+this.url);
 	    this.commentService.create(this.url, this.commentForCreateAndUpdate(comment))}
 	
 	read (commentId:string){
@@ -33,5 +40,7 @@ export class Comment implements CRUD{
 		this.commentService.delete(this.url, id);		
 	}
 
-	commentForCreateAndUpdate(comment:CommentModel){return {"title":comment.title, "body":comment.body, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+
+	
 }

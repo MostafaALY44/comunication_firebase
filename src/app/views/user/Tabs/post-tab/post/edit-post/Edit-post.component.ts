@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostService } from 'src/app/services/user/post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PostModel } from 'src/app/services/user/oop/models/PostModel';
+import { CoursesService } from 'src/app/services/user/courses.service';
+import { CourseService } from 'src/app/services/user/oop/course.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -11,12 +14,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class EditPostComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data:any,
-  private ser: PostService, private route:ActivatedRoute) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data:PostModel) { }
 
   newPost = new FormGroup({
-    title : new FormControl(this.data.post.title,Validators.required),
-    body : new FormControl(this.data.post.body,[Validators.required, Validators.minLength(4)])
+    title : new FormControl(this.data.title,Validators.required),
+    body : new FormControl(this.data.body,[Validators.required, Validators.minLength(4)])
   });
 
 
@@ -31,10 +33,12 @@ export class EditPostComponent implements OnInit {
 
   onSubmit(){
     if(!this.isEmpty(this.newPost.value.body)){
-      let courseId=this.data.courseId;
-      let idPost= this.data.post.id
-      this.data.post= {"date":this.data.post.date,"like" :this.data.post.like, "dislike":this.data.post.dislike, "postOwner":this.data.post.postOwner, "title":this.newPost.value.title, "body": this.newPost.value.body};
-      this.ser.editPost(courseId, idPost, this.data.post);
+   // let courseId=this.data.courseId;
+      let idPost= this.data.id
+      this.data= {"id" : this.data.id, "reactedPerson" :this.data.reactedPerson,"like" :this.data.like, "dislike":this.data.dislike, "postOwner":this.data.postOwner, "title":this.newPost.value.title, "body": this.newPost.value.body};
+      //this.ser.editPost(courseId, idPost, this.data.post);
+      CourseService.posts.update(idPost,this.data);
+      
     }
   }
 }
