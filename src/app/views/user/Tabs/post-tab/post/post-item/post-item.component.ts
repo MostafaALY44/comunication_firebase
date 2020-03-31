@@ -84,14 +84,21 @@ export class PostItemComponent implements OnInit {
       this.newComment.reset();
     } 
 }
-
+showit:boolean=false;
 addLike(personId: string, postId: string){
   CourseService.posts.addLike('Mostafa Aly', postId);
 }
 addDisLike(personId: string, postId: string){
   CourseService.posts.addDislike('Mostafa Aly', postId)
 }
+removeLike(personId: string, postId: string){
+  CourseService.posts.removeLike('Mostafa Aly', postId);
 
+}
+
+removedislike(personId: string, postId: string){
+  CourseService.posts.removeDisLike('Mostafa Aly', postId);
+}
 Currcomment:CommentModel;
 setComment(comment:CommentModel){
   this.Currcomment=comment;

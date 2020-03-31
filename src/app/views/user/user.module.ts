@@ -56,7 +56,8 @@ import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-com
     EditAssignmentComponent,
     EditCommentComponent,
     EditMaterialComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    AddAssignmentComponent
     
   ],
   imports: [

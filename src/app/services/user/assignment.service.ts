@@ -25,10 +25,12 @@ export class AssignmentService {
 
   public addAssignment(courseId, data){ 
     //data["date"]=firebase.firestore.FieldValue.serverTimestamp();
+   // console.log('courses/'+courseId+'/assignment');
     return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').add(data);
   }
 
   public editAssignment(courseId, assignmentId, data){
+    //console.log('courses/'+courseId+'/assignment');
     return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).update(data);
   }
   public deleteAssignment(courseId,assignmentId){
@@ -36,3 +38,4 @@ export class AssignmentService {
     return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).delete();
   }
 }
+ 

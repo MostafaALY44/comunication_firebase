@@ -23,7 +23,7 @@ export class EditAssignmentComponent implements OnInit {
   constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any) { }
 
   ngOnInit() {
-  }
+  } 
   isEmpty(text:string):boolean{
     for(let i=0;i<text.length;i++)
       if(text[i] != " ")
