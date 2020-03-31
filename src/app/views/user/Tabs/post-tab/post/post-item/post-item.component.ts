@@ -10,6 +10,7 @@ import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
+import { ReportPostComponent } from '../report-post/report-post.component';
 
 
 @Component({
@@ -114,6 +115,10 @@ deleteComments(idPost){
   CourseService.posts.comment.setCurrentIdPost(idPost);
   CourseService.posts.comment.delete(this.Currcomment.id); 
 } 
+
+report(){
+  this.dialog.open(ReportPostComponent,{data:this.CurrPost})
+}
 
 }
  

@@ -1,0 +1,11 @@
+<form [formGroup] = "reportPost" (ngSubmit)="onSubmit()">
+    <div class="form-group ">  
+        <mat-form-field >
+                <input matInput
+                formControlName="report" placeholder="Type Your Report" type="text">
+              </mat-form-field>
+              <br>
+            <button type="submit" class="btn btn-success" [disabled]="!reportPost.valid" style="margin-top: 20px;" mat-dialog-close>Send</button>
+        </div>
+  
+    </form> 

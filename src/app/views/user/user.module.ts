@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.component';
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
+import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-post.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-com
     EditAssignmentComponent,
     EditCommentComponent,
     EditMaterialComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    ReportPostComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -57,7 +59,8 @@ import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-com
     EditCommentComponent,
     EditMaterialComponent,
     EditCategoryComponent,
-    AddAssignmentComponent
+    AddAssignmentComponent,
+    ReportPostComponent
     
   ],
   imports: [
