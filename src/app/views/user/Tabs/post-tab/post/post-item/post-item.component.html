@@ -23,16 +23,16 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-md-2">
-                <a href="#" style="margin-top: 20px;">
+                <button (click)="addLike('Mostafa Aly', post.id)" style="margin-top: 20px;">
                     <span class="badge badge-pill badge-success">Like</span>
-                </a> {{ post.like }}
+                </button> {{ post.like }}
 
             </div>
             <div class="col-md-8">
-                <a href="#" style="margin-top: 20px;">
+                <button href="#" (click)="addDisLike('Mostafa Aly', post.id)" style="margin-top: 20px;">
                     <span class="badge badge-pill badge-danger">Dislike</span>
 
-                </a> {{ post.dislike }}
+                </button> {{ post.dislike }}
 
 
             </div>

@@ -7,7 +7,7 @@ import { take, map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class InverseAuthGuard implements CanActivateChild {
+export class InverseAuthGuard   {
   constructor(private AuthService : AuthenticationService, private router:Router){}
   canActivateChild(
     next: ActivatedRouteSnapshot,

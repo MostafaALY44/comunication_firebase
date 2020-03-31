@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*signUp() {
+  signUp() {
     this.authenticationService.SignUp(this.email, this.password);
     this.email = ''; 
     this.password = '';
-  }*/
+  }
   error:string='';
   signIn() {
     this.email = this.login.value.email; 

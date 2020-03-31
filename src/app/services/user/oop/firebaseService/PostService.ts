@@ -29,19 +29,35 @@ export class PostService implements CRUDForfirebase{
           );
     }
 
+    
     addReact(url: string, id: string, personId:string, react:boolean){
-		this.read(url, id).toPromise().then( (post)=>{
+        console.log("addReact: ")
+
+		let removeSubscribe=this.read(url, id).subscribe( (post)=>{
             let checkAction= this.checkAction(post.reactedPerson, personId, react) 
+            console.log("addReact: "+checkAction)
             if(checkAction == -1)
                 return;
 
             if(checkAction == 1){
+                if(react)
+                    post.dislike--;
+                else
+                    post.like--;
                 post.reactedPerson.find(element=> element.personId=== personId).action=react;
             }else{
                 post.reactedPerson.push({"personId":personId, "action":react});
             }
-            this.update(url,id,post);      
+            if(react)
+                post.like++;
+            else
+                post.dislike++;
+            this.update(url,id,post);   
+            this.doUnsubscribe(removeSubscribe)
         })
+    }
+    doUnsubscribe(removeSubscribe){
+        setTimeout(function(){removeSubscribe.unsubscribe()},1000)
     }
 
     removeReact(url: string, id: string, personId:string, react:boolean){

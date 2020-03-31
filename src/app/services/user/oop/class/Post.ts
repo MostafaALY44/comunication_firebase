@@ -58,8 +58,7 @@ export class Post implements CRUD{
 		this.currentPostId=postId
 		this.comment.setIdCourse(postId);
 		return this.comment.comments;
-		
 	}
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : [], "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
 
 }

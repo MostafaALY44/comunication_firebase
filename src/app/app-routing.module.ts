@@ -29,7 +29,7 @@ const routes: Routes = [
     path:'user', component: UserComponent,
     loadChildren: () => import('./views/user/user.module').then(m=>m.UserModule),
     //canLoad: [AuthGuard],
-    //canActivateChild:[AuthGuard]
+    canActivateChild:[AuthGuard]
   },
   {
     path:'admin', component: SuperAdminComponent,

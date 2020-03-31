@@ -83,8 +83,15 @@ export class PostItemComponent implements OnInit {
 
       this.newComment.reset();
     } 
-
 }
+
+addLike(personId: string, postId: string){
+  CourseService.posts.addLike('Mostafa Aly', postId);
+}
+addDisLike(personId: string, postId: string){
+  CourseService.posts.addDislike('Mostafa Aly', postId)
+}
+
 Currcomment:CommentModel;
 setComment(comment:CommentModel){
   this.Currcomment=comment;
