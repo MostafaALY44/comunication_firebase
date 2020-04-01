@@ -1,7 +1,10 @@
+import { Material } from 'src/app/services/user/oop/class/Material';
+import { MaterialModel } from './../../../../../../services/user/oop/models/MaterialModel.model';
+import { CourseService } from 'src/app/services/user/oop/course.service';
 import { EditMaterialComponent } from './../edit-material/edit-material.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MaterialsService } from 'src/app/services/user/materials.service';
 
@@ -13,33 +16,28 @@ import { MaterialsService } from 'src/app/services/user/materials.service';
 export class MaterialItemsComponent implements OnInit {
 
 
-  // materials:Observable<Material[]>;
-  // courseId;
+  // @Input() materials:Material[];
+  materials: MaterialModel[];
 
-  // constructor(private materialsService: MaterialsService, route: ActivatedRoute, private dialog: MatDialog) {
-  //   route.parent.paramMap.subscribe((params: ParamMap) => {
-  //     this.courseId = params.get('id');
-  //     this.materials = materialsService.getMaterial(this.courseId)
-  //   }
-  //   );
-  // }
+  material: Material;
+  currentCategory: string;
 
-   ngOnInit() {
-   }
 
-  // getDate(date){
-  //   if(date != null)
-  //     return date.toDate();
-  // }
+  constructor(private route: ActivatedRoute) {
+    route.paramMap.subscribe(
+      (params: ParamMap) => {
+        //  this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material.subscribeMaterialsFireStore();
+        this.materials = CourseService.categories.categoriesMap.get(params.get("id")).getAll().subscribe(element =>
+          element.forEach(element2 =>{
+            return element2;
+          })
+        ).subscribeMaterialsFireStore();
 
-  // currentMaterial;
-  // setMaterial(material){
-  //   this.currentMaterial = material;
-  // }
-  // deleteMaterial(){
-  //   this.materialsService.deleteMaterial(this.courseId,this.currentMaterial["id"]);
-  // } 
-  // editMaterial(){
-  //   this.dialog.open(EditMaterialComponent,{data:{"material":this.currentMaterial,"courseId":this.courseId}})
-  // }
+        // console.log(this.materials);
+      }
+    );
+  }
+
+  ngOnInit() {
+  }
 }

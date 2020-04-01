@@ -16,12 +16,15 @@ export class CourseService {
   static posts: Post;
   static categories: Category;
   static assignments: Observable<Assignment[]>;
+
   private postFactoryService: PostFactoryService = new PostFactoryService(this.firestore)
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
 
   courseId;
-  constructor(private firestore: AngularFirestore) { CourseService.assignments = this.allAssignments.asObservable(); }
+  constructor(private firestore: AngularFirestore) { 
+    CourseService.assignments = this.allAssignments.asObservable(); 
+  }
 
   setCouserId(courseId: string) {
     this.courseId = courseId;
@@ -46,5 +49,4 @@ export class CourseService {
     this.removesubscribe = new AssignmentService(this.firestore).getAssingment(courseId).subscribe(assignments => this.allAssignments.next(assignments));
 
   }
-
 }

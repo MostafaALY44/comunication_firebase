@@ -8,13 +8,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let material of materials | async">
-      <td>{{ material.name }}</td>
+    <tr *ngFor="let material of materials">
+      <td>{{ material.id }}</td>
       <td>{{ material.date }}</td>
       <td><a [href]="material.link">Download</a></td>
       <td>
         <div>
-          <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setMaterial(material)">
+          <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" > <!--(click)="setMaterial(material)"--> 
             <mat-icon>more_vert</mat-icon>
           </button>
         </div>
@@ -29,11 +29,11 @@
 </table>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editMaterial()">
+  <button mat-menu-item type="button" class="btn btn-warning edit color" > <!-- (click)="editMaterial()" --> 
     <i class="material-icons md-light">edit</i> edit
   </button>
 
-  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteMaterial()">
+  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" > <!-- (click)="deleteMaterial()" --> 
     <i class="material-icons" style="align-content: center;">
       delete_forever
     </i> delete </button>

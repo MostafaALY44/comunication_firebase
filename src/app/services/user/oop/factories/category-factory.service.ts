@@ -14,11 +14,11 @@ export class CategoryFactoryService implements OnDestroy {
   category: Category;
 
   private url: string
+
   constructor(private firestore: AngularFirestore) {
     if (this.removeUnsubscribe1)
       this.removeUnsubscribe1.unsubscribe();
     this.category = new Category(this.url, this.firestore)
-
   }
 
   changeUrl(url: string) {

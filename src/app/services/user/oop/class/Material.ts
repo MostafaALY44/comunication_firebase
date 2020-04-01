@@ -2,27 +2,23 @@ import { CRUD } from '../models/CRUD';
 import { MaterialModel } from '../models/MaterialModel.model';
 import { MaterialService } from '../firebaseService/MaterialService';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 
 export class Material implements CRUD, OnDestroy{    
 
-	//allMaterials: BehaviorSubject<MaterialModel[]>=new BehaviorSubject([]);
-	//material:Observable< MaterialModel[]>
 	material: MaterialModel[];
-    private materialService:MaterialService
+	private materialService:MaterialService;
+	
 	constructor(private url:string, private firestore: AngularFirestore){
 		this.url+="/materials";
 		this.materialService = new MaterialService(this.firestore);
 	}
+
 	ngOnDestroy(): void {
 		if(Material.removeUnsubscribe1)  
 			Material.removeUnsubscribe1.unsubscribe();
 	}
 
-	/*changeUrl(url:string){
-		this.url=url+"/materials/"; 
-	}*/
 	create (material:MaterialModel){
         return this.materialService.create(this.url, material)
     }
@@ -40,7 +36,7 @@ export class Material implements CRUD, OnDestroy{
 	}
 
 	getAll(){
-		console.log("getAll() from material "+ this.url)
+		// console.log("getAll() from material "+ this.url)
 		return this.materialService.getAll(this.url);
 	}
 
@@ -51,6 +47,5 @@ export class Material implements CRUD, OnDestroy{
 			Material.removeUnsubscribe1.unsubscribe();
 		Material.removeUnsubscribe1=this.getAll().subscribe(materials=> this.material=materials)
     }
-
 	materialForCreateAndUbdate(material:MaterialModel){return {"date":material.date, "link":material.link}}
 }
