@@ -7,6 +7,7 @@ import { OnDestroy } from '@angular/core';
 export class Material implements CRUD, OnDestroy{    
 
 	material: MaterialModel[];
+	
 	private materialService:MaterialService;
 	
 	constructor(private url:string, private firestore: AngularFirestore){
@@ -46,6 +47,7 @@ export class Material implements CRUD, OnDestroy{
 		if(Material.removeUnsubscribe1)  
 			Material.removeUnsubscribe1.unsubscribe();
 		Material.removeUnsubscribe1=this.getAll().subscribe(materials=> this.material=materials)
+		return this.material;
     }
 	materialForCreateAndUbdate(material:MaterialModel){return {"date":material.date, "link":material.link}}
 }

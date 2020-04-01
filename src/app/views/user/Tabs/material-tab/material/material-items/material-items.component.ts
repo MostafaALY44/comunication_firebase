@@ -17,23 +17,21 @@ export class MaterialItemsComponent implements OnInit {
 
 
   // @Input() materials:Material[];
-  materials: MaterialModel[];
+  materials: Material;
 
-  material: Material;
-  currentCategory: string;
+  // material: Material;
+  // currentCategory: string;
 
 
   constructor(private route: ActivatedRoute) {
-    route.paramMap.subscribe(
+    route.parent.paramMap.subscribe(
       (params: ParamMap) => {
-        //  this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material.subscribeMaterialsFireStore();
-        this.materials = CourseService.categories.categoriesMap.get(params.get("id")).getAll().subscribe(element =>
-          element.forEach(element2 =>{
-            return element2;
-          })
-        ).subscribeMaterialsFireStore();
+        console.log("===============>"+params.get('id'));
+          // this.materials = CourseService.categories.materials.subscribeMaterialsFireStore();
+        this.materials = CourseService.categories.categoriesMap.get(params.get('id'));
+        // this.materials.subscribeMaterialsFireStore();
 
-        // console.log(this.materials);
+        console.log(this.materials.material);
       }
     );
   }
