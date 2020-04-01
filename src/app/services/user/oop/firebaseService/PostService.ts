@@ -3,10 +3,12 @@ import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostModel, ReactedPerson } from '../models/PostModel';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 export class PostService implements CRUDForfirebase{
     constructor(private firestore: AngularFirestore){}
     create(url: string, post) {
+        post["date"]=firebase.firestore.FieldValue.serverTimestamp();
         return this.firestore.collection(url).add(post)
     }
     read(url: string, id: string) {
@@ -29,19 +31,36 @@ export class PostService implements CRUDForfirebase{
           );
     }
 
+    
     addReact(url: string, id: string, personId:string, react:boolean){
-		this.read(url, id).toPromise().then( (post)=>{
+     //   console.log("addReact: ")
+
+		let removeSubscribe=this.read(url, id).subscribe( (post)=>{
             let checkAction= this.checkAction(post.reactedPerson, personId, react) 
-            if(checkAction == -1)
-                return;
+            console.log("addReact: "+checkAction)
+            if(checkAction == -1){
+                this.doUnsubscribe(removeSubscribe)
+                return;}
 
             if(checkAction == 1){
+                if(react)
+                    post.dislike--;
+                else
+                    post.like--;
                 post.reactedPerson.find(element=> element.personId=== personId).action=react;
             }else{
                 post.reactedPerson.push({"personId":personId, "action":react});
             }
-            this.update(url,id,post);      
+            if(react)
+                post.like++;
+            else
+                post.dislike++;
+            this.update(url,id,post);   
+            this.doUnsubscribe(removeSubscribe)
         })
+    }
+    doUnsubscribe(removeSubscribe){
+        setTimeout(function(){removeSubscribe.unsubscribe()},5)
     }
 
     removeReact(url: string, id: string, personId:string, react:boolean){
@@ -67,6 +86,20 @@ export class PostService implements CRUDForfirebase{
             }
         }else
             return 0 //allow new react
+    }
+
+
+    reportPost(url: string, id: string, personId:string,report:string){
+       // console.log("+++++++++++++++++++++++++++++");
+        let removeSubscribe=this.read(url, id).subscribe( (post)=>{
+           
+                post.reportPost.push({"personId":personId, "report":report});
+               // console.log("post.reportPost "+post.reportPost)
+                this.update(url,id,post);
+                this.doUnsubscribe(removeSubscribe)
+        })
+           
+            
     }
 
 }

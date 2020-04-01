@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col md-2">
-                <img src="" alt="photo ">{{post.postOwner}}
+                <i class="fa fa-user-circle" style="font-size:48px;color:black"></i>&nbsp;<div style="font-size: 20px;">{{post.postOwner}}</div>
             </div>
             <div class="col md-6">
                 <h5>{{post.title}}</h5>
@@ -23,23 +23,18 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-md-2">
-                <a href="#" style="margin-top: 20px;">
-                    <span class="badge badge-pill badge-success">Like</span>
-                </a> {{ post.like }}
+               
+                    <i type="button" (click)="addLike('Mostafa Aly', post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
+               
+                {{ post.like }}
 
             </div>
             <div class="col-md-8">
-                <a href="#" style="margin-top: 20px;">
-                    <span class="badge badge-pill badge-danger">Dislike</span>
+               
+                    <i type="button" (click)="addDisLike('Mostafa Aly', post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
 
-                </a> {{ post.dislike }}
+                 {{ post.dislike }}
 
-
-            </div>
-            <div class="col-md-2">
-                <a href="#" style="margin-top: 20px;">
-                    <span class="badge badge-pill badge-dark">Report</span>
-                </a> 0
 
             </div>
         </div>
@@ -59,18 +54,18 @@
             </div>
         </form>
 
-
-        <button (click)="getComment(post.id)">show Comments</button>
-        <div *ngIf="flagDisplayComment">
-            <div class="row" *ngFor="let comment of comments | async">
+        <button style="font-size:24px" (click)="getComment(post.id)">show Comments <i class="material-icons">comment</i></button>
+        
+        <div *ngIf="flagDisplayComment" >
+            <div class="row" *ngFor="let comment of comments | async" >
                
                 <div class="col-md-12" style="padding: 20px;">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
                         <div class="card text-center">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col md-2">
-                                        <img src="" alt="photo ">{{comment.commentOwner}}
+                                        <i class="fa fa-user-circle" style="font-size:25px;color:black"></i>&nbsp;<div style="font-size: 15px;">{{comment.commentOwner}}</div>
                                     </div>
 
                                     <div class="col md-4">
@@ -108,6 +103,11 @@
             <i class="material-icons" style="align-content: center;">
                 delete_forever
             </i> delete </button>
+            <button style=" outline: none; " mat-menu-item type="button"  (click)="report()" >
+            <i class="material-icons" class="fa fa-minus-square" style="font-size:24px">
+                
+            </i> report </button>
+
     </mat-menu>
     <mat-menu #menu1="matMenu">
         <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editComment(post.id)">

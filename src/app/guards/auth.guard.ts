@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/auth/authentication.service';
 import { take, map, tap } from 'rxjs/operators';
 
-/*@Injectable({
+@Injectable({
   providedIn: 'root'
-})*/
+})
 /*class UserToken {}
 class Permissions {
   canLoadChildren(user: UserToken, id: string, segments: UrlSegment[]): boolean {
@@ -14,8 +14,8 @@ class Permissions {
   }
 }*/
 
-@Injectable()
-export class AuthGuard implements  CanLoad, CanActivate, CanActivateChild   {
+//@Injectable()
+export class AuthGuard    {
 
   constructor(private AuthService : AuthenticationService, private router:Router) {}
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
@@ -26,7 +26,7 @@ export class AuthGuard implements  CanLoad, CanActivate, CanActivateChild   {
         if(!loggedIn){
           this.router.navigate(['auth/login']);
         }
-      })) && this.AuthService.isEmailVerified();
+      }))
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 

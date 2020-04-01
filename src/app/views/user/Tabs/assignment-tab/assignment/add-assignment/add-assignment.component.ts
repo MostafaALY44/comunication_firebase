@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AssignmentService } from 'src/app/services/user/assignment.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'add-assignment',
@@ -14,15 +15,20 @@ export class AddAssignmentComponent implements OnInit {
     title : new FormControl('',Validators.required),
     start : new FormControl('',Validators.required),
     end : new FormControl('',Validators.required),
-    accept : new FormControl('',Validators.required),
+    accept : new FormControl(''),
     note : new FormControl(''),
     Qurl : new FormControl('',Validators.required)
     
   });
-  constructor(private ser: AssignmentService, private route:ActivatedRoute) { }
+   assignmentId;
+  constructor(private ser: AssignmentService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
+    //this.route.parent.paramMap.subscribe((params : ParamMap) =>  this.assignmentId=params.get('id'));
+   }
 
   ngOnInit() {
+
   }
+  
   isEmpty(text:string):boolean{
     for(let i=0;i<text.length;i++)
       if(text[i] != " ")
@@ -34,17 +40,18 @@ export class AddAssignmentComponent implements OnInit {
     //console.log(this.newAssignment.value);
     if(!this.isEmpty(this.newAssignment.value.title)){
 
-      let data={"acceptAfterEnd" :this.newAssignment.value.accept,
+       let data2={"acceptAfterEnd" :this.newAssignment.value.accept,
                  "endDate":this.newAssignment.value.end,
                  "link":this.newAssignment.value.Qurl,
                  "note":this.newAssignment.value.note,
                  "startDate":this.newAssignment.value.start,
                  "title":this.newAssignment.value.title};
-      let assignmentId;
-      this.route.parent.paramMap.subscribe((params : ParamMap) =>  assignmentId=params.get('id'));
-      this.ser.addAssignment( assignmentId,data);
+     
+     
+      this.ser.addAssignment( this.data.courseId,data2);
       this.newAssignment.reset();
     } 
   }
 
 }
+ 

@@ -53,13 +53,25 @@ export class Post implements CRUD{
 		this.postService.addReact(this.url, postId, personId,false)
 	}	
 
+	removeLike(personId:string, postId:string){
+		this.postService.removeReact(this.url, postId, personId,true)
+	}	
+	
+	removeDisLike(personId:string, postId:string){
+		this.postService.removeReact(this.url, postId, personId,false)
+	}	
+
 	currentPostId:string="";
 	getComments(postId:string):Observable<CommentModel[]>{
 		this.currentPostId=postId
 		this.comment.setIdCourse(postId);
 		return this.comment.comments;
-		
 	}
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
+	reportPost(personId:string, postId:string,report:string){
+		this.postService.reportPost(this.url,postId,personId,report);
+
+	}
+
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : [],"reportPost":[], "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
 
 }
