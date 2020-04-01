@@ -27,6 +27,7 @@ export class AuthGuard    {
           this.router.navigate(['auth/login']);
         }
       }))
+      //return this.AuthService.isEmailVerified()
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
@@ -52,5 +53,6 @@ export class AuthGuard    {
           }
         })
       )
+     // return this.AuthService.isEmailVerified()
     }
 }

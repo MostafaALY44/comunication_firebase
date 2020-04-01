@@ -8,6 +8,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { AnnouncementNaveComponent } from './shared/components/layouts/announcement-nave/announcement-nave.component';
 import { InverseAuthGuard } from './guards/inverse-auth.guard';
 
+import {AngularFireAuthGuard, canActivate, redirectLoggedInTo,
+   redirectUnauthorizedTo, emailVerified, AuthPipe, AuthPipeGenerator} from '@angular/fire/auth-guard'
+import { map } from 'rxjs/operators';
+import { pipe } from 'rxjs';
+
+const xyz: AuthPipeGenerator = (next) => pipe(next.routeConfig.redirectTo[''],emailVerified)
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
+
 
 const routes: Routes = [
   {
@@ -27,9 +35,16 @@ const routes: Routes = [
   },
   {
     path:'user', component: UserComponent,
-    loadChildren: () => import('./views/user/user.module').then(m=>m.UserModule),
+    children:[
+      {
+        path:'',
+        loadChildren: () => import('./views/user/user.module').then(m=>m.UserModule),
+        ...canActivate(redirectUnauthorizedToLogin)
+      }
+    ],
     //canLoad: [AuthGuard],
-    canActivateChild:[AuthGuard]
+    ...canActivate(xyz)
+    //...canActivate(xyz)
   },
   {
     path:'admin', component: SuperAdminComponent,

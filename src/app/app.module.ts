@@ -13,6 +13,7 @@ import { AuthenticationService } from './services/auth/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './guards/auth.guard';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
   providers: [
     AngularFirestore,
     AuthGuard,  
-    AuthenticationService
+    AuthenticationService,
+    AngularFireAuthGuard 
   ],
   bootstrap: [AppComponent]
 })
