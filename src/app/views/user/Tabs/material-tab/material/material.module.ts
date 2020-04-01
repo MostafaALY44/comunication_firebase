@@ -20,7 +20,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     ],
   imports: [
     CommonModule,
-    MaterialRoutingModule
+    //MaterialRoutingModule
   ]
 })
 export class MaterialModule { }

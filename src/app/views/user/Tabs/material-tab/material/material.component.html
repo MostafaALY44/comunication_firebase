@@ -1,12 +1,12 @@
 <div class="container">
 
-    <!-- <div class="row">
+     <!-- <div class="row">
         <div class="col-md-12">
             <material-category [categoryName]="recipient.key"></material-category>
         </div>
-    </div> -->
+    </div>  -->
 
-    <div class="row">
+     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs">
                 <div *ngFor="let recipient of categories | keyvalue">
@@ -17,10 +17,10 @@
                         <mat-icon>add_circle_outline</mat-icon>
                     </a>
                 </li>
-            </ul>
+            </ul> 
 
-            <!-- Modal
-            <form [formGroup]="newCategory" (ngSubmit)="onSubmit()">
+            
+            <!-- <form [formGroup]="newCategory" (ngSubmit)="onSubmit()">
                 <div class="modal fade" id="add-tab" tabindex="-1" role="dialog" aria-labelledby="addnewtab"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -42,8 +42,8 @@
                         </div>
                     </div>
                 </div>
-            </form> -->
-            <!-- 
+            </form>  -->
+             
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="editCategory()">
         <mat-icon>edit</mat-icon>Edit
@@ -51,9 +51,9 @@
       <button mat-menu-item (click)="deleteCategory()">
         <mat-icon>delete_forever</mat-icon> Delete
       </button>
-    </mat-menu> -->
+    </mat-menu> 
 
-            <!-- 
+         
     <mat-menu #menu="matMenu">
       <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editCategory()">
         <i class="material-icons md-light">edit
@@ -65,13 +65,13 @@
           delete_forever
         </i> Delete
       </button>
-    </mat-menu> -->
+    </mat-menu> 
 
-        </div>
+        <!-- </div>
     </div>
 
     <!------------------------[materials]="recipient.value.material"--------------------*ngFor="let recipient of categories | keyvalue"------------------------------------------------------>
-    <div class="row" >
+    <!-- <div class="row" >
         <div class="col-md-12">
             <material-items ></material-items>
         </div>
@@ -87,17 +87,9 @@
         </div>
     </div>
 
-</div>
+</div> --> 
 
 
-<ul>
-    <li *ngFor="let recipient of categories | keyvalue">
-        {{recipient.key}}
-        <button (click)="recipient.value.subscribeMaterialsFireStore()">
-            subscribe on tab {{recipient.key}}
-        </button>
-        <div *ngFor="let material of recipient.value.material ">
-            {{material|json}}
-        </div>
-    </li>
-</ul> 
+
+
+<router-outlet></router-outlet>

@@ -7,6 +7,7 @@ export interface Roles {
  export interface User{
     uid:string;
     email:string;
+    emailVerified:boolean;
     name:string;
     type: string;
     level:string;

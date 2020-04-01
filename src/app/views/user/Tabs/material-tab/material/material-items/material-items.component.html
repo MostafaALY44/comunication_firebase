@@ -1,4 +1,4 @@
-<table class="table">
+<!-- <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Name</th>
@@ -15,7 +15,7 @@
       <td>
         <div>
           <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" > <!--(click)="setMaterial(material)"--> 
-            <mat-icon>more_vert</mat-icon>
+            <!-- <mat-icon>more_vert</mat-icon>
           </button>
         </div>
       </td>
@@ -30,11 +30,31 @@
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item type="button" class="btn btn-warning edit color" > <!-- (click)="editMaterial()" --> 
-    <i class="material-icons md-light">edit</i> edit
+    <!-- <i class="material-icons md-light">edit</i> edit
   </button>
 
   <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" > <!-- (click)="deleteMaterial()" --> 
-    <i class="material-icons" style="align-content: center;">
+    <!-- <i class="material-icons" style="align-content: center;">
       delete_forever
     </i> delete </button>
-</mat-menu>
+</mat-menu> --> 
+
+<!-- <ul>
+  <li *ngFor="let recipient of categories | keyvalue">
+    
+    <div *ngIf="(recipient.key == currentCategoryKey)">
+      {{recipient.key}}
+      <button (click)="recipient.value.subscribeMaterialsFireStore()">
+          subscribe on tab {{recipient.key}}
+      </button>
+      <div *ngFor="let material of recipient.value.material ">
+          {{material|json}}
+      </div>
+      </div>
+  </li>
+</ul> -->
+<div *ngIf="isDataLoad">
+<div *ngFor="let material of materials.material ">
+  {{material|json}}
+</div>
+</div> 

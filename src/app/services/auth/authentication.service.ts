@@ -29,15 +29,19 @@ export class AuthenticationService  {
         }
       })
     )
+
   }
 
-  isVerificateEmail:boolean=false;
+   isVerificateEmail:boolean=false;
   /* Sign up */
   async SignUp(email: string, password: string) {
     const credential = await this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-    return this.saveNewUserData(credential.user).then(()=>
-      firebase.auth().currentUser.sendEmailVerification()
-    );
+    this.isVerificateEmail=credential.user.emailVerified;
+
+    return this.saveNewUserData(credential.user).then(()=>{
+      firebase.auth().currentUser.sendEmailVerification();
+      this.SignOut();
+    });
   }
 
   private saveNewUserData(user) {
@@ -46,6 +50,7 @@ export class AuthenticationService  {
     const data:User = { 
       uid: user.uid, 
       email: user.email, 
+      emailVerified:false,
       name: user.displayName,
       type:"doctor",
       level:"2",
@@ -58,16 +63,30 @@ export class AuthenticationService  {
     } 
     return userRef.set(data, { merge: true })
   }
+  removeSubscribe;
   isEmailVerified():boolean{
-    console.log(this.isVerificateEmail)
-    return this.isVerificateEmail
+    let verified:boolean=false;
+    // if(this.userData){
+    //   this.removeSubscribe=this.userData.subscribe(user=> { if(!!user)verified=user.emailVerified;this.doUnSubscribe()});
+    // }
+    return true
+  }
+
+  doUnSubscribe(){
+    setTimeout(() => {
+      this.removeSubscribe.unsubscribe;
+    }, 100);
   }
 
   /* Sign in */
   async SignIn(email: string, password: string) {
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
-    console.log("+++ : "+credential.user.emailVerified)
+    //console.log("+++++++++++++++++++ : "+credential.user.emailVerified)
     this.isVerificateEmail=credential.user.emailVerified;
+    /*if(!AuthenticationService.isVerificateEmail){
+        this.SignOut();
+        return ;
+      }*/
     return this.updateUserData(credential.user);
   }
 
@@ -78,6 +97,7 @@ export class AuthenticationService  {
     const data = { 
       uid: user.uid, 
       email: user.email,
+      emailVerified:user.emailVerified,
       type:"doctor",
       level:"2",
       contact:"",
@@ -93,7 +113,8 @@ export class AuthenticationService  {
   /* Sign out */
   SignOut() {
     this.angularFireAuth.signOut().then(() =>
-      console.log("signOut done")
+    console.log("Sign out ")
+    //AuthenticationService.isVerificateEmail=false
       ).catch(()=>console.log("signOut not done"));
   }  
 
