@@ -7,9 +7,15 @@
         <th scope="col">End_Date</th>
         <th scope="col">Link</th>
         <th scope="col">Note</th>
-        <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment">
+        <th scope="col">
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment">
           Add-assign
-        </button></th>
+        </button> -->
+        <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="AddAssignment()"> 
+          <i class="material-icons md-light">add</i> AddAssign 
+        </button> 
+
+      </th>
       </tr>
     </thead>
     <tbody>

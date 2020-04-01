@@ -16,7 +16,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     MaterialItemsComponent, 
     AddMaterialComponent, 
     EditMaterialComponent, 
-    EditCategoryComponent],
+    EditCategoryComponent, 
+    ],
   imports: [
     CommonModule,
     MaterialRoutingModule

@@ -20,10 +20,10 @@ export class AssignmentItemsComponent implements OnInit {
   courseId;
   
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
-    /*route.parent.paramMap.subscribe((params : ParamMap) =>{  
-      this.courseId=params.get('id');
-      this.assignments = service.getAssingment(this.courseId) });
-    //this.assignments.subscribe(x=>console.log(x));*/
+    route.parent.paramMap.subscribe((params : ParamMap) =>{  
+      this.courseId=params.get('id')});
+     // this.assignments = service.getAssingment(this.courseId) });
+    //this.assignments.subscribe(x=>console.log(x));
     
     this.assignments=CourseService.assignments;
    }
@@ -45,10 +45,14 @@ export class AssignmentItemsComponent implements OnInit {
                                                     width: '400px',
                                                   })
   }
-  currentAssign;
+  currentAssign; 
   setAssignment(assignment){
     this.currentAssign=assignment;
   }
+  AddAssignment(){
+    this.dialog.open(AddAssignmentComponent, {data:{"courseId":this.courseId}})
+  }
+
   deleteAssignment(){
     this.service.deleteAssignment(this.courseId,this.currentAssign["id"]);
   } 

@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PostService } from 'src/app/services/user/post.service';
-import { PostFactoryService } from 'src/app/services/user/oop/factories/post-factory.service';
 import { Post } from 'src/app/services/user/oop/class/Post';
 import { CourseService } from 'src/app/services/user/oop/course.service';
+<<<<<<< HEAD
+=======
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
+>>>>>>> 30b7f14d31692e0cc0ee07cae8e2a3f99e443b55
 
 @Component({
   selector: 'app-post',
@@ -15,6 +17,15 @@ import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 })
 export class PostComponent implements OnInit,OnDestroy {
   
+<<<<<<< HEAD
+  posts:Observable<Post[]>;
+
+  removeSubscribe;
+  constructor(private ser: PostService, route:ActivatedRoute) {
+    this.removeSubscribe=route.parent.paramMap.subscribe(() =>{
+      this.posts=CourseService.posts
+    })
+=======
   coursePosts:Post;
   removeSubscribe;
   constructor(private ser: PostService, route:ActivatedRoute) {
@@ -24,6 +35,7 @@ export class PostComponent implements OnInit,OnDestroy {
     this.removeSubscribe=route.parent.paramMap.subscribe(() =>this.coursePosts=CourseService.posts)
     
     //})
+>>>>>>> 30b7f14d31692e0cc0ee07cae8e2a3f99e443b55
   }
   ngOnDestroy(): void {
     this.removeSubscribe.unsubscribe();

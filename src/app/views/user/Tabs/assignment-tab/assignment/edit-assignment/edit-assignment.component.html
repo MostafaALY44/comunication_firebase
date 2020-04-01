@@ -9,7 +9,7 @@
     
     <mat-card-content>
         <input type="text" [class.is-invalid]="newAssignment.get('title').invalid && newAssignment.get('title').touched"
-        formControlName="title" class="form-control" id="url" placeholder="Title">
+        formControlName="title" class="form-control" id="title" placeholder="Title">
    <input type="text" [class.is-invalid]="newAssignment.get('note').invalid "
        formControlName="note" class="form-control my-2" id="note" placeholder="Notes">
    <input type="text" [class.is-invalid]="newAssignment.get('Qurl').invalid && newAssignment.get('Qurl').touched"
@@ -35,7 +35,7 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-button mat-dialog-close>Close</button>
-        <button type="submit" [disabled]="!newAssignment.valid" mat-button >Add-new</button>
+        <button type="submit" [disabled]="!newAssignment.valid" mat-button mat-dialog-close>Add-new</button>
       
     </mat-card-actions>
   </mat-card>

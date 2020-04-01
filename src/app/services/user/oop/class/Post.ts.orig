@@ -9,14 +9,20 @@ import { CommentModel } from '../models/CommentModel';
 
 export class Post implements CRUD{
 
-	comment:Comment;
+	currentComment:Comment;
 	//posts: Observable<PostModel[]>;
 	posts: PostModel[];
 	private postService:PostService=new PostService(this.firestore)
+<<<<<<< HEAD
+	
+	constructor(private url:string, public post:PostModel, private firestore: AngularFirestore){
+        url+='/posts';
+    }
+=======
 	private url:string;
 	constructor(private firestore: AngularFirestore){
 		//this.url+='/posts';
-		this.comment=new Comment(this.firestore);
+		this.currentComment=new Comment(this.firestore);
 	}
 
 	reset(){
@@ -24,8 +30,9 @@ export class Post implements CRUD{
 	}
 	changeUrl(url:string){
 		this.url=url+'/posts';
-		this.comment.changeUrl(this.url);
+		this.currentComment.changeUrl(this.url);
 	}
+>>>>>>> 30b7f14d31692e0cc0ee07cae8e2a3f99e443b55
 	create (post:PostModel){    
 	    this.postService.create(this.url, this.postForCreateAndUpdate(post))}
 	
@@ -53,25 +60,13 @@ export class Post implements CRUD{
 		this.postService.addReact(this.url, postId, personId,false)
 	}	
 
-	removeLike(personId:string, postId:string){
-		this.postService.removeReact(this.url, postId, personId,true)
-	}	
-	
-	removeDisLike(personId:string, postId:string){
-		this.postService.removeReact(this.url, postId, personId,false)
-	}	
-
 	currentPostId:string="";
 	getComments(postId:string):Observable<CommentModel[]>{
 		this.currentPostId=postId
-		this.comment.setIdCourse(postId);
-		return this.comment.comments;
+		this.currentComment.setIdCourse(postId);
+		return this.currentComment.comments;
+		
 	}
-	reportPost(personId:string, postId:string,report:string){
-		this.postService.reportPost(this.url,postId,personId,report);
-
-	}
-
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : [],"reportPost":[], "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
 
 }
