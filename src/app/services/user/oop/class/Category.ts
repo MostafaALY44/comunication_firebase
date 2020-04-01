@@ -7,26 +7,17 @@ import { Material } from './Material';
 export class Category implements CRUD {
     categoriesMap = new Map<string, Material>();
 
-    materials: Material;
 
     private categoryService: CategoryService = new CategoryService(this.firestore);
 
     constructor(
         private url: string,
         private firestore: AngularFirestore) {
-            this.materials = new Material(url,this.firestore);
         }
 
     changeUrl(url: string) {
         this.url = url + "/categories/";
     }
-
-    // currentCategoryId:string="";
-	// getAllMaterials(categoryId:string):Observable<MaterialModel[]>{
-	// 	this.currentCategoryId=categoryId;
-	// 	this.materials.setIdCourse(postId);
-	// 	return this.comment.comments;
-	// }
 
     reset() {
         this.categoriesMap.clear();
