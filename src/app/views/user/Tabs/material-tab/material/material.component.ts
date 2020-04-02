@@ -1,26 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Material } from 'src/app/services/user/oop/class/Material';
-import { CourseService } from 'src/app/services/user/oop/course.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-material',
   templateUrl: './material.component.html',
   styleUrls: ['./material.component.css']
 })
-export class MaterialComponent implements OnInit, OnDestroy {
-  categories: Map<string, Material>;
+export class MaterialComponent implements OnInit {
 
-  materials: Material[];
+  constructor() {
+  }
 
-  constructor(route: ActivatedRoute) {
-    this.categories = CourseService.categories.categoriesMap;
-    // setTimeout(function (){
-    // console.log("$$$$$$$$$$$$$$$$$$$$"+CourseService.categories.categoriesMap.size)},5000)
-  }
-  
-  ngOnDestroy(): void {
-  }
   ngOnInit() {
   }
+
 }

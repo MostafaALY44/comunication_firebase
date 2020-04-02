@@ -42,9 +42,8 @@ export class CourseService {
     this.categoryFactoryService.changeUrl('/courses/' + courseId);
     CourseService.categories = this.categoryFactoryService.category;
     CourseService.isCategoryLoad=this.categoryFactoryService.isLoad();
-    console.log(this.categoryFactoryService.category.categoriesMap)
-
   }
+  
   removesubscribe;
   setAssignment(courseId: string) {
     this.allAssignments.next([]);

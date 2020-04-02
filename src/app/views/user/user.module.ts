@@ -38,10 +38,10 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     MaterialCategoryComponent,
     MaterialItemsComponent,
     AssignmentItemsComponent,
+    AddMaterialComponent,
     AssignmentSolutionComponent,
     ReviewSolutionComponent,
     AddAssignmentComponent,
-    AddMaterialComponent,
     PostItemComponent,
     NewPostComponent,
     EditPostComponent,
@@ -60,8 +60,8 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditMaterialComponent,
     EditCategoryComponent,
     AddAssignmentComponent,
-    ReportPostComponent
-    
+    ReportPostComponent,
+    AddMaterialComponent
   ],
   imports: [
     CommonModule,
