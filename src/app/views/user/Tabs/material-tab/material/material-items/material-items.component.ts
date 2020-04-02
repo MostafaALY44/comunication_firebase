@@ -6,6 +6,8 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'material-items',
@@ -50,15 +52,26 @@ export class MaterialItemsComponent implements OnInit , OnDestroy{
       if(this.removeUnsubscribe2)
       this.removeUnsubscribe2.unsubscribe()
   }
-  ngOnInit() {
+  
+  private _success = new Subject<string>();
+
+  staticAlertClosed = false;
+  successMessage = '';
+
+  ngOnInit(): void {
+    setTimeout(() => this.staticAlertClosed = true, 20000);
+    this._success.subscribe(message => this.successMessage = message);
+    this._success.pipe(debounceTime(5000)).subscribe(() => this.successMessage = '');
   }
 
-  newMaterialObj: MaterialModel;
-  materialName: string = "Lecture#0";
-  materialDate: string = "10-10-2010";
-  materialLink: string = "www.facebook.com";
+  public changeSuccessMessage() {
+    this._success.next(`${new Date()} - Message successfully changed.`);
+  }
 
-  public materialClass = CourseService.categories.categoriesMap.get('lab');
+
+  materialName: string = "Lecture#0";
+  materialDate: string = "00-00-20";
+  materialLink: string = "www..com";
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddMaterialComponent , {
@@ -68,32 +81,18 @@ export class MaterialItemsComponent implements OnInit , OnDestroy{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('The dialog\'s data ' + result); // result is a json object that contain the form data 
-      this.newMaterialObj = result;
-      // this.animal = result;
+      if(result)
+        this.addMaterialItem(result);
     });
     
-    this.addMaterial();
   }
-
-  // addMaterial(newMaterialObj:MaterialModel){
-  //   console.log("addMaterial() is called !!!");
-  //   this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-  //   let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory); // http://localhost:4200/user/comp204/material/currentCategory
-  //   materialClass.create(newMaterialObj);
-  // }
-
+  
   currentCategory: string;
-  addMaterial(){
-    console.log("addMaterialTest() is called !!!");
+  addMaterialItem(materialItem: MaterialModel){
     this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-    let model:MaterialModel={id:"lab#7", date : "22/3",link : "www.googledrive.com"}
     let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory) // http://localhost:4200/user/comp204/material/currentCategory
-    materialClass.create(model)
-    console.log("addMaterialTest() is called  22222 !!!");
-
+    materialClass.create(materialItem)
+    console.log("New Material is added !!! :" + materialItem.id);
   }
-
   
 }
