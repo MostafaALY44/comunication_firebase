@@ -47,11 +47,6 @@
   Add Item <mat-icon>library_add</mat-icon>
 </button>
 
-<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
-<p>
-  <button class="btn btn-primary" (click)="changeSuccessMessage()">Change message</button>
-</p>
-
 <!-- Edite menu view difintion -->
 <mat-menu #menu="matMenu">
   <button mat-menu-item type="button" class="btn btn-warning edit color">
