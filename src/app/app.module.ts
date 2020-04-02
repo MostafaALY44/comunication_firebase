@@ -10,7 +10,6 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AuthenticationService } from './services/auth/authentication.service';
-import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './guards/auth.guard';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
@@ -26,8 +25,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
   ],
   providers: [
     AngularFirestore,
