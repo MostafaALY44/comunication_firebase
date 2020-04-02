@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Category } from '../class/category';
 import { Material } from '../class/Material';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { CourseService } from '../course.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class CategoryFactoryService implements OnDestroy {
 
   removeUnsubscribe1
   category: Category;
+  private isCategoryLoad:BehaviorSubject<boolean>=new BehaviorSubject(false);
 
   private url: string
 
@@ -39,7 +41,7 @@ export class CategoryFactoryService implements OnDestroy {
       let categoryNames = this.category.getAll();
       this.removeUnsubscribe1 = categoryNames.subscribe(categories => {
         let removeUnsubscribe2: Subscription[] = [];
-
+        
         if (categories.length < this.category.categoriesMap.size) {
           this.category.categoriesMap.forEach((value: Material, key: string) => {
             if (!categories.find(element => element.id === key))
@@ -57,9 +59,15 @@ export class CategoryFactoryService implements OnDestroy {
             }
           })
         }
+        this.isCategoryLoad.next(true);
       })
     }
   }
+  
+  isLoad():Observable<boolean>{
+    return this.isCategoryLoad.asObservable();
+  }
+
   ngOnDestroy(): void {
     if (this.removeUnsubscribe1)
       this.removeUnsubscribe1.unsubscribe();

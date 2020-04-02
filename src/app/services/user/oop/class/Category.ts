@@ -7,14 +7,14 @@ import { Material } from './Material';
 export class Category implements CRUD {
     categoriesMap = new Map<string, Material>();
 
-    materials: Material;
+    //materials: Material;
 
     private categoryService: CategoryService = new CategoryService(this.firestore);
 
     constructor(
         private url: string,
         private firestore: AngularFirestore) {
-            this.materials = new Material(url,this.firestore);
+            //this.materials = new Material(url,this.firestore);
         }
 
     changeUrl(url: string) {

@@ -39,11 +39,11 @@ const routes: Routes = [
       {
         path:'',
         loadChildren: () => import('./views/user/user.module').then(m=>m.UserModule),
-        ...canActivate(redirectUnauthorizedToLogin)
+        //...canActivate(redirectUnauthorizedToLogin)
       }
     ],
     //canLoad: [AuthGuard],
-    ...canActivate(xyz)
+//...canActivate(xyz)
     //...canActivate(xyz)
   },
   {

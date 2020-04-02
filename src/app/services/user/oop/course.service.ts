@@ -16,6 +16,7 @@ export class CourseService {
   static posts: Post;
   static categories: Category;
   static assignments: Observable<Assignment[]>;
+  static isCategoryLoad:Observable<boolean>;
 
   private postFactoryService: PostFactoryService = new PostFactoryService(this.firestore)
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
@@ -40,6 +41,9 @@ export class CourseService {
   setCategories(courseId: string) {
     this.categoryFactoryService.changeUrl('/courses/' + courseId);
     CourseService.categories = this.categoryFactoryService.category;
+    CourseService.isCategoryLoad=this.categoryFactoryService.isLoad();
+    console.log(this.categoryFactoryService.category.categoriesMap)
+
   }
   removesubscribe;
   setAssignment(courseId: string) {

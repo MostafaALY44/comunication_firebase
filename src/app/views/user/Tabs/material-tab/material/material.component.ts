@@ -15,6 +15,8 @@ export class MaterialComponent implements OnInit, OnDestroy {
 
   constructor(route: ActivatedRoute) {
     this.categories = CourseService.categories.categoriesMap;
+    // setTimeout(function (){
+    // console.log("$$$$$$$$$$$$$$$$$$$$"+CourseService.categories.categoriesMap.size)},5000)
   }
   
   ngOnDestroy(): void {
