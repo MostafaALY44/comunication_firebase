@@ -25,7 +25,7 @@ export class PostService implements CRUDForfirebase{
         return this.firestore.collection<PostModel>(url).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;
-              const id = a.payload.doc.id;
+              const id = a.payload.doc.id; 
               return { id, ...data };
             })) 
           );

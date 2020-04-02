@@ -59,7 +59,7 @@ export class Post implements CRUD{
 	
 	removeDisLike(personId:string, postId:string){
 		this.postService.removeReact(this.url, postId, personId,false)
-	}	
+	}	 
 
 	currentPostId:string="";
 	getComments(postId:string):Observable<CommentModel[]>{

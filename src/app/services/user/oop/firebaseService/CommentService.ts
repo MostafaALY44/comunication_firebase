@@ -1,7 +1,7 @@
 import { CRUDForfirebase } from './CRUDForFirebase';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CommentModel } from '../models/CommentModel';
+import { CommentModel, ReactedPersons } from '../models/CommentModel';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
@@ -14,10 +14,12 @@ export class CommentService implements CRUDForfirebase{
     }
 
     read(url: string, id: string) {
-        return this.firestore.doc(url+'/'+id).valueChanges()
+        console.log(url+'/'+id)
+        return this.firestore.doc<CommentModel>(url+'/'+id).valueChanges()
+        
     }
     update(url: string, id: string, comment) {
-        return this.firestore.doc(url+'/'+id).update(comment);
+        return this.firestore.doc<CommentModel>(url+'/'+id).update(comment);
     }
     delete(url: string, id: string) {
         return this.firestore.doc(url+'/'+id).delete();
@@ -33,5 +35,51 @@ export class CommentService implements CRUDForfirebase{
           );
 
     }
+
+    addReact(url: string, id: string, personId:string, react:boolean){
+         // console.log("addReact: ")
+   
+           let removeSubscribe=this.read(url, id).subscribe( (comment)=>{
+           // console.log("addReact: " +comment)
+               let checkAction= this.checkAction(comment.reactedPerson, personId, react) 
+              // console.log("addReact: "+checkAction)
+               if(checkAction == -1){
+                   this.doUnsubscribe(removeSubscribe)
+                   return;
+                }
+   
+               if(checkAction == 1){
+                   if(react)
+                       comment.dislike--;
+                   else
+                       comment.like--;
+                    comment.reactedPerson.find(element=> element.personId=== personId).action=react;
+               }else{
+                comment.reactedPerson.push({"personId":personId, "action":react});
+               }
+               if(react)
+                    comment.like++;
+               else
+                    comment.dislike++;
+               this.update(url,id,comment);   
+               this.doUnsubscribe(removeSubscribe)
+           })
+       }
+       doUnsubscribe(removeSubscribe){
+           setTimeout(function(){removeSubscribe.unsubscribe()},5)
+       }
+
+       
+       checkAction(actions:ReactedPersons[], personId, react:boolean):number{
+           let isFind = actions.find(element=> element.personId=== personId)
+           if(isFind){
+               if(isFind.action==react)
+                   return -1 //not allow the same react
+               else{
+                   return 1 //allow with different react
+               }
+           }else
+               return 0 //allow new react
+       }
 
 }

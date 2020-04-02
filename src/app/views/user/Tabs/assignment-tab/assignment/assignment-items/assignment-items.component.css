@@ -9,11 +9,19 @@
   }
 
   .edit:hover{
-    color: #ffcc00;
+    color: #0c0c0a;
   }
 
   .color{
     color: beige;
   }
 
+  /* Structure */
+table {
+  width: 100%;
+}
 
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}

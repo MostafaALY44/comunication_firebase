@@ -15,7 +15,7 @@ export class EditAssignmentComponent implements OnInit {
     title : new FormControl(this.data.assignment.title,Validators.required),
     start : new FormControl(this.data.assignment.startDate,Validators.required),
     end : new FormControl(this.data.assignment.endDate,Validators.required),
-    accept : new FormControl(this.data.assignment.acceptAfterEnd,Validators.required),
+    accept : new FormControl(this.data.assignment.acceptAfterEnd),
     note : new FormControl(this.data.assignment.note),
     Qurl : new FormControl(this.data.assignment.link,Validators.required)
     

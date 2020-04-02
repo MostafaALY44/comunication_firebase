@@ -33,7 +33,8 @@ export class AssignmentSolutionComponent implements OnInit {
     if(!this.isEmpty(this.newSolution.value.Aurl)){
 
       let data={"note":this.newSolution.value.note,
-                 "url":this.newSolution.value.Aurl
+                 "url":this.newSolution.value.Aurl,
+                 "personId":"Mostafa Aly"
                  };
       this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data);
       this.newSolution.reset();

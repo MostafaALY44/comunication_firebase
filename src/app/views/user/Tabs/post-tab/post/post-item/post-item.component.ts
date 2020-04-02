@@ -76,7 +76,7 @@ export class PostItemComponent implements OnInit {
 
     if(!this.isEmpty(this.newComment.value.text)){
 
-      let data:CommentModel={"id":"" ,"like":0,"dislike":0,"body" :this.newComment.value.text,"commentOwner":"Mostafa Aly"};
+      let data:CommentModel={"id":"" ,"like":0,"reactedPerson" : [], "dislike":0,"body" :this.newComment.value.text,"commentOwner":"Mostafa Aly"};
       
       //this.commentservice.addPostComment(this.courseId,postId,data);
        CourseService.posts.comment.setCurrentIdPost(postId);
@@ -117,7 +117,19 @@ deleteComments(idPost){
 } 
 
 report(){
-  this.dialog.open(ReportPostComponent,{data:this.CurrPost})
+  this.dialog.open(ReportPostComponent,{data:this.CurrPost,height: '200px',
+  width: '300px'})
+  
+}
+
+
+addCommentLike(personId: string, commentId: string ,postId:string){
+ CourseService.posts.comment.setCurrentIdPost(postId);
+  CourseService.posts.comment.addLike('Mostafa Aly', commentId);
+}
+addCommentDisLike(personId: string, commentId: string,postId:string){
+  CourseService.posts.comment.setCurrentIdPost(postId);
+  CourseService.posts.comment.addDislike('Mostafa Aly', commentId);
 }
 
 }
