@@ -1,60 +1,60 @@
-<!-- <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Date</th>
-      <th scope="col">Link</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let material of materials">
-      <td>{{ material.id }}</td>
-      <td>{{ material.date }}</td>
-      <td><a [href]="material.link">Download</a></td>
-      <td>
-        <div>
-          <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" > <!--(click)="setMaterial(material)"--> 
-            <!-- <mat-icon>more_vert</mat-icon>
-          </button>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <th scope="col">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-material">Add-Material</button>
-      </th>
-    </tr>
-  </tbody>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <!-- Link Column -->
+  <ng-container matColumnDef="link">
+    <th mat-header-cell *matHeaderCellDef> Download </th>
+    <td mat-cell *matCellDef="let element"> 
+      <a [href]="element.link"><mat-icon>cloud_download</mat-icon></a>
+    </td>
+  </ng-container>
+
+
+  <!-- Operation Column -->
+  <ng-container matColumnDef="operation">
+    <th mat-header-cell *matHeaderCellDef>
+      Edit
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;">
+          <mat-icon>dehaze</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
 </table>
 
+<button mat-raised-button (click)="openDialog()">
+  Add Item <mat-icon>library_add</mat-icon>
+</button>
+
+<!-- Edite menu view difintion -->
 <mat-menu #menu="matMenu">
-  <button mat-menu-item type="button" class="btn btn-warning edit color" > <!-- (click)="editMaterial()" --> 
-    <!-- <i class="material-icons md-light">edit</i> edit
+  <button mat-menu-item type="button" class="btn btn-warning edit color">
+    <i class="material-icons md-light">edit</i> Edit
   </button>
-
-  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" > <!-- (click)="deleteMaterial()" --> 
-    <!-- <i class="material-icons" style="align-content: center;">
+  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete">
+    <i class="material-icons" style="align-content: center;">
       delete_forever
-    </i> delete </button>
-</mat-menu> --> 
-
-<!-- <ul>
-  <li *ngFor="let recipient of categories | keyvalue">
-    
-    <div *ngIf="(recipient.key == currentCategoryKey)">
-      {{recipient.key}}
-      <button (click)="recipient.value.subscribeMaterialsFireStore()">
-          subscribe on tab {{recipient.key}}
-      </button>
-      <div *ngFor="let material of recipient.value.material ">
-          {{material|json}}
-      </div>
-      </div>
-  </li>
-</ul> -->
-<div *ngIf="isDataLoad">
-<div *ngFor="let material of materials.material ">
-  {{material|json}}
-</div>
-</div> 
+    </i> Delete 
+  </button>
+</mat-menu>

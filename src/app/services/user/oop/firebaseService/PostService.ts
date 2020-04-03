@@ -25,7 +25,7 @@ export class PostService implements CRUDForfirebase{
         return this.firestore.collection<PostModel>(url).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;
-              const id = a.payload.doc.id;
+              const id = a.payload.doc.id; 
               return { id, ...data };
             })) 
           );
@@ -64,8 +64,11 @@ export class PostService implements CRUDForfirebase{
     }
 
     removeReact(url: string, id: string, personId:string, react:boolean){
-        this.read(url, id).toPromise().then( (post)=>{
+        
+        this.read(url, id).subscribe(  (post)=>{
+           
             let isPost = post.reactedPerson.find(element=> element.personId=== personId)
+           
             if(isPost){
                 let index = post.reactedPerson.findIndex(element=> element.personId==personId);
                 if(index >-1){

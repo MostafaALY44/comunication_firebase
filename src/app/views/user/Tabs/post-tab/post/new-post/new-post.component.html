@@ -8,17 +8,22 @@
     </h5>
     <div class="form-group container row">        
     <div class="card-body">  
-        <div class="input-group">
-            <textarea class="form-control" aria-label="With textarea"
-                [class.is-invalid]="newPost.get('body').invalid && 
-                newPost.get('body').touched"
-                placeholder="Type your post content here ..." formControlName="body" ></textarea>
-        </div>
+
+        <mat-form-field class="example-full-width">
+            
+            <textarea matInput placeholder="Type your post content here ..." aria-label="With textarea" 
+            [class.is-invalid]="newPost.get('body').invalid && 
+            newPost.get('body').touched" formControlName="body"></textarea>
+          </mat-form-field>
+
         <small 
         [class.d-none]="newPost.get('body').valid ||  
                 newPost.get('body').untouched"
          class="text-danger">invalid input</small><br>
-        <button type="submit" class="btn btn-success" [disabled]="!newPost.valid" style="margin-top: 20px;">Share</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!newPost.valid" style="margin-top: 20px;">Share
+            
+        </button>
+       
     </div>
 </div>
 </div>

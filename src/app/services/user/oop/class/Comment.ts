@@ -26,10 +26,11 @@ export class Comment implements CRUD{
 	}
 	 
 	create (comment:CommentModel){    
-		//console.log("from comment "+this.url);
+		
 	    this.commentService.create(this.url+'/'+this.postId+'/comments', this.commentForCreateAndUpdate(comment))}
 	
 	read (commentId:string){
+	//	console.log("from comment "+this.url+'/'+this.postId+'/comments');
 		return this.commentService.read(this.url+'/'+this.postId+'/comments', commentId);
 	}
 	
@@ -42,7 +43,18 @@ export class Comment implements CRUD{
 		this.commentService.delete(this.url+'/'+this.postId+'/comments', id);		
 	}
 
-	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+	addLike(personId:string, commentId:string){
+		//console.log("------------");
+		this.commentService.addReact(this.url+'/'+this.postId+'/comments', commentId, personId,true)
+		//console.log("+++++++++++++++++");
+	}
 
+
+	addDislike(personId:string, commentId:string){
+		this.commentService.addReact(this.url+'/'+this.postId+'/comments', commentId, personId,false)
+	}	
+
+	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reactedPerson" : comment.reactedPerson, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+ 
 	
 }

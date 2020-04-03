@@ -8,6 +8,7 @@ import { AssignmentSolutionComponent } from '../assignment-solution/assignment-s
 import { AddAssignmentComponent } from '../add-assignment/add-assignment.component';
 import { EditAssignmentComponent } from '../edit-assignment/edit-assignment.component';
 import { CourseService } from 'src/app/services/user/oop/course.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'assignment-items',
@@ -17,8 +18,9 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 export class AssignmentItemsComponent implements OnInit {
 
   assignments:Observable<Assignment[]>;
-  courseId;
   
+  courseId;
+  dataSource:any;
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
@@ -26,18 +28,23 @@ export class AssignmentItemsComponent implements OnInit {
     //this.assignments.subscribe(x=>console.log(x));
     
     this.assignments=CourseService.assignments;
+    this.dataSource=this.assignments;
+
    }
  
   ngOnInit() {
   } 
-
+ 
   getDate(date){
     if(date != null)
       return date.toDate();
   }
 
   showSolutions(id:string){
-    this.dialog.open(ReviewSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id}})
+    this.dialog.open(ReviewSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id},
+    height: '300px',
+    width: '500px',
+  })
   }
   addSolution(id:string){
     this.dialog.open(AssignmentSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id},
@@ -47,7 +54,9 @@ export class AssignmentItemsComponent implements OnInit {
   }
   currentAssign; 
   setAssignment(assignment){
+    console.log(assignment)
     this.currentAssign=assignment;
+    
   }
   AddAssignment(){
     this.dialog.open(AddAssignmentComponent, {data:{"courseId":this.courseId}})
@@ -59,4 +68,8 @@ export class AssignmentItemsComponent implements OnInit {
   editAssignment(){
     this.dialog.open(EditAssignmentComponent,{data:{"assignment":this.currentAssign,"courseId":this.courseId}})
   }
+
+  displayedColumns: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result', 'actions'];
+  
 }
+

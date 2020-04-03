@@ -30,7 +30,7 @@
 
             </div>
             <div class="col-md-8">
-               
+                
                     <i type="button" (click)="addDisLike('Mostafa Aly', post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
 
                  {{ post.dislike }}
@@ -82,6 +82,24 @@
                                     {{ comment.body }}
                                 </p>
                             </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                       
+                                            <i type="button" (click)="addCommentLike('Mostafa Aly', comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
+                                       
+                                        {{ comment.like }}
+                        
+                                    </div>
+                                    <div class="col-md-8">
+                                       
+                                            <i type="button" (click)="addCommentDisLike('Mostafa Aly', comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i>
+                        
+                                         {{ comment.dislike }}
+                        
+                        
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

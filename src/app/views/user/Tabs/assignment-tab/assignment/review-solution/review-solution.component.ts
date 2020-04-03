@@ -13,12 +13,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ReviewSolutionComponent implements OnInit {
 
   solutions:Observable<AssignmentSolution[]>;
-
+  dataSource:any;
   constructor(private service:AssignmentSolutionService, route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
     //console.log(this.data);
     this.solutions = service.getAssingmentSolution(this.data.courseId, this.data.assignmentId);
+    this.dataSource=this.solutions;
    //this.solutions.subscribe(x=>console.log(x))
    }
+
+   displayedColumns: string[] = ['name', 'recieve','link', 'note'];
  
   ngOnInit() {
   }
@@ -27,6 +30,7 @@ export class ReviewSolutionComponent implements OnInit {
     if(date != null)
       return date.toDate();
   }
+  
 
 
 }

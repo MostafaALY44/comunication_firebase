@@ -1,11 +1,17 @@
-<form [formGroup] = "reportPost" (ngSubmit)="onSubmit()">
-    <div class="form-group ">  
-        <mat-form-field >
-                <input matInput
-                formControlName="report" placeholder="Type Your Report" type="text">
-              </mat-form-field>
-              <br>
-            <button type="submit" class="btn btn-success" [disabled]="!reportPost.valid" style="margin-top: 20px;" mat-dialog-close>Send</button>
-        </div>
+
+    <form [formGroup] = "reportPost" (ngSubmit)="onSubmit()">
   
-    </form> 
+      <div mat-dialog-title align="center"><b>Report Form</b></div>
+    
+    <mat-dialog-content>
+      <input type="text" [class.is-invalid]="reportPost.get('report').invalid && reportPost.get('report').touched"
+                  formControlName="report"
+                  class="form-control" id="report" placeholder="Type Your Report">
+    </mat-dialog-content>
+    <br>
+    <mat-dialog-actions align="end">
+      <button  mat-button mat-dialog-close>Close</button>
+       <button type="submit" [disabled]="!reportPost.valid"  mat-button mat-dialog-close>Send</button>
+      
+    </mat-dialog-actions>
+    </form>

@@ -1,56 +1,86 @@
-<table class="table">
-    <thead class="thead-dark">
-      <tr>
+<button mat-raised-button (click)="AddAssignment()"> 
+  Add Item <mat-icon style='color:rgb(69, 69, 170)'>library_add</mat-icon>
+</button> <br>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+  <!-- Date Column -->
+  <ng-container matColumnDef="start_date">
+    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="end_date">
+    <th mat-header-cell *matHeaderCellDef> End Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="note">
+    <th mat-header-cell *matHeaderCellDef> Note </th>
+    <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+  </ng-container>
+
+  <!-- Link Column -->
+  <ng-container matColumnDef="link">
+    <th mat-header-cell *matHeaderCellDef> Download </th>
+    <td mat-cell *matCellDef="let element"> 
+      <a [href]="element.link"><mat-icon>cloud_download</mat-icon></a>
+    </td>
+  </ng-container>
+  <!-- Operation Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>
+      Actions
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;"   (click)="setAssignment(element)">
+          <mat-icon>dehaze</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="result">
+    <th mat-header-cell *matHeaderCellDef>
+      Result
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <div>
         
-        <th scope="col">Name</th>
-        <th scope="col">Start_Date</th>
-        <th scope="col">End_Date</th>
-        <th scope="col">Link</th>
-        <th scope="col">Note</th>
-        <th scope="col">
-          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment">
-          Add-assign
-        </button> -->
-        <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="AddAssignment()"> 
-          <i class="material-icons md-light">add</i> AddAssign 
-        </button> 
+          <mat-icon type="button" (click)="addSolution(element.id)" style='color:rgb(69, 69, 170)'>assignment_return</mat-icon>
+        &nbsp;
+        
+          <mat-icon type="button" (click)="showSolutions(element.id)" style='color:rgb(69, 69, 170)'>assignment</mat-icon>
+        
+      </div>
+    </td>
+  </ng-container>
 
-      </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let assignment of assignments | async"> 
-        <td>{{assignment.title}}</td>
-        <td>{{assignment.startDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
-        <td>{{assignment.endDate |date:'yyyy/MM/dd h:mm:ss a' }}</td>
-        <td><a href={{assignment.link}}>Download</a></td> 
-        <td>{{assignment.note}}</td>
-        <td><button type="button" class="btn btn-success my-2" (click)="addSolution(assignment.id)">
-            Solve
-          </button>&nbsp;
-          <button type="button" class="btn btn-primary my-2" (click)="showSolutions(assignment.id)">
-            Review
-          </button>
-          </td>
-          <td>
-            <div>
-              <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setAssignment(assignment)">
-              <mat-icon>more_vert</mat-icon>
-              </button>
-            </div>  
-          </td>
-      </tr>  
-    </tbody>
-  </table>
- 
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+    
+    <!-- <button mat-raised-button (click)="AddAssignment()"> 
+      Add Item <mat-icon style='color:rgb(69, 69, 170)'>library_add</mat-icon>
+    </button>  -->
 
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editAssignment()"> 
-      <i class="material-icons md-light">edit</i> edit 
-    </button> 
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editAssignment()"> 
+        <i class="material-icons md-light">edit</i> edit 
+      </button> 
+    
+        <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteAssignment()">
+          <i class="material-icons" style="align-content: center;">
+          delete_forever
+          </i> delete  </button>         
+    </mat-menu> 
 
-      <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteAssignment()">
-        <i class="material-icons" style="align-content: center;">
-        delete_forever
-        </i> delete  </button>         
-</mat-menu>
+
+    

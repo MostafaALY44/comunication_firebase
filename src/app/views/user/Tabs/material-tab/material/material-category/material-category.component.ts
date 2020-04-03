@@ -1,6 +1,5 @@
-import { Category } from 'src/app/services/user/oop/class/category';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Material } from 'src/app/services/user/oop/class/Material';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { CategoryModel } from 'src/app/services/user/oop/models/CategoryModel';
 
@@ -10,16 +9,13 @@ import { CategoryModel } from 'src/app/services/user/oop/models/CategoryModel';
   styleUrls: ['./material-category.component.css']
 })
 export class MaterialCategoryComponent implements OnInit {
- 
-  @Input() categoryName: string;
-  //categories: Category;
 
-  constructor(){
-    // route.paramMap.subscribe((params : ParamMap) =>  this.categories = CourseService.categories.categoriesMap.get(params.get('id')));
-    //this.categories=CourseService.categories;
+  categories: Map<string, Material>;
+  constructor() {
+    this.categories = CourseService.categories.categoriesMap;
   }
 
   ngOnInit() {
   }
- 
+
 }
