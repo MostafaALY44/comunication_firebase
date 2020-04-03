@@ -3,6 +3,7 @@ import { SearchInputService } from 'src/app/services/announcement/search-input.s
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'app-nav',
@@ -12,15 +13,27 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
 export class NavComponent implements OnInit {
   constructor(private searchService:SearchInputService, private router:Router,
      private authenticationService:AuthenticationService) {
-        if(this.isEqualAnnouncementsOrWelcom(this.router.url) )
+        if(this.isEqualAnnouncementsOrWelcom(this.router.url) ) 
           this.displaySearchInput=true;
-       
+        
      };
   displaySearchInput:boolean=false;
   urlBeforeNavigate:string='';
   searchWord:string='';
-  ngOnInit() {
+  isEmailVerified(){
+    return  UserService.user.emailVerified;
   }
+
+  displayEmail():string{
+    return UserService.user.email;
+  }
+
+  goVerificate():boolean{
+    //console.log(AuthenticationService.goVerificate)
+    return AuthenticationService.goVerificate
+  }
+
+  ngOnInit() {}
   isEqualAnnouncementsOrWelcom(url:string) :boolean{
     if(this.router.url.length ==1 && this.router.url[0]=='/')  // for welcom url
       return true;

@@ -7,18 +7,21 @@ import { environment } from 'src/environments/environment';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { User } from './user.model';
+import { UserService } from '../user/oop/user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService  {
-  userData: Observable<User> | null;
+  //static user: Observable<User> ;
 
-  user$: Observable<User>;
+  //user$: Observable<User>;
   constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore) {
     //this.userData = angularFireAuth.authState;
     // Get the auth state, then fetch the Firestore user document or return null
-    this.userData = this.angularFireAuth.authState.pipe(
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    UserService.userObservable = this.angularFireAuth.authState.pipe(
       switchMap(user => {
           // Logged in
         if (user) {
@@ -29,15 +32,16 @@ export class AuthenticationService  {
         }
       })
     )
+    UserService.setUser();
+
 
   }
 
-   isVerificateEmail:boolean=false;
+   static goVerificate:boolean=false;
   /* Sign up */
   async SignUp(email: string, password: string) {
-    const credential = await this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-    this.isVerificateEmail=credential.user.emailVerified;
-
+    AuthenticationService.goVerificate=true;
+    const credential = await this.angularFireAuth.createUserWithEmailAndPassword(email, password); 
     return this.saveNewUserData(credential.user).then(()=>{
       firebase.auth().currentUser.sendEmailVerification();
       this.SignOut();
@@ -59,53 +63,54 @@ export class AuthenticationService  {
       background:"",
       roles: {
         other: true
-      }
+      },
+      universities:[{name:"Ain Shams University", colleges:[{name:"faculty of science",
+      courseCodes:[]}]}]
     } 
     return userRef.set(data, { merge: true })
   }
-  removeSubscribe;
+  /*removeSubscribe;
   isEmailVerified():boolean{
     let verified:boolean=false;
     // if(this.userData){
     //   this.removeSubscribe=this.userData.subscribe(user=> { if(!!user)verified=user.emailVerified;this.doUnSubscribe()});
     // }
-    return true
-  }
+    console.log(this.isVerificateEmail)
+    return this.isVerificateEmail;
+  }*/
 
-  doUnSubscribe(){
+  /*doUnSubscribe(){
     setTimeout(() => {
       this.removeSubscribe.unsubscribe;
     }, 100);
-  }
+  }*/
 
   /* Sign in */
   async SignIn(email: string, password: string) {
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
-    //console.log("+++++++++++++++++++ : "+credential.user.emailVerified)
-    this.isVerificateEmail=credential.user.emailVerified;
-    /*if(!AuthenticationService.isVerificateEmail){
-        this.SignOut();
+    if(!credential.user.emailVerified){
+      this.SignOut();
+      AuthenticationService.goVerificate=true;
         return ;
-      }*/
+    }else AuthenticationService.goVerificate=false;
     return this.updateUserData(credential.user);
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument = this.firestore.doc(`users/${user.uid}`);
-
     const data = { 
       uid: user.uid, 
       email: user.email,
       emailVerified:user.emailVerified,
-      type:"doctor",
-      level:"2",
-      contact:"",
-      belong_to:"",
-      background:"",
-      roles: {
-        other: true
-      }
+     // type:"doctor",
+     // level:"2",
+     // contact:"",
+     // belong_to:"",
+     // background:"",
+      // roles: {
+      //   other: true
+      // }
     } 
     return userRef.set(data, { merge: true })
   }

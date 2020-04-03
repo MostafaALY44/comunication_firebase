@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
   email: string;
   password: string;
   signUp() {
-    this.authenticationService.SignUp(this.email, this.password);
+    this.authenticationService.SignUp(this.email, this.password)
   }
 
   signIn() {

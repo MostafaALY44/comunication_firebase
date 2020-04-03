@@ -3,6 +3,7 @@ import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree,
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/auth/authentication.service';
 import { take, map, tap } from 'rxjs/operators';
+import { UserService } from '../services/user/oop/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,14 @@ export class InverseAuthGuard   {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.AuthService.userData.pipe(
+      return UserService.userObservable.pipe(
         take(1),
-        map(user => !(!!user)),      //map to boolean
+        map(user => !(!!user && user.emailVerified)),      //map to boolean
         tap(loggedIn => {
           if(!loggedIn){
             this.router.navigate(['./user']);
           }
-        })
-      )
+        }))
   }
   
 }

@@ -9,15 +9,24 @@ import { AnnouncementNaveComponent } from './shared/components/layouts/announcem
 import { InverseAuthGuard } from './guards/inverse-auth.guard';
 
 import {AngularFireAuthGuard, canActivate, redirectLoggedInTo,
-   redirectUnauthorizedTo, emailVerified, AuthPipe, AuthPipeGenerator} from '@angular/fire/auth-guard'
+   redirectUnauthorizedTo, emailVerified, AuthPipe, AuthPipeGenerator, customClaims} from '@angular/fire/auth-guard'
 import { map } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 
-const xyz: AuthPipeGenerator = (next) => pipe(next.routeConfig.redirectTo[''],emailVerified)
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
+//const xyz = (next, state) => map(user => user.emailVerified?['/user'] : ['auth/login'])
+const x:AuthPipe = map(user=>{if(!user.emailVerified)  return ['auth/login']}) 
+const redirect =()=> {if(emailVerified) return x; else return ['auth/user']}
+//const x= ()=>emailVerified =(user=>)
+//const redirectUnauthorizedToLogin :AuthPipeGenerator=()=>redirectUnauthorizedTo()
+const editorOnly = () => pipe(customClaims, map(claims => claims.emailVerified));
+//const x =(y)=>emailVerified
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(  ['/auth/login']);
+const redirectAuthorizedToLogin = () => redirectLoggedInTo(  ['/user']);
+//const redirectToProfileEditOrLogin = () => map(user => user.emailVerified ? [] : ['login']);
 
 
-const routes: Routes = [
+
+const routes: Routes = [ 
   {
     path:'', component: AnnouncementNaveComponent,
     children:[
@@ -39,12 +48,13 @@ const routes: Routes = [
       {
         path:'',
         loadChildren: () => import('./views/user/user.module').then(m=>m.UserModule),
-        //...canActivate(redirectUnauthorizedToLogin)
+       // ...canActivate(()=>emailVerified)
       }
     ],
-    //canLoad: [AuthGuard],
-//...canActivate(xyz)
-    //...canActivate(xyz)
+    //canActivate:[AngularFireAuthGuard]
+    canActivateChild: [AuthGuard]
+    //...canActivate([redirectUnauthorizedToLogin])
+    //...canActivate(()=>x)
   },
   {
     path:'admin', component: SuperAdminComponent,

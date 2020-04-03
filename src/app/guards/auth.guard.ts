@@ -3,6 +3,7 @@ import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/auth/authentication.service';
 import { take, map, tap } from 'rxjs/operators';
+import { UserService } from '../services/user/oop/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,44 +16,22 @@ class Permissions {
 }*/
 
 //@Injectable()
-export class AuthGuard    {
+export class AuthGuard implements CanActivateChild   {
 
-  constructor(private AuthService : AuthenticationService, private router:Router) {}
+  constructor(private authService:AuthenticationService, private router:Router) {}
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return this.AuthService.userData.pipe(
+    return UserService.userObservable.pipe(
       take(1),
-      map(user => !!user),      //map to boolean
-      tap(loggedIn => {
-        if(!loggedIn){
+      map(user => (!!user && user.emailVerified)),      //map to boolean
+      tap(loggedIn => {//console.log("PPPPPPPPPPPPPPPPPPPPPPPPP")
+        if(AuthenticationService.goVerificate)
+          this.router.navigate(['']);
+
+        else if(!loggedIn){
           this.router.navigate(['auth/login']);
         }
       }))
       //return this.AuthService.isEmailVerified()
   }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-
-    return this.AuthService.userData.pipe(
-      take(1),
-      map(user => !!user),      //map to boolean
-      tap(loggedIn => {
-        if(!loggedIn){
-          this.router.navigate(['auth/login']);
-        }
-      })
-    )
-  }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-      return this.AuthService.userData.pipe(
-        take(1),
-        map(user => !!user),      //map to boolean
-        tap(loggedIn => {
-          if(!loggedIn){
-            this.router.navigate(['auth/login']);
-          }
-        })
-      )
-     // return this.AuthService.isEmailVerified()
-    }
+  
 }
