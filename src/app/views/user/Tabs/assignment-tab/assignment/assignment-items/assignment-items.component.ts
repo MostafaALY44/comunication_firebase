@@ -70,6 +70,6 @@ export class AssignmentItemsComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result', 'actions'];
-  
+  //new update 
 }
 
