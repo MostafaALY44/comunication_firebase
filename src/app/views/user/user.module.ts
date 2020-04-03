@@ -1,3 +1,4 @@
+import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
 import { NewPostComponent } from './Tabs/post-tab/post/new-post/new-post.component';
@@ -20,7 +21,7 @@ import { ReviewSolutionComponent } from './Tabs/assignment-tab/assignment/review
 import { AddAssignmentComponent } from './Tabs/assignment-tab/assignment/add-assignment/add-assignment.component';
 import { AddMaterialComponent } from './Tabs/material-tab/material/add-material/add-material.component';
 import { CoursesService } from 'src/app/services/user/courses.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.component';
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
@@ -38,10 +39,10 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     MaterialCategoryComponent,
     MaterialItemsComponent,
     AssignmentItemsComponent,
+    AddMaterialComponent,
     AssignmentSolutionComponent,
     ReviewSolutionComponent,
     AddAssignmentComponent,
-    AddMaterialComponent,
     PostItemComponent,
     NewPostComponent,
     EditPostComponent,
@@ -60,14 +61,15 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditMaterialComponent,
     EditCategoryComponent,
     AddAssignmentComponent,
-    ReportPostComponent
-    
+    ReportPostComponent,
+    AddMaterialComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers:[CoursesService]
   

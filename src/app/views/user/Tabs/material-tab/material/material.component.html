@@ -1,37 +1,4 @@
-<!--div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <material-category></material-category>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <material-items></material-items>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            <add-material></add-material>
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-</div-->
-<!--div *ngFor="let category of categories |async">
-    {{category.name}} :
-        <div *ngFor="let material of category.materials |async">
-            {{material.material|json}}
-        </div>
-     
-</div-->
-
-<ul>
-    <li *ngFor="let recipient of categories | keyvalue">
-        {{recipient.key}} --><button (click)="recipient.value.subscribeMaterialsFireStore()">subscribe on tab {{recipient.key}} </button>
-            <div *ngFor="let material of recipient.value.material ">
-                    {{material|json}}
-            </div>
-    </li>
-</ul>
+<div class="container">
+    <material-category></material-category>
+    <router-outlet></router-outlet>
+</div>

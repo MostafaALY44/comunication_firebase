@@ -1,61 +1,54 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item" *ngFor="let category of categories | async">
-    <a routerLink="{{category.name}}" class="nav-link" routerLinkActive="active" (click)="setCategory(category)">
-      {{ category.name }}
-        <mat-icon (click)="editCategory()">edit</mat-icon>
-        <mat-icon (click)="deleteCategory()">close</mat-icon>
-    </a>
-  </li>
-  <li class="nav-item nav-link">
-    <a href="" class="nav-link badge badge-success" data-toggle="modal" data-target="#add-tab">
-        <mat-icon>add_circle_outline</mat-icon>
-    </a>
-  </li>
-</ul>
+<!------------------------ [[[[[[[[[[[ Categories ]]]]]]]]] ------------------------------------->
+<div class="row">
+  <div class="col-md-12">
 
-<!-- Modal -->
-<form [formGroup]="newCategory" (ngSubmit)="onSubmit()">
-  <div class="modal fade" id="add-tab" tabindex="-1" role="dialog" aria-labelledby="addnewtab" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnewtab">Add New Category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" id="name" placeholder="Enter new Category's name"
-            formControlName="name">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Add</button>
-        </div>
+    <ul class="nav nav-tabs">
+      <div *ngFor="let category of categories | keyvalue">
+        <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active">
+          {{ category.key }}
+          <mat-icon>edit</mat-icon>
+          <mat-icon>close</mat-icon>
+        </a>
       </div>
-    </div>
+      <li class="nav-item nav-link">
+        <a href="" class="nav-link badge badge-success" data-toggle="modal" data-target="#add-tab">
+          <mat-icon>add_circle_outline</mat-icon>
+        </a>
+      </li>
+    </ul>
+
+    <!-- <form [formGroup]="newCategory" (ngSubmit)="onSubmit()">
+          <div class="modal fade" id="add-tab" tabindex="-1" role="dialog" aria-labelledby="addnewtab"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="addnewtab">Add New Category</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <input type="text" class="form-control" id="name"
+                              placeholder="Enter new Category's name" formControlName="name">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-success">Add</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form> -->
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="editCategory()">
+        <mat-icon>edit</mat-icon>Edit
+      </button>
+      <button mat-menu-item (click)="deleteCategory()">
+        <mat-icon>delete_forever</mat-icon> Delete
+      </button>
+    </mat-menu>
   </div>
-</form>
-<!-- 
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="editCategory()">
-    <mat-icon>edit</mat-icon>Edit
-  </button>
-  <button mat-menu-item (click)="deleteCategory()">
-    <mat-icon>delete_forever</mat-icon> Delete
-  </button>
-</mat-menu> -->
 
-<!-- 
-<mat-menu #menu="matMenu">
-  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editCategory()">
-    <i class="material-icons md-light">edit
-
-    </i> Edit
-  </button>
-  <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteCategory()">
-    <i class="material-icons" style="align-content: center;">
-      delete_forever
-    </i> Delete
-  </button>
-</mat-menu> -->
+</div>

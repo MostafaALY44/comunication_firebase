@@ -1,4 +1,4 @@
-<form [formGroup]="newMaterial" (ngSubmit)="onSubmit()">
+<!-- <form [formGroup]="newMaterial" (ngSubmit)="onSubmit()">
   <div class="modal fade" id="add-material" tabindex="-1" role="dialog" aria-labelledby="addmaterial"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -10,8 +10,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <input type="text" [class.is-invalid]="newMaterial.get('name').invalid && newMaterial.get('name').touched"
-            formControlName="name" class="form-control" id="name" placeholder="Name">
+          <input type="text" [class.is-invalid]="newMaterial.get('id').invalid && newMaterial.get('id').touched"
+            formControlName="id" class="form-control" id="id" placeholder="id">
           <input class="form-control"
             [class.is-invalid]="newMaterial.get('date').invalid && newMaterial.get('date').touched"
             formControlName="date" type="datetime-local" placeholder="Date" id="date">
@@ -25,4 +25,46 @@
       </div>
     </div>
   </div>
-</form>
+</form> -->
+
+<h1 mat-dialog-title>Adding new material item </h1>
+<div mat-dialog-content>
+  <p>What's your new material data?</p>
+
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.id">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <input matInput [(ngModel)]="data.date">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Link</mat-label>
+    <input matInput [(ngModel)]="data.link">
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add</button>  <!-- data is a json object that contain the form data -->
+
+</div>
+
+<!-- 
+<ol>
+  <li>
+    <mat-form-field>
+      <mat-label>What's your name?</mat-label>
+      <input matInput [(ngModel)]="name">
+    </mat-form-field>
+  </li>
+  <li>
+    <button mat-raised-button (click)="openDialog()">Pick one</button>
+  </li>
+  <li *ngIf="animal">
+    You chose: <i>{{animal}}</i>
+  </li>
+</ol> -->

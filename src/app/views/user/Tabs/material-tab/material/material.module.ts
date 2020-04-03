@@ -1,3 +1,4 @@
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddMaterialComponent } from './add-material/add-material.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,10 +17,12 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     MaterialItemsComponent, 
     AddMaterialComponent, 
     EditMaterialComponent, 
-    EditCategoryComponent],
+    EditCategoryComponent, 
+    ],
   imports: [
     CommonModule,
-    MaterialRoutingModule
+    
+    //MaterialRoutingModule
   ]
 })
 export class MaterialModule { }

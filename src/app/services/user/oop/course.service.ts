@@ -4,9 +4,8 @@ import { Post } from './class/Post';
 import { Category } from 'src/app/services/user/oop/class/category';
 import { PostFactoryService } from './factories/post-factory.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CategoryFactoryService } from './class/category-factory.service';
-import { PostModel } from './models/PostModel';
 import { AssignmentService } from '../assignment.service';
+import { CategoryFactoryService } from './factories/category-factory.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,38 +13,43 @@ import { AssignmentService } from '../assignment.service';
 
 export class CourseService {
 
-  static posts:Post;
-  static categories:Category;
+  static posts: Post;
+  static categories: Category;
   static assignments: Observable<Assignment[]>;
-  private postFactoryService:PostFactoryService = new PostFactoryService(this.firestore)
-  private categoryFactoryService:CategoryFactoryService= new CategoryFactoryService(this.firestore);
-  private allAssignments: BehaviorSubject<Assignment[]>=new BehaviorSubject([]);
+  static isCategoryLoad:Observable<boolean>;
 
-  courseId; 
-  constructor(private firestore: AngularFirestore) {CourseService.assignments=this.allAssignments.asObservable(); }
+  private postFactoryService: PostFactoryService = new PostFactoryService(this.firestore)
+  private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
+  private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
 
-  setCouserId(courseId:string){
-    this.courseId=courseId;
-    this.setPosts(courseId); 
+  courseId;
+  constructor(private firestore: AngularFirestore) { 
+    CourseService.assignments = this.allAssignments.asObservable(); 
+  }
+
+  setCouserId(courseId: string) {
+    this.courseId = courseId;
+    this.setPosts(courseId);
     this.setCategories(courseId);
     this.setAssignment(courseId)
   }
 
-  setPosts(courseId:string){
-    this.postFactoryService.changeUrl('/courses/'+courseId)
-    CourseService.posts=this.postFactoryService.coursePost;
+  setPosts(courseId: string) {
+    this.postFactoryService.changeUrl('/courses/' + courseId)
+    CourseService.posts = this.postFactoryService.coursePost;
   }
-  setCategories(courseId:string){
-    this.categoryFactoryService.changeUrl('/courses/'+courseId);
-    CourseService.categories= this.categoryFactoryService.category;
+  setCategories(courseId: string) {
+    this.categoryFactoryService.changeUrl('/courses/' + courseId);
+    CourseService.categories = this.categoryFactoryService.category;
+    CourseService.isCategoryLoad=this.categoryFactoryService.isLoad();
   }
+  
   removesubscribe;
-  setAssignment(courseId:string){
+  setAssignment(courseId: string) {
     this.allAssignments.next([]);
-    if(this.removesubscribe)
-        this.removesubscribe.unsubscribe();
-    this.removesubscribe=new AssignmentService(this.firestore).getAssingment(courseId).subscribe(assignments=> this.allAssignments.next(assignments));
-    
-  }
+    if (this.removesubscribe)
+      this.removesubscribe.unsubscribe();
+    this.removesubscribe = new AssignmentService(this.firestore).getAssingment(courseId).subscribe(assignments => this.allAssignments.next(assignments));
 
+  }
 }

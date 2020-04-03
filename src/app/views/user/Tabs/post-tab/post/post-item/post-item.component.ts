@@ -20,6 +20,7 @@ import { ReportPostComponent } from '../report-post/report-post.component';
 })
 export class PostItemComponent implements OnInit {
   @Input() post:PostComment;
+  
   courseId;
   constructor( public dialog:MatDialog) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
