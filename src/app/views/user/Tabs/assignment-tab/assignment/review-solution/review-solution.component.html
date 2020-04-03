@@ -10,7 +10,7 @@
       <!-- Date Column -->
       <ng-container matColumnDef="recieve">
         <th mat-header-cell *matHeaderCellDef> recieve </th>
-        <td mat-cell *matCellDef="let element"> {{getDate(element.date)|date: 'dd/MM/yyyy'}} </td>
+        <td mat-cell *matCellDef="let element"> {{getDate(element.date)|date:'short'}} </td>
       </ng-container>
       <!-- Link Column -->
       <ng-container matColumnDef="link">

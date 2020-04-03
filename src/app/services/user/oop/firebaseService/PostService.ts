@@ -64,8 +64,11 @@ export class PostService implements CRUDForfirebase{
     }
 
     removeReact(url: string, id: string, personId:string, react:boolean){
-        this.read(url, id).toPromise().then( (post)=>{
+        
+        this.read(url, id).subscribe(  (post)=>{
+           
             let isPost = post.reactedPerson.find(element=> element.personId=== personId)
+           
             if(isPost){
                 let index = post.reactedPerson.findIndex(element=> element.personId==personId);
                 if(index >-1){

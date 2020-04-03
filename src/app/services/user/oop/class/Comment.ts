@@ -54,7 +54,7 @@ export class Comment implements CRUD{
 		this.commentService.addReact(this.url+'/'+this.postId+'/comments', commentId, personId,false)
 	}	
 
-	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reactedPerson" : [], "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reactedPerson" : comment.reactedPerson, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
  
 	
 }

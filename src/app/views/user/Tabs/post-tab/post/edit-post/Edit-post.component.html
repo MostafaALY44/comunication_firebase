@@ -1,18 +1,26 @@
-<form [formGroup] = "newPost" (ngSubmit)="onSubmit()">
-    <div class="form-group ">  
-        <mat-form-field >
-                <input matInput
-                formControlName="title" placeholder="title" type="text">
-              </mat-form-field>
-              
-                <textarea class="form-control" aria-label="With textarea"
-                    [class.is-invalid]="newPost.get('body').invalid && 
-                    newPost.get('body').touched" formControlName="body" ></textarea>
-            <small
-            [class.d-none]="newPost.get('body').valid || 
-                    newPost.get('body').untouched"
-             class="text-danger">invalid input</small><br>
-            <button type="submit" class="btn btn-success" [disabled]="!newPost.valid" style="margin-top: 20px;" mat-dialog-close>Share</button>
-        </div>
+
+    <form [formGroup] = "newPost" (ngSubmit)="onSubmit()">
   
-    </form> 
+        <div mat-dialog-title align="center"><b>Edit</b></div>
+      
+        <mat-dialog-content>
+         <mat-form-field class="example-full-width">
+            
+            <input matInput [class.is-invalid]="newPost.get('title').invalid && newPost.get('title').touched"
+            formControlName="title"
+             id="title" >
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+           
+            <textarea matInput aria-label="With textarea"
+            [class.is-invalid]="newPost.get('body').invalid && 
+            newPost.get('body').touched" formControlName="body"></textarea>
+          </mat-form-field>
+      </mat-dialog-content>
+
+      <mat-dialog-actions align="end">
+        <button  mat-button mat-dialog-close>Close</button>
+         <button type="submit"  [disabled]="!newPost.valid"  mat-button mat-dialog-close>Share</button>
+      </mat-dialog-actions>
+      </form>

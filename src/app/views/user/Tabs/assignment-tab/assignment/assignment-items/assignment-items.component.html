@@ -1,4 +1,6 @@
-
+<button mat-raised-button (click)="AddAssignment()"> 
+  Add Item <mat-icon style='color:rgb(69, 69, 170)'>library_add</mat-icon>
+</button> <br>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <!--- Note that these columns can be defined in any order.
@@ -31,11 +33,6 @@
       <a [href]="element.link"><mat-icon>cloud_download</mat-icon></a>
     </td>
   </ng-container>
-
-  
-
-
-
   <!-- Operation Column -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>
@@ -70,9 +67,9 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
     
-    <button mat-raised-button (click)="AddAssignment()"> 
+    <!-- <button mat-raised-button (click)="AddAssignment()"> 
       Add Item <mat-icon style='color:rgb(69, 69, 170)'>library_add</mat-icon>
-    </button> 
+    </button>  -->
 
     <mat-menu #menu="matMenu">
       <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editAssignment()"> 
