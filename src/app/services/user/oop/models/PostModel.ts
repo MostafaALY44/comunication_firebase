@@ -3,11 +3,6 @@ export interface ReactedPerson {
 	action:boolean;//true for like  and false for dislike
 };
 
-export interface ReportPost { 
-	personId:string;
-	report:string;
-};
-
 export interface PostModel{
 	id:string
 	title:string
@@ -16,5 +11,5 @@ export interface PostModel{
 	dislike:number;
 	postOwner:string;
 	reactedPerson:ReactedPerson[];
-	reportPost:ReportPost[]
+	
 }

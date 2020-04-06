@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AssignmentSolutionService } from 'src/app/services/user/assignment-solution.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'assignment-solution',
@@ -17,8 +18,12 @@ export class AssignmentSolutionComponent implements OnInit {
     
     
   });
-  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) { }
+  currentUser;
+  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
 
+    this.currentUser=UserService.getUser();
+   }
+    
   ngOnInit() {
   }
   isEmpty(text:string):boolean{
@@ -34,7 +39,7 @@ export class AssignmentSolutionComponent implements OnInit {
 
       let data={"note":this.newSolution.value.note,
                  "url":this.newSolution.value.Aurl,
-                 "personId":"Mostafa Aly"
+                 "personId":this.currentUser.name
                  };
       this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data);
       this.newSolution.reset();

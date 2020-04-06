@@ -9,6 +9,7 @@ import { AddAssignmentComponent } from '../add-assignment/add-assignment.compone
 import { EditAssignmentComponent } from '../edit-assignment/edit-assignment.component';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'assignment-items',
@@ -21,6 +22,7 @@ export class AssignmentItemsComponent implements OnInit {
   
   courseId;
   dataSource:any;
+  currentUser;
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
@@ -29,6 +31,7 @@ export class AssignmentItemsComponent implements OnInit {
     
     this.assignments=CourseService.assignments;
     this.dataSource=this.assignments;
+    this.currentUser= UserService.getUser();
 
    }
  
@@ -70,6 +73,10 @@ export class AssignmentItemsComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result', 'actions'];
-  //new update 
+
+  displayedColumns1: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result'];
+  
+  
+
 }
 

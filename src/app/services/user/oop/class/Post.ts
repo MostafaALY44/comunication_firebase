@@ -67,11 +67,11 @@ export class Post implements CRUD{
 		this.comment.setIdCourse(postId);
 		return this.comment.comments;
 	}
-	reportPost(personId:string, postId:string,report:string){
-		this.postService.reportPost(this.url,postId,personId,report);
+	// reportPost(personId:string, postId:string,report:string){
+	// 	this.postService.reportPost(this.url,postId,personId,report);
 
-	}
+	// }
 
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : post.reactedPerson,"reportPost":post.reportPost, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : post.reactedPerson, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
 
 }

@@ -13,10 +13,12 @@ import { AuthenticationService } from './services/auth/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { NotFoundPageComponent } from './views/not-found/not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,

@@ -17,10 +17,10 @@ export class AuthenticationService  {
   //static user: Observable<User> ;
 
   //user$: Observable<User>;
-  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore) {
+  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore, private router:Router) {
     //this.userData = angularFireAuth.authState;
     // Get the auth state, then fetch the Firestore user document or return null
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     UserService.userObservable = this.angularFireAuth.authState.pipe(
       switchMap(user => {
           // Logged in
@@ -145,7 +145,21 @@ export class AuthenticationService  {
       }
       return false
     }
-  
+
+   forgotPassword(email){
+    this.angularFireAuth.sendPasswordResetEmail(email).then(
+  () => {
+    // success, show some message
+    this.router.navigate(['']);
+    console.log("send successfully !!")
+    window.alert("please check your Email to reset your password!")
+  },
+  err => {
+    // handle errors
+    console.log("error")
+  }
+);
+  }
 
 }
 

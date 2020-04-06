@@ -92,17 +92,17 @@ export class PostService implements CRUDForfirebase{
     }
 
 
-    reportPost(url: string, id: string, personId:string,report:string){
-       // console.log("+++++++++++++++++++++++++++++");
-        let removeSubscribe=this.read(url, id).subscribe( (post)=>{
+    // reportPost(url: string, id: string, personId:string,report:string){
+    //    // console.log("+++++++++++++++++++++++++++++");
+    //     let removeSubscribe=this.read(url, id).subscribe( (post)=>{
            
-                post.reportPost.push({"personId":personId, "report":report});
-               // console.log("post.reportPost "+post.reportPost)
-                this.update(url,id,post);
-                this.doUnsubscribe(removeSubscribe)
-        })
+    //             post.reportPost.push({"personId":personId, "report":report});
+    //            // console.log("post.reportPost "+post.reportPost)
+    //             this.update(url,id,post);
+    //             this.doUnsubscribe(removeSubscribe)
+    //     })
            
             
-    }
+    // }
 
 }

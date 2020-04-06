@@ -21,6 +21,6 @@ export class InstructorGuard implements CanActivate {
             console.error('Access denied - instructor only')
           }
         }))
-  }
+  } 
   
 }

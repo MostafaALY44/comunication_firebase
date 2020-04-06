@@ -24,14 +24,14 @@
         <div class="row">
             <div class="col-md-2">
                
-                    <i type="button" (click)="addLike('Mostafa Aly', post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
+                    <i type="button" (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
                
                 {{ post.like }}
 
             </div>
             <div class="col-md-8">
                 
-                    <i type="button" (click)="addDisLike('Mostafa Aly', post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
+                    <i type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
 
                  {{ post.dislike }}
 
@@ -71,11 +71,12 @@
                                     <div class="col md-4">
                                         <p>{{getDate(comment.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
                                     </div>
-
+                                <div *ngIf="comment.commentOwner===currentUser.name">
                                     <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
                                         (click)="setComment(comment)">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
+                                </div>
                                 </div>
 
                                 <p class="card-text">
@@ -86,14 +87,14 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                        
-                                            <i type="button" (click)="addCommentLike('Mostafa Aly', comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
+                                            <i type="button" (click)="addCommentLike( comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
                                        
                                         {{ comment.like }}
                         
                                     </div>
                                     <div class="col-md-8">
                                        
-                                            <i type="button" (click)="addCommentDisLike('Mostafa Aly', comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i>
+                                            <i type="button" (click)="addCommentDisLike( comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i>
                         
                                          {{ comment.dislike }}
                         
@@ -112,6 +113,7 @@
 
 
     <mat-menu #menu="matMenu">
+        <div *ngIf="post.postOwner===currentUser.name">
         <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editPost()">
             <i class="material-icons md-light">edit</i> edit
         </button>
@@ -121,11 +123,14 @@
             <i class="material-icons" style="align-content: center;">
                 delete_forever
             </i> delete </button>
+ 
+        </div>
+        <div  *ngIf="post.postOwner!=currentUser.name">
             <button style=" outline: none; " mat-menu-item type="button"  (click)="report()" >
             <i class="material-icons" class="fa fa-minus-square" style="font-size:24px">
                 
             </i> report </button>
-
+        </div>
     </mat-menu>
     <mat-menu #menu1="matMenu">
         <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editComment(post.id)">

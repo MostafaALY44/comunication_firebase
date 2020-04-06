@@ -12,6 +12,7 @@ import {AngularFireAuthGuard, canActivate, redirectLoggedInTo,
    redirectUnauthorizedTo, emailVerified, AuthPipe, AuthPipeGenerator, customClaims} from '@angular/fire/auth-guard'
 import { map } from 'rxjs/operators';
 import { pipe } from 'rxjs';
+import { NotFoundPageComponent } from './views/not-found/not-found-page/not-found-page.component';
 
 //const xyz = (next, state) => map(user => user.emailVerified?['/user'] : ['auth/login'])
 const x:AuthPipe = map(user=>{if(!user.emailVerified)  return ['auth/login']}) 
@@ -36,7 +37,7 @@ const routes: Routes = [
         children:[
           {
             path:'',
-            loadChildren: () => import('./views/pages/pages.module').then(m=>m.PagesModule)
+            loadChildren: () => import('./views/pages/pages.module').then(m=>m.PagesModule),
           }
         ]
     },
@@ -72,7 +73,10 @@ const routes: Routes = [
     canActivateChild:[InverseAuthGuard]
   },
   {
-    path:'**', redirectTo:''  // to handel any incorrect path
+    path:'page-not-found', component:NotFoundPageComponent 
+  },
+  {
+    path:'**', component:NotFoundPageComponent  // to handel any incorrect path
   }
 ];
 
