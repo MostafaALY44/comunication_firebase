@@ -20,10 +20,4 @@ export class AddMaterialComponent  {
     this.dialogRef.close();
   }
 
-    // onSubmit() {
-  //   let data = { "id": this.newMaterial.value.id, "date": this.newMaterial.value.date, "link": this.newMaterial.value.link };
-  //   let materialId;
-  //   this.route.parent.paramMap.subscribe((params: ParamMap) => materialId = params.get('id'));
-  // }
-
 }

@@ -1,3 +1,4 @@
+import { EditMaterialComponent } from './../edit-material/edit-material.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Material } from './../../../../../../services/user/oop/class/Material';
 import { MaterialModel } from './../../../../../../services/user/oop/models/MaterialModel.model';
@@ -15,11 +16,14 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./material-items.component.css']
 })
 
-export class MaterialItemsComponent implements OnInit , OnDestroy{
+export class MaterialItemsComponent implements  OnDestroy{
   // Angular Mateial table resourses
   displayedColumns: string[] = ['name', 'date', 'link', 'operation'];
   dataSource:any;
   ///////////////////////////
+
+  currentCategory: string;
+  targetMaterial: MaterialModel = {id:"", date:"", link:""};
 
   materials: Material;
   isDataLoad:boolean=false
@@ -32,7 +36,6 @@ export class MaterialItemsComponent implements OnInit , OnDestroy{
       (flag) => {
         if (flag) {
           this.isDataLoad = true;
-
           this.removeUnsubscribe2 = this.route.paramMap.subscribe(
                 (params: ParamMap) => {
                 this.materials = CourseService.categories.categoriesMap.get(params.get('id'));
@@ -52,47 +55,41 @@ export class MaterialItemsComponent implements OnInit , OnDestroy{
       if(this.removeUnsubscribe2)
       this.removeUnsubscribe2.unsubscribe()
   }
-  
-  private _success = new Subject<string>();
 
-  staticAlertClosed = false;
-  successMessage = '';
+  openDialog(fromAction: string): void {
+    if (fromAction === "addMaterial"){
+      const dialogRef = this.dialog.open(AddMaterialComponent , {data: this.targetMaterial});
+      dialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.addMaterialItem(result);
+      });
 
-  ngOnInit(): void {
-    setTimeout(() => this.staticAlertClosed = true, 20000);
-    this._success.subscribe(message => this.successMessage = message);
-    this._success.pipe(debounceTime(5000)).subscribe(() => this.successMessage = '');
-  }
-
-  public changeSuccessMessage() {
-    this._success.next(`${new Date()} - Message successfully changed.`);
-  }
-
-
-  materialName: string = "Lecture#0";
-  materialDate: string = "00-00-20";
-  materialLink: string = "www..com";
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddMaterialComponent , {
-      // height: '400px', //to determine the window size.
-      // width: '600px',  //to determine the window size.
-      data: {id: this.materialName, date: this.materialDate, link: this.materialLink }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result)
-        this.addMaterialItem(result);
-    });
+    }else if (fromAction === "editMaterial"){
+      const dialogRef = this.dialog.open(EditMaterialComponent , {data: this.targetMaterial});
+      dialogRef.afterClosed().subscribe(result => {this.updateMaterial(result);});
+    }
     
   }
   
-  currentCategory: string;
+  
+  selectedMaterial(currentMaterial:MaterialModel){
+    this.targetMaterial = currentMaterial;
+  }
+
   addMaterialItem(materialItem: MaterialModel){
-    this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-    let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory) // http://localhost:4200/user/comp204/material/currentCategory
+      this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
+    let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory);
     materialClass.create(materialItem)
-    console.log("New Material is added !!! :" + materialItem.id);
+  }
+
+  updateMaterial(newMaterial: MaterialModel){
+    this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
+    CourseService.categories.categoriesMap.get(this.currentCategory).update(this.targetMaterial.id, newMaterial);
+  }
+
+  deleteMaterial(){
+    this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
+    CourseService.categories.categoriesMap.get(this.currentCategory).delete(this.targetMaterial.id);
   }
   
 }

@@ -18,7 +18,7 @@ export class MaterialService implements CRUDForfirebase{
     }
 
     update(url: string, id: string, material) {
-        return this.firestore.doc<MaterialModel>(url+'/'+id).update(material);
+        return this.firestore.doc(url+'/'+id).update(material);
     }
     delete(url:string, id: string) {
         return this.firestore.doc<Assignment>(url+'/'+id).delete();
