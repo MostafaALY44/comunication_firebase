@@ -28,13 +28,21 @@ export class PostFactoryService implements OnDestroy {
    }
 
    changeUrl(url:string){
-    this.coursePost.reset();
-     this.url=url;
-     this.coursePost.changeUrl(this.url);
-     let postNames=this.coursePost.getAll();
-     this.removeUnsubscribe1=postNames.subscribe((posts)=>{this.coursePost.posts=posts;})
+    if(this.removeUnsubscribe1)  
+      this.removeUnsubscribe1.unsubscribe();
+      this.coursePost.reset();
+      this.url=url;
+      this.coursePost.changeUrl(this.url);
+      this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{this.coursePost.posts=posts;})
    }
 
+  //  subscribe(){
+  //   this.setPosts(false);
+  // }
+  // unsubscribe(){
+  //  if(this.removeUnsubscribe1)  
+  //    this.removeUnsubscribe1.unsubscribe();
+  // }
   ngOnDestroy(): void {
     if(this.removeUnsubscribe1)  
           this.removeUnsubscribe1.unsubscribe();

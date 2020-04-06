@@ -6,6 +6,7 @@ import { PostFactoryService } from './factories/post-factory.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AssignmentService } from '../assignment.service';
 import { CategoryFactoryService } from './factories/category-factory.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,17 +23,66 @@ export class CourseService {
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
 
-  courseId;
+  //courseId;
   constructor(private firestore: AngularFirestore) { 
     CourseService.assignments = this.allAssignments.asObservable(); 
   }
 
   setCouserId(courseId: string) {
-    this.courseId = courseId;
+    //this.courseId = courseId;
     this.setPosts(courseId);
     this.setCategories(courseId);
     this.setAssignment(courseId)
+    
+    // let course=UserService.loadedCourses.get(courseId)
+    // if(!course){
+    //   this.setPosts(courseId);
+    //   this.setCategories(courseId);
+    //   this.setAssignment(courseId)
+    //   console.log(course)
+    //   console.log(courseId)
+    //   let newCourse={  posts: Object.assign({},CourseService.posts),
+    //     categories: Object.assign({},CourseService.categories),
+    //     assignments: Object.assign({},CourseService.assignments),
+    //     isCategoryLoad: Object.assign({},CourseService.isCategoryLoad)
+    //   }
+    //   UserService.loadedCourses.set(courseId, newCourse)
+    //   //course=UserService.loadedCourses.get(courseId)
+    //   console.log(UserService.loadedCourses)
+      
+    // }else{
+    //   course=UserService.loadedCourses.get(courseId)
+    //   CourseService.posts=course.posts
+    //   CourseService.categories=course.categories
+    //   CourseService.isCategoryLoad=course.isCategoryLoad
+    //   CourseService.assignments=course.assignments
+    // }
+    
   }
+
+  // subscribeTab(tabName:"post"|"material"|"assignment"){
+  //   switch(tabName){
+  //     case "post":
+  //       this.postFactoryService.subscribe();
+  //       break;
+  //     case "material":
+  //       this.categoryFactoryService.subscribe();
+  //       break;
+  //     case "assignment":break; 
+  //   }
+  // };
+
+  // unsubscribeTab(tabName:"post"|"category"|"assignment"){
+  //   switch(tabName){
+  //     case "post":
+  //       this.postFactoryService.unsubscribe();
+  //       break;
+  //     case "category":
+  //       this.categoryFactoryService.unsubscribe();
+  //       break;
+  //     case "assignment":break;
+  //   }
+  // };
 
   setPosts(courseId: string) {
     this.postFactoryService.changeUrl('/courses/' + courseId)

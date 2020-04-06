@@ -13,6 +13,7 @@ import { AuthenticationService } from './services/auth/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFontAwesomeModule,
+    AngularFireMessagingModule
   ],
   providers: [
     AngularFirestore,
