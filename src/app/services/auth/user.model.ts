@@ -13,6 +13,9 @@ export interface Roles {
      name:string;
      colleges:College[]
  }
+ export interface token{
+
+ }
   
  export class User{
     uid:string;
@@ -26,5 +29,5 @@ export interface Roles {
     background:string;
     roles:Roles;
     universities:university[];
- 
+    fcmTokens:token;
 }

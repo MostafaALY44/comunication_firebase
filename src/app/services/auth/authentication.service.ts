@@ -65,7 +65,8 @@ export class AuthenticationService  {
         other: true
       },
       universities:[{name:"Ain Shams University", colleges:[{name:"faculty of science",
-      courseCodes:[]}]}]
+      courseCodes:[]}]}],
+      fcmTokens:{}
     } 
     return userRef.set(data, { merge: true })
   }

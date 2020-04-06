@@ -14,6 +14,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { NotFoundPageComponent } from './views/not-found/not-found-page/not-found-page.component';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NotFoundPageComponent } from './views/not-found/not-found-page/not-foun
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFontAwesomeModule,
+    AngularFireMessagingModule
   ],
   providers: [
     AngularFirestore,

@@ -9,11 +9,8 @@ export class Category implements CRUD {
 
 
     private categoryService: CategoryService = new CategoryService(this.firestore);
-
-    constructor(
-        private url: string,
-        private firestore: AngularFirestore) {
-        }
+    private url: string;
+    constructor(private firestore: AngularFirestore) {}
 
     changeUrl(url: string) {
         this.url = url + "/categories/";

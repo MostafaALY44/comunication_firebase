@@ -18,24 +18,35 @@ export class CategoryFactoryService implements OnDestroy {
   private url: string
 
   constructor(private firestore: AngularFirestore) {
-    if (this.removeUnsubscribe1)
-      this.removeUnsubscribe1.unsubscribe();
-    this.category = new Category(this.url, this.firestore)
+    this.category = new Category(this.firestore)
   }
 
   changeUrl(url: string) {
+    if (this.removeUnsubscribe1)
+      this.removeUnsubscribe1.unsubscribe();
     this.category.reset();
     this.category.changeUrl(url);
     this.url = url;
     this.setCategories();
   }
 
-  doUnsubscribe(removeUnsubscribe: Subscription[]) {
+  private doUnsubscribeArray(removeUnsubscribe: Subscription[]) {
     removeUnsubscribe.forEach(element => {
-      setTimeout(function () { element.unsubscribe() }, 5000);
+      setTimeout(function () { element.unsubscribe() }, 1000);
     });
   }
 
+  // private doUnsubscribe(removeUnsubscribe: Subscription){
+  //   setTimeout(function () { removeUnsubscribe.unsubscribe() }, 1000);
+  // }
+
+  // subscribe(){
+  //   this.setCategories(false);
+  // }
+  // unsubscribe(){
+  //   if (this.removeUnsubscribe1)
+  //     this.removeUnsubscribe1.unsubscribe();
+  // } 
   setCategories() {
     {
       let categoryNames = this.category.getAll();
@@ -53,13 +64,16 @@ export class CategoryFactoryService implements OnDestroy {
               let x = new Material(this.url + '/categories/' + element.id, this.firestore);
               removeUnsubscribe2.push(x.getAll().subscribe(materials => {
                 x.material = materials;
+                this.doUnsubscribeArray(removeUnsubscribe2)
               }));
-              this.doUnsubscribe(removeUnsubscribe2)
+              
               this.category.categoriesMap.set((element.id), x)
             }
           })
         }
         this.isCategoryLoad.next(true);
+        // if(doUnsubscribe)
+        //     this.doUnsubscribe(this.removeUnsubscribe1);
       })
     }
   }
