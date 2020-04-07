@@ -13,8 +13,7 @@ export class AddMaterialComponent  {
 
   constructor(
     public dialogRef: MatDialogRef<AddMaterialComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: MaterialModel,
-     ) { }
+    @Inject(MAT_DIALOG_DATA) public data: MaterialModel) { }
 
     onNoClick(): void {
     this.dialogRef.close();

@@ -14,7 +14,8 @@ export class EditMaterialComponent {
 
   constructor(
     public dialogRef: MatDialogRef<EditMaterialComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: MaterialModel) { }
+    @Inject(MAT_DIALOG_DATA) public data: MaterialModel) {}
+
 
     onNoClick(): void {
     this.dialogRef.close();

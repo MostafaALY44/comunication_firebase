@@ -10,23 +10,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+
 @Component({
   selector: 'material-items',
   templateUrl: './material-items.component.html',
   styleUrls: ['./material-items.component.css']
 })
 
-export class MaterialItemsComponent implements  OnDestroy{
+export class MaterialItemsComponent implements OnDestroy {
   // Angular Mateial table resourses
   displayedColumns: string[] = ['name', 'date', 'link', 'operation'];
-  dataSource:any;
+  dataSource: any;
   ///////////////////////////
 
   currentCategory: string;
-  targetMaterial: MaterialModel = {id:"", date:"", link:""};
+  targetMaterial: MaterialModel;
 
   materials: Material;
-  isDataLoad:boolean=false
+  isDataLoad: boolean = false
 
   removeUnsubscribe1;
   removeUnsubscribe2;
@@ -37,59 +38,50 @@ export class MaterialItemsComponent implements  OnDestroy{
         if (flag) {
           this.isDataLoad = true;
           this.removeUnsubscribe2 = this.route.paramMap.subscribe(
-                (params: ParamMap) => {
-                this.materials = CourseService.categories.categoriesMap.get(params.get('id'));
-                this.materials.subscribeMaterialsFireStore();
-                this.dataSource = this.materials.material;
-                }
-            )
+            (params: ParamMap) => {
+              this.materials = CourseService.categories.categoriesMap.get(params.get('id'));
+              this.materials.subscribeMaterialsFireStore();
+              this.dataSource = this.materials.material;
+            }
+          )
 
         };
       })
   }
 
-  ngOnDestroy(): void {
-    if(this.removeUnsubscribe1)
-      this.removeUnsubscribe1.unsubscribe()
-
-      if(this.removeUnsubscribe2)
-      this.removeUnsubscribe2.unsubscribe()
-  }
-
-  openDialog(fromAction: string): void {
-    if (fromAction === "addMaterial"){
-      const dialogRef = this.dialog.open(AddMaterialComponent , {data: this.targetMaterial});
-      dialogRef.afterClosed().subscribe(result => {
-        if(result)
-          this.addMaterialItem(result);
-      });
-
-    }else if (fromAction === "editMaterial"){
-      const dialogRef = this.dialog.open(EditMaterialComponent , {data: this.targetMaterial});
-      dialogRef.afterClosed().subscribe(result => {this.updateMaterial(result);});
-    }
-    
-  }
-  
-  
-  selectedMaterial(currentMaterial:MaterialModel){
+  selectedMaterial(currentMaterial: MaterialModel) {
     this.targetMaterial = currentMaterial;
   }
 
-  addMaterialItem(materialItem: MaterialModel){
+  addMaterial() {
+    const dialogRef = this.dialog.open(AddMaterialComponent, { data: this.targetMaterial });
+    dialogRef.afterClosed().subscribe(newMaterialItem => {
       this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-    let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory);
-    materialClass.create(materialItem)
+      let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory);
+      materialClass.create(newMaterialItem);
+    });
   }
 
-  updateMaterial(newMaterial: MaterialModel){
-    this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-    CourseService.categories.categoriesMap.get(this.currentCategory).update(this.targetMaterial.id, newMaterial);
+  updateMaterial() {
+    const dialogRef = this.dialog.open(EditMaterialComponent, { data: this.targetMaterial });
+    dialogRef.afterClosed().subscribe(updatedMaterialItem => {
+      this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
+      CourseService.categories.categoriesMap.get(this.currentCategory).update(this.targetMaterial.id, updatedMaterialItem);
+    });
   }
 
-  deleteMaterial(){
+  deleteMaterial() {
     this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
     CourseService.categories.categoriesMap.get(this.currentCategory).delete(this.targetMaterial.id);
   }
-  
+
+
+  ngOnDestroy(): void {
+    if (this.removeUnsubscribe1)
+      this.removeUnsubscribe1.unsubscribe()
+
+    if (this.removeUnsubscribe2)
+      this.removeUnsubscribe2.unsubscribe()
+  }
+
 }

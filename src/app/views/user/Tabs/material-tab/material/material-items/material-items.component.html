@@ -40,13 +40,13 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<button mat-raised-button (click)="openDialog('addMaterial')">
+<button mat-raised-button (click)="addMaterial()">
   Add Item <mat-icon>library_add</mat-icon>
 </button>
 
 <!-- Edite menu view -->
 <mat-menu #menu="matMenu">
-  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="openDialog('editMaterial')">
+  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateMaterial()">
     <i class="material-icons md-light">edit</i> Edit
   </button>
   <button mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteMaterial()">
