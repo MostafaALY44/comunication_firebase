@@ -40,7 +40,7 @@ export class MaterialCategoryComponent {
   }
 
   updateCategoryTest(){
-    CourseService.categories.updateAhmed("a", {id:"A"});
+    CourseService.categories.updateAhmed("a",{id:"A"});
     console.log("u called")
   }
 

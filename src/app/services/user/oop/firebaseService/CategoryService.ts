@@ -43,7 +43,8 @@ export class CategoryService implements CRUDForfirebase {
 
     ///// *****************************************************************
     updateAhmed(url: string, id: string, category) {
-    return this.firestore.doc<CategoryModel>(url+'/'+id).update(category);
+    //return this.firestore.doc<CategoryModel>(url+'/'+id).set(category);
+    return this.firestore.collection(url).doc(category.id).set({});
   }
 
   delete(url: string, id: string) {
