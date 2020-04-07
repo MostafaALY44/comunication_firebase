@@ -24,7 +24,7 @@ export class MaterialItemsComponent implements OnDestroy {
   ///////////////////////////
 
   currentCategory: string;
-  targetMaterial: MaterialModel;
+  targetMaterial: MaterialModel = {id:"id", date:"date", link:"link"};
 
   materials: Material;
   isDataLoad: boolean = false
@@ -55,18 +55,20 @@ export class MaterialItemsComponent implements OnDestroy {
 
   addMaterial() {
     const dialogRef = this.dialog.open(AddMaterialComponent, { data: this.targetMaterial });
-    dialogRef.afterClosed().subscribe(newMaterialItem => {
+    dialogRef.afterClosed().subscribe(result => {
       this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
       let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory);
-      materialClass.create(newMaterialItem);
+      materialClass.create(result);
     });
   }
 
   updateMaterial() {
+    let oldId = this.targetMaterial.id;
     const dialogRef = this.dialog.open(EditMaterialComponent, { data: this.targetMaterial });
     dialogRef.afterClosed().subscribe(updatedMaterialItem => {
       this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
       CourseService.categories.categoriesMap.get(this.currentCategory).update(this.targetMaterial.id, updatedMaterialItem);
+      CourseService.categories.categoriesMap.get(this.currentCategory).delete(oldId);
     });
   }
 
@@ -74,7 +76,6 @@ export class MaterialItemsComponent implements OnDestroy {
     this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
     CourseService.categories.categoriesMap.get(this.currentCategory).delete(this.targetMaterial.id);
   }
-
 
   ngOnDestroy(): void {
     if (this.removeUnsubscribe1)

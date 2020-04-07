@@ -1,3 +1,4 @@
+import { AddCategoryComponent } from './Tabs/material-tab/material/add-category/add-category.component';
 import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
@@ -50,7 +51,8 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCommentComponent,
     EditMaterialComponent,
     EditCategoryComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    AddCategoryComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -62,7 +64,8 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCategoryComponent,
     AddAssignmentComponent,
     ReportPostComponent,
-    AddMaterialComponent
+    AddMaterialComponent,
+    AddCategoryComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ export class CategoryService implements CRUDForfirebase {
   constructor(private firestore: AngularFirestore) { }
 
   create(url: string, category: CategoryModel) {
-    return this.firestore.collection(url).add(category.id);
+    return this.firestore.collection(url).doc(category.id).set({});
   }
 
   read(url: string, id: string): Observable<CategoryModel> {
@@ -19,6 +19,7 @@ export class CategoryService implements CRUDForfirebase {
   }
 
   removeSubscribe;
+
   update(url: string, id: string, category) {
     let tempDoc = this.firestore.doc<CategoryModel>(url + id).snapshotChanges().pipe(
       map(a => {
@@ -40,12 +41,16 @@ export class CategoryService implements CRUDForfirebase {
     )
   }
 
+    ///// *****************************************************************
+    updateAhmed(url: string, id: string, category) {
+    return this.firestore.doc<CategoryModel>(url+'/'+id).update(category);
+  }
+
   delete(url: string, id: string) {
     return this.firestore.doc<CategoryModel>(url + '/' + id).delete();
   }
 
   getAll(url: string): Observable<CategoryModel[]> {
-    //console.log("from service getAll() "+url);
     return this.firestore.collection<CategoryModel>(url).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data();

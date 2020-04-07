@@ -13,7 +13,7 @@ export class Category implements CRUD {
     constructor(private firestore: AngularFirestore) {}
 
     changeUrl(url: string) {
-        this.url = url + "/categories/";
+        this.url = url + "/categories";
     }
 
     reset() {
@@ -32,6 +32,10 @@ export class Category implements CRUD {
         return this.categoryService.read(this.url, categoryId);
     }
     update(id: string, category: CategoryModel) {
+        return this.categoryService.update(this.url, id, category)
+    }
+    ///// *****************************************************************
+    updateAhmed(id: string, category: CategoryModel) {
         return this.categoryService.update(this.url, id, category)
     }
     delete(id: string) {

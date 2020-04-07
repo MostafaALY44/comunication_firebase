@@ -8,6 +8,7 @@ import { MaterialCategoryComponent } from './material-category/material-category
 import { MaterialItemsComponent } from './material-items/material-items.component';
 import { EditMaterialComponent } from './edit-material/edit-material.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 
 
@@ -18,6 +19,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     AddMaterialComponent, 
     EditMaterialComponent, 
     EditCategoryComponent, 
+    AddCategoryComponent, 
     ],
   imports: [
     CommonModule,
