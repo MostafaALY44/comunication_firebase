@@ -12,8 +12,7 @@ export class CategoryService implements CRUDForfirebase {
 
   create(url: string, category: CategoryModel) {
     // return this.firestore.collection(url).doc(category.name).set({});
-    //return this.firestore.collection(url).add({name:category.name});
-    return this.firestore.collection(url).doc(category.id).set({name: category.name})
+    return this.firestore.collection(url).add({name:category.name});
   }
 
   read(url: string, id: string): Observable<CategoryModel> {

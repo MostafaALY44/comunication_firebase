@@ -28,6 +28,7 @@ export class Category implements CRUD {
     create(category: CategoryModel) {
         return this.categoryService.create(this.url, category)
     }
+    
     read(categoryId: string) {
         return this.categoryService.read(this.url, categoryId);
     }
