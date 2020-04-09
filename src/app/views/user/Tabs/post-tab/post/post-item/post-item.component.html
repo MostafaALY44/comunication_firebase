@@ -23,10 +23,11 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-md-2">
-               
-                    <i type="button" (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
-               
+                
+                <i *ngIf="!showit; else elseBlock" type="button"  id="myDIV" (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
+                <ng-template #elseBlock><i type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i></ng-template>
                 {{ post.like }}
+                
 
             </div>
             <div class="col-md-8">
@@ -34,7 +35,7 @@
                     <i type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
 
                  {{ post.dislike }}
-
+                 <i type="button" (click)="removedislike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
 
             </div>
         </div>

@@ -73,5 +73,5 @@ export class Post implements CRUD{
 	// }
 
 	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : post.reactedPerson, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
-
+ 
 }

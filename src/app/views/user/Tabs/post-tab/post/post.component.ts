@@ -14,7 +14,7 @@ import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit,OnDestroy {
-  
+   
   coursePosts:Post;
   //removeSubscribe;
   constructor(private ser: PostService, route:ActivatedRoute) {

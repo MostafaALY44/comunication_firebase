@@ -26,6 +26,11 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
 import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-post.component';
+import { PollingComponent } from './Tabs/polling-tab/polling/polling.component';
+import { PollingItemsComponent } from './Tabs/polling-tab/polling/polling-items/polling-items.component';
+import { AddPollingComponent } from './Tabs/polling-tab/polling/add-polling/add-polling.component';
+import { EditPollingComponent } from './Tabs/polling-tab/polling/edit-polling/edit-polling.component';
+import { EditOptionComponent } from './Tabs/polling-tab/polling/edit-option/edit-option.component';
 
 
 @NgModule({
@@ -50,7 +55,12 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCommentComponent,
     EditMaterialComponent,
     EditCategoryComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    PollingComponent,
+    PollingItemsComponent,
+    AddPollingComponent,
+    EditPollingComponent,
+    EditOptionComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -62,7 +72,9 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCategoryComponent,
     AddAssignmentComponent,
     ReportPostComponent,
-    AddMaterialComponent
+    AddMaterialComponent,
+    EditPollingComponent,
+    EditOptionComponent
   ],
   imports: [
     CommonModule,

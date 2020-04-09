@@ -1,0 +1,17 @@
+
+<div class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-12">
+            <add-polling></add-polling>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row" style="text-align: center;" >
+        <div class="col-md-12" *ngFor="let poll of coursepolls.polles ">
+            
+            <polling-items [poll]="poll"></polling-items>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

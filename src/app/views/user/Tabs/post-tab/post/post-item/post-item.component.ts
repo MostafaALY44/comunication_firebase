@@ -88,20 +88,29 @@ export class PostItemComponent implements OnInit {
       this.newComment.reset();
     } 
 }
-showit:boolean=false;
+showit:boolean=false; 
 addLike( postId: string){
+  if(!this.showit){
   CourseService.posts.addLike(this.currentUser.uid, postId);
+    this.showit=true;
+  }else this.showit=false;
+  //let element = document.getElementById("myDIV");
+  //element.classList.toggle("fa-thumbs-down",true);
+
 }
 addDisLike( postId: string){
   CourseService.posts.addDislike(this.currentUser.uid, postId)
 }
 removeLike( postId: string){
- 
+ //console.log("______________")
+ if(this.showit){
   CourseService.posts.removeLike(this.currentUser.uid, postId);
-
+  this.showit=false;
+ }else this.showit=true;
+ 
 }
 
-removedislike( postId: string){
+removedislike( postId: string){ 
   CourseService.posts.removeDisLike(this.currentUser.uid, postId);
 }
 Currcomment:CommentModel;
@@ -110,7 +119,7 @@ setComment(comment:CommentModel){
 
 }
 
-editComment(idPost){console.log(this.Currcomment);
+editComment(idPost){//console.log(this.Currcomment);
   CourseService.posts.comment.setCurrentIdPost(idPost);
   this.dialog.open(EditCommentComponent,{data:this.Currcomment})
 }
