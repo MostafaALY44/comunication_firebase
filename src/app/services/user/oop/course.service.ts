@@ -88,6 +88,7 @@ export class CourseService {
     this.postFactoryService.changeUrl('/courses/' + courseId)
     CourseService.posts = this.postFactoryService.coursePost;
   }
+  
   setCategories(courseId: string) {
     this.categoryFactoryService.changeUrl('/courses/' + courseId);
     CourseService.categories = this.categoryFactoryService.category;

@@ -8,25 +8,17 @@
 
         <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active">
           {{ category.key }}
-          <mat-icon >edit</mat-icon>
-          <mat-icon (click)="selectedCategory(category.key);deleteCategory();">close</mat-icon>
+          <mat-icon (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon (click)="deleteCategory(category.value.id);">close</mat-icon>
         </a>
 
       </div>
 
       <li class="nav-item nav-link">
-        <!-- <a href="" class="nav-link badge badge-success" data-toggle="modal" data-target="#add-tab">
+
+        <button mat-raised-button (click)="addCategory()">
           <mat-icon>add_circle_outline</mat-icon>
-        </a> -->
-
-        
-<button mat-raised-button (click)="addCategory()">
-  <mat-icon>add_circle_outline</mat-icon>
-</button>
-
-<!-- <button mat-raised-button (click)="updateCategoryTest()">
-  updateCategoryTest
-</button> -->
+        </button>
 
       </li>
 

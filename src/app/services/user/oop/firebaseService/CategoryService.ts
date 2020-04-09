@@ -11,7 +11,9 @@ export class CategoryService implements CRUDForfirebase {
   constructor(private firestore: AngularFirestore) { }
 
   create(url: string, category: CategoryModel) {
-    return this.firestore.collection(url).doc(category.id).set({});
+    // return this.firestore.collection(url).doc(category.name).set({});
+    //return this.firestore.collection(url).add({name:category.name});
+    return this.firestore.collection(url).doc(category.id).set({name: category.name})
   }
 
   read(url: string, id: string): Observable<CategoryModel> {
@@ -20,32 +22,10 @@ export class CategoryService implements CRUDForfirebase {
 
   removeSubscribe;
 
-  update(url: string, id: string, category) {
-    let tempDoc = this.firestore.doc<CategoryModel>(url + id).snapshotChanges().pipe(
-      map(a => {
-        const data = a.payload.data();
-        const id = a.payload.id;
-        return { id, ...data };
-      }))
-
-    let tempColl = new MaterialService(this.firestore).getAll(url + '/' + id + '/material/');
-    this.delete(url, id).then(() =>
-      this.create(url, { "id": category.id }).then(() =>
-        this.removeSubscribe = tempColl.subscribe(element =>
-          element.forEach(element2 =>
-            this.firestore.collection(url + '/' + category.id + '/materials/').add(element2.id).then(() =>
-              this.firestore.doc(url + '/' + category.id + '/materials/' + element2.id).set({ "link": element2.link, "date": element2.date })
-            )))
-
-      ).finally(() => this.removeSubscribe.unsubscribe())
-    )
+  update(url: string, id: string, category:CategoryModel) {
+    return this.firestore.collection(url).doc(id).update({name:category.name});
   }
 
-    ///// *****************************************************************
-    updateAhmed(url: string, id: string, category) {
-    //return this.firestore.doc<CategoryModel>(url+'/'+id).set(category);
-    return this.firestore.collection(url).doc(category.id).set({});
-  }
 
   delete(url: string, id: string) {
     return this.firestore.doc<CategoryModel>(url + '/' + id).delete();

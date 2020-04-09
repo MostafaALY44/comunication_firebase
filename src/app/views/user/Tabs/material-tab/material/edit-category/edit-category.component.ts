@@ -1,3 +1,4 @@
+import { CategoryModel } from './../../../../../../services/user/oop/models/CategoryModel';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MaterialsService } from 'src/app/services/user/materials.service';
@@ -10,20 +11,20 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./edit-category.component.css']
 })
 export class EditCategoryComponent implements OnInit {
-  newCategory = new FormGroup({
-    name : new FormControl(this.data.category.name,Validators.required),
-  });
-  constructor(private materialService: MaterialsService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any) { }
+  // newCategory = new FormGroup({
+  //   name : new FormControl(this.data.category.name,Validators.required),
+  // });
+  constructor(@Inject(MAT_DIALOG_DATA) private data:CategoryModel) { }
 
   ngOnInit() {
   }
 
-  isEmpty(text:string):boolean{
-    for(let i=0;i<text.length;i++)
-      if(text[i] != " ")
-        return false;
-    return true;
-  }
+  // isEmpty(text:string):boolean{
+  //   for(let i=0;i<text.length;i++)
+  //     if(text[i] != " ")
+  //       return false;
+  //   return true;
+  // }
  
   // onSubmit(){
   //     let courseId=this.data.courseId;

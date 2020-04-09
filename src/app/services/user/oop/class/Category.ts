@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Material } from './Material';
 
 export class Category implements CRUD {
-    categoriesMap = new Map<string, Material>();
+    categoriesMap = new Map<string, {id:string, material:Material}>();
 
 
     private categoryService: CategoryService = new CategoryService(this.firestore);
@@ -34,10 +34,7 @@ export class Category implements CRUD {
     update(id: string, category: CategoryModel) {
         return this.categoryService.update(this.url, id, category)
     }
-    ///// *****************************************************************
-    updateAhmed(id: string, category: CategoryModel) {
-        return this.categoryService.update(this.url, id, category)
-    }
+    
     delete(id: string) {
         return this.categoryService.delete(this.url, id);
     }

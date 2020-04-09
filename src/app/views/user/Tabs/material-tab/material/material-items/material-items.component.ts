@@ -33,20 +33,23 @@ export class MaterialItemsComponent implements OnDestroy {
   removeUnsubscribe2;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+
     this.removeUnsubscribe1 = CourseService.isCategoryLoad.subscribe(
       (flag) => {
         if (flag) {
           this.isDataLoad = true;
+
           this.removeUnsubscribe2 = this.route.paramMap.subscribe(
             (params: ParamMap) => {
-              this.materials = CourseService.categories.categoriesMap.get(params.get('id'));
-              this.materials.subscribeMaterialsFireStore();
+              this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material;
+              this.dataSource  = this.materials.subscribeMaterialsFireStore();
               this.dataSource = this.materials.material;
             }
           )
-
+          
         };
       })
+
   }
 
   selectedMaterial(currentMaterial: MaterialModel) {
@@ -57,7 +60,7 @@ export class MaterialItemsComponent implements OnDestroy {
     const dialogRef = this.dialog.open(AddMaterialComponent, { data: this.targetMaterial });
     dialogRef.afterClosed().subscribe(result => {
       this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-      let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory);
+      let materialClass = CourseService.categories.categoriesMap.get(this.currentCategory).material;
       materialClass.create(result);
     });
   }
@@ -67,14 +70,14 @@ export class MaterialItemsComponent implements OnDestroy {
     const dialogRef = this.dialog.open(EditMaterialComponent, { data: this.targetMaterial });
     dialogRef.afterClosed().subscribe(updatedMaterialItem => {
       this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-      CourseService.categories.categoriesMap.get(this.currentCategory).update(this.targetMaterial.id, updatedMaterialItem);
-      CourseService.categories.categoriesMap.get(this.currentCategory).delete(oldId);
+      CourseService.categories.categoriesMap.get(this.currentCategory).material.update(this.targetMaterial.id, updatedMaterialItem);
+      CourseService.categories.categoriesMap.get(this.currentCategory).material.delete(oldId);
     });
   }
 
   deleteMaterial() {
     this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
-    CourseService.categories.categoriesMap.get(this.currentCategory).delete(this.targetMaterial.id);
+    CourseService.categories.categoriesMap.get(this.currentCategory).material.delete(this.targetMaterial.id);
   }
 
   ngOnDestroy(): void {

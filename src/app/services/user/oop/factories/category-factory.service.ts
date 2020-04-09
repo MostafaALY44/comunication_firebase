@@ -13,7 +13,7 @@ export class CategoryFactoryService implements OnDestroy {
 
   removeUnsubscribe1
   category: Category;
-  private isCategoryLoad:BehaviorSubject<boolean>=new BehaviorSubject(false);
+  private isCategoryLoad:BehaviorSubject<boolean>= new BehaviorSubject(false);
 
   private url: string
 
@@ -54,20 +54,19 @@ export class CategoryFactoryService implements OnDestroy {
         let removeUnsubscribe2: Subscription[] = [];
         
         if (categories.length < this.category.categoriesMap.size) {
-          this.category.categoriesMap.forEach((value: Material, key: string) => {
-            if (!categories.find(element => element.id === key))
+          this.category.categoriesMap.forEach((value: {id:string, material:Material}, key: string) => {
+            if (!categories.find(element => element.name === key))
               this.category.categoriesMap.delete(key);
           })
         } else if (categories.length > this.category.categoriesMap.keys.length) {
           categories.forEach(element => {
-            if (!this.category.categoriesMap.get(element.id)) {
-              let x = new Material(this.url + '/categories/' + element.id, this.firestore);
+            if (!this.category.categoriesMap.get(element.name)) {
+              let x = new Material(this.url + '/categories/' + element.name, this.firestore);
               removeUnsubscribe2.push(x.getAll().subscribe(materials => {
                 x.material = materials;
                 this.doUnsubscribeArray(removeUnsubscribe2)
               }));
-              
-              this.category.categoriesMap.set((element.id), x)
+              this.category.categoriesMap.set((element.name), {id:element.id, material:x})
             }
           })
         }
