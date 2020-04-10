@@ -20,9 +20,12 @@ export class Material implements CRUD, OnDestroy{
 			Material.removeUnsubscribe1.unsubscribe();
 	}
 
-	create (material:MaterialModel){
-        return this.materialService.create(this.url, material)
-    }
+	create(material: MaterialModel) {
+		if (material)
+			return this.materialService.create(this.url, material)
+		else
+			console.log("Creating new material is canceled");
+	}
 	
 	read (id:string){
 		return this.materialService.read(this.url, id);

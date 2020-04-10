@@ -61,7 +61,7 @@ export class CategoryFactoryService implements OnDestroy {
         } else if (categories.length > this.category.categoriesMap.keys.length) {
           categories.forEach(element => {
             if (!this.category.categoriesMap.get(element.name)) {
-              let x = new Material(this.url + '/categories/' + element.name, this.firestore);
+              let x = new Material(this.url + '/categories/' + element.id, this.firestore);
               removeUnsubscribe2.push(x.getAll().subscribe(materials => {
                 x.material = materials;
                 this.doUnsubscribeArray(removeUnsubscribe2)

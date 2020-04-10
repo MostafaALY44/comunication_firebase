@@ -24,7 +24,7 @@ export class MaterialItemsComponent implements OnDestroy {
   ///////////////////////////
 
   currentCategory: string;
-  targetMaterial: MaterialModel = {id:"id", date:"date", link:"link"};
+  targetMaterial: MaterialModel = {id:"name", date:"date", link:"link"};
 
   materials: Material;
   isDataLoad: boolean = false
@@ -38,7 +38,6 @@ export class MaterialItemsComponent implements OnDestroy {
       (flag) => {
         if (flag) {
           this.isDataLoad = true;
-
           this.removeUnsubscribe2 = this.route.paramMap.subscribe(
             (params: ParamMap) => {
               this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material;

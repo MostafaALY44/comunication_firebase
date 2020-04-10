@@ -12,7 +12,10 @@ export class CategoryService implements CRUDForfirebase {
 
   create(url: string, category: CategoryModel) {
     // return this.firestore.collection(url).doc(category.name).set({});
+    if (category)
     return this.firestore.collection(url).add({name:category.name});
+    else
+    console.log("Creating new Category canceled");
   }
 
   read(url: string, id: string): Observable<CategoryModel> {

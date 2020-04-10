@@ -41,7 +41,8 @@ export class MaterialCategoryComponent {
     const dialogRef = this.dialog.open(AddCategoryComponent, { data: this.newCategory });
     dialogRef.afterClosed().subscribe(result => {
       CourseService.categories.create(result);
-      console.log(result);
+      if (result)
+        console.log(result);
     });
   }
 
