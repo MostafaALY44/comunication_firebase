@@ -1,4 +1,4 @@
-<form [formGroup] = "newCategory" (ngSubmit)="onSubmit()">
+<!-- <form [formGroup] = "newCategory" (ngSubmit)="onSubmit()">
     <div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="solvesolution" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -36,4 +36,19 @@
         <button type="submit" [disabled]="!newCategory.valid" mat-button >Save</button>
     </mat-card-actions>
   </mat-card>
-</form>
+</form> -->
+
+<h1 mat-dialog-title>Edit Category item </h1>
+<div mat-dialog-content>
+  <p>What's your new category name?</p>
+
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Update</button>  <!-- data is a json object that contain the form data -->
+</div>

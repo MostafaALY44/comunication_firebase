@@ -20,9 +20,12 @@ export class Material implements CRUD, OnDestroy{
 			Material.removeUnsubscribe1.unsubscribe();
 	}
 
-	create (material:MaterialModel){
-        return this.materialService.create(this.url, material)
-    }
+	create(material: MaterialModel) {
+		if (material)
+			return this.materialService.create(this.url, material)
+		else
+			console.log("Creating new material is canceled");
+	}
 	
 	read (id:string){
 		return this.materialService.read(this.url, id);
@@ -48,6 +51,7 @@ export class Material implements CRUD, OnDestroy{
 			Material.removeUnsubscribe1.unsubscribe();
 		Material.removeUnsubscribe1=this.getAll().subscribe(materials=> this.material=materials)
 		return this.material;
-    }
+	}
+	
 	materialForCreateAndUbdate(material:MaterialModel){return {"date":material.date, "link":material.link}}
 }

@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Material } from './Material';
 
 export class Category implements CRUD {
-    categoriesMap = new Map<string, Material>();
+    categoriesMap = new Map<string, {id:string, material:Material}>();
 
 
     private categoryService: CategoryService = new CategoryService(this.firestore);
@@ -13,7 +13,7 @@ export class Category implements CRUD {
     constructor(private firestore: AngularFirestore) {}
 
     changeUrl(url: string) {
-        this.url = url + "/categories/";
+        this.url = url + "/categories";
     }
 
     reset() {
@@ -28,12 +28,14 @@ export class Category implements CRUD {
     create(category: CategoryModel) {
         return this.categoryService.create(this.url, category)
     }
+    
     read(categoryId: string) {
         return this.categoryService.read(this.url, categoryId);
     }
     update(id: string, category: CategoryModel) {
         return this.categoryService.update(this.url, id, category)
     }
+    
     delete(id: string) {
         return this.categoryService.delete(this.url, id);
     }

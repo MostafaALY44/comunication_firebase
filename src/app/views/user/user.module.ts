@@ -1,3 +1,4 @@
+import { AddCategoryComponent } from './Tabs/material-tab/material/add-category/add-category.component';
 import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
@@ -56,10 +57,8 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     EditMaterialComponent,
     EditCategoryComponent,
     ReportPostComponent,
-    ChangePasswordComponent
-    
-    
-    
+    ChangePasswordComponent,
+    AddCategoryComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -71,9 +70,9 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     EditCategoryComponent,
     AddAssignmentComponent,
     ReportPostComponent,
-    AddMaterialComponent
-    
-    
+    AddMaterialComponent,
+    AddMaterialComponent,
+    AddCategoryComponent
   ],
   imports: [
     CommonModule,
