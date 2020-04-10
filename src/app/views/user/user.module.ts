@@ -26,6 +26,11 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
 import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-post.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ChangePasswordComponent } from '../auth/change-password/change-password.component';
+
+
+
 
 
 @NgModule({
@@ -50,7 +55,11 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCommentComponent,
     EditMaterialComponent,
     EditCategoryComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    ChangePasswordComponent
+    
+    
+    
   ],
   entryComponents: [
     EditPostComponent,
@@ -63,13 +72,16 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     AddAssignmentComponent,
     ReportPostComponent,
     AddMaterialComponent
+    
+    
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ScrollingModule
   ],
   providers:[CoursesService]
   

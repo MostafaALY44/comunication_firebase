@@ -24,10 +24,9 @@
         <div class="row">
             <div class="col-md-2">
                
-                    <i type="button" (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
-               
+                <i  type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
+                <!-- <ng-template #elseBlock><i type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i></ng-template> -->
                 {{ post.like }}
-
             </div>
             <div class="col-md-8">
                 

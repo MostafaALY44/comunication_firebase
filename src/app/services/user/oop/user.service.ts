@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { User, university } from '../../auth/user.model';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth/auth';
-import { AngularFirestore } from '@angular/fire/firestore/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { Post } from './class/Post';
 import { Category } from './class/category';
@@ -45,7 +45,7 @@ export class UserService implements OnDestroy {
   //static hasGroups:HasGroups[];
   static hasGroups:university[]=[]; 
  
-  constructor() {
+  constructor(private firestore: AngularFirestore) {
     //console.log("+++++++++++++++++++++++++++++++++++")
     // this.removeSubscribe= UserService.userObservable.subscribe(user=>{
     //   if(user){
@@ -71,5 +71,9 @@ export class UserService implements OnDestroy {
   /*public getCourses():Observable<Course[]>{
     return this.firestore.collection<Course>('courses').valueChanges();
   }*/
+   update(data){
+    this.firestore.doc('users/'+UserService.user.uid).update(data);
+  }
+ 
 
 }

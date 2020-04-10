@@ -90,15 +90,22 @@ export class PostItemComponent implements OnInit {
 }
 showit:boolean=false;
 addLike( postId: string){
-  CourseService.posts.addLike(this.currentUser.uid, postId);
+  // if(!this.showit){
+    CourseService.posts.addLike(this.currentUser.uid, postId);
+    // this.showit=true;
+  // }else this.showit=false;
+  //let element = document.getElementById("myDIV");
+  //element.classList.toggle("fa-thumbs-down",true);
+
 }
 addDisLike( postId: string){
   CourseService.posts.addDislike(this.currentUser.uid, postId)
 }
 removeLike( postId: string){
- 
-  CourseService.posts.removeLike(this.currentUser.uid, postId);
-
+  // if(this.showit){
+    CourseService.posts.removeLike(this.currentUser.uid, postId);
+    // this.showit=false;
+  // }else this.showit=true;
 }
 
 removedislike( postId: string){
