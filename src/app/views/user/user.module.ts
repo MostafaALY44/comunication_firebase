@@ -71,7 +71,7 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     AddAssignmentComponent,
     ReportPostComponent,
     AddMaterialComponent,
-    AddMaterialComponent,
+    //AddMaterialComponent,
     AddCategoryComponent
   ],
   imports: [
