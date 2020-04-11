@@ -8,9 +8,12 @@ import { AuthComponent } from './auth/auth.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NavComponent } from './announcement-nave/nav/nav.component';
 import { MaterialModule } from 'src/app/material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnnouncementNaveComponent } from './announcement-nave/announcement-nave.component';
 import { FooterComponent } from './footer.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { AboutComponent } from './about/about.component';
+import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +23,22 @@ import { FooterComponent } from './footer.component';
     WelcomeComponent, 
     NavComponent,
     AnnouncementNaveComponent,
-    FooterComponent
+    FooterComponent,
+    ContactUsComponent,
+    AboutComponent,
+    ChangeNameComponent
   ],
-  
+  entryComponents: [
+    
+    ChangeNameComponent
+  ],
+
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class LayoutsModule { }

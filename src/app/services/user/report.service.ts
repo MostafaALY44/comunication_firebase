@@ -10,7 +10,7 @@ import { PostReport } from './models/report.model';
 })
 export class ReportService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) { } 
 
   public getReports(id):Observable<PostReport[]>{
     return this.firestore.collection<PostReport>('reports/'+id).snapshotChanges().pipe(

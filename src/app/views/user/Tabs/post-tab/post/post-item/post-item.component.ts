@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPostComponent } from '../edit-post/Edit-post.component';
 import { Comment } from '@angular/compiler';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 import { CourseService } from 'src/app/services/user/oop/course.service';
@@ -12,6 +12,7 @@ import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 import { ReportPostComponent } from '../report-post/report-post.component';
 import { UserService } from 'src/app/services/user/oop/user.service';
+import { element } from 'protractor';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { UserService } from 'src/app/services/user/oop/user.service';
   styleUrls: ['./post-item.component.css']
 })
 export class PostItemComponent implements OnInit {
-  @Input() post:PostComment;
+  @Input() post:PostModel;
   
   courseId;
   currentUser;
@@ -29,7 +30,20 @@ export class PostItemComponent implements OnInit {
     this.currentUser=UserService.getUser();
    }
    currentIdPostComment;
+   isLike:boolean=false;
+   isDisLike:boolean=false;
+   isLikeComment:boolean=false;
+   isDisLikeComment:boolean=false;
   ngOnInit() {
+    
+    this.post.reactedPerson.forEach(person=>{
+      if(person.personId===UserService.user.uid){
+        if(person.action) this.isLike=true;
+        else this.isDisLike=true;
+      } 
+    })
+// console.log(CourseService.posts.comment.comments)
+
   }
   getDate(date){
     if(date != null)
@@ -41,27 +55,45 @@ export class PostItemComponent implements OnInit {
     this.CurrPost=post;
   }
 
-  editPost(){//console.log(this.CurrPost);
+  editPost(){
     this.dialog.open(EditPostComponent,{data:this.CurrPost})
   }
   deletePost(){
-   // this.ser.deletePost(this.courseId,this.CurrPost["id"]);
+   
    CourseService.posts.delete(this.CurrPost.id);
   } 
-  // displayComments(postId):boolean{
-  //   return postId==this.currentIdPostComment;
-  // }
-  comments:Observable <CommentModel[]>;
+  
+  comments:{"commentModel":CommentModel,"isLike" :boolean,"isDisLike" :boolean} []=[];
   flagDisplayComment:boolean = false;
+  removeSubscribe:Subscription;
   getComment(postId){
-    //this.currentIdPostComment=postId;
-    //this.comments=this.commentservice.getPostComments(this.courseId,this.currentIdPostComment);
-    
     if(!this.flagDisplayComment){
-     // console.log("from getdisplay comment"+this.flagDisplayComment);
-    this.comments= CourseService.posts.getComments(postId);
+     
+     this.removeSubscribe= CourseService.posts.getComments(postId)
+    .subscribe(comment=>{
+      this.comments=[];
+     // console.log(comment)
+      comment.forEach(element=>{
+       let LikeComment:boolean=false;
+       let disLikeComment:boolean=false;
+        element.reactedPerson.forEach(person=>{
+          if(person.personId===UserService.user.uid){
+            if(person.action) LikeComment=true;
+            else disLikeComment=true;
+          } 
+        })
+       // console.log({...element,"isLike" :LikeComment,"isDisLike" :disLikeComment})
+        this.comments.push({"commentModel":element,"isLike" :LikeComment,"isDisLike" :disLikeComment})
+
+      })
+
+
+    })
+
     this.flagDisplayComment=true;
-  }else this.flagDisplayComment=false;
+  }else{ this.flagDisplayComment=false;
+    this.removeSubscribe.unsubscribe();
+  }
    
   }
   newComment = new FormGroup({
@@ -81,24 +113,30 @@ export class PostItemComponent implements OnInit {
 
       let data:CommentModel={"id":"" ,"like":0,"reactedPerson" : [], "dislike":0,"body" :this.newComment.value.text,"commentOwner":this.currentUser.name};
       
-      //this.commentservice.addPostComment(this.courseId,postId,data);
+      
        CourseService.posts.comment.setCurrentIdPost(postId);
        CourseService.posts.comment.create(data);
 
       this.newComment.reset();
+      this.flagDisplayComment=false;
+      this.removeSubscribe.unsubscribe();
+      this.getComment(postId);
+
     } 
 }
-showit:boolean=false;
+
 addLike( postId: string){
-  CourseService.posts.addLike(this.currentUser.uid, postId);
+  
+    CourseService.posts.addLike(this.currentUser.uid, postId);
+ 
 }
 addDisLike( postId: string){
   CourseService.posts.addDislike(this.currentUser.uid, postId)
 }
 removeLike( postId: string){
- 
-  CourseService.posts.removeLike(this.currentUser.uid, postId);
-
+  
+    CourseService.posts.removeLike(this.currentUser.uid, postId);
+  
 }
 
 removedislike( postId: string){
@@ -136,5 +174,14 @@ addCommentDisLike( commentId: string,postId:string){
   CourseService.posts.comment.addDislike(this.currentUser.uid, commentId);
 }
 
+removeCommentLike( commentId: string ,postId:string){
+  CourseService.posts.comment.setCurrentIdPost(postId);
+   CourseService.posts.comment.removeLike(this.currentUser.uid, commentId);
+ }
+ removeCommentDisLike( commentId: string,postId:string){
+   CourseService.posts.comment.setCurrentIdPost(postId);
+   CourseService.posts.comment.removeDisLike(this.currentUser.uid, commentId);
+ }
+ 
 }
  

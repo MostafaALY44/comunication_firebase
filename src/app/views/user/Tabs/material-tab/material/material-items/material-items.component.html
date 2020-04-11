@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!currentUser.roles.other">
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
@@ -35,16 +35,23 @@
       </div>
     </td>
   </ng-container>
-
+  <div *ngIf="currentUser.roles.instructor&& !currentUser.roles.other;else elseBlock">
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</div>
+<ng-template #elseBlock>
+  <div>
+<tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+</div>
+</ng-template>
 </table>
 
-<button mat-raised-button (click)="addMaterial();">
+<button mat-raised-button (click)="addMaterial();" *ngIf="currentUser.roles.instructor">
   Add Item <mat-icon>library_add</mat-icon>
 </button>
 
-
+ 
 <!-- Edite menu view -->
 <mat-menu #menu="matMenu">
   <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateMaterial()">

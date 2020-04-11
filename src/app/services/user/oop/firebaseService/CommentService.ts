@@ -49,25 +49,48 @@ export class CommentService implements CRUDForfirebase{
                 }
    
                if(checkAction == 1){
-                   if(react)
-                       comment.dislike--;
-                   else
-                       comment.like--;
+                if(react)
+                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
+                
+                else
+                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
                     comment.reactedPerson.find(element=> element.personId=== personId).action=react;
                }else{
                 comment.reactedPerson.push({"personId":personId, "action":react});
                }
                if(react)
-                    comment.like++;
-               else
-                    comment.dislike++;
-               this.update(url,id,comment);   
+                 this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(1)});
+                
+                else
+                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(1)});
+               //this.update(url,id,comment);   
                this.doUnsubscribe(removeSubscribe)
            })
        }
        doUnsubscribe(removeSubscribe){
            setTimeout(function(){removeSubscribe.unsubscribe()},5)
        }
+
+       removeReact(url: string, id: string, personId:string,react){
+       
+        let removeSubscribe=this.read(url, id).subscribe(  (comment)=>{
+           
+                 let index = comment.reactedPerson.findIndex(element=> element.personId==personId);
+               //console.log(index)
+                 if(index >-1){
+                     comment.reactedPerson.splice(index, 1);
+                    
+                    if(react)
+                         this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
+                    else
+                          this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
+ 
+                    
+                 }
+                 this.doUnsubscribe(removeSubscribe)
+          
+         })
+     }
 
        
        checkAction(actions:ReactedPersons[], personId, react:boolean):number{

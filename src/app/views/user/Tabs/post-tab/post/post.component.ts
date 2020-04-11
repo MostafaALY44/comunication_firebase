@@ -16,6 +16,7 @@ import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 export class PostComponent implements OnInit,OnDestroy {
   
   coursePosts:Post;
+  
   //removeSubscribe;
   constructor(private ser: PostService, route:ActivatedRoute) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.posts=this.ser.getCoursePosts( params.get('id')));

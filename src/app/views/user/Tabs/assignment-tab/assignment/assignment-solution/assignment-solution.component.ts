@@ -4,6 +4,7 @@ import { AssignmentSolutionService } from 'src/app/services/user/assignment-solu
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user/oop/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'assignment-solution',
@@ -19,7 +20,7 @@ export class AssignmentSolutionComponent implements OnInit {
     
   });
   currentUser;
-  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
+  constructor(private service: AssignmentSolutionService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) {
 
     this.currentUser=UserService.getUser();
    }
@@ -42,7 +43,8 @@ export class AssignmentSolutionComponent implements OnInit {
                  "personId":this.currentUser.name
                  };
       this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data);
-      this.newSolution.reset();
+     // this.newSolution.reset();
+     this._snackBar.open('Your solution', 'sent Successfully', { duration: 3000, });
     } 
   }
 

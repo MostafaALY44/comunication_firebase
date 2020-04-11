@@ -18,7 +18,7 @@ export class GlobalAnnouncementService {
         const data = a.payload.doc.data() ;
         const id = a.payload.doc.id;  
         return { id, ...data };
-      }))
+      })) 
     );
     return this.globalTags;
   }

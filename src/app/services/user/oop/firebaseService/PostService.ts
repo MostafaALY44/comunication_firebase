@@ -44,18 +44,22 @@ export class PostService implements CRUDForfirebase{
 
             if(checkAction == 1){
                 if(react)
-                    post.dislike--;
+                    this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
+                    //post.dislike--;
                 else
-                    post.like--;
+                    this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
+                    //post.like--;
                 post.reactedPerson.find(element=> element.personId=== personId).action=react;
             }else{
                 post.reactedPerson.push({"personId":personId, "action":react});
             }
             if(react)
-                post.like++;
+                this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(1)});
+                //post.like++;
             else
-                post.dislike++;
-            this.update(url,id,post);   
+                this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(1)});
+               // post.dislike++;
+           // this.update(url,id,post);   
             this.doUnsubscribe(removeSubscribe)
         })
     }
@@ -63,21 +67,26 @@ export class PostService implements CRUDForfirebase{
         setTimeout(function(){removeSubscribe.unsubscribe()},5)
     }
 
-    removeReact(url: string, id: string, personId:string, react:boolean){
-        
-        this.read(url, id).subscribe(  (post)=>{
+    removeReact(url: string, id: string, personId:string,react){
+       
+        let removeSubscribe=this.read(url, id).subscribe(  (post)=>{
            
-            let isPost = post.reactedPerson.find(element=> element.personId=== personId)
-           
-            if(isPost){
-                let index = post.reactedPerson.findIndex(element=> element.personId==personId);
-                if(index >-1){
-                    post.reactedPerson.splice(index, 1);
-                    this.update(url,id,post);
-                }
-            }
-        })
-    }
+                 let index = post.reactedPerson.findIndex(element=> element.personId==personId);
+               console.log(index)
+                 if(index >-1){
+                     post.reactedPerson.splice(index, 1);
+                    
+                    if(react)
+                         this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
+                    else
+                          this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
+ 
+                    
+                 }
+                 this.doUnsubscribe(removeSubscribe)
+          
+         })
+     }
     
     checkAction(actions:ReactedPerson[], personId, react:boolean):number{
         let isFind = actions.find(element=> element.personId=== personId)
