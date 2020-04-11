@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMaterialComponent } from '../add-material/add-material.component';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/services/user/oop/class/category';
+import { UserService } from 'src/app/services/user/oop/user.service';
+import { User } from 'src/app/services/auth/user.model';
 
 @Component({
   selector: 'material-category',
@@ -21,12 +23,13 @@ export class MaterialCategoryComponent {
    categories: Map<string, {id:string, material:Material}>
 
   //currentCategory:string;
-
+  currentUser:User;
   constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog) {
     this.categories = CourseService.categories.categoriesMap;
+    this.currentUser= UserService.getUser();
   }
 
-
+ 
   newCategory: CategoryModel = {id:"", name:""};
 
   targetCategoryId;

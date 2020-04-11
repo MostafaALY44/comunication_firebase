@@ -24,14 +24,14 @@
         <div class="row">
             <div class="col-md-2">
                
-                <i  type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
-                <!-- <ng-template #elseBlock><i type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i></ng-template> -->
+                <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i>
+                <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
                 {{ post.like }}
             </div>
             <div class="col-md-8">
                 
-                    <i type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:36px"></i>
-
+                    <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px"></i>
+                    <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:36px"></i>
                  {{ post.dislike }}
 
 
@@ -56,46 +56,48 @@
         <button style="font-size:24px" (click)="getComment(post.id)">show Comments <i class="material-icons">comment</i></button>
         
         <div *ngIf="flagDisplayComment" >
-            <div class="row" *ngFor="let comment of comments | async" >
-               
+            <div class="row" *ngFor="let comment of comments " >
+              
                 <div class="col-md-12" style="padding: 20px;">
                     <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
                         <div class="card text-center">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col md-2">
-                                        <i class="fa fa-user-circle" style="font-size:25px;color:black"></i>&nbsp;<div style="font-size: 15px;">{{comment.commentOwner}}</div>
+                                        <i class="fa fa-user-circle" style="font-size:25px;color:black"></i>&nbsp;<div style="font-size: 15px;">{{comment.commentModel.commentOwner}}</div>
                                     </div>
 
                                     <div class="col md-4">
-                                        <p>{{getDate(comment.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+                                        <p>{{getDate(comment.commentModel.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
                                     </div>
-                                <div *ngIf="comment.commentOwner===currentUser.name">
+                                <div *ngIf="comment.commentModel.commentOwner===currentUser.name">
                                     <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
-                                        (click)="setComment(comment)">
+                                        (click)="setComment(comment.commentModel)">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                 </div>
                                 </div>
 
                                 <p class="card-text">
-                                    {{ comment.body }}
+                                    {{ comment.commentModel.body }}
                                 </p>
                             </div>
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-2">
                                        
-                                            <i type="button" (click)="addCommentLike( comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
-                                       
-                                        {{ comment.like }}
+                                            <!-- <i type="button" (click)="addCommentLike( comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i> -->
+                                            <i *ngIf="!comment.isLike" type="button"  (click)="addCommentLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-up" style="font-size:20px"></i>
+                                            <i *ngIf="comment.isLike" type="button" (click)="removeCommentLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
+                                        {{ comment.commentModel.like }}
                         
                                     </div>
                                     <div class="col-md-8">
                                        
-                                            <i type="button" (click)="addCommentDisLike( comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i>
-                        
-                                         {{ comment.dislike }}
+                                            <!-- <i type="button" (click)="addCommentDisLike( comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i> -->
+                                            <i *ngIf="!comment.isDisLike" type="button"  (click)="addCommentDisLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-down" style="font-size:20px"></i>
+                                            <i *ngIf="comment.isDisLike" type="button" (click)="removeCommentDisLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-down" style="font-size:20px"></i>
+                                         {{ comment.commentModel.dislike }}
                         
                         
                                     </div>

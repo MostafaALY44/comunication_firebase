@@ -44,18 +44,22 @@ export class PostService implements CRUDForfirebase{
 
             if(checkAction == 1){
                 if(react)
-                    post.dislike--;
+                    this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
+                    //post.dislike--;
                 else
-                    post.like--;
+                    this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
+                    //post.like--;
                 post.reactedPerson.find(element=> element.personId=== personId).action=react;
             }else{
                 post.reactedPerson.push({"personId":personId, "action":react});
             }
             if(react)
-                post.like++;
+                this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(1)});
+                //post.like++;
             else
-                post.dislike++;
-            this.update(url,id,post);   
+                this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(1)});
+               // post.dislike++;
+           // this.update(url,id,post);   
             this.doUnsubscribe(removeSubscribe)
         })
     }

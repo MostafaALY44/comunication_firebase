@@ -7,6 +7,8 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/services/auth/user.model';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 
 @Component({
@@ -18,9 +20,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class MaterialItemsComponent implements OnDestroy {
   // Angular Mateial table resourses
   displayedColumns: string[] = ['name', 'date', 'link', 'operation'];
+  displayedColumns1: string[] = ['name', 'date', 'link'];
   dataSource: any;
   ///////////////////////////
-
+ 
   currentCategory: string;
   targetMaterial: MaterialModel = {id:"name", date:"date", link:"link"};
 
@@ -29,7 +32,7 @@ export class MaterialItemsComponent implements OnDestroy {
 
   removeUnsubscribe1;
   removeUnsubscribe2;
-
+  currentUser:User;
   constructor(private route: ActivatedRoute, public dialog: MatDialog) {
 
     this.removeUnsubscribe1 = CourseService.isCategoryLoad.subscribe(
@@ -47,6 +50,7 @@ export class MaterialItemsComponent implements OnDestroy {
           
         };
       })
+      this.currentUser= UserService.getUser();
   }
 
   selectedMaterial(currentMaterial: MaterialModel) {

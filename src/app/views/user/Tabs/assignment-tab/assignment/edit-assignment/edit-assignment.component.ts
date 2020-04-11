@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AssignmentService } from 'src/app/services/user/assignment.service';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -20,7 +21,7 @@ export class EditAssignmentComponent implements OnInit {
     Qurl : new FormControl(this.data.assignment.link,Validators.required)
     
   });
-  constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any) { }
+  constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   } 
@@ -42,6 +43,7 @@ export class EditAssignmentComponent implements OnInit {
                             "startDate":this.newAssignment.value.start,
                             "title":this.newAssignment.value.title};
       this.ser.editAssignment(courseId, idAssignent, this.data.assignment);
+      this._snackBar.open(this.newAssignment.value.title, 'Updated Successfully', { duration: 3000, });
     }
   }
 }

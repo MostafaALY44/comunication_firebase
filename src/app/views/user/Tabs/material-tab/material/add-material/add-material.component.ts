@@ -21,7 +21,7 @@ export class AddMaterialComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
+ 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000, });
   }
