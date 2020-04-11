@@ -9,6 +9,6 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="openSnackBar('Updating Canceled', '❌'); onNoClick();">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.id, ' 📝 Updated Successfully')">Update</button>  <!-- data is a json object that contain the form data -->
+  <button mat-button (click)="openSnackBar('Edit Category item Canceled', '❌'); onNoClick();">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.id + ' Category item', ' 📝 Updated Successfully')">Update</button>  <!-- data is a json object that contain the form data -->
 </div>

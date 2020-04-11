@@ -54,7 +54,7 @@
  
 <!-- Edite menu view -->
 <mat-menu #menu="matMenu">
-  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateMaterial()">
+  <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateMaterial(); openSnackBar('Material item ', 'Updated 🆗');">
     <i class="material-icons md-light">edit</i> Edit
   </button>
   <button mat-menu-item type="button" class="btn btn-danger delete" (click)="openSnackBar(targetMaterial.id + ' Material item', 'Deleted 🗑'); deleteMaterial(); ">

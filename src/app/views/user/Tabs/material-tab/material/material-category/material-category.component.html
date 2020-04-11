@@ -7,7 +7,7 @@
 
         <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active" >
           {{ category.key }}
-          <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to edit" (click)="openSnackBar(category.key + ' Category', 'Updated 🆗');updateCategory(category.value.id);">edit</mat-icon>
           <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to delete" (click)="openSnackBar(category.key + ' Category', 'Deleted 🗑'); deleteCategory(category.value.id);">close</mat-icon>
         </a>
 
@@ -15,7 +15,7 @@
 
       <li class="nav-item nav-link" *ngIf="currentUser.roles.instructor">
 
-        <button mat-raised-button (click)="addCategory()">
+        <button mat-raised-button (click)="addCategory() " placement="bottom" ngbTooltip="Click to add new.">
           <mat-icon>add_circle_outline</mat-icon>
         </button>
 

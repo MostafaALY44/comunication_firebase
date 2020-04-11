@@ -11,6 +11,7 @@ import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/services/user/oop/class/category';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { User } from 'src/app/services/auth/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'material-category',
@@ -77,6 +78,5 @@ export class MaterialCategoryComponent {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000, });
   }
-
 
 }
