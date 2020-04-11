@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMaterialComponent } from '../add-material/add-material.component';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/services/user/oop/class/category';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'material-category',
@@ -22,7 +23,7 @@ export class MaterialCategoryComponent {
 
   //currentCategory:string;
 
-  constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog) {
+  constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.categories = CourseService.categories.categoriesMap;
   }
 
@@ -61,10 +62,19 @@ export class MaterialCategoryComponent {
 
     // let oldId = this.targetMaterial.id;
     const dialogRef = this.dialog.open(EditCategoryComponent, { data: this.newCategory });
+    
     dialogRef.afterClosed().subscribe(updatedCategoryItem => {
+      if (updatedCategoryItem)
       CourseService.categories.update(targetCategoryId, updatedCategoryItem);
-      this.router.navigate(['user/comp404/material']);
+      else
+      console.log("Category updating is canceled !!!");
+      //this.router.navigate(['user/comp404/material']);
     });
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000, });
+  }
+
 
 }

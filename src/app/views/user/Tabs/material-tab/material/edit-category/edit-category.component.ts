@@ -3,33 +3,26 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MaterialsService } from 'src/app/services/user/materials.service';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-category',
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.css']
 })
-export class EditCategoryComponent implements OnInit {
-  // newCategory = new FormGroup({
-  //   name : new FormControl(this.data.category.name,Validators.required),
-  // });
-  constructor(@Inject(MAT_DIALOG_DATA) private data:CategoryModel) { }
-
-  ngOnInit() {
+export class EditCategoryComponent{
+  constructor(
+    public dialogRef: MatDialogRef<EditCategoryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: CategoryModel,
+    private _snackBar: MatSnackBar
+  ) { }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
-  // isEmpty(text:string):boolean{
-  //   for(let i=0;i<text.length;i++)
-  //     if(text[i] != " ")
-  //       return false;
-  //   return true;
-  // }
- 
-  // onSubmit(){
-  //     let courseId=this.data.courseId;
-  //     let idCategory= this.data.category.id;
-  //     this.data.category= {"name" :this.newCategory.value.name};
-  //     this.materialService.editCategory(courseId, idCategory, this.data.category);
-  // }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000, });
+  }
+
 }

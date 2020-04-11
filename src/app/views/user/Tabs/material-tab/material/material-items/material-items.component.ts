@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class MaterialItemsComponent implements OnDestroy {
   removeUnsubscribe1;
   removeUnsubscribe2;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private _snackBar: MatSnackBar) {
 
     this.removeUnsubscribe1 = CourseService.isCategoryLoad.subscribe(
       (flag) => {
@@ -75,6 +76,10 @@ export class MaterialItemsComponent implements OnDestroy {
   deleteMaterial() {
     this.route.paramMap.subscribe((params: ParamMap) => this.currentCategory = params.get('id'));
     CourseService.categories.categoriesMap.get(this.currentCategory).material.delete(this.targetMaterial.id);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000, });
   }
 
   ngOnDestroy(): void {

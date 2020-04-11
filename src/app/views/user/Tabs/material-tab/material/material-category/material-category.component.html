@@ -1,4 +1,3 @@
-<!------------------------ [[[[[[[[[[[ Categories ]]]]]]]]] ------------------------------------->
 <div class="row">
   <div class="col-md-12">
 
@@ -8,8 +7,8 @@
 
         <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active">
           {{ category.key }}
-          <mat-icon (click)="updateCategory(category.value.id);">edit</mat-icon>
-          <mat-icon (click)="deleteCategory(category.value.id);">close</mat-icon>
+          <mat-icon placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon placement="bottom" ngbTooltip="Click to delete" (click)="openSnackBar(category.key + ' Category', 'Deleted 🗑'); deleteCategory(category.value.id);">close</mat-icon>
         </a>
 
       </div>
