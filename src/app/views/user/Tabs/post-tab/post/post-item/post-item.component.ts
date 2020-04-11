@@ -118,8 +118,10 @@ export class PostItemComponent implements OnInit {
        CourseService.posts.comment.create(data);
 
       this.newComment.reset();
+
       this.flagDisplayComment=false;
-      this.removeSubscribe.unsubscribe();
+      if(this.removeSubscribe)
+          this.removeSubscribe.unsubscribe();
       this.getComment(postId);
 
     } 
