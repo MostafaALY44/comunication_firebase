@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddCategoryComponent } from './Tabs/material-tab/material/add-category/add-category.component';
 import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
@@ -80,7 +81,8 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    ScrollingModule
+    ScrollingModule,
+    NgbModule
   ],
   providers:[CoursesService]
   

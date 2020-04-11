@@ -7,8 +7,6 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -40,6 +38,7 @@ export class MaterialItemsComponent implements OnDestroy {
           this.isDataLoad = true;
           this.removeUnsubscribe2 = this.route.paramMap.subscribe(
             (params: ParamMap) => {
+              if (CourseService.categories.categoriesMap.get(params.get('id')))
               this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material;
               this.dataSource  = this.materials.subscribeMaterialsFireStore();
               this.dataSource = this.materials.material;
@@ -48,7 +47,6 @@ export class MaterialItemsComponent implements OnDestroy {
           
         };
       })
-
   }
 
   selectedMaterial(currentMaterial: MaterialModel) {

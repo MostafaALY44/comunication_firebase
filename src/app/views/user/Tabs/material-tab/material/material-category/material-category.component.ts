@@ -24,7 +24,6 @@ export class MaterialCategoryComponent {
 
   constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog) {
     this.categories = CourseService.categories.categoriesMap;
-
   }
 
 
@@ -48,7 +47,9 @@ export class MaterialCategoryComponent {
 
   deleteCategory(targetCategoryId){
     CourseService.categories.delete(targetCategoryId);
-    console.log(this.targetCategoryId + " is deleted");
+      // setTimeout(function(){
+      //   this.router.navigate(['user/comp404/material']);
+      // },3000);
   }
 
   updateCategory(targetCategoryId){
@@ -62,6 +63,7 @@ export class MaterialCategoryComponent {
     const dialogRef = this.dialog.open(EditCategoryComponent, { data: this.newCategory });
     dialogRef.afterClosed().subscribe(updatedCategoryItem => {
       CourseService.categories.update(targetCategoryId, updatedCategoryItem);
+      this.router.navigate(['user/comp404/material']);
     });
   }
 
