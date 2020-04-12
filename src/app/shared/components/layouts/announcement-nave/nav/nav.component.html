@@ -57,6 +57,17 @@
         <a class="p-2 text-dark" routerLink="/auth/signup" routerLinkActive="active" >Sign Up</a>
     </nav>
     <nav class="my-2 my-md-0 mr-md-3"  *ngIf="isEmailVerified()">
+        <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
+            <i type="button" [matMenuTriggerFor]="menu" class="material-icons" style="font-size:17px; color: cornflowerblue;">settings
+                <span class="material-icons" style="font-size:17px; color: cornflowerblue;">
+                    arrow_drop_down
+                    </span>
+            </i>&nbsp;&nbsp;
+           
+            <mat-menu #menu="matMenu">
+                <a (click)= "changeName()" mat-menu-item>Change your Name</a>
+                <a (click)="changePassword()" mat-menu-item>Change your password</a>
+            </mat-menu>
         <a class=" p-2 text-dark" (click)="logout()" routerLink="/" >Logout</a>
     </nav>
-  </div>
+  </div> 

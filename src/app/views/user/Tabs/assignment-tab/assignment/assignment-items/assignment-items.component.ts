@@ -11,6 +11,7 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'assignment-items',
@@ -25,7 +26,8 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   dataSource:any;
   currentUser;
   removesubscribe;
-  constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog, private userService:UserService) {
+  constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog,private _snackBar: MatSnackBar,
+    private userService:UserService) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
      // this.assignments = service.getAssingment(this.courseId) });
@@ -79,6 +81,8 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
 
   deleteAssignment(){
     this.service.deleteAssignment(this.courseId,this.currentAssign["id"]);
+    this._snackBar.open(this.currentAssign['title'], 'Deleted Successfully', { duration: 3000, });
+
   } 
   editAssignment(){
     this.dialog.open(EditAssignmentComponent,{data:{"assignment":this.currentAssign,"courseId":this.courseId}})

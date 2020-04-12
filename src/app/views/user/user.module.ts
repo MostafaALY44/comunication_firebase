@@ -1,3 +1,5 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddCategoryComponent } from './Tabs/material-tab/material/add-category/add-category.component';
 import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
 import { EditMaterialComponent } from './Tabs/material-tab/material/edit-material/edit-material.component';
@@ -26,6 +28,11 @@ import { EditPostComponent } from './Tabs/post-tab/post/edit-post/Edit-post.comp
 import { EditAssignmentComponent } from './Tabs/assignment-tab/assignment/edit-assignment/edit-assignment.component';
 import { EditCommentComponent } from './Tabs/post-tab/post/edit-comment/edit-comment.component';
 import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-post.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ChangePasswordComponent } from '../auth/change-password/change-password.component';
+
+
+
 
 
 @NgModule({
@@ -50,7 +57,9 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCommentComponent,
     EditMaterialComponent,
     EditCategoryComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    ChangePasswordComponent,
+    AddCategoryComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -62,14 +71,18 @@ import { ReportPostComponent } from './Tabs/post-tab/post/report-post/report-pos
     EditCategoryComponent,
     AddAssignmentComponent,
     ReportPostComponent,
-    AddMaterialComponent
+    AddMaterialComponent,
+    //AddMaterialComponent,
+    AddCategoryComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ScrollingModule,
+    NgbModule
   ],
   providers:[CoursesService]
   

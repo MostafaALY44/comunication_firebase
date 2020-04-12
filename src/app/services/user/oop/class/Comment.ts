@@ -49,10 +49,19 @@ export class Comment implements CRUD{
 		//console.log("+++++++++++++++++");
 	}
 
-
+ 
 	addDislike(personId:string, commentId:string){
 		this.commentService.addReact(this.url+'/'+this.postId+'/comments', commentId, personId,false)
 	}	
+
+	removeLike(personId:string, commentId:string){
+		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId,true)
+	}	
+	
+	removeDisLike(personId:string, commentId:string){
+		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId,false)
+	}	 
+
 
 	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reactedPerson" : comment.reactedPerson, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
  

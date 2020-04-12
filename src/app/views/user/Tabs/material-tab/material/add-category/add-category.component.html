@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Adding new category item </h1>
+<div mat-dialog-content>
+  <p>What's your new category name?</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.name + ' Category', 'Added Successfully')" >Add</button>  <!-- data is a json object that contain the form data -->
+</div>

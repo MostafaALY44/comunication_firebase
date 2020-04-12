@@ -3,6 +3,7 @@ import { AssignmentService } from 'src/app/services/user/assignment.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'add-assignment',
@@ -21,12 +22,12 @@ export class AddAssignmentComponent implements OnInit {
     
   });
    assignmentId;
-  constructor(private ser: AssignmentService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any) {
+  constructor(private ser: AssignmentService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) {
     //this.route.parent.paramMap.subscribe((params : ParamMap) =>  this.assignmentId=params.get('id'));
    }
 
   ngOnInit() {
-
+ 
   }
   
   isEmpty(text:string):boolean{
@@ -49,9 +50,14 @@ export class AddAssignmentComponent implements OnInit {
      
      
       this.ser.addAssignment( this.data.courseId,data2);
-      this.newAssignment.reset();
+     // this.newAssignment.reset();
+      this._snackBar.open(this.newAssignment.value.title, 'Added Successfully', { duration: 3000, });
     } 
   }
+
+  
+    
+  
 
 }
  

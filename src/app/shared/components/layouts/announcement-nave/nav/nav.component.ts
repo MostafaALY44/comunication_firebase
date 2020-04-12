@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { UserService } from 'src/app/services/user/oop/user.service';
+import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nav',
@@ -11,11 +13,13 @@ import { UserService } from 'src/app/services/user/oop/user.service';
   styleUrls: ['../../../../../views/auth/sb-admin-2.min.css']
 })
 export class NavComponent implements OnInit {
+  currentUser;
   constructor(private searchService:SearchInputService, private router:Router,
-     private authenticationService:AuthenticationService) {
+     private authenticationService:AuthenticationService,private dialog:MatDialog) {
         if(this.isEqualAnnouncementsOrWelcom(this.router.url) ) 
           this.displaySearchInput=true;
         
+          this.currentUser=UserService.getUser();
      };
   displaySearchInput:boolean=false;
   urlBeforeNavigate:string='';
@@ -66,6 +70,13 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.authenticationService.SignOut();
+  }
+  changePassword(){
+    this.router.navigate(['user/change-password']); 
+  }
+
+  changeName(){
+    this.dialog.open(ChangeNameComponent,{data:this.currentUser})
   }
 
 }

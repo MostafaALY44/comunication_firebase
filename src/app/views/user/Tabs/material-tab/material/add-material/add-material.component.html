@@ -1,42 +1,12 @@
-<!-- <form [formGroup]="newMaterial" (ngSubmit)="onSubmit()">
-  <div class="modal fade" id="add-material" tabindex="-1" role="dialog" aria-labelledby="addmaterial"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnewtab">Adding Material</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" [class.is-invalid]="newMaterial.get('id').invalid && newMaterial.get('id').touched"
-            formControlName="id" class="form-control" id="id" placeholder="id">
-          <input class="form-control"
-            [class.is-invalid]="newMaterial.get('date').invalid && newMaterial.get('date').touched"
-            formControlName="date" type="datetime-local" placeholder="Date" id="date">
-          <input type="text" [class.is-invalid]="newMaterial.get('link').invalid && newMaterial.get('link').touched"
-            formControlName="link" class="form-control" id="link" placeholder="Link">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" [disabled]="!newMaterial.valid" class="btn btn-success">Add-new</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</form> -->
-
 <h1 mat-dialog-title>Adding new material item </h1>
 <div mat-dialog-content>
   <p>What's your new material data?</p>
-
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.id">
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field> 
     <mat-label>Date</mat-label>
     <input matInput [(ngModel)]="data.date">
   </mat-form-field>
@@ -47,24 +17,8 @@
   </mat-form-field>
 
 </div>
+
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add</button>  <!-- data is a json object that contain the form data -->
-
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.id, 'Added Successfully')"> Add </button>  <!-- data is a json object that contain the form data -->
 </div>
-
-<!-- 
-<ol>
-  <li>
-    <mat-form-field>
-      <mat-label>What's your name?</mat-label>
-      <input matInput [(ngModel)]="name">
-    </mat-form-field>
-  </li>
-  <li>
-    <button mat-raised-button (click)="openDialog()">Pick one</button>
-  </li>
-  <li *ngIf="animal">
-    You chose: <i>{{animal}}</i>
-  </li>
-</ol> -->

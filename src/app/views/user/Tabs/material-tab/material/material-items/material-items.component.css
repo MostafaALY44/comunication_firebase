@@ -7,3 +7,18 @@ table {
   font-weight: bold;
 }
   
+.branch {
+  background-color: #FFF8DC;
+}
+
+.delete:hover{
+  color: #ff473f;
+}
+
+.edit:hover{
+  color: #0c0c0a;
+}
+
+.color{
+  color: beige;
+}
