@@ -4,17 +4,18 @@ import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
+import { CourseService } from './oop/course.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentService {
-
+  static url:string=""
   constructor(private firestore: AngularFirestore) { }
 
-  public getAssingment(idCourse):Observable<Assignment[]>{
+  public getAssingment(url):Observable<Assignment[]>{
     //console.log('courses/'+idCourse+'/assignment');
-    return this.firestore.collection<Assignment>('courses/'+idCourse+'/assignment').snapshotChanges().pipe(
+    return this.firestore.collection<Assignment>(url+'/assignment').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() ;
         const id = a.payload.doc.id;
@@ -25,17 +26,17 @@ export class AssignmentService {
 
   public addAssignment(courseId, data){ 
     //data["date"]=firebase.firestore.FieldValue.serverTimestamp();
-   // console.log('courses/'+courseId+'/assignment');
-    return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').add(data);
+    console.log(AssignmentService.url+'/assignment');
+    return this.firestore.collection<Assignment>(AssignmentService.url+'/assignment').add(data);
   }
 
   public editAssignment(courseId, assignmentId, data){
     //console.log('courses/'+courseId+'/assignment');
-    return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).update(data);
+    return this.firestore.collection<Assignment>(AssignmentService.url+'/assignment').doc(assignmentId).update(data);
   }
   public deleteAssignment(courseId,assignmentId){
     //console.log('courses/'+courseId+'/posts/'+id);
-    return this.firestore.collection<Assignment>('courses/'+courseId+'/assignment').doc(assignmentId).delete();
+    return this.firestore.collection<Assignment>(AssignmentService.url+'/assignment').doc(assignmentId).delete();
   }
 }
  

@@ -64,9 +64,12 @@ export class AuthenticationService  {
       roles: {
         other: true
       },
-      universities:[{name:"Ain Shams University", colleges:[{name:"faculty of science",
-      courseCodes:[]}]}],
-      fcmTokens:{}
+      universities:[{name:"Ain Shams University", id:"", colleges:[{name:"faculty of science", id:"",
+      courseCodes:[{code:"",  postsNumber:0, categoriesNumber:0, assignmentsNumber:0, deletePostsNumber:0,
+      deleteAssignmentNumber:0}]
+    }]}],
+      fcmTokens:{},
+      univeristy:{}
     } 
     return userRef.set(data, { merge: true })
   }
@@ -88,6 +91,7 @@ export class AuthenticationService  {
 
   /* Sign in */
   async SignIn(email: string, password: string) {
+    
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
     if(!credential.user.emailVerified){
       this.SignOut();

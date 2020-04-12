@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AssignmentService } from 'src/app/services/user/assignment.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -10,30 +10,42 @@ import { EditAssignmentComponent } from '../edit-assignment/edit-assignment.comp
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/services/user/oop/user.service';
+import { NotificationService } from 'src/app/services/user/oop/notification.service';
 
 @Component({
   selector: 'assignment-items',
   templateUrl: './assignment-items.component.html',
   styleUrls: ['./assignment-items.component.css']
 })
-export class AssignmentItemsComponent implements OnInit {
+export class AssignmentItemsComponent implements OnInit , OnDestroy{
 
   assignments:Observable<Assignment[]>;
   
   courseId;
   dataSource:any;
   currentUser;
-  constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog) {
+  removesubscribe;
+  constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog, private userService:UserService) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
      // this.assignments = service.getAssingment(this.courseId) });
     //this.assignments.subscribe(x=>console.log(x));
     
     this.assignments=CourseService.assignments;
+    this.removesubscribe=CourseService.assignments.subscribe(assignments=>{
+      let obj={[UserService.indexNotification+".assignmentNumber"]:assignments.length}
+      console.log("qqqqqqqqqqqqqqq ",obj)
+      this.userService.update( obj)
+        NotificationService.currNotification.assignmentsNumber=0
+    })
     this.dataSource=this.assignments;
     this.currentUser= UserService.getUser();
 
    }
+  ngOnDestroy(): void {
+    if(this.removesubscribe)
+      this.removesubscribe.unsubscribe()
+  }
  
   ngOnInit() {
   } 
