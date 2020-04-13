@@ -7,7 +7,8 @@ import { AuthenticationService } from '../../auth/authentication.service';
 import { Post } from './class/Post';
 import { Category } from './class/category';
 import { DocumentReference } from '@angular/fire/firestore/interfaces';
-interface Course{
+import { CourseService } from './course.service';
+interface CourseTab{
   posts: Post,
   categories: Category,
   assignments: Observable<Assignment[]>;
@@ -25,6 +26,7 @@ export class UserService implements OnDestroy {
 
   static userObservable:Observable<User>
   static user:User= new User();
+  static indexNotification:string="";
   private static removeSubscribe;
   static getUser(){
     return UserService.user
@@ -41,7 +43,7 @@ export class UserService implements OnDestroy {
       }else UserService.user.emailVerified=false;
     })
   }
-  //static loadedCourses:Map<string, Course> = new Map<string, Course>();
+  //static loadedCourses:Map<string, CourseTab> = new Map<string, Course>();
   //static hasGroups:HasGroups[];
   static hasGroups:university[]=[]; 
  
@@ -68,12 +70,8 @@ export class UserService implements OnDestroy {
 
 
 
-  /*public getCourses():Observable<Course[]>{
-    return this.firestore.collection<Course>('courses').valueChanges();
-  }*/
-   update(data){
-    this.firestore.doc('users/'+UserService.user.uid).update(data);
-  }
- 
+ update(data){
+   this.firestore.doc('users/'+UserService.user.uid).update(data);
+ }
 
 }

@@ -7,6 +7,10 @@ import { CommentService } from '../firebaseService/CommentService';
 import { Comment } from '../class/Comment'
 import { map } from 'rxjs/operators';
 import { PostModel } from '../models/PostModel';
+import { NotificationService } from '../notification.service';
+import { CourseFirebaseService } from '../firebaseService/course-firebase.service';
+import { UserService } from '../user.service';
+import { CourseService } from '../course.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,26 +27,41 @@ export class PostFactoryService implements OnDestroy {
   //private postService:PostService =new PostService(this.firestore);
   //private commentService:CommentService = new CommentService(this.firestore);
   private url:string;
-  constructor( private firestore: AngularFirestore) {
-    //this.coursePost.posts=this.getPosts();
-   }
-
+  constructor( private firestore: AngularFirestore) {}
+   private userService:UserService=new UserService(this.firestore)
    changeUrl(url:string){
-    if(this.removeUnsubscribe1)  
-      this.removeUnsubscribe1.unsubscribe();
+      if(this.removeUnsubscribe1)  
+        this.removeUnsubscribe1.unsubscribe();
       this.coursePost.reset();
       this.url=url;
-      this.coursePost.changeUrl(this.url);
-      this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{this.coursePost.posts=posts;})
+      this.coursePost.changeUrl(this.url); 
+      this.setPosts();
    }
 
-  //  subscribe(){
-  //   this.setPosts(false);
-  // }
-  // unsubscribe(){
-  //  if(this.removeUnsubscribe1)  
-  //    this.removeUnsubscribe1.unsubscribe();
-  // }
+  private setPosts(){
+    this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{
+      this.coursePost.posts=posts;
+      })
+   }   
+   private setPosts2(){
+    this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{
+      //console.log ("oooooooooooooooooooooooooo: ",UserService.indexNotification+".postsNumber")
+      //console.log ("uuuuuuuuuuuuuuuuuuuuuuuuuu: ",this.url)
+       let obj={[UserService.indexNotification+".postNumber"]:posts.length}
+        
+      this.userService.update( obj)
+      NotificationService.currNotification.postsNumber=0
+      this.coursePost.posts=posts;})
+   }   
+
+  subscribe(){
+    this.unsubscribe();
+     this.setPosts2();
+   }
+   unsubscribe(){
+    if(this.removeUnsubscribe1)  
+      this.removeUnsubscribe1.unsubscribe();
+   }
   ngOnDestroy(): void {
     if(this.removeUnsubscribe1)  
           this.removeUnsubscribe1.unsubscribe();

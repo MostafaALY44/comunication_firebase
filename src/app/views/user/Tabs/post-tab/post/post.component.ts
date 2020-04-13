@@ -25,11 +25,12 @@ export class PostComponent implements OnInit,OnDestroy {
     //this.removeSubscribe=route.parent.paramMap.subscribe(() =>this.coursePosts=CourseService.posts)
 
     //})
-    
+    CourseService.subscribeTab("post");
     this.coursePosts=CourseService.posts;
   }
   ngOnDestroy(): void {
     //this.removeSubscribe.unsubscribe();
+    CourseService.unsubscribeTab("post");
   }
 
   ngOnInit() {

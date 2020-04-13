@@ -14,7 +14,7 @@ export class PostService implements CRUDForfirebase{
     read(url: string, id: string) {
         return this.firestore.doc<PostModel>(url+'/'+id).valueChanges();
     }
-    update(url: string, id: string, post) {
+    update(url: string, id: string, post) {;
         return this.firestore.doc(url+'/'+id).update(post);
     }
     delete(url: string, id: string) {
@@ -33,72 +33,28 @@ export class PostService implements CRUDForfirebase{
 
     
     addReact(url: string, id: string, personId:string, react:boolean){
-     //   console.log("addReact: ")
-
-		let removeSubscribe=this.read(url, id).subscribe( (post)=>{
-            let checkAction= this.checkAction(post.reactedPerson, personId, react) 
-            console.log("addReact: "+checkAction)
-            if(checkAction == -1){
-                this.doUnsubscribe(removeSubscribe)
-                return;}
-
-            if(checkAction == 1){
-                if(react)
-                    this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
-                    //post.dislike--;
-                else
-                    this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
-                    //post.like--;
-                post.reactedPerson.find(element=> element.personId=== personId).action=react;
-            }else{
-                post.reactedPerson.push({"personId":personId, "action":react});
-            }
-            if(react)
-                this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(1)});
-                //post.like++;
-            else
-                this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(1)});
-               // post.dislike++;
-           // this.update(url,id,post);   
-            this.doUnsubscribe(removeSubscribe)
-        })
+     return this.update(url, id, {[`react.${personId}`] :react})
+		
     }
-    doUnsubscribe(removeSubscribe){
-        setTimeout(function(){removeSubscribe.unsubscribe()},5)
-    }
+    // doUnsubscribe(removeSubscribe){
+    //     setTimeout(function(){removeSubscribe.unsubscribe()},0)
+    // }
 
-    removeReact(url: string, id: string, personId:string,react){
-       
-        let removeSubscribe=this.read(url, id).subscribe(  (post)=>{
-           
-                 let index = post.reactedPerson.findIndex(element=> element.personId==personId);
-               console.log(index)
-                 if(index >-1){
-                     post.reactedPerson.splice(index, 1);
-                    
-                    if(react)
-                         this.update(url,id,{reactedPerson:post.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
-                    else
-                          this.update(url,id,{reactedPerson:post.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
- 
-                    
-                 }
-                 this.doUnsubscribe(removeSubscribe)
-          
-         })
+    removeReact(url: string, id: string, personId:string){
+        this.update(url, id, {[`react.${personId}`] :firebase.firestore.FieldValue.delete()})
      }
     
-    checkAction(actions:ReactedPerson[], personId, react:boolean):number{
-        let isFind = actions.find(element=> element.personId=== personId)
-        if(isFind){
-            if(isFind.action==react)
-                return -1 //not allow the same react
-            else{
-                return 1 //allow with different react
-            }
-        }else
-            return 0 //allow new react
-    }
+    // checkAction(actions:ReactedPerson[], personId, react:boolean):number{
+    //     let isFind = actions.find(element=> element.personId=== personId)
+    //     if(isFind){
+    //         if(isFind.action==react)
+    //             return -1 //not allow the same react
+    //         else{
+    //             return 1 //allow with different react
+    //         }
+    //     }else
+    //         return 0 //allow new react
+    // }
 
 
     // reportPost(url: string, id: string, personId:string,report:string){

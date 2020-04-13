@@ -10,7 +10,7 @@ import { AddSuperAdminComponent } from './add-super-admin/add-super-admin.compon
 
 const routes: Routes = [
   {
-    path:'',component:AdminBodyComponent,
+    path:':id1/:id2',component:AdminBodyComponent,
     children:[
       {
         path:'edit-courses',component:EditCoursesComponent

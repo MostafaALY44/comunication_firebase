@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { Course } from './oop/models/CourseMode';
 @Injectable({
   providedIn: 'root'
 })

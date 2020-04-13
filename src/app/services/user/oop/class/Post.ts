@@ -42,7 +42,7 @@ export class Post implements CRUD{
 	}
 
 	addLike(personId:string, postId:string){
-		this.postService.addReact(this.url, postId, personId,true)
+		return this.postService.addReact(this.url, postId, personId,true)
 	}
 
 	getAll(){
@@ -54,11 +54,11 @@ export class Post implements CRUD{
 	}	
  
 	removeLike(personId:string, postId:string){
-		this.postService.removeReact(this.url, postId, personId,true)
+		this.postService.removeReact(this.url, postId, personId)
 	}	
 	
 	removeDisLike(personId:string, postId:string){
-		this.postService.removeReact(this.url, postId, personId,false)
+		this.postService.removeReact(this.url, postId, personId)
 	}	 
 
 	currentPostId:string="";
@@ -72,6 +72,6 @@ export class Post implements CRUD{
 
 	// }
 
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"reactedPerson" : post.reactedPerson, "body":post.body, "like":post.like, "dislike":post.dislike, "postOwner": post.postOwner}}
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"react" : null, "body":post.body, "postOwner": post.postOwner}}
 
 }

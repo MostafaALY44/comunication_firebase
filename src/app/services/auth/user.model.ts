@@ -1,15 +1,19 @@
 import { DocumentReference } from '@angular/fire/firestore/interfaces';
+import { Course } from '../user/oop/models/CourseMode';
 
 export interface Roles { 
     student?: boolean;
     instructor?: boolean;
     other?: boolean;
  }
+ 
  export interface College{
+     id:string;
      name:string;
-     courseCodes:string[];
+     courseCodes:Course[];
  }
  export interface university{
+     id:string;
      name:string;
      colleges:College[]
  }
@@ -30,4 +34,5 @@ export interface Roles {
     roles:Roles;
     universities:university[];
     fcmTokens:token;
+    univeristy:any;
 }

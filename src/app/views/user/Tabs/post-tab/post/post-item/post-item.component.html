@@ -26,13 +26,13 @@
                
                 <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i>
                 <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
-                {{ post.like }}
+                {{ react.like }}
             </div>
             <div class="col-md-8">
                 
                     <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px"></i>
                     <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:36px"></i>
-                 {{ post.dislike }}
+                 {{ react.dislike }}
 
 
             </div>
@@ -89,7 +89,7 @@
                                             <!-- <i type="button" (click)="addCommentLike( comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i> -->
                                             <i *ngIf="!comment.isLike" type="button"  (click)="addCommentLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-up" style="font-size:20px"></i>
                                             <i *ngIf="comment.isLike" type="button" (click)="removeCommentLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
-                                        {{ comment.commentModel.like }}
+                                        {{ comment.like }}
                         
                                     </div>
                                     <div class="col-md-8">
@@ -97,7 +97,7 @@
                                             <!-- <i type="button" (click)="addCommentDisLike( comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i> -->
                                             <i *ngIf="!comment.isDisLike" type="button"  (click)="addCommentDisLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-down" style="font-size:20px"></i>
                                             <i *ngIf="comment.isDisLike" type="button" (click)="removeCommentDisLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-down" style="font-size:20px"></i>
-                                         {{ comment.commentModel.dislike }}
+                                         {{ comment.dislike }}
                         
                         
                                     </div>

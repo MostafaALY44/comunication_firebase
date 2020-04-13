@@ -7,13 +7,20 @@ import { EditPersonsComponent } from './edit-persons/edit-persons.component';
 import { ReviewReportsComponent } from './review-reports/review-reports.component';
 import { AddSuperAdminComponent } from './add-super-admin/add-super-admin.component';
 import { AdminBodyComponent } from './admin-body/admin-body.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material.module';
+import { SaveDataComponent } from './edit-courses/save-data/save-data.component';
 
 
 @NgModule({
-  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent],
+  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent],
+  entryComponents:[SaveDataComponent],
   imports: [
     CommonModule,
-    SuperAdminRoutingModule
+    SuperAdminRoutingModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FormsModule
   ]
 })
 export class SuperAdminModule { }

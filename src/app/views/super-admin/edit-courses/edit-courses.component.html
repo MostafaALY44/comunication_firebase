@@ -1,1 +1,18 @@
-<p>edit-courses works!</p>
+<div class="container">
+<form [formGroup]="registrationForm" >
+<div class="form-group">
+    <mat-form-field class="example-full-width">
+        <mat-label>Course Code &nbsp;#1</mat-label>
+        <input matInput formControlName="courseCode" autofocus>
+      </mat-form-field>
+      <div formArrayName="newCourseCode" *ngFor="let elementCourseCode of newCourseCode.controls; let i=index">
+        <mat-form-field class="example-full-width">
+            <mat-label>Course Code &nbsp;#{{i+2}}</mat-label>
+            <input id="{{i}}" class="toAdd" matInput [formControlName]="i" >
+          </mat-form-field>
+      </div>
+  </div>
+  
+</form>
+<button  (click)="onSubmit()" [disabled]="!registrationForm.valid">add Courses</button>
+</div>

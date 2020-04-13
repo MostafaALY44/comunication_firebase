@@ -32,8 +32,8 @@ export class MessagingService implements OnDestroy{
    listen(){
      this.receiveMessages();
     // console.log("}}}}}}}}}}}}}}}}")
-  //  this.removeSubscribe2=this.afMessaging.messages
-  //   .subscribe((message) => { console.log("+++++++++++++++++++++++++++++++++++++++",message); });
+   this.removeSubscribe2=this.afMessaging.messages
+    .subscribe((message) => { console.log("+++++++++++++++++++++++++++++++++++++++",message); });
 
   }
 

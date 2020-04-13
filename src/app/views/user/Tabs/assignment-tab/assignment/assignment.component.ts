@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user/oop/user.service';
+import { NotificationService } from 'src/app/services/user/oop/notification.service';
 
 @Component({
   selector: 'app-assignment',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssignmentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 
   ngOnInit() {
   }

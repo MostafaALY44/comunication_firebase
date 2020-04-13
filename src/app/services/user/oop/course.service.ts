@@ -14,25 +14,29 @@ import { UserService } from './user.service';
 
 export class CourseService {
 
-  static posts: Post;
+  static posts: Post; 
   static categories: Category;
   static assignments: Observable<Assignment[]>;
   static isCategoryLoad:Observable<boolean>;
+  static notification:{"posts":number,"assignments":number}={"posts":0,"assignments":0};
 
-  private postFactoryService: PostFactoryService = new PostFactoryService(this.firestore)
+  static postFactoryService: PostFactoryService;
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
 
   //courseId;
   constructor(private firestore: AngularFirestore) { 
+    CourseService.postFactoryService = new PostFactoryService(this.firestore)
     CourseService.assignments = this.allAssignments.asObservable(); 
   }
 
-  setCouserId(courseId: string) {
+  //setCouserId(courseId: string) {
+    setUrl(url: string) {
     //this.courseId = courseId;
-    this.setPosts(courseId);
-    this.setCategories(courseId);
-    this.setAssignment(courseId)
+    AssignmentService.url=url
+    this.setPosts(url);
+    this.setCategories(url);
+    this.setAssignment(url)
     
     // let course=UserService.loadedCourses.get(courseId)
     // if(!course){
@@ -60,37 +64,37 @@ export class CourseService {
     
   }
 
-  // subscribeTab(tabName:"post"|"material"|"assignment"){
-  //   switch(tabName){
-  //     case "post":
-  //       this.postFactoryService.subscribe();
-  //       break;
-  //     case "material":
-  //       this.categoryFactoryService.subscribe();
-  //       break;
-  //     case "assignment":break; 
-  //   }
-  // };
+  static subscribeTab(tabName:"post"|"material"|"assignment"){
+    switch(tabName){
+      case "post":
+        CourseService.postFactoryService.subscribe();
+        break;
+      case "material":
+        //this.categoryFactoryService.subscribe();
+        break;
+      case "assignment":break; 
+    }
+  };
 
-  // unsubscribeTab(tabName:"post"|"category"|"assignment"){
-  //   switch(tabName){
-  //     case "post":
-  //       this.postFactoryService.unsubscribe();
-  //       break;
-  //     case "category":
-  //       this.categoryFactoryService.unsubscribe();
-  //       break;
-  //     case "assignment":break;
-  //   }
-  // };
+  static unsubscribeTab(tabName:"post"|"category"|"assignment"){
+    switch(tabName){
+      case "post":
+        CourseService.postFactoryService.unsubscribe();
+        break;
+      case "category":
+        //this.categoryFactoryService.unsubscribe();
+        break;
+      case "assignment":break;
+    }
+  };
 
   setPosts(courseId: string) {
-    this.postFactoryService.changeUrl('/courses/' + courseId)
-    CourseService.posts = this.postFactoryService.coursePost;
+    CourseService.postFactoryService.changeUrl( courseId)
+    CourseService.posts = CourseService.postFactoryService.coursePost;
   }
   
   setCategories(courseId: string) {
-    this.categoryFactoryService.changeUrl('/courses/' + courseId);
+    this.categoryFactoryService.changeUrl( courseId);
     CourseService.categories = this.categoryFactoryService.category;
     CourseService.isCategoryLoad=this.categoryFactoryService.isLoad();
   }
