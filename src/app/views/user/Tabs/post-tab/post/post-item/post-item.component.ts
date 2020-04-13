@@ -13,6 +13,8 @@ import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 import { ReportPostComponent } from '../report-post/report-post.component';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { element } from 'protractor';
+import { User } from 'src/app/services/auth/user.model';
+
 
 
 @Component({
@@ -21,10 +23,10 @@ import { element } from 'protractor';
   styleUrls: ['./post-item.component.css']
 })
 export class PostItemComponent implements OnInit {
-  @Input() post:PostModel;
+  @Input() post;
   
   courseId;
-  currentUser;
+  currentUser:User;
   constructor( public dialog:MatDialog) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
     this.currentUser=UserService.getUser();
@@ -32,18 +34,28 @@ export class PostItemComponent implements OnInit {
    currentIdPostComment;
    isLike:boolean=false;
    isDisLike:boolean=false;
-   isLikeComment:boolean=false;
-   isDisLikeComment:boolean=false;
-  ngOnInit() {
-    
-    this.post.reactedPerson.forEach(person=>{
-      if(person.personId===UserService.user.uid){
-        if(person.action) this.isLike=true;
-        else this.isDisLike=true;
-      } 
-    })
-// console.log(CourseService.posts.comment.comments)
+   react:{"like":number, "dislike": number}={"like":0, "dislike": 0};
 
+  ngOnInit() {
+    //console.log(this.post.x instanceof  Map)
+    let react =this.post.react;
+    let like:number=0;
+    let counter:number=0;
+    if(react){
+    Object.keys(react).forEach(person=>{
+      counter++;
+      if((this.isLike == this.isDisLike)){
+        if(person == this.currentUser.uid){
+          this.isLike=react[person];
+          this.isDisLike=!this.isLike;
+        }
+      }
+      if(react[person])
+          like++;
+    })
+    this.react={"like":like, "dislike": counter-like}
+  }
+// console.log(CourseService.posts.comment.comments)
   }
   getDate(date){
     if(date != null)
@@ -63,12 +75,12 @@ export class PostItemComponent implements OnInit {
    CourseService.posts.delete(this.CurrPost.id);
   } 
   
-  comments:{"commentModel":CommentModel,"isLike" :boolean,"isDisLike" :boolean} []=[];
+  comments:{"commentModel":CommentModel, "like":number, "dislike":number, "isLike" :boolean,"isDisLike" :boolean} []=[];
   flagDisplayComment:boolean = false;
   removeSubscribe:Subscription;
   getComment(postId){
     if(!this.flagDisplayComment){
-     
+      console.log("55555555555555555555")
      this.removeSubscribe= CourseService.posts.getComments(postId)
     .subscribe(comment=>{
       this.comments=[];
@@ -76,18 +88,23 @@ export class PostItemComponent implements OnInit {
       comment.forEach(element=>{
        let LikeComment:boolean=false;
        let disLikeComment:boolean=false;
-        element.reactedPerson.forEach(person=>{
-          if(person.personId===UserService.user.uid){
-            if(person.action) LikeComment=true;
-            else disLikeComment=true;
-          } 
+       let counter:number=0;
+       let like:number=0;
+       if(element.react)
+       Object.keys(element.react).forEach(person=>{
+          counter++;
+          if((LikeComment == disLikeComment)){
+            if(person == this.currentUser.uid){
+              LikeComment=element.react[person];
+              disLikeComment=!LikeComment;
+            }
+          }
+          if(element.react[person])
+              like++;
         })
        // console.log({...element,"isLike" :LikeComment,"isDisLike" :disLikeComment})
-        this.comments.push({"commentModel":element,"isLike" :LikeComment,"isDisLike" :disLikeComment})
-
+        this.comments.push({"commentModel":element, "like":like, "dislike":counter-like, "isLike" :LikeComment,"isDisLike" :disLikeComment})
       })
-
-
     })
 
     this.flagDisplayComment=true;
@@ -110,10 +127,7 @@ export class PostItemComponent implements OnInit {
   onSubmit(postId){
 
     if(!this.isEmpty(this.newComment.value.text)){
-
-      let data:CommentModel={"id":"" ,"like":0,"reactedPerson" : [], "dislike":0,"body" :this.newComment.value.text,"commentOwner":this.currentUser.name};
-      
-      
+      let data:CommentModel={"id":"" ,"react" : null, "body" :this.newComment.value.text,"commentOwner":this.currentUser.name};
        CourseService.posts.comment.setCurrentIdPost(postId);
        CourseService.posts.comment.create(data);
 
@@ -128,9 +142,7 @@ export class PostItemComponent implements OnInit {
 }
 
 addLike( postId: string){
-  
     CourseService.posts.addLike(this.currentUser.uid, postId);
- 
 }
 addDisLike( postId: string){
   CourseService.posts.addDislike(this.currentUser.uid, postId)

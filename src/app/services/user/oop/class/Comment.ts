@@ -44,9 +44,7 @@ export class Comment implements CRUD{
 	}
 
 	addLike(personId:string, commentId:string){
-		//console.log("------------");
 		this.commentService.addReact(this.url+'/'+this.postId+'/comments', commentId, personId,true)
-		//console.log("+++++++++++++++++");
 	}
 
  
@@ -55,15 +53,15 @@ export class Comment implements CRUD{
 	}	
 
 	removeLike(personId:string, commentId:string){
-		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId,true)
+		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId)
 	}	
 	
 	removeDisLike(personId:string, commentId:string){
-		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId,false)
+		this.commentService.removeReact(this.url+'/'+this.postId+'/comments', commentId, personId)
 	}	 
 
 
-	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reactedPerson" : comment.reactedPerson, "like":comment.like, "dislike":comment.dislike, "commentOwner": comment.commentOwner}}
+	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reacte" : comment.react, "commentOwner": comment.commentOwner}}
  
 	
 }

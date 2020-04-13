@@ -35,7 +35,7 @@ export class NewPostComponent implements OnInit {
   onSubmit(){
     if(!this.isEmpty(this.newPost.value.body)){
 
-      let data:PostModel={"id" : "", "reactedPerson" : [],"like" :0, "dislike":0, "postOwner":this.currentUser.name, "title":this.newPost.value.title, "body": this.newPost.value.body};
+      let data:PostModel={"id" : "", "react" : null, "postOwner":this.currentUser.name, "title":this.newPost.value.title, "body": this.newPost.value.body};
       //let courseId;
      // this.route.parent.paramMap.subscribe((params : ParamMap) => courseId=params.get('id'));
       //this.ser.addCoursePost(courseId,data);

@@ -19,6 +19,7 @@ export class CommentService implements CRUDForfirebase{
         
     }
     update(url: string, id: string, comment) {
+        console.log(url+'/'+id+"  ",comment)
         return this.firestore.doc<CommentModel>(url+'/'+id).update(comment);
     }
     delete(url: string, id: string) {
@@ -37,72 +38,11 @@ export class CommentService implements CRUDForfirebase{
     }
 
     addReact(url: string, id: string, personId:string, react:boolean){
-         // console.log("addReact: ")
-   
-           let removeSubscribe=this.read(url, id).subscribe( (comment)=>{
-           // console.log("addReact: " +comment)
-               let checkAction= this.checkAction(comment.reactedPerson, personId, react) 
-              // console.log("addReact: "+checkAction)
-               if(checkAction == -1){
-                   this.doUnsubscribe(removeSubscribe)
-                   return;
-                }
-   
-               if(checkAction == 1){
-                if(react)
-                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
-                
-                else
-                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
-                    comment.reactedPerson.find(element=> element.personId=== personId).action=react;
-               }else{
-                comment.reactedPerson.push({"personId":personId, "action":react});
-               }
-               if(react)
-                 this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(1)});
-                
-                else
-                    this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(1)});
-               //this.update(url,id,comment);   
-               this.doUnsubscribe(removeSubscribe)
-           })
-       }
-       doUnsubscribe(removeSubscribe){
-           setTimeout(function(){removeSubscribe.unsubscribe()},5)
+        this.update(url, id, {[`react.${personId}`] :react})
        }
 
-       removeReact(url: string, id: string, personId:string,react){
-       
-        let removeSubscribe=this.read(url, id).subscribe(  (comment)=>{
-           
-                 let index = comment.reactedPerson.findIndex(element=> element.personId==personId);
-               //console.log(index)
-                 if(index >-1){
-                     comment.reactedPerson.splice(index, 1);
-                    
-                    if(react)
-                         this.update(url,id,{reactedPerson:comment.reactedPerson ,"like":firebase.firestore.FieldValue.increment(-1)});
-                    else
-                          this.update(url,id,{reactedPerson:comment.reactedPerson ,"dislike":firebase.firestore.FieldValue.increment(-1)});
- 
-                    
-                 }
-                 this.doUnsubscribe(removeSubscribe)
-          
-         })
+       removeReact(url: string, id: string, personId:string){
+        this.update(url, id, {[`react.${personId}`] :firebase.firestore.FieldValue.delete()})
      }
-
-       
-       checkAction(actions:ReactedPersons[], personId, react:boolean):number{
-           let isFind = actions.find(element=> element.personId=== personId)
-           if(isFind){
-               if(isFind.action==react)
-                   return -1 //not allow the same react
-               else{
-                   return 1 //allow with different react
-               }
-           }else
-               return 0 //allow new react
-       }
 
 }
