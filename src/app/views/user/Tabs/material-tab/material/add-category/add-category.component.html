@@ -1,13 +1,20 @@
-<h1 mat-dialog-title>Adding new category item </h1>
+<div mat-dialog-title>Adding new category item </div>
+<form (ngSubmit)="onSubmit()" [formGroup] = "addCategory">
 <div mat-dialog-content>
   <p>What's your new category name?</p>
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.name">
+    <input matInput formControlName="nameCategory"  [class.is-invalid]="addCategory.get('nameCategory').invalid && 
+    addCategory.get('nameCategory').touched" >
+    <small 
+    [class.d-none]="addCategory.get('nameCategory').valid ||  
+    addCategory.get('nameCategory').untouched"
+     class="text-danger">invalid input</small><br>
   </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.name + ' Category', 'Added Successfully')" >Add</button>  <!-- data is a json object that contain the form data -->
+  <button mat-button mat-dialog-close>No Thanks</button>
+  <button mat-button type="submit" [disabled]="!addCategory.valid"  mat-dialog-close >Add</button>  <!-- data is a json object that contain the form data -->
 </div>
+</form>

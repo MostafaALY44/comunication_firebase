@@ -30,6 +30,7 @@ export class CategoryService implements CRUDForfirebase {
 
 
   delete(url: string, id: string) {
+    //console.log("qqqqqqqq ",url + '/' + id)
     return this.firestore.doc<CategoryModel>(url + '/' + id).delete();
   }
 

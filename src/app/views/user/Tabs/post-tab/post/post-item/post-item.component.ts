@@ -80,7 +80,6 @@ export class PostItemComponent implements OnInit {
   removeSubscribe:Subscription;
   getComment(postId){
     if(!this.flagDisplayComment){
-      console.log("55555555555555555555")
      this.removeSubscribe= CourseService.posts.getComments(postId)
     .subscribe(comment=>{
       this.comments=[];

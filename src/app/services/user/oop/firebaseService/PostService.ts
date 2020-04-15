@@ -1,8 +1,9 @@
 import { CRUDForfirebase } from './CRUDForFirebase';
-import 'firebase/firestore';
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostModel, ReactedPerson } from '../models/PostModel';
 import { map } from 'rxjs/operators';
+import 'firebase/firestore';
 import * as firebase from 'firebase';
 
 export class PostService implements CRUDForfirebase{

@@ -5,15 +5,16 @@
     <ul class="nav nav-tabs">
 
       <div *ngFor="let category of categories | keyvalue">
-
+        
         <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active" >
           {{ category.key }}
+          <span class="badge badge-primary badge-pill">{{getNotification(category.key) }}</span>  
            
-          <mat-icon *ngIf="currentUser.roles.instructor" (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon *ngIf="currentUser.roles.instructor" (click)="updateCategory(category.key);">edit</mat-icon>
           <mat-icon *ngIf="currentUser.roles.instructor" (click)="deleteCategory(category.value.id);">close</mat-icon>
         
         </a>
-
+        
       </div>
 
       <li class="nav-item nav-link" *ngIf="currentUser.roles.instructor">

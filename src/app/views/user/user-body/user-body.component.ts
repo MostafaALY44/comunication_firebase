@@ -37,8 +37,14 @@ export class UserBodyComponent implements OnInit {
     let notification=NotificationService.notification.get(id1+id2+id3)
     if(!notification)
       return ;
-    return notification.postsNumber+notification.categoriesNumber+notification.assignmentsNumber;
-  }
+      //console.log("notification ", notification)
+    //return notification.postsNumber+notification.categoriesNumber+notification.assignmentsNumber;
+    let counter=0;
+    notification.categoriesNumber.forEach((value:number, key:string)=>{
+      counter+=value;
+    })
+    return notification.postsNumber+counter+notification.assignmentsNumber;
+  } 
   
 
 

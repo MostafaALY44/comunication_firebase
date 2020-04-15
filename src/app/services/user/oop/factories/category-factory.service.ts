@@ -32,7 +32,7 @@ export class CategoryFactoryService implements OnDestroy {
 
   private doUnsubscribeArray(removeUnsubscribe: Subscription[]) {
     removeUnsubscribe.forEach(element => {
-      setTimeout(function () { element.unsubscribe() }, 1000);
+      setTimeout(function () { element.unsubscribe() }, 0);
     });
   }
 
@@ -51,6 +51,7 @@ export class CategoryFactoryService implements OnDestroy {
     {
       let categoryNames = this.category.getAll();
       this.removeUnsubscribe1 = categoryNames.subscribe(categories => {
+        this.isCategoryLoad.next(false);
         let removeUnsubscribe2: Subscription[] = [];
         
         if (categories.length < this.category.categoriesMap.size) {
@@ -58,19 +59,21 @@ export class CategoryFactoryService implements OnDestroy {
             if (!categories.find(element => element.name === key))
               this.category.categoriesMap.delete(key);
           })
+          this.isCategoryLoad.next(true);
         } else if (categories.length > this.category.categoriesMap.keys.length) {
           categories.forEach(element => {
             if (!this.category.categoriesMap.get(element.name)) {
               let x = new Material(this.url + '/categories/' + element.id, this.firestore);
               removeUnsubscribe2.push(x.getAll().subscribe(materials => {
-                x.material = materials;
+                x.material.next( materials);
                 this.doUnsubscribeArray(removeUnsubscribe2)
               }));
-              this.category.categoriesMap.set((element.name), {id:element.id, material:x})
+              this.category.categoriesMap.set(element.name, {id:element.id, material:x})
             }
           })
-        }
-        this.isCategoryLoad.next(true);
+          this.isCategoryLoad.next(true);
+        }else
+          this.isCategoryLoad.next(true);
         // if(doUnsubscribe)
         //     this.doUnsubscribe(this.removeUnsubscribe1);
       })

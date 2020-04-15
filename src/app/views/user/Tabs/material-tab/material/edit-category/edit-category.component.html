@@ -39,16 +39,22 @@
 </form> -->
 
 <h1 mat-dialog-title>Edit Category item </h1>
+<form (ngSubmit)="onSubmit()" [formGroup] = "editCategory">
 <div mat-dialog-content>
   <p>What's your new category name?</p>
-
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.name">
+    <input matInput formControlName="nameCategory"  [class.is-invalid]="editCategory.get('nameCategory').invalid && 
+    editCategory.get('nameCategory').touched" >
+    <small 
+    [class.d-none]="editCategory.get('nameCategory').valid ||  
+    editCategory.get('nameCategory').untouched"
+     class="text-danger">invalid input</small><br>
   </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Update</button>  <!-- data is a json object that contain the form data -->
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button type="submit" [disabled]="!editCategory.valid" mat-dialog-close cdkFocusInitial>Update</button>  <!-- data is a json object that contain the form data -->
 </div>
+</form>

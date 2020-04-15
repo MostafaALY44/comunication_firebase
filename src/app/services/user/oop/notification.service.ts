@@ -3,15 +3,20 @@ import { UserService } from './user.service';
 import { CourseFirebaseService } from './firebaseService/course-firebase.service';
 import { NotificationModel } from './models/CourseMode';
 import { Subscription } from 'rxjs';
+import { Category } from './class/category';
+import 'firebase/firestore';
+import * as firebase from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService implements OnDestroy{
   static notification:Map<string,NotificationModel>=new Map<string,NotificationModel>()
-  static currNotification:NotificationModel={"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":0};
-  constructor(private courseFirebaseService:CourseFirebaseService) { }
-
+  static currNotification:NotificationModel={"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":new Map<string,number>()};
+  private userService:UserService=new UserService(this.firestore)
+  constructor(private courseFirebaseService:CourseFirebaseService, private firestore: AngularFirestore) { }
+ 
   private getCourseFromDB(url:string, courseId:string){
     return this.courseFirebaseService.read(url,courseId);
   }
@@ -45,20 +50,55 @@ export class NotificationService implements OnDestroy{
         this.removeSubscribe.push(this.getCourseFromDB(url2, courseKey).subscribe(course=>{
           let x= course.postsNumber - UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber
             let y=course.assignmentsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].assignmentNumber
-            console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||| ",x)
-            console.log("course.postsNumber - courseCode.postsNumber "+course.postsNumber+" - "+UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber)
-            let object={};
+            let temp=UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].categoriesNumber;
+            let tempMap=new Map<string, number>()
+
+            if(temp)
+            Object.keys(temp).forEach(categoryId=>{
+              tempMap.set(categoryId, temp[categoryId]);
+            })
+            //let z=course.assignmentsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].categoriesNumber
+            //console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||| ",x)
+           // console.log("course.postsNumber - courseCode.postsNumber "+course.postsNumber+" - "+UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber)
+        
+           let object={};
             let notification=NotificationService.notification.get(universityKey+collegeKey+courseKey)
             if(!notification){
-              NotificationService.notification.set(universityKey+collegeKey+courseKey, {"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":0})
+              NotificationService.notification.set(universityKey+collegeKey+courseKey, {"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":new Map<string,number>()})
               notification=NotificationService.notification.get(universityKey+collegeKey+courseKey)
             }
+            console.log("course ",course.categoriesNumber)
+            
+            Object.keys(course.categoriesNumber).forEach(categoryKey=>{
+              //console.log(" course.categoriesNumber[categoryKey] ", course.categoriesNumber[categoryKey])
+              //const xxx= tempMap.get(categoryKey)
+              if(tempMap.has(categoryKey)){
+                console.log("xxxx ", course.categoriesNumber[categoryKey] - tempMap.get(categoryKey))
+                notification.categoriesNumber.set(categoryKey, course.categoriesNumber[categoryKey] - tempMap.get(categoryKey));
+                tempMap.delete(categoryKey)
+              }else{
+                notification.categoriesNumber.set(categoryKey, course.categoriesNumber[categoryKey]);
+                // let obj={[UserService.indexNotification+".categoryNumber."+categoryKey]:firebase.firestore.FieldValue.delete()}
+                // this.userService.update( obj)
+              }
+            })
+            
+            tempMap.forEach((value:number, key:string)=>{
+              let obj={["univeristy."+universityKey+
+              ".colleages."+collegeKey+
+              ".courses."+courseKey+
+              ".categoriesNumber."+key]:firebase.firestore.FieldValue.delete()}
+              //let obj={[UserService.indexNotification+".categoryNumber."+key]:firebase.firestore.FieldValue.delete()}
+              this.userService.update( obj)
+            })
             
             if(x){
+              x=(x<0)?0:x;
               object={"postsNumber":x};
               notification.postsNumber=x;
             }
             if(y){
+              y=(y<0)?0:y;
               object={...object, ...{"assignmentsNumber":y}}
               notification.assignmentsNumber=y
             }

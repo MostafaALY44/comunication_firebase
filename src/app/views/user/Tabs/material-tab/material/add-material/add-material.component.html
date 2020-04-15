@@ -1,24 +1,32 @@
-<h1 mat-dialog-title>Adding new material item </h1>
+<div mat-dialog-title>Adding new material item </div>
 <div mat-dialog-content>
   <p>What's your new material data?</p>
+</div>
+  <form (ngSubmit)="onSubmit()" [formGroup] = "addMaterial">
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.id">
-  </mat-form-field>
-
-  <mat-form-field> 
-    <mat-label>Date</mat-label>
-    <input matInput [(ngModel)]="data.date">
+    <input matInput formControlName="nameMaterial" [class.is-invalid]="addMaterial.get('nameMaterial').invalid && 
+    addMaterial.get('nameMaterial').touched" >
+    <small 
+    [class.d-none]="addMaterial.get('nameMaterial').valid ||  
+    addMaterial.get('nameMaterial').untouched"
+     class="text-danger">invalid input</small><br>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Link</mat-label>
-    <input matInput [(ngModel)]="data.link">
+    <input matInput formControlName="linkMaterial" [class.is-invalid]="addMaterial.get('linkMaterial').invalid && 
+    addMaterial.get('linkMaterial').touched" >
+    <small 
+    [class.d-none]="addMaterial.get('linkMaterial').valid ||  
+    addMaterial.get('linkMaterial').untouched"
+     class="text-danger">invalid input</small><br>
   </mat-form-field>
 
-</div>
+
 
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="openSnackBar(data.id, 'Added Successfully')"> Add </button>  <!-- data is a json object that contain the form data -->
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close type="submit" [disabled]="!addMaterial.valid"> Add </button>  <!-- data is a json object that contain the form data -->
 </div>
+</form>

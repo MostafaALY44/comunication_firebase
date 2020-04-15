@@ -21,11 +21,13 @@ export class Category implements CRUD {
     }
 
     getAll() {
+        console.log("!!!!!!!!!!!!!!!! "+this.url)
         return this.categoryService.getAll(this.url);
     }
 
     //CRUD///////////////////////////////////
     create(category: CategoryModel) {
+        
         return this.categoryService.create(this.url, category)
     }
     

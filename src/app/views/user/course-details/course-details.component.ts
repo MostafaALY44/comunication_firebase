@@ -18,7 +18,8 @@ removeSubscribe;notificationKey:string="";
     //route.paramMap.subscribe((params : ParamMap) => ser.setCurrentId( params.get('id') ) );
    let flag:boolean=false;
     this.removeSubscribe=route.paramMap.subscribe((params : ParamMap) =>{
-        for(let university=0;university<UserService.hasGroups.length;university++){
+      //UserService.hasGroups= UserService.user.univeristy
+        /*for(let university=0;university<UserService.hasGroups.length;university++){
           for(let college=0;college<UserService.hasGroups[university].colleges.length;college++){
             if(UserService.hasGroups[university].colleges[college].courseCodes
                 .find(course=> (course.code===params.get('id3')
@@ -30,10 +31,26 @@ removeSubscribe;notificationKey:string="";
 
           }
           if(flag) break;
-        }
+        }*/
        // { if(college.courseCodes.find(course=> course===params.get('id')))  }
           
-         if(!flag){ routUser.navigate(['page-not-found']);
+       Object.keys(UserService.hasGroups).forEach((universityKey :any)=>{
+         
+         if(universityKey!=params.get('id1'))
+          flag=true;
+        if(!flag)
+        Object.keys(UserService.hasGroups[universityKey].colleages).forEach(( collegeKey: any) => {
+          if(collegeKey!=params.get('id2'))
+            flag=true;
+          if(!flag)
+          Object.keys(UserService.hasGroups[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
+            if(collegeKey!=params.get('id3'))
+            flag=true;
+          })
+        })
+       })
+
+         if(!flag){; routUser.navigate(['page-not-found']);
          return;
         }
         this.notificationKey=params.get('id1')+params.get('id2')+params.get('id3');
@@ -56,6 +73,17 @@ removeSubscribe;notificationKey:string="";
     if( !NotificationService.currNotification)
       return ;
    return  NotificationService.currNotification.assignmentsNumber;
+   }
+
+   getCatrgoriesNotification(){
+    NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
+    if( !NotificationService.currNotification)
+      return ;
+      let counter=0;
+     NotificationService.currNotification.categoriesNumber.forEach((value:number, key:string)=>{
+      counter+=value;
+    });
+    return counter;
    }
 
   ngOnDestroy(): void {

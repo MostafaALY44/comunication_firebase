@@ -1,21 +1,21 @@
 <div class="container" style="margin-top: 50px;">
-    {{testMap|json}}<br>
+    <!-- {{testMap|json}}<br>
     <ul>
          <li *ngFor="let university of courses?.univeristy | keyvalue"> <!--university key and name -->
-            {{university.key}} --> {{university.value.name }}
+            <!-- {{university.key}} ==> {{university.value.name }}
             <ul>
                 <li *ngFor="let college of university.value.colleages | keyvalue">
-                    {{college.key}} --> {{college .value.name }} <!--college key and name -->
-                    <ul>
+                    {{college.key}} ==> {{college .value.name }} <!--college key and name -->
+                    <!-- <ul>
                         <li *ngFor="let course of college .value.courses | keyvalue"><!--course codeKey and notification -->
-                           <a routerLink="{{university.key}}/{{college.key}}/{{course.key}}/post" >{{course.key}}</a>
+                           <!-- <a routerLink="{{university.key}}/{{college.key}}/{{course.key}}/post" >{{course.key}}</a>
                            <span class="badge badge-primary badge-pill">{{getNotification(university.key, college.key, course.key) }}</span>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
-    </ul><br>
+    </ul><br>  -->
     <div class="row">
        
         <div class="col-md-4">

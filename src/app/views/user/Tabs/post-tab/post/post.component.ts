@@ -27,6 +27,7 @@ export class PostComponent implements OnInit,OnDestroy {
     //})
     CourseService.subscribeTab("post");
     this.coursePosts=CourseService.posts;
+    console.log("CourseService.posts ",CourseService.categories.categoriesMap)
   }
   ngOnDestroy(): void {
     //this.removeSubscribe.unsubscribe();

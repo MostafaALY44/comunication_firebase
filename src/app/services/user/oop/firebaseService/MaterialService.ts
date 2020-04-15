@@ -4,12 +4,15 @@ import 'firebase/firestore';
 import { CRUDForfirebase } from './CRUDForFirebase';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase';
 
 export class MaterialService implements CRUDForfirebase{
 
     constructor(private firestore: AngularFirestore){}
 
     create(url:string, material:MaterialModel ) {
+        console.log('MaterialService create  '+url+'/'+material.id)
+        material["date"]=firebase.firestore.FieldValue.serverTimestamp();
         return this.firestore.collection(url).doc(material.id).set(material)
     }
 
@@ -18,6 +21,7 @@ export class MaterialService implements CRUDForfirebase{
     }
 
     update(url: string, id: string, material) {
+        material["date"]=firebase.firestore.FieldValue.serverTimestamp();
         return this.firestore.doc(url+'/'+id).set(material);
     }
 

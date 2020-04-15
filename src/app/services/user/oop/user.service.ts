@@ -39,13 +39,13 @@ export class UserService implements OnDestroy {
       if(user){
           UserService.user=user
           //console.log("}}}}}}}}} "+UserService.user.emailVerified)
-          UserService.hasGroups=user.universities
+          UserService.hasGroups=user.univeristy
       }else UserService.user.emailVerified=false;
     })
   }
   //static loadedCourses:Map<string, CourseTab> = new Map<string, Course>();
   //static hasGroups:HasGroups[];
-  static hasGroups:university[]=[]; 
+  static hasGroups =[]; 
  
   constructor(private firestore: AngularFirestore) {
     //console.log("+++++++++++++++++++++++++++++++++++")

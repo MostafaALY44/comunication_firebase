@@ -1,15 +1,10 @@
-<h1 mat-dialog-title>Edit material item </h1>
+<!-- <div mat-dialog-title>Edit material item </div>
 <div mat-dialog-content>
   <p>What's your new material data?</p>
 
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.id">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Date</mat-label>
-    <input matInput [(ngModel)]="data.date">
   </mat-form-field>
 
   <mat-form-field>
@@ -22,4 +17,38 @@
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Update</button>  <!-- data is a json object that contain the form data -->
+<!-- </div> --> -->
+
+
+<div mat-dialog-title>Adding new material item </div>
+<div mat-dialog-content>
+  <p>Edit material data</p>
 </div>
+  <form (ngSubmit)="onSubmit()" [formGroup] = "editMaterial">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="nameMaterial" [class.is-invalid]="editMaterial.get('nameMaterial').invalid && 
+    editMaterial.get('nameMaterial').touched" >
+    <small 
+    [class.d-none]="editMaterial.get('nameMaterial').valid ||  
+    editMaterial.get('nameMaterial').untouched"
+     class="text-danger">invalid input</small><br>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Link</mat-label>
+    <input matInput formControlName="linkMaterial" [class.is-invalid]="editMaterial.get('linkMaterial').invalid && 
+    editMaterial.get('linkMaterial').touched" >
+    <small 
+    [class.d-none]="editMaterial.get('linkMaterial').valid ||  
+    editMaterial.get('linkMaterial').untouched"
+     class="text-danger">invalid input</small><br>
+  </mat-form-field>
+
+
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close type="submit" [disabled]="!editMaterial.valid"> Edit </button>  <!-- data is a json object that contain the form data -->
+</div>
+</form>

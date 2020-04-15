@@ -11,6 +11,7 @@ import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/services/user/oop/class/category';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { User } from 'src/app/services/auth/user.model';
+import { NotificationService } from 'src/app/services/user/oop/notification.service';
 
 @Component({
   selector: 'material-category',
@@ -27,10 +28,13 @@ export class MaterialCategoryComponent {
   constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog) {
     this.categories = CourseService.categories.categoriesMap;
     this.currentUser= UserService.getUser();
+    
   }
-
- 
-  newCategory: CategoryModel = {id:"", name:""};
+  currNotificationCategoriesNumber:Map<string, number>=NotificationService.currNotification.categoriesNumber
+  getNotification(key:string){
+    //console.log(NotificationService.currNotification.categoriesNumber)
+    return NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)
+  }
 
   targetCategoryId;
 
@@ -40,34 +44,15 @@ export class MaterialCategoryComponent {
   }
 
   addCategory(){
-    const dialogRef = this.dialog.open(AddCategoryComponent, { data: this.newCategory });
-    dialogRef.afterClosed().subscribe(result => {
-      CourseService.categories.create(result);
-      if (result)
-        console.log(result);
-    });
+    this.dialog.open(AddCategoryComponent);
   }
 
   deleteCategory(targetCategoryId){
     CourseService.categories.delete(targetCategoryId);
-      // setTimeout(function(){
-      //   this.router.navigate(['user/comp404/material']);
-      // },3000);
   }
 
-  updateCategory(targetCategoryId){
-    // let categoryKey =  this.route.firstChild.snapshot.paramMap.get('id');
-    //this.categories.get(categoryKey).unsubscribeMaterialsFireStore();
-    // this.router.navigate(['user/comp404/material']);
-    //CourseService.categories.update(targetCategoryId, {id:"", name:"test222"});
-    //this.router.navigate(['user/comp404/material/a']);
-
-    // let oldId = this.targetMaterial.id;
-    const dialogRef = this.dialog.open(EditCategoryComponent, { data: this.newCategory });
-    dialogRef.afterClosed().subscribe(updatedCategoryItem => {
-      CourseService.categories.update(targetCategoryId, updatedCategoryItem);
-      this.router.navigate(['user/comp404/material']);
-    });
+  updateCategory(key:string){
+    this.dialog.open(EditCategoryComponent, { data: key});
   }
 
 }
