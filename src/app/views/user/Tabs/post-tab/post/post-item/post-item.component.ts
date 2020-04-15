@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostService } from 'src/app/services/user/post.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPostComponent } from '../edit-post/Edit-post.component';
 import { Comment } from '@angular/compiler';
@@ -27,7 +27,7 @@ export class PostItemComponent implements OnInit {
   
   courseId;
   currentUser:User;
-  constructor( public dialog:MatDialog) {
+  constructor( public dialog:MatDialog , private route : ActivatedRoute ,private router:Router) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
     this.currentUser=UserService.getUser();
    }
@@ -37,6 +37,7 @@ export class PostItemComponent implements OnInit {
    react:{"like":number, "dislike": number}={"like":0, "dislike": 0};
 
   ngOnInit() {
+    
     //console.log(this.post.x instanceof  Map)
     let react =this.post.react;
     let like:number=0;
@@ -173,7 +174,7 @@ deleteComments(idPost){
 } 
  
 report(){
-  this.dialog.open(ReportPostComponent,{data:this.CurrPost,height: '200px',
+  this.dialog.open(ReportPostComponent,{data:{ 'post':this.CurrPost, 'urlparam': this.route.parent.paramMap,'router':this.router.url},height: '200px',
   width: '300px'})
   
 }

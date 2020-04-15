@@ -157,7 +157,7 @@ export class AuthenticationService  {
     // success, show some message
     this.router.navigate(['']);
     console.log("send successfully !!")
-    window.alert("please check your Email to reset your password!")
+    // window.alert("please check your Email to continue this process!")
   },
   err => {
     // handle errors
