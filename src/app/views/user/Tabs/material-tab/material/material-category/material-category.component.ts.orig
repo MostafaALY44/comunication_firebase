@@ -11,7 +11,6 @@ import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/services/user/oop/class/category';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { User } from 'src/app/services/auth/user.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'material-category',
@@ -25,7 +24,7 @@ export class MaterialCategoryComponent {
 
   //currentCategory:string;
   currentUser:User;
-  constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+  constructor(private route: ActivatedRoute,private router: Router, public dialog: MatDialog) {
     this.categories = CourseService.categories.categoriesMap;
     this.currentUser= UserService.getUser();
   }
@@ -78,5 +77,6 @@ export class MaterialCategoryComponent {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000, });
   }
+
 
 }

@@ -34,7 +34,7 @@ export class MaterialItemsComponent implements OnDestroy {
   removeUnsubscribe1;
   removeUnsubscribe2;
   currentUser:User;
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+  constructor(private route: ActivatedRoute, public dialog: MatDialog,private _snackBar: MatSnackBar) {
 
     this.removeUnsubscribe1 = CourseService.isCategoryLoad.subscribe(
       (flag) => {

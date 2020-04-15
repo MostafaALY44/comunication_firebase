@@ -1,0 +1,33 @@
+<div class="row">
+<!------------------------ [[[[[[[[[[[ Categories ]]]]]]]]] ------------------------------------->
+<div class="row" *ngIf="!currentUser.roles.other">
+  <div class="col-md-12">
+
+    <ul class="nav nav-tabs">
+
+      <div *ngFor="let category of categories | keyvalue">
+
+        <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active" >
+          {{ category.key }}
+          <mat-icon placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon placement="bottom" ngbTooltip="Click to delete" (click)="openSnackBar(category.key + ' Category', 'Deleted 🗑'); deleteCategory(category.value.id);">close</mat-icon>
+           
+          <mat-icon *ngIf="currentUser.roles.instructor" (click)="updateCategory(category.value.id);">edit</mat-icon>
+          <mat-icon *ngIf="currentUser.roles.instructor" (click)="deleteCategory(category.value.id);">close</mat-icon>
+        
+        </a>
+
+      </div>
+
+      <li class="nav-item nav-link" *ngIf="currentUser.roles.instructor">
+
+        <button mat-raised-button (click)="addCategory()">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+
+      </li> 
+
+    </ul>
+
+  </div>
+</div>
