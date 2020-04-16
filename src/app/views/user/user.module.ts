@@ -33,6 +33,11 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
 
 
 
+import { PollingComponent } from './Tabs/polling-tab/polling/polling.component';
+import { PollingItemsComponent } from './Tabs/polling-tab/polling/polling-items/polling-items.component';
+import { AddPollingComponent } from './Tabs/polling-tab/polling/add-polling/add-polling.component';
+import { EditPollingComponent } from './Tabs/polling-tab/polling/edit-polling/edit-polling.component';
+import { EditOptionComponent } from './Tabs/polling-tab/polling/edit-option/edit-option.component';
 
 
 @NgModule({
@@ -59,7 +64,12 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     EditCategoryComponent,
     ReportPostComponent,
     ChangePasswordComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    PollingComponent,
+    PollingItemsComponent,
+    AddPollingComponent,
+    EditPollingComponent,
+    EditOptionComponent
   ],
   entryComponents: [
     EditPostComponent,
@@ -73,7 +83,9 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
     ReportPostComponent,
     AddMaterialComponent,
     //AddMaterialComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    EditPollingComponent,
+    EditOptionComponent
   ],
   imports: [
     CommonModule,

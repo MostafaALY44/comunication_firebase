@@ -153,7 +153,7 @@ removeLike( postId: string){
   
 }
 
-removedislike( postId: string){
+removedislike( postId: string){ 
   CourseService.posts.removeDisLike(this.currentUser.uid, postId);
 }
 Currcomment:CommentModel;
@@ -162,7 +162,7 @@ setComment(comment:CommentModel){
 
 }
 
-editComment(idPost){console.log(this.Currcomment);
+editComment(idPost){//console.log(this.Currcomment);
   CourseService.posts.comment.setCurrentIdPost(idPost);
   this.dialog.open(EditCommentComponent,{data:this.Currcomment})
 }
