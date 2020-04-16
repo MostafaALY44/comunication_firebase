@@ -40,9 +40,9 @@ export class AddMaterialComponent {
        this.data.subscribe((params: ParamMap) => currentCategory = params.get('id')).unsubscribe();
        let materialClass = CourseService.categories.categoriesMap.get(currentCategory).material;
         materialClass.create({"id":materialName, "link":this.addMaterial.value.linkMaterial, "date":""}).then(()=>{
-          this.openSnackBar(materialName + ' Material', 'Added Successfully')
+          this.openSnackBar(materialName + ' Material ✅', 'Added Successfully')
         }).catch(()=>{
-          this.openSnackBar(materialName + ' Material', 'error in add Material')
+          this.openSnackBar(materialName + ' Material ❌', 'error in add Material')
         })
      }
    }

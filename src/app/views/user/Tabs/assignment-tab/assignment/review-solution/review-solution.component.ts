@@ -22,8 +22,12 @@ export class ReviewSolutionComponent implements OnInit {
    }
 
    displayedColumns: string[] = ['name', 'recieve','link', 'note'];
- 
+   isEmpty:boolean= false;
   ngOnInit() {
+      this.solutions.subscribe(solution=>{
+        if(solution.length===0)
+            this.isEmpty=true;
+      })
   }
 
   getDate(date){

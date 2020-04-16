@@ -1,0 +1,45 @@
+
+  <div class="card text-center" style="margin-top: 20px;" *ngIf="post;else elseBlock">
+    <div class="card-body">
+        <div class="row">
+            <div class="col md-2">
+                <i class="fa fa-user-circle" style="font-size:48px;color:black"></i>&nbsp;<div style="font-size: 20px;">{{post.postOwner}}</div>
+            </div>
+            <div class="col md-6">
+                <h5>{{post.title}}</h5>
+            </div>
+            <div class="col md-4">
+                <p>{{getDate(post.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+            </div>
+        </div>
+
+        <p class="card-text">
+            {{ post.body }}
+        </p>
+    </div>
+    <!-- <div class="card-footer">
+        <div class="row">
+            <div class="col-md-2">
+               
+                <i  type="button"  class="fa fa-thumbs-o-up" style="font-size:36px"></i>
+                
+                {{ post.react.like }}
+            </div>
+            <div class="col-md-8">
+                
+                    <i type="button" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px"></i>
+                    
+                 {{ post.react.dislike }}
+
+
+            </div>
+        </div>
+    </div>
+    </div> -->
+  </div>
+    <br>
+<ng-template #elseBlock>
+    <div align="center" style="margin-top: 2%;"><h3>This post was deleted.</h3></div>
+</ng-template>
+
+    <button mat-button mat-dialog-close>Close</button>

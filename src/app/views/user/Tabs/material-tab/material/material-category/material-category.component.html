@@ -1,4 +1,3 @@
-<!------------------------ [[[[[[[[[[[ Categories ]]]]]]]]] ------------------------------------->
 <div class="row" *ngIf="!currentUser.roles.other">
   <div class="col-md-12">
 
@@ -8,10 +7,11 @@
         
         <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active" >
           {{ category.key }}
+          
           <span class="badge badge-primary badge-pill">{{getNotification(category.key) }}</span>  
            
-          <mat-icon *ngIf="currentUser.roles.instructor" (click)="updateCategory(category.key);">edit</mat-icon>
-          <mat-icon *ngIf="currentUser.roles.instructor" (click)="deleteCategory(category.value.id);">close</mat-icon>
+          <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.key);">edit</mat-icon>
+          <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to delete" (click)="deleteCategory(category.value.id);">close</mat-icon>
         
         </a>
         
@@ -19,7 +19,7 @@
 
       <li class="nav-item nav-link" *ngIf="currentUser.roles.instructor">
 
-        <button mat-raised-button (click)="addCategory()">
+        <button mat-raised-button (click)="addCategory() " placement="bottom" ngbTooltip="Click to add new.">
           <mat-icon>add_circle_outline</mat-icon>
         </button>
 

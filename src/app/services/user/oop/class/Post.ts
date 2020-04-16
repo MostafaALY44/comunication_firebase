@@ -22,6 +22,9 @@ export class Post implements CRUD{
 	reset(){
 		this.posts=[];
 	}
+	getUrl(){
+		return this.url;
+	}
 	changeUrl(url:string){
 		this.url=url+'/posts';
 		this.comment.changeUrl(this.url);
@@ -38,6 +41,7 @@ export class Post implements CRUD{
 	}
 
 	delete(id:string){
+		
 		this.postService.delete(this.url, id);		
 	}
 

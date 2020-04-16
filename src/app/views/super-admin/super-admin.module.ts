@@ -10,11 +10,12 @@ import { AdminBodyComponent } from './admin-body/admin-body.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { SaveDataComponent } from './edit-courses/save-data/save-data.component';
+import { ShowPostsComponent } from './review-reports/show-posts/show-posts.component';
 
 
 @NgModule({
-  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent],
-  entryComponents:[SaveDataComponent],
+  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent, ShowPostsComponent],
+  entryComponents:[SaveDataComponent, ShowPostsComponent],
   imports: [
     CommonModule,
     SuperAdminRoutingModule,

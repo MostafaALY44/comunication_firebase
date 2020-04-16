@@ -1,10 +1,11 @@
-<div class="card text-center" style="margin-top: 20px;">
+
+<div class="card text-center" style="margin-top: 20px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
     <div class="card-body">
         <div class="row">
             <div class="col md-2">
-                <i class="fa fa-user-circle" style="font-size:48px;color:black"></i>&nbsp;<div style="font-size: 20px;">{{post.postOwner}}</div>
+                <i class="fa fa-user-circle" style="font-size:48px; color:#1f1f7a"></i>&nbsp;<div style="font-size: 20px;">{{post.postOwner}}</div>
             </div>
-            <div class="col md-6">
+            <div class="col md-6 card-title" >
                 <h5>{{post.title}}</h5>
             </div>
             <div class="col md-4">
@@ -20,22 +21,25 @@
             {{ post.body }}
         </p>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style=" border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                
-                <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px"></i>
-                <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px"></i>
+                <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px ; color:#1f1f7a"></i>
+                <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px; color:#1f1f7a"></i>
                 {{ react.like }}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 
-                    <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px"></i>
-                    <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:36px"></i>
-                 {{ react.dislike }}
-
-
+                <i type="button" (click)="getComment(post.id)" class="material-icons" style="font-size:36px; color:#1f1f7a">comment</i>
             </div>
+            <div class="col-md-4">
+                
+                    <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px; color:#1f1f7a"></i>
+                    <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:36px; color:#1f1f7a"></i>
+                 {{ react.dislike }}
+            </div>
+           
         </div>
         <form [formGroup]="newComment" (ngSubmit)="onSubmit(post.id)">
             <div class="row">
@@ -53,12 +57,51 @@
             </div>
         </form>
 
-        <button style="font-size:24px" (click)="getComment(post.id)">show Comments <i class="material-icons">comment</i></button>
+        <!-- <button style="font-size:24px" (click)="getComment(post.id)">show Comments <i class="material-icons">comment</i></button> -->
         
         <div *ngIf="flagDisplayComment" >
-            <div class="row" *ngFor="let comment of comments " >
+            <div  *ngFor="let comment of comments " >
               
-                <div class="col-md-12" style="padding: 20px;">
+                <div class="card" style="margin-top: 10px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
+                    
+                    <div class="card-body" >
+                      <div class="card-title">
+                          <div class="row">
+                           <div class="col-md-10">   
+                          <div align="start">
+                          <i class="fa fa-user-circle" style="font-size:25px;color:#1f1f7a"></i>&nbsp;&nbsp;
+                          <font size="4"><b>{{comment.commentModel.commentOwner}}</b></font><br>
+                           <small style="color: grey;">{{getDate(comment.commentModel.date) |date:'yyyy/MM/dd h:mm:ss a'}}</small>
+                        </div>
+                        </div>
+                        
+                           <div class="col-md-2" *ngIf="comment.commentModel.commentOwner===currentUser.name" align="end" >
+                            <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
+                                (click)="setComment(comment.commentModel)">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+                    
+                    </div>
+                        </div>
+                      
+                     
+                      <p class="card-text">{{ comment.commentModel.body }}</p>
+                      <hr size="50"  style="margin-left: 30px;margin-right: 30px; color: #cce0ff;">
+                      
+                        <i *ngIf="!comment.isLike" type="button"  (click)="addCommentLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-up" style="font-size:25px; color:#1f1f7a"></i>
+                        <i *ngIf="comment.isLike" type="button" (click)="removeCommentLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-up" style="font-size:25px; color:#1f1f7a"></i>
+                    {{ comment.like }}
+                    
+                      &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i *ngIf="!comment.isDisLike" type="button"  (click)="addCommentDisLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-down" style="font-size:25px; color:#1f1f7a"></i>
+                        <i *ngIf="comment.isDisLike" type="button" (click)="removeCommentDisLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-down" style="font-size:25px; color:#1f1f7a"></i>
+                     {{ comment.dislike }}
+                      
+                    </div>
+                  </div>
+
+                <!-- <div class="col-md-12" style="padding: 20px;">
                     <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
                         <div class="card text-center">
                             <div class="card-body">
@@ -86,7 +129,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                        
-                                            <!-- <i type="button" (click)="addCommentLike( comment.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i> -->
+                                            
                                             <i *ngIf="!comment.isLike" type="button"  (click)="addCommentLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-up" style="font-size:20px"></i>
                                             <i *ngIf="comment.isLike" type="button" (click)="removeCommentLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-up" style="font-size:20px"></i>
                                         {{ comment.like }}
@@ -94,7 +137,7 @@
                                     </div>
                                     <div class="col-md-8">
                                        
-                                            <!-- <i type="button" (click)="addCommentDisLike( comment.id,post.id)" style="margin-top: 20px;" class="fa fa-thumbs-down" style="font-size:20px"></i> -->
+                                            
                                             <i *ngIf="!comment.isDisLike" type="button"  (click)="addCommentDisLike( comment.commentModel.id ,post.id)" class="fa fa-thumbs-o-down" style="font-size:20px"></i>
                                             <i *ngIf="comment.isDisLike" type="button" (click)="removeCommentDisLike(comment.commentModel.id ,post.id)" class="fa fa-thumbs-down" style="font-size:20px"></i>
                                          {{ comment.dislike }}
@@ -105,13 +148,14 @@
                         </div>
                     </div>
                 </div>
+            </div> -->
 
-            </div>
+
         </div>
     </div>
 </div>
 
-
+</div>
 
     <mat-menu #menu="matMenu">
         <div *ngIf="post.postOwner===currentUser.name">
@@ -143,4 +187,5 @@
             <i class="material-icons" style="align-content: center;">
                 delete_forever
             </i> delete </button>
-    </mat-menu>
+        </mat-menu>
+ 

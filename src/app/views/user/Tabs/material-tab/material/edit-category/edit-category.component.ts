@@ -5,21 +5,23 @@ import { MaterialsService } from 'src/app/services/user/materials.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from 'src/app/services/user/oop/course.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-category',
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.css']
 })
-export class EditCategoryComponent implements OnInit {
+export class EditCategoryComponent  {
   editCategory:FormGroup ;
-  constructor(@Inject(MAT_DIALOG_DATA) private data:string, private router: Router) { 
+  constructor(@Inject(MAT_DIALOG_DATA) private data:string, private router: Router, private _snackBar: MatSnackBar) { 
     this.editCategory= new FormGroup({
       nameCategory : new FormControl(data,Validators.required),
     });
   }
 
-  ngOnInit() {
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000, });
   }
 
   isEmpty(text:string):boolean{
@@ -40,7 +42,10 @@ export class EditCategoryComponent implements OnInit {
       CourseService.categories.categoriesMap.delete(this.data);
       CourseService.categories.categoriesMap.set( categoryName, index)
       
-      CourseService.categories.update(index.id , {"id":index.id ,"name":  categoryName}).catch(()=>{
+      CourseService.categories.update(index.id , {"id":index.id ,"name":  categoryName}).then(()=>{
+        this.openSnackBar(categoryName + ' Category item', ' 📝 Updated Successfully')
+      }).catch(()=>{
+        this.openSnackBar('Edit Category item failed', '❌')
         index= CourseService.categories.categoriesMap.get( categoryName)
         CourseService.categories.categoriesMap.delete( categoryName);
         CourseService.categories.categoriesMap.set(this.data, index)

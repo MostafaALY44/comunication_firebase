@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user/oop/user.service';
@@ -7,8 +7,14 @@ import { MessagingService } from 'src/app/services/auth/messaging.service';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { NotificationModel } from 'src/app/services/user/oop/models/CourseMode';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
-
+interface Tree{
+  name:string;
+  link?:string;
+  children?: Tree[];
+}
 
 @Component({
   selector: 'user-body',
@@ -16,7 +22,12 @@ import { NotificationService } from 'src/app/services/user/oop/notification.serv
   styleUrls: ['./user-body.component.css']
 })
 export class UserBodyComponent implements OnInit { 
- 
+  treeControl = new NestedTreeControl<Tree>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<Tree>();
+  hasChild = (_: number, node: Tree) => !!node.children && node.children.length > 0;
+
+  @ViewChild('tree', {static:false}) tree;
+  treeUniversity:Tree[]=[]
   courses : User;
   notification: NotificationModel;
   constructor( private userService:UserService, private messag:MessagingService, 
@@ -25,9 +36,24 @@ export class UserBodyComponent implements OnInit {
     this.notificationService.setNotificationMap();
     
       UserService.userObservable.subscribe(user=>{
-        
+        this.treeUniversity=[]
         this.courses=user;
-        //this.testMap=user.
+        Object.keys(user.univeristy).forEach((universityKey:any)=>{
+          let temp1:Tree[]=[];
+          Object.keys(user.univeristy[universityKey].colleages).forEach((collegeKey:any)=>{
+            let temp2:Tree[]=[];
+            Object.keys(user.univeristy[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
+              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/post"})
+              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/material"})
+              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/assingment"})
+            })
+            temp1.push({"name":collegeKey, "children":temp2})
+          })
+          this.treeUniversity.push({"name":universityKey, "children":temp1})
+        })
+        this.dataSource.data = this.treeUniversity;
+        this.treeControl.dataNodes = this.treeUniversity;
+        this.treeControl.expandAll();
       }
     )
     
@@ -49,6 +75,7 @@ export class UserBodyComponent implements OnInit {
 
 
   ngOnInit() {
+    
   }
 
 }

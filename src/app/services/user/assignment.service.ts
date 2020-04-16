@@ -12,7 +12,7 @@ import { CourseService } from './oop/course.service';
 export class AssignmentService {
   static url:string=""
   constructor(private firestore: AngularFirestore) { }
-
+ 
   public getAssingment(url):Observable<Assignment[]>{
     //console.log('courses/'+idCourse+'/assignment');
     return this.firestore.collection<Assignment>(url+'/assignment').snapshotChanges().pipe(

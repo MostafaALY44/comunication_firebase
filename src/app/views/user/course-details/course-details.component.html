@@ -1,18 +1,19 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" routerLink="post" role="tab" aria-controls="post"
-            aria-selected="true">Posts</a>
-            <span class="badge badge-primary badge-pill">{{getPostNotification() }}</span>
+    <li class="nav-item"  >
+        <a class="nav-link" routerLinkActive="active activeee"  id="home-tab" data-toggle="tab" routerLink="post" role="tab" aria-controls="post"
+            aria-selected="true" style="border-color: #cce0ff; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Posts</a>
+            <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;">{{getPostNotification() }}</span>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" routerLink="material" role="tab" aria-controls="profile"
-            aria-selected="false">Material</a>
-            <span class="badge badge-primary badge-pill">{{getCatrgoriesNotification() }}</span>
+        <a class="nav-link"  routerLinkActive="active activeee" id="profile-tab" data-toggle="tab" routerLink="material" role="tab" aria-controls="profile"
+            aria-selected="false" style="border-color: #cce0ff; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Material</a>
+            <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;">{{getCatrgoriesNotification() }}</span>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" routerLink="assingment" role="tab" aria-controls="contact"
-            aria-selected="false">Assingment</a>
-            <span class="badge badge-primary badge-pill">{{getAssignmentNotification() }}</span>
+        <a class="nav-link"  routerLinkActive="active activeee" id="contact-tab" data-toggle="tab" routerLink="assingment" role="tab" aria-controls="contact"
+            aria-selected="false" style="border-color: #cce0ff;
+            text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Assingment</a>
+            <span class="badge badge-primary badge-pill " style="background-color :#1f1f7a;">{{getAssignmentNotification() }}</span>
     </li>
 </ul>
 

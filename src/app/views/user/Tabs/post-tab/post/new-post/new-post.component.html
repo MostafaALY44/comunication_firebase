@@ -1,6 +1,6 @@
 <form [formGroup] = "newPost" (ngSubmit)="onSubmit()">
-<div class="card">
-    <h5 class="card-header">What's in your mind? 
+<div class="card" style=" border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
+    <h5 class="card-header" style=" border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">What's in your mind? 
         <mat-form-field >
             <input matInput
             formControlName="title" placeholder="title" type="text">
@@ -20,7 +20,7 @@
         [class.d-none]="newPost.get('body').valid ||  
                 newPost.get('body').untouched"
          class="text-danger">invalid input</small><br>
-        <button type="submit" class="btn btn-primary" [disabled]="!newPost.valid" style="margin-top: 20px;">Share
+        <button type="submit" class="btn " [disabled]="!newPost.valid" style=" border-color: #cce0ff; background-color:#33ffad ; color: #0033cc;  border-radius: 10px 30px 10px 30px; padding: 20px;">Share
             
         </button>
        

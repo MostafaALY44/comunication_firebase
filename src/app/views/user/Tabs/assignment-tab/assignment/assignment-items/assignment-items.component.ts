@@ -26,6 +26,7 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   dataSource:any;
   currentUser;
   removesubscribe;
+  isEmpty:boolean=false;
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog,private _snackBar: MatSnackBar,
     private userService:UserService) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
@@ -35,8 +36,10 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
     
     this.assignments=CourseService.assignments;
     this.removesubscribe=CourseService.assignments.subscribe(assignments=>{
+      if(!assignments.length){
+        this.isEmpty=true;}
+        else this.isEmpty=false;
       let obj={[UserService.indexNotification+".assignmentNumber"]:assignments.length}
-      console.log("qqqqqqqqqqqqqqq ",obj)
       this.userService.update( obj)
         NotificationService.currNotification.assignmentsNumber=0
     })
@@ -50,12 +53,17 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   }
  
   ngOnInit() {
+    // this.assignments.subscribe(assignment=>{
+    //   if(!assignment.length){
+    //     this.isEmpty=true;}
+    //     else this.isEmpty=false;
+    // })
   } 
  
   getDate(date){
     if(date != null)
       return date.toDate();
-  }
+  } 
 
   showSolutions(id:string){
     this.dialog.open(ReviewSolutionComponent, {data:{"courseId":this.courseId,"assignmentId":id},

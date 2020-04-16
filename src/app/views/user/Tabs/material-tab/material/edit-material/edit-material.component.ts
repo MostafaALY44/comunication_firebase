@@ -43,9 +43,9 @@ export class EditMaterialComponent {
        materialClass.update(materialName, {"id":materialName, "link":this.editMaterial.value.linkMaterial, "date":""}).then(()=>{
         if(materialName != this.data.material.id)
             materialClass.delete(this.data.material.id)
-         this.openSnackBar(materialName + ' Material', 'edit Successfully')
+         this.openSnackBar(materialName + ' Material 📝', 'edit Successfully')
        }).catch(()=>{
-         this.openSnackBar(materialName + ' Material', 'error in edit Material')
+         this.openSnackBar(materialName + ' Material ❌', 'error in edit Material')
        })
     }
   }
