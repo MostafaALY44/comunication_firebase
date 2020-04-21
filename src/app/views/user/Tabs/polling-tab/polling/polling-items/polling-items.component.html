@@ -1,0 +1,82 @@
+<div class="card text-center" style="margin-top: 20px;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col md-2">
+                <i class="fa fa-user-circle" style="font-size:48px;color:black"></i>&nbsp;<div style="font-size: 20px;">{{poll.pollingOwner}}</div>
+            </div>
+            <div class="col md-6">
+                <h5>{{poll.text}}</h5>
+            </div>
+            <div class="col md-4">
+                <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+            </div>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPoll(poll)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div> 
+
+        <!-- <p class="card-text">
+            {{ post.body }}
+        </p> -->
+    </div>
+    <div class="card-footer">
+        
+       
+        <div class="row" *ngFor="let option of options | async" >
+               
+            <div class="col-md-12" style="padding: 20px;">
+                <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+
+                                    <mat-radio-button value="option">{{ option.text }}</mat-radio-button>
+
+                                </div>
+
+                                <div class="col md-6">
+                                    {{option.votes}}
+                                </div>
+
+                                <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;" (click)="setOption(option)">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                            </div>
+                           
+                            
+                       
+                        </div>
+                        
+                </div>
+            </div>
+
+        </div>
+        </div>
+    
+</div>  
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updatePoll()">
+                <i class="material-icons md-light">edit</i> edit
+            </button>
+    
+            <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deletePoll()">
+                <i class="material-icons" style="align-content: center;">
+                    delete_forever
+                </i> delete </button>
+        </mat-menu>
+
+
+        <mat-menu #menu1="matMenu">
+            <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateOption(poll.id)">
+                <i class="material-icons md-light">edit</i> edit
+            </button>
+    
+            <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteOption(poll.id)">
+                <i class="material-icons" style="align-content: center;">
+                    delete_forever
+                </i> delete </button>
+        </mat-menu>
+

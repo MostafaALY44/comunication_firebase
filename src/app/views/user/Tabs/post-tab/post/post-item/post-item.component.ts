@@ -37,7 +37,7 @@ export class PostItemComponent implements OnInit {
    react:{"like":number, "dislike": number}={"like":0, "dislike": 0};
 
   ngOnInit() {
-    
+     
     //console.log(this.post.x instanceof  Map)
     let react =this.post.react;
     let like:number=0;
@@ -153,7 +153,7 @@ removeLike( postId: string){
   
 }
 
-removedislike( postId: string){
+removedislike( postId: string){ 
   CourseService.posts.removeDisLike(this.currentUser.uid, postId);
 }
 Currcomment:CommentModel;
@@ -162,7 +162,7 @@ setComment(comment:CommentModel){
 
 }
 
-editComment(idPost){console.log(this.Currcomment);
+editComment(idPost){//console.log(this.Currcomment);
   CourseService.posts.comment.setCurrentIdPost(idPost);
   this.dialog.open(EditCommentComponent,{data:this.Currcomment})
 }

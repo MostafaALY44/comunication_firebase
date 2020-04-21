@@ -1,0 +1,41 @@
+<div *ngIf="isEmpty; else noData" align="center " style="margin-top: 5%;"> 
+   
+  
+    <p style="font-size: large;">
+      No Courses yet.
+    </p>
+    <i class="fa fa-folder-open" style="font-size:70px;color:rgb(29, 11, 49)"></i>
+   
+  </div>
+  <ng-template #noData>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" align="center">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Name Column -->
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Code </th>
+      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+    </ng-container>
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{getDate(element.date)|date:'medium'}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteCourse(element)">
+            <i class="material-icons" style="align-content: center;">
+            delete_forever
+            </i> delete  </button> &nbsp;&nbsp;&nbsp;
+            <!-- <button   mat-menu-item  type="button" class="btn btn-warning edit color" (click)="updateCourse(element)">
+                <i class="material-icons md-light" >
+                  edit
+                </i> Edit  </button> -->
+    </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </ng-template>

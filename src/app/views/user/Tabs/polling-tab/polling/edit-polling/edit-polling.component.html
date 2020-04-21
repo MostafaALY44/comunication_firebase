@@ -1,0 +1,22 @@
+<form [formGroup] = "updatePoll" (ngSubmit)="onSubmit()">
+  
+    <div mat-dialog-title align="center"><b>Update Poll</b></div>
+  
+  <mat-dialog-content>
+    <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Polling" formControlName="poll"  [class.is-invalid]="updatePoll.get('poll').invalid && 
+        updatePoll.get('poll').touched"></textarea>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" formControlName="deadLine" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" >
+    <button  mat-button mat-dialog-close>Close</button>
+     <button type="submit" [disabled]="!updatePoll.valid"  mat-button mat-dialog-close>Update</button>
+     
+  </mat-dialog-actions>
+  </form> 

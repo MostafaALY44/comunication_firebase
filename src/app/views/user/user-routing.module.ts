@@ -10,6 +10,7 @@ import { AssignmentItemsComponent } from './Tabs/assignment-tab/assignment/assig
 import { ReviewSolutionComponent } from './Tabs/assignment-tab/assignment/review-solution/review-solution.component';
 import { ChangePasswordComponent } from '../auth/change-password/change-password.component';
 
+import { PollingComponent } from './Tabs/polling-tab/polling/polling.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,10 @@ const routes: Routes = [
               
             ]
           },
+          {
+            path:'polling',
+            component: PollingComponent,
+          }
         ]
       }
     ]

@@ -12,7 +12,7 @@ export class ContactService {
   constructor(private firestore: AngularFirestore) { }
 
   public getContacts(id):Observable<ContactModel[]>{
-    return this.firestore.collection<ContactModel>('contacts/'+id).snapshotChanges().pipe(
+    return this.firestore.collection<ContactModel>('problemContacts/'+id).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() ;
         const id = a.payload.doc.id;
@@ -23,6 +23,6 @@ export class ContactService {
 
   public addContact( data){ 
    // data["date"]=firebase.firestore.FieldValue.serverTimestamp();
-    return this.firestore.collection<ContactModel>('contacts/').add(data);
+    return this.firestore.collection<ContactModel>('problemContacts/').add(data);
   }
 }

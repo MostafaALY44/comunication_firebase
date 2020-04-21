@@ -33,7 +33,8 @@ export class MaterialCategoryComponent {
   currNotificationCategoriesNumber:Map<string, number>=NotificationService.currNotification.categoriesNumber
   getNotification(key:string){
     //console.log(NotificationService.currNotification.categoriesNumber)
-    return NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)
+    if(NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)>0)
+        return NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)
   }
 
   targetCategoryId;

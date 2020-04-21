@@ -1,0 +1,38 @@
+<form [formGroup]="myForm" >
+  
+    <mat-card class="row">
+        <mat-form-field class="example-full-width">
+            <mat-label>Type Your Polling</mat-label>
+            <textarea matInput placeholder="Polling" formControlName="poll"  [class.is-invalid]="myForm.get('poll').invalid && 
+            myForm.get('poll').touched"></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Choose a deadLine</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="deadLine" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+    </mat-card>
+    <br>
+    <mat-card class="row">
+    <div formArrayName="options">
+        
+        <div *ngFor="let option of optionForms.controls; let i=index" 
+              [formGroupName]="i">
+
+              <mat-form-field class="example-half-width">
+                <mat-label>option</mat-label>
+                <input matInput placeholder="votting item"  formControlName="text" > 
+              </mat-form-field>&nbsp;
+            
+            
+              <button mat-raised-button color="warn"  (click)="deleteOption(i)">Delete</button>
+            
+  
+        </div>
+    </div>
+    <button mat-stroked-button color="warn" (click)="addOption()">Add Option</button><br>
+    <button  (click)="onSubmit()" mat-stroked-button color="primary" style="margin-top: 6px;" [disabled]="!myForm.valid">Add Polling</button>
+</mat-card>
+  </form>

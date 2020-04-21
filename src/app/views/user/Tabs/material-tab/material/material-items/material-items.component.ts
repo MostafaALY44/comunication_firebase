@@ -36,6 +36,7 @@ export class MaterialItemsComponent implements  OnDestroy {
   removeUnsubscribe2;
   removeUnsubscribe3;
   currentUser:User;
+  isEmpty:boolean=false;
   constructor(private route: ActivatedRoute, router:Router, public dialog: MatDialog,  private firestore: AngularFirestore) {
 
     this.removeUnsubscribe1 = CourseService.isCategoryLoad.subscribe(
@@ -53,11 +54,16 @@ export class MaterialItemsComponent implements  OnDestroy {
                 let currentCategoryId:string=CourseService.categories.categoriesMap.get(params.get('id')).id;
                 this.removeUnsubscribe3=this.materials.subscribeMaterialsFireStore().subscribe(materials=>{
                   this.dataSource=materials;
+                  // to know if material is empty
+                  if(!materials.length){
+                    this.isEmpty=true;}
+                    else this.isEmpty=false;
+
                   let obj={[UserService.indexNotification+".categoriesNumber."+currentCategoryId]:materials.length}
                   this.userService.update( obj)
                   NotificationService.currNotification.categoriesNumber.delete(currentCategoryId);
 			            NotificationService.currNotification.categoriesNumber.set(currentCategoryId, 0)
-                })
+                }) 
               }else{
                 let r= router.url.slice(0, -params.get('id').length) 
                 //console.log(r)

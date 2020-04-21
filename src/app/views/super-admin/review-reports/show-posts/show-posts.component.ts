@@ -27,7 +27,7 @@ post:PostModel;
     if(date != null)
       return date.toDate();
   }
-  
+   
   ngOnInit() {
   }
 

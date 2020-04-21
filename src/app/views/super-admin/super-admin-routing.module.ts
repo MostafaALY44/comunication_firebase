@@ -6,6 +6,8 @@ import { EditPersonsComponent } from './edit-persons/edit-persons.component';
 import { ReviewReportsComponent } from './review-reports/review-reports.component';
 import { AdminBodyComponent } from './admin-body/admin-body.component';
 import { AddSuperAdminComponent } from './add-super-admin/add-super-admin.component';
+import { CoursesBodyComponent } from './courses-body/courses-body.component';
+import { GetCoursesComponent } from './get-courses/get-courses.component';
 
 
 const routes: Routes = [
@@ -13,7 +15,11 @@ const routes: Routes = [
     path:':id1/:id2',component:AdminBodyComponent,
     children:[
       {
-        path:'edit-courses',component:EditCoursesComponent
+        path:'courses-body',component:CoursesBodyComponent,
+        children:[
+            {path:"edit-courses" ,component:EditCoursesComponent},
+            {path:"get-courses" , component:GetCoursesComponent}
+        ]
       },
       {
         path:'edit-persons',component:EditPersonsComponent

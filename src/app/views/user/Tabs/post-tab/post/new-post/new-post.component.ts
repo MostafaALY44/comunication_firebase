@@ -31,7 +31,7 @@ export class NewPostComponent implements OnInit {
         return false;
     return true;
   }
-
+ 
   onSubmit(){
     if(!this.isEmpty(this.newPost.value.body)){
 

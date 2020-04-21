@@ -48,7 +48,7 @@ removeSubscribe;notificationKey:string="";
             flag=true;
           })
         })
-       })
+       }) 
 
          if(!flag){; routUser.navigate(['page-not-found']);
          return;
@@ -66,13 +66,15 @@ removeSubscribe;notificationKey:string="";
       NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
       if( !NotificationService.currNotification)
         return ;
-     return  NotificationService.currNotification.postsNumber;
+      if(NotificationService.currNotification.postsNumber)
+         return  NotificationService.currNotification.postsNumber;
    }
    getAssignmentNotification(){
     NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
     if( !NotificationService.currNotification)
       return ;
-   return  NotificationService.currNotification.assignmentsNumber;
+    if(NotificationService.currNotification.assignmentsNumber)  
+      return  NotificationService.currNotification.assignmentsNumber;
    }
 
    getCatrgoriesNotification(){
@@ -83,7 +85,8 @@ removeSubscribe;notificationKey:string="";
      NotificationService.currNotification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
     });
-    return counter;
+    if(counter)
+        return counter;
    }
 
   ngOnDestroy(): void {

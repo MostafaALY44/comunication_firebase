@@ -9,6 +9,8 @@ import { NotificationModel } from 'src/app/services/user/oop/models/CourseMode';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ChangeNameComponent } from '../change-name/change-name.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Tree{
   name:string;
@@ -30,8 +32,9 @@ export class UserBodyComponent implements OnInit {
   treeUniversity:Tree[]=[]
   courses : User;
   notification: NotificationModel;
+  currentUser;
   constructor( private userService:UserService, private messag:MessagingService, 
-    private notificationService:NotificationService) {//UserService
+    private notificationService:NotificationService,private dialog:MatDialog) {//UserService
 
     this.notificationService.setNotificationMap();
     
@@ -52,13 +55,22 @@ export class UserBodyComponent implements OnInit {
           this.treeUniversity.push({"name":universityKey, "children":temp1})
         })
         this.dataSource.data = this.treeUniversity;
+        // console.log(this.dataSource.data);
         this.treeControl.dataNodes = this.treeUniversity;
         this.treeControl.expandAll();
       }
     )
-    
+    this.currentUser=UserService.getUser();
+  //  console.log( this.getuniversityId("ASU/science/math333/post"))
+  //  console.log( this.getcoleageId("ASU/science/math333/post"))
   }
-
+getuniversityId(link:string):string{
+ return link.slice(0,link.indexOf("/"));
+} 
+getcoleageId(link:string):string{
+ let temp= link.slice(link.indexOf("/")+1);
+  return temp.slice(0,temp.indexOf("/"));
+ }
   getNotification(id1:string, id2:string, id3:string){
     let notification=NotificationService.notification.get(id1+id2+id3)
     if(!notification)
@@ -69,12 +81,15 @@ export class UserBodyComponent implements OnInit {
     notification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
     })
-    return notification.postsNumber+counter+notification.assignmentsNumber;
+    if(notification.postsNumber+counter+notification.assignmentsNumber)
+      return notification.postsNumber+counter+notification.assignmentsNumber;
   } 
   
 
 
   ngOnInit() {
+    if(UserService.user.name==="")
+      this.dialog.open(ChangeNameComponent,{data:this.currentUser}) 
     
   }
 

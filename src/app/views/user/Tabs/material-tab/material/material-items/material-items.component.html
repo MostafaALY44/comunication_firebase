@@ -1,3 +1,17 @@
+<button mat-raised-button (click)="addMaterial();" *ngIf="currentUser.roles.instructor" style="margin-top: 10px;">
+  Add Item <mat-icon style="color: #1f1f7a;">library_add</mat-icon>
+</button>
+
+<div *ngIf="isEmpty; else noData" align="center " style="margin-top: 5%;"> 
+   
+  
+  <p style="font-size: large;">
+    No Materials yet.
+  </p>
+  <i class="fa fa-folder-open" style="font-size:70px;color:#1f1f7a"></i>
+ 
+</div>
+<ng-template #noData> 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!currentUser.roles.other">
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
@@ -20,7 +34,7 @@
     <td mat-cell *matCellDef="let element"> 
       <a [href]="element.link"><mat-icon>cloud_download</mat-icon></a>
     </td>
-  </ng-container>
+  </ng-container> 
 
   <!-- Operation Column -->
   <ng-container matColumnDef="operation">
@@ -46,10 +60,8 @@
 </div>
 </ng-template>
 </table>
+</ng-template>
 
-<button mat-raised-button (click)="addMaterial();" *ngIf="currentUser.roles.instructor">
-  Add Item <mat-icon>library_add</mat-icon>
-</button>
 
  
 <!-- Edite menu view -->

@@ -7,6 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AssignmentService } from '../assignment.service';
 import { CategoryFactoryService } from './factories/category-factory.service';
 import { UserService } from './user.service';
+import { Polling } from './class/Polling';
+import { PollingFactoryService } from './factories/polling-factory.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,8 @@ import { UserService } from './user.service';
 export class CourseService {
 
   static posts: Post; 
+  
+  static polls: Polling;
   static categories: Category;
   static assignments: Observable<Assignment[]>;
   static isCategoryLoad:Observable<boolean>;
@@ -23,7 +27,7 @@ export class CourseService {
   static postFactoryService: PostFactoryService;
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
-
+  private pollingFactoryService: PollingFactoryService = new PollingFactoryService(this.firestore)
   //courseId;
   constructor(private firestore: AngularFirestore) { 
     CourseService.postFactoryService = new PostFactoryService(this.firestore)
@@ -37,7 +41,7 @@ export class CourseService {
     this.setPosts(url);
     this.setCategories(url);
     this.setAssignment(url)
-    
+    this.setpolls(url);
     // let course=UserService.loadedCourses.get(courseId)
     // if(!course){
     //   this.setPosts(courseId);
@@ -106,5 +110,9 @@ export class CourseService {
       this.removesubscribe.unsubscribe();
     this.removesubscribe = new AssignmentService(this.firestore).getAssingment(courseId).subscribe(assignments => this.allAssignments.next(assignments));
 
+  }
+  setpolls(courseId: string) {
+    this.pollingFactoryService.changeUrl( courseId)
+    CourseService.polls = this.pollingFactoryService.coursePolling;
   }
 }
