@@ -37,7 +37,7 @@ export class PostItemComponent implements OnInit {
    react:{"like":number, "dislike": number}={"like":0, "dislike": 0};
 
   ngOnInit() {
-    
+     
     //console.log(this.post.x instanceof  Map)
     let react =this.post.react;
     let like:number=0;

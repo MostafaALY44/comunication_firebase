@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user/oop/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ContactModel } from 'src/app/services/user/oop/models/contactModel';
 import { ContactService } from 'src/app/services/user/contact.service';
+import { RegistrationContactService } from 'src/app/services/user/registration-contact.service';
 
 
 @Component({
@@ -15,10 +16,11 @@ export class ContactUsComponent implements OnInit {
   ContactUs = new FormGroup({
     name : new FormControl('',Validators.required),
     email : new FormControl('',Validators.required),
-    message:new FormControl('',Validators.required)
+    message:new FormControl('',Validators.required),
+    type:new FormControl('',Validators.required)
   });
   currentUser;
-  constructor(private service: ContactService) {
+  constructor(private Problemservice: ContactService, private Registrationservice: RegistrationContactService) {
     this.currentUser=UserService.getUser();
 
    }
@@ -26,25 +28,35 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
   }
   isEmpty(text:string):boolean{
-    for(let i=0;i<text.length;i++)
+    for(let i=0;i<text.length;i++) 
       if(text[i] != " ")
         return false;
     return true;
   }
 
   onSubmit(){
+    console.log(this.ContactUs)
     if(!this.isEmpty(this.ContactUs.value.name)){
       if(this.currentUser.uid){
           let data:ContactModel={"personId" : this.currentUser.uid, "name" :this.ContactUs.value.name,"email" :this.ContactUs.value.email, "message":this.ContactUs.value.message};
-      
-      this.service.addContact(data);
-      this.ContactUs.reset();
+        if(this.ContactUs.value.type==="1"){
+          this.Problemservice.addContact(data);
+          this.ContactUs.reset();}
+      else if(this.ContactUs.value.type==="2"){
+        this.Registrationservice.addContact(data);
+        this.ContactUs.reset();
+      }
     }else {
 
       let data:ContactModel={ "name" :this.ContactUs.value.name,"email" :this.ContactUs.value.email, "message":this.ContactUs.value.message};
       
-      this.service.addContact(data);
+      if(this.ContactUs.value.type==="1"){
+        this.Problemservice.addContact(data);
+        this.ContactUs.reset();}
+    else if(this.ContactUs.value.type==="2"){
+      this.Registrationservice.addContact(data);
       this.ContactUs.reset();
+    }
     }
 
     } 

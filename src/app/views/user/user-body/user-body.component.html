@@ -1,4 +1,4 @@
-<div  style=" margin-top: 30px; margin-left: 20px; margin-right: 100px;">
+<div  style=" margin-top: 30px; margin-left: 20px; margin-right: 30px;">
     
     <!-- {{testMap|json}}<br>
     <ul>
@@ -17,7 +17,7 @@
             </ul>
         </li>
     </ul><br>  -->
-
+ 
     
 
 
@@ -54,7 +54,11 @@
               <button mat-icon-button disabled></button>
               
  
-              <a routerLink="{{node.link}}" style="text-decoration: none;"><li  routerLinkActive="active activeee" class="list-group-item forCoursesLinks" style="border-color: #cce0ff; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;"><font size="4">{{node.name}}</font></li></a>
+              <a routerLink="{{node.link}}" style="text-decoration: none;"><li  routerLinkActive="active activeee" class="list-group-item forCoursesLinks" style="border-color: #cce0ff;  padding-right: 54px; padding-left: 30px; border-radius: 10px 30px 10px;"><font size="3">{{node.name}}  </font> 
+                <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;margin-left: 10px;margin-right: 0px;">{{getNotification(getuniversityId(node.link), getcoleageId(node.link), node.name) }}</span>
+              </li>
+              
+            </a>
               
                 
               

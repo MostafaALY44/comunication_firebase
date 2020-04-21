@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserModule } from '../user.module';
 import { User } from 'src/app/services/auth/user.model';
 import { UserService } from 'src/app/services/user/oop/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-change-name',
@@ -18,7 +19,7 @@ export class ChangeNameComponent implements OnInit {
     
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data:User,private service: UserService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data:User,private service: UserService,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -38,7 +39,9 @@ export class ChangeNameComponent implements OnInit {
      
       //let data1=this.updateName.value.name;
       this.service.update(data1);
+      this._snackBar.open(this.updateName.value.name, 'Stored Successfully', { duration: 3000, });
     }
   }
 
 }
+ 

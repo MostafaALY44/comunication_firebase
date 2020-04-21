@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-signup',
@@ -9,8 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['../sb-admin-2.min.css']
 })
 export class SignupComponent implements OnInit {
-
-  constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {}
+// allUsers;
+  constructor( private users :UserService,private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {
+    // this.users.getAll().subscribe(users=>{
+    //   this.allUsers=users;
+    // });
+  }
 
   ngOnInit() {
   }
@@ -18,12 +23,32 @@ export class SignupComponent implements OnInit {
   email: string;
   //name: string;
   //password:string;
-  signUp() {
+  // isFound:boolean=false;
+  // check():boolean{
+  //   this.allUsers.forEach(user=>{
+  //       //console.log(user)
+  //       if(user.email===this.email && user.emailVerified) return this.isFound=true;
+  //       else return this.isFound=false;
+  //     })
     
+  //   return;
+  // }
+  
+  signUp() {
+    // console.log(this.check())
+    // if( !this.check())
+
+    firebase.auth().fetchSignInMethodsForEmail(this.email).then(methods => {
+      if(methods.length>0) {
+        this._snackBar.open('Your are Already registered !!!','', { duration: 5000, });
+    }
+      else this.authenticationService.forgotPassword(this.email);
+    }).catch(err=>{
+      this._snackBar.open(err,'', { duration: 5000, });
+    })
+        
+    // else this._snackBar.open('Your are Already registered!' ,'', { duration: 5000, });
       
-      this.authenticationService.forgotPassword(this.email);
-   
-    this._snackBar.open('please check your Email to continue this process!' ,'', { duration: 3000, });
     
   }
 
@@ -32,6 +57,7 @@ export class SignupComponent implements OnInit {
   // }
 
   signOut() { 
+    
     this.authenticationService.SignOut();
   }
   isEmpty(text:string):boolean{

@@ -9,6 +9,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { User } from './user.model';
 import { UserService } from '../user/oop/user.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthenticationService  {
   //static user: Observable<User> ;
 
   //user$: Observable<User>;
-  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore, private router:Router) {
+  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore, private router:Router,private _snackBar: MatSnackBar) {
     //this.userData = angularFireAuth.authState;
     // Get the auth state, then fetch the Firestore user document or return null
     //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
@@ -155,16 +156,19 @@ export class AuthenticationService  {
     this.angularFireAuth.sendPasswordResetEmail(email).then(
   () => {
     // success, show some message
+    this._snackBar.open('please check your Email to continue this process!' ,'', { duration: 5000, });
     this.router.navigate(['']);
-    console.log("send successfully !!")
+    // console.log("send successfully !!")
     // window.alert("please check your Email to continue this process!")
   },
   err => {
     // handle errors
-    console.log("error")
+    // console.log("error")
+    this._snackBar.open(err ,'', { duration: 5000, });
+      this.router.navigate(['/auth/signup']);
   }
 );
   }
 
-}
+} 
 

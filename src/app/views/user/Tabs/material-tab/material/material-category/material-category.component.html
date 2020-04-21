@@ -1,20 +1,20 @@
-<div class="row" *ngIf="!currentUser.roles.other">
+<!-- <div class="row" *ngIf="!currentUser.roles.other">
   <div class="col-md-12">
 
     <ul class="nav nav-tabs">
 
       <div *ngFor="let category of categories | keyvalue">
         
-        <a routerLink="{{category.key}}" class="nav-link" routerLinkActive="active" >
+        <a routerLink="{{category.key}}" class="nav-link " routerLinkActive="activeee" style=" border-radius: 30px 10px 30px; padding-left: 30px; text-align: center;border-color: #cce0ff;" >
           {{ category.key }}
           
-          <span class="badge badge-primary badge-pill">{{getNotification(category.key) }}</span>  
+            
            
           <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.key);">edit</mat-icon>
           <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to delete" (click)="deleteCategory(category.value.id);">close</mat-icon>
         
         </a>
-        
+        <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;">{{getNotification(category.key) }}</span>
       </div>
 
       <li class="nav-item nav-link" *ngIf="currentUser.roles.instructor">
@@ -28,4 +28,26 @@
     </ul>
 
   </div>
+</div> -->
+
+<div id='cssmenu' *ngIf="!currentUser.roles.other">
+  <ul>
+     <a routerLinkActive="active" routerLink="{{category.key}}" *ngFor="let category of categories | keyvalue" style="text-decoration: none;"> <li >{{ category.key }}
+      <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to edit" (click)="updateCategory(category.key);">edit</mat-icon>
+      <mat-icon *ngIf="currentUser.roles.instructor" placement="bottom" ngbTooltip="Click to delete" (click)="deleteCategory(category.value.id);">close</mat-icon>
+      <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;margin-left: 8px;">{{getNotification(category.key) }}</span>
+     </li>
+     
+      
+    </a>
+     <a><li class="active" *ngIf="currentUser.roles.instructor" style="margin-bottom: 0px;">
+
+      <button mat-raised-button (click)="addCategory() " placement="bottom" ngbTooltip="Click to add new.">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+
+    </li> 
+  </a>
+  </ul>
 </div>
+  
