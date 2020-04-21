@@ -90,7 +90,7 @@ export class AuthenticationService  {
   }*/
 
   /* Sign in */
-  async SignIn(email: string, password: string) {
+  async SignIn(email: string, password: string) { 
     
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
     if(!credential.user.emailVerified){

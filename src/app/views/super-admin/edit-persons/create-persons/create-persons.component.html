@@ -1,0 +1,8 @@
+<p>create-persons works!</p>
+add other details
+<div *ngFor="let createPerson of createPersonComponents; let i = index; trackBy:trackByCreatePerson">
+    <div *ngIf="!removed.has(i)">
+<app-create-person-form [idIndex]=i [disable]=createPerson (isformDataDone)="isformDataDone($event, i)"
+    (destroyItSelf)="remove($event, i)"  ></app-create-person-form>
+</div>
+</div>

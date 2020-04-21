@@ -36,7 +36,7 @@ export class SaveDataComponent implements OnInit {
         this.data.courses[i]=this.changeCode;
     }
       
-    
+ 
     this.currentCode=this.changeCode=''
   }
   canEdit(code:string):boolean{

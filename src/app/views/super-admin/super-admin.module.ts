@@ -11,11 +11,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { SaveDataComponent } from './edit-courses/save-data/save-data.component';
 import { ShowPostsComponent } from './review-reports/show-posts/show-posts.component';
+import { SavePersonsDataComponent } from './edit-persons/save-persons-data/save-persons-data.component';
+import { CreatePersonsComponent } from './edit-persons/create-persons/create-persons.component';
+import { CreatePersonFormComponent } from './edit-persons/create-persons/create-person-form/create-person-form.component';
+import { AddItherDetailsComponent } from './edit-persons/create-persons/add-ither-details/add-ither-details.component';
 
 
 @NgModule({
-  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent, ShowPostsComponent],
-  entryComponents:[SaveDataComponent, ShowPostsComponent],
+  declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent, ShowPostsComponent, SavePersonsDataComponent, CreatePersonsComponent, CreatePersonFormComponent, AddItherDetailsComponent],
+  entryComponents:[SaveDataComponent,
+     ShowPostsComponent,
+     SavePersonsDataComponent],
   imports: [
     CommonModule,
     SuperAdminRoutingModule,
