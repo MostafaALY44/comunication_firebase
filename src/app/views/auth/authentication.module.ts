@@ -1,3 +1,5 @@
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -23,7 +25,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     CommonModule,
     AuthRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatCardModule
   ]
 })
 export class AuthModule { }

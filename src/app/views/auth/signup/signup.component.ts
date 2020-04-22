@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { UserService } from 'src/app/services/user/oop/user.service';
@@ -10,7 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {}
+  isUserAgree = false;
+
+  constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar,private router: Router) {}
 
   ngOnInit() {
   }
@@ -40,5 +43,13 @@ export class SignupComponent implements OnInit {
         return false;
     return true;
   }
+
+  privacyRedirect(){
+    this.router.navigate(['privacy']);
+  }
+  termsRedirect(){
+    this.router.navigate(['terms-and-conditions']);
+  }
+
 
 }

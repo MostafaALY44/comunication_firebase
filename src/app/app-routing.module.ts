@@ -1,3 +1,5 @@
+import { TermsAndConditionsComponent } from './shared/components/layouts/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyComponent } from './shared/components/layouts/privacy/privacy.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Route, UrlSegment } from '@angular/router';
 import { UserComponent } from './shared/components/layouts/user/user.component';
@@ -37,6 +39,8 @@ const routes: Routes = [
       {path:'contact-us', component:ContactUsComponent},
 
       {path:'about', component:AboutComponent},
+      {path:'privacy', component:PrivacyComponent},
+      {path:'terms-and-conditions', component:TermsAndConditionsComponent},
      
       {
         path:'announcements', 
