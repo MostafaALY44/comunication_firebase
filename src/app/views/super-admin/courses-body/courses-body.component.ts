@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'courses-body',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesBodyComponent implements OnInit {
 
-  constructor() { }
+  constructor(router:Router) { 
+    AuthenticationService.currentAdminLink= router.url;
+  }
 
   ngOnInit() {
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, Inject } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ReportService } from 'src/app/services/user/report.service';
 import { Observable } from 'rxjs';
 import { PostReport } from 'src/app/services/user/models/report.model';
@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ShowPostsComponent } from './show-posts/show-posts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 
 @Component({
@@ -26,9 +27,11 @@ export class ReviewReportsComponent implements OnInit {
    dataSource:Observable<PostReport[]>;
   postService;
   post:PostModel;
+  
   constructor( public dialog:MatDialog,private route:ActivatedRoute, 
-    private reportService: ReportService ,private firestore: AngularFirestore, private _snackBar: MatSnackBar) { 
-    this.route.parent.paramMap.subscribe((param:ParamMap)=>{
+    private reportService: ReportService ,private firestore: AngularFirestore, private _snackBar: MatSnackBar,router:Router) { 
+      AuthenticationService.currentAdminLink= router.url;
+      this.route.parent.paramMap.subscribe((param:ParamMap)=>{
       this.universityId=param.get('id1');
       this.collegeId=param.get('id2');
       this.reports=this.reportService.getReports(this.universityId,this.collegeId);

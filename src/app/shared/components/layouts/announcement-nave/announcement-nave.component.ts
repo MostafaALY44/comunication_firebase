@@ -10,7 +10,9 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
 })
 export class AnnouncementNaveComponent implements OnInit {
  // @Output() isFocusSearchEvent =new EventEmitter<any>();
-  constructor(private router:Router, private authenticationService:AuthenticationService) { }
+  constructor(private router:Router, private authenticationService:AuthenticationService) {
+  
+   }
 
   ngOnInit() {
   }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 @Component({
   selector: 'app-admin-body',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminBodyComponent implements OnInit {
 
-  constructor() { }
+  constructor(router:Router) { 
+    AuthenticationService.currentAdminLink= router.url;
+  }
 
   ngOnInit() {
   }

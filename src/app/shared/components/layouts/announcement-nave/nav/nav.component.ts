@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-nav',
@@ -14,12 +15,21 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NavComponent implements OnInit {
   currentUser;
+  userLink:string="user";
   constructor(private searchService:SearchInputService, private router:Router,
-     private authenticationService:AuthenticationService,private dialog:MatDialog) {
+     private authenticationService:AuthenticationService,private dialog:MatDialog,private angularFireAuth: AngularFireAuth) {
         if(this.isEqualAnnouncementsOrWelcom(this.router.url) ) 
           this.displaySearchInput=true;
         
           this.currentUser=UserService.getUser();
+         let removeSubscribe= AuthenticationService.isAdmin.subscribe(admin=>{
+            if(admin){
+              this.userLink="admin";
+              setTimeout(()=>{
+                removeSubscribe.unsubscribe();
+              },0)
+            }
+          })
      };
   displaySearchInput:boolean=false;
   urlBeforeNavigate:string='';

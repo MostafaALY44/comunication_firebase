@@ -28,6 +28,7 @@ export class UserService implements OnDestroy {
   static user:User= new User();
   static indexNotification:string="";
   private static removeSubscribe;
+  static temp:Observable<User>;
   static getUser(){
     return UserService.user
   }

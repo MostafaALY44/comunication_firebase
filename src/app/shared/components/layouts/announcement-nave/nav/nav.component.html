@@ -41,7 +41,7 @@
 </div>
 <div class="d-flex flex-column flex-md-row align-items-center p-2 bg-light shadow">
     &nbsp;&nbsp;&nbsp;<a class="my-0 mr-md-auto font-weight-normal" routerLink="/"><font size="5">FC</font></a>
-    <a *ngIf="isEmailVerified()" class="my-0 mr-md-auto font-weight-normal" routerLink="/user"><font size="4"> {{displayEmail() }}</font></a>
+    <a *ngIf="isEmailVerified()" class="my-0 mr-md-auto font-weight-normal" routerLink="/{{userLink}}"><font size="4"> {{displayEmail() }}</font></a>
     <form *ngIf="displaySearchInput" class="my-0 mr-md-auto font-weight-normal" >
             <mat-form-field style="width: 330px;">
             <input name="searchWord" [(ngModel)]="searchWord" matInput placeholder="Search for a specific announcement" (input)="wordSearch($event.target.value)" (focus)="focusSearch()" >

@@ -15,6 +15,7 @@ import { pipe } from 'rxjs';
 import { NotFoundPageComponent } from './views/not-found/not-found-page/not-found-page.component';
 import { ContactUsComponent } from './shared/components/layouts/contact-us/contact-us.component';
 import { AboutComponent } from './shared/components/layouts/about/about.component';
+import { AdminGuardGuard } from './guards/admin-guard.guard';
 
 //const xyz = (next, state) => map(user => user.emailVerified?['/user'] : ['auth/login'])
 const x:AuthPipe = map(user=>{if(!user.emailVerified)  return ['auth/login']}) 
@@ -66,13 +67,15 @@ const routes: Routes = [
   },
   {
     path:'admin', component: SuperAdminComponent,
+
     children:[
       {
         path:'',
         loadChildren: () => import('./views/super-admin/super-admin.module').then(m=>m.SuperAdminModule)
       }
 
-    ]
+    ],
+    canActivateChild:[AdminGuardGuard]
   },
   {
     path:'auth', component: AuthComponent,

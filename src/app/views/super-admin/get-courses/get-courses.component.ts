@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Course } from 'src/app/services/user/oop/models/CourseMode';
 import { UpdateCoursesComponent } from './update-courses/update-courses.component';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 @Component({
   selector: 'get-courses',
@@ -15,9 +16,11 @@ export class GetCoursesComponent implements OnInit {
   routerLink:string="";
   isEmpty:boolean=false;
   dataSource;
-  constructor(private router:ActivatedRoute,private _snackBar: MatSnackBar,
-    private courseFirebaseService:CourseFirebaseService,public dialog:MatDialog) {
+  
 
+  constructor(private router:ActivatedRoute,private _snackBar: MatSnackBar,
+    private courseFirebaseService:CourseFirebaseService,public dialog:MatDialog, route:Router) {
+      AuthenticationService.currentAdminLink= route.url;
     this.router.parent.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
