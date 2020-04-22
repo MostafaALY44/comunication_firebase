@@ -1,12 +1,9 @@
-
-   
-
 <mat-dialog-content>
     <div mat-dialog-title style="color: blue;" align="center">
          you will insert {{data.courses.length}} courses
      </div>
      <div style="color: blueviolet;">review your courses befor add it in database (you can click on word code to edit it or remove all letter to delete)</div>
-    <mat-grid-list cols="4" rowHeight="45px">
+    <mat-grid-list cols="2" rowHeight="45px">
         <mat-grid-tile *ngFor="let element of data.courses; let i=index" >
         <a  (click)="changeCurrentCodeState(element)" > 
             <span *ngIf="!canEdit(element)">{{element}}</span>

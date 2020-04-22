@@ -1,0 +1,34 @@
+<mat-card style="border-style: solid;
+border-color: rgb(194, 248, 218); margin: 50px;">
+
+<form >
+  <div class="closs">
+    {{idIndex}}
+  </div>
+  <button type="button" class="close"  (click)="destroyItSelfe()" style="outline: none;">
+    <span>&times;</span>
+  </button>
+    <mat-form-field style="width: 20%;">
+      <mat-label>email </mat-label>
+      <input matInput type="email" [(ngModel)]="email" (change)="onChangeEmail()" name="email" id="email{{idIndex}}">
+      <span matSuffix>@</span>
+    </mat-form-field>
+    
+    <mat-form-field class="full-width">
+      <mat-label>courses</mat-label>
+      <input matInput type="text" #course (keyup)="keyUp($event, course)"  id="courses{{idIndex}}" >
+    </mat-form-field>
+    <div class="row">&nbsp;
+    <div *ngFor="let element of courses; let i=index">
+        
+        <a  (click)="changeCurrentCodeState(i)" > <br>
+            <span *ngIf="!canEdit(i)">{{element}}&ndash;</span>
+            <mat-form-field *ngIf="canEdit(i)">
+                <mat-label>Edit Course Code </mat-label>
+                <input matInput  type="text" id={{i}}   [(ngModel)]="currentTemp" name="element" (blur)="reset(i)" autofocus>
+              </mat-form-field>
+        </a>
+    </div>
+    </div>
+  </form >
+</mat-card>

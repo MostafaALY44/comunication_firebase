@@ -73,5 +73,9 @@ export class UserService implements OnDestroy {
  update(data){
    this.firestore.doc('users/'+UserService.user.uid).update(data);
  }
+  getAll(){
+    return this.firestore.collection<User>('users/').valueChanges();
+  
+ }
 
 }

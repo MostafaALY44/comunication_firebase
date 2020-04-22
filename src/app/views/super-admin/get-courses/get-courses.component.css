@@ -1,0 +1,20 @@
+table {
+    width: 82%;
+    margin-top: 5%;
+   
+  }
+  .branch {
+    background-color: #FFF8DC;
+  }
+
+  .delete:hover{
+    color: #ff473f; 
+  }
+
+  .edit:hover{
+    color: #5b2efd;
+  }
+
+  .color{
+    color: rgb(243, 243, 235);
+  }

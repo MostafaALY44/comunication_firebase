@@ -39,7 +39,7 @@ export class NotificationService implements OnDestroy{
       });
     });
   });
-
+ 
   Object.keys(UserService.user.univeristy).forEach(( universityKey: any) => {
     url="universities/"+universityKey;
     console.log(university[universityKey].name);
@@ -48,7 +48,9 @@ export class NotificationService implements OnDestroy{
       console.log(university[universityKey].colleages[collegeKey].name);
       Object.keys(university[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
         this.removeSubscribe.push(this.getCourseFromDB(url2, courseKey).subscribe(course=>{
-          let x= course.postsNumber - UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber
+          console.log(course)
+          let x= course.postsNumber
+           - UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber
             let y=course.assignmentsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].assignmentNumber
             let temp=UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].categoriesNumber;
             let tempMap=new Map<string, number>()

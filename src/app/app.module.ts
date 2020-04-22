@@ -17,7 +17,7 @@ import { NotFoundPageComponent } from './views/not-found/not-found-page/not-foun
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
@@ -37,7 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFontAwesomeModule,
     AngularFireMessagingModule,
     ScrollingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     AngularFirestore,

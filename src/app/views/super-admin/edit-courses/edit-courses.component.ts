@@ -13,12 +13,12 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 export class EditCoursesComponent implements OnInit {
   routerLink:string="";
   constructor(private fb: FormBuilder, public dialog:MatDialog, private router:ActivatedRoute) {
-    this.router.parent.paramMap.subscribe((params: ParamMap)=>{
+    this.router.parent.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
       console.log(this.routerLink)
-    })
-     
+    }) 
+      
     this.registrationForm = this.fb.group({
       courseCode:['', Validators.required],
       newCourseCode: this.fb.array([])
