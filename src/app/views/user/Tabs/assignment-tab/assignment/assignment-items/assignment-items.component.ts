@@ -88,8 +88,10 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   }
 
   deleteAssignment(){
-    this.service.deleteAssignment(this.courseId,this.currentAssign["id"]);
-    this._snackBar.open(this.currentAssign['title'], 'Deleted Successfully', { duration: 3000, });
+    this.service.deleteAssignment(this.courseId,this.currentAssign["id"]).then(()=>{
+      this._snackBar.open(this.currentAssign['title'], 'Deleted Successfully', { duration: 3000, });
+    })
+    
 
   } 
   editAssignment(){

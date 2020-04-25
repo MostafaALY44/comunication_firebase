@@ -41,7 +41,10 @@ you have {{coursesNotCreatedYet.length}} courses must be register first:
 <!-- </mat-dialog-content> -->
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close (click)="closeDialog()" >Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">add ({{data.persons.length}})</button>
+    <button mat-button mat-dialog-close (click)="closeDialog()" >Close</button>
+    <button mat-button  cdkFocusInitial (click)="onSubmit()">add ({{data.persons.length}})</button>
   </mat-dialog-actions>
+  <br>
+  <br>
+  <mat-spinner *ngIf="showSpinner" align="center" style="margin-left: 200px;"></mat-spinner>
 

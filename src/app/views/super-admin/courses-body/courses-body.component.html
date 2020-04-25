@@ -1,11 +1,20 @@
 
-  <div class="sidebar">
+  <!-- <div class="sidebar">
     <a routerLink="edit-courses"><i class="fa fa-fw fa-user bb"></i> Add Courses</a>
     <a routerLink="get-courses"><i class="fa fa-fw fa-envelope aa"></i> Show All Courses</a>
-  </div>
+  </div> -->
+  <mat-tab-group>
+    <mat-tab label="Add Courses">
+      <div class="main" style="padding-top: 50px;padding-left: 150px;">
+      <edit-courses></edit-courses> 
+    </div> </mat-tab>
+    <mat-tab label="Show All Courses" > 
+      <div class="main" align="center">
+        <get-courses></get-courses>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
   
-  <div class="main" align="center">
-    <router-outlet></router-outlet>
-  </div>
+  
   
   

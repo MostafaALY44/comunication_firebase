@@ -38,8 +38,8 @@ static adminIdLink:string="";
               user.getIdTokenResult().then((idTokenResult)=>{
                 if(idTokenResult.claims.admin)
                   setTimeout(()=>{
-                    console.log(idTokenResult.claims)
-                    console.log(idTokenResult.claims.idUniversity, idTokenResult.claims.idCollege)
+                    // console.log(idTokenResult.claims)
+                    // console.log(idTokenResult.claims.idUniversity, idTokenResult.claims.idCollege)
                     AuthenticationService.adminIdLink=idTokenResult.claims.idUniversity+"/"+idTokenResult.claims.idCollege;
                      UserService.userObservable =  of(null)
                    AuthenticationService.isAdmin.next(true);
@@ -92,7 +92,7 @@ static adminIdLink:string="";
     
      UserService.userObservable=temp;
     UserService.setUser();
-    console.log("mmmmmmmmmmmmmmmmmm")
+    // console.log("mmmmmmmmmmmmmmmmmm")
 
 
   }

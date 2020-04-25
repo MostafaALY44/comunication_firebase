@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { element } from 'protractor';
 import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-save-data',
@@ -10,7 +11,7 @@ import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService
 })
 export class SaveDataComponent implements OnInit {
 
-  constructor(private courseFirebaseService:CourseFirebaseService, @Inject(MAT_DIALOG_DATA) private data:{link:string,courses:string[]}) { 
+  constructor(public dialogRef: MatDialogRef<SaveDataComponent>,private courseFirebaseService:CourseFirebaseService, @Inject(MAT_DIALOG_DATA) private data:{link:string,courses:string[]},private _snackBar: MatSnackBar) { 
     console.log(data.courses.length)
   }
 
@@ -42,9 +43,18 @@ export class SaveDataComponent implements OnInit {
   canEdit(code:string):boolean{
     return this.currentCode === code
   }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  showSpinner:boolean=false;
   onSubmit(){
+    this.showSpinner=true;
     this.data.courses.forEach(elemet=>{
-      this.courseFirebaseService.create(this.data.link,elemet);
+      this.courseFirebaseService.create(this.data.link,elemet).then(x=>{
+        this.showSpinner=false;
+        this._snackBar.open(elemet, 'Added Successfully', { duration: 3000, });
+      })
     })
   }
   ngOnInit() {

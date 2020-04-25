@@ -1,0 +1,53 @@
+<!-- <div class="container" *ngFor="let user of users|async" style="width: 80%;height: 80px;">
+    <div class="row" >
+        {{user.email}}
+    </div>
+    <div  *ngFor="let university of user?.univeristy | keyvalue">
+        <div  *ngFor="let college of university?.value.colleages | keyvalue">
+            <div class="row" *ngFor="let course of college.value.courses | keyvalue">
+                {{course.key}}
+            </div>
+        </div>
+    </div>
+
+</div> -->
+
+
+<!-- Editable table -->
+<div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Persons</h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <tr>
+            <th class="text-center">Email</th>
+            <th class="text-center">Courses</th>
+            <th class="text-center">Action</th>
+          </tr>
+          <tr *ngFor="let user of users|async " >
+            <td *ngIf="user.univeristy">
+                <span  contenteditable="true" id="email"  (blur)="updateEmail(user.email,user.uid, $event)">{{user.email}}</span>
+            </td>
+    
+                        
+                         
+             <td *ngIf="user.univeristy">
+                <span *ngFor="let university of user?.univeristy | keyvalue" >
+                     <span *ngFor=" let college of university?.value.colleages | keyvalue">
+                          <span  id="course" *ngFor="let course of college.value.courses | keyvalue" contenteditable="true"  (blur)="updateCourse(course,user.uid,$event)">{{course.key}}</span>&nbsp;&nbsp;
+                        </span>
+                </span>
+                             
+                             
+            </td>
+            <td *ngIf="user.univeristy">
+                <span class="table-remove">
+                     <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" (click)="remove(user)">Remove</button>
+                 </span>
+            </td> 
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Editable table -->

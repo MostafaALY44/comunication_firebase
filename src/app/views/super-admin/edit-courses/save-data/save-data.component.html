@@ -1,9 +1,13 @@
+
+
 <mat-dialog-content>
+    
     <div mat-dialog-title style="color: blue;" align="center">
          you will insert {{data.courses.length}} courses
      </div>
      <div style="color: blueviolet;">review your courses befor add it in database (you can click on word code to edit it or remove all letter to delete)</div>
     <mat-grid-list cols="2" rowHeight="45px">
+        
         <mat-grid-tile *ngFor="let element of data.courses; let i=index" >
         <a  (click)="changeCurrentCodeState(element)" > 
             <span *ngIf="!canEdit(element)">{{element}}</span>
@@ -16,9 +20,14 @@
         </a>
         </mat-grid-tile>
     </mat-grid-list>
+    
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">add ({{data.courses.length}})</button>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button  cdkFocusInitial (click)="onSubmit()">add ({{data.courses.length}})</button>
+   
   </mat-dialog-actions>
+  <br>
+  <br>
+  <mat-spinner *ngIf="showSpinner" align="center" style="margin-left: 200px;"></mat-spinner>

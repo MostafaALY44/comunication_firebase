@@ -18,7 +18,7 @@ export class AdminGuardGuard implements CanActivateChild {
     return AuthenticationService.isAdmin.asObservable().pipe(
       take(1),
       map(admin => admin),
-      tap(loggedIn => {console.log("PPPPPPPPPPPPPPPPPPPPPPPPP", loggedIn,AuthenticationService.isAdmin )
+      tap(loggedIn => {//console.log("PPPPPPPPPPPPPPPPPPPPPPPPP", loggedIn,AuthenticationService.isAdmin )
       
         if(!loggedIn){
           setTimeout(()=>{
@@ -26,7 +26,7 @@ export class AdminGuardGuard implements CanActivateChild {
           },1000)
         
       
-      }
+      } 
       })
     );
       //return this.AuthService.isEmailVerified()
