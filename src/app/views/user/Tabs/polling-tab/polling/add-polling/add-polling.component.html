@@ -1,6 +1,6 @@
 <form [formGroup]="myForm" >
   
-    <mat-card class="row">
+    <mat-card class="row w-60" style=" border-radius: 10px 30px 10px; width: 850px; height: 170px;margin-left: 40px;" >
         <mat-form-field class="example-full-width">
             <mat-label>Type Your Polling</mat-label>
             <textarea matInput placeholder="Polling" formControlName="poll"  [class.is-invalid]="myForm.get('poll').invalid && 
@@ -15,7 +15,7 @@
           </mat-form-field>
     </mat-card>
     <br>
-    <mat-card class="row">
+    <mat-card class="row w-60" style=" border-radius: 10px 30px 10px;width: 850px;margin-left: 40px;">
     <div formArrayName="options">
         
         <div *ngFor="let option of optionForms.controls; let i=index" 

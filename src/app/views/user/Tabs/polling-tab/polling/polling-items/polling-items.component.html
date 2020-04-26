@@ -10,9 +10,9 @@
             </div>
             <div class="col md-4">
                 <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
-            </div>
+            </div >
 
-            <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
+            <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div> 
@@ -31,12 +31,13 @@
                 <mat-radio-button class="example-radio-button"  (click)="voteOption(option.id)" 
                     [value]="option.id" >
                     {{ option.text }}
-                    <span style="text-align: right; color: darkred;"> {{countVotes(option.id)}} </span>
                     
                 </mat-radio-button>
             </div>
-            <div class="col-sm-5">
-                <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a" (click)="setOption(option)">
+             
+            <div class="col-sm-6">
+                <span  style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
+                <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;" (click)="setOption(option)">
                     <mat-icon>more_vert</mat-icon>
                 </button>
             </div>
