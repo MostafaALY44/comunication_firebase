@@ -1,22 +1,19 @@
-<div style="background: rgba(255, 17, 0, 0.459); border: rgb(7, 0, 53); outline-style: solid;">
-<div class="card text-center" style="margin-top: 20px;">
+<div class="container">
+<div class="card text-center w-70" style="margin-top: 20px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
     <div class="card-body">
         <div class="row">
             <div class="col md-2">
-                <i class="fa fa-user-circle" style="font-size:48px;color:black"></i>&nbsp;
-                <span style="font-size: 20px;"> {{poll.pollingOwner}} </span>
+                <i class="fa fa-user-circle" style="font-size:40px; color:#1f1f7a"></i>&nbsp;<div style="font-size: 15px; color:#1f1f7a">{{poll.pollingOwner}}</div>
             </div>
 
             <div class="col md-8">
                 <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
-            </div>
+            </div >
 
-            <div class="col md-2">
-                <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPoll(poll)">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-            </div>
-
+            <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div> 
 
         </div>
         <hr>
@@ -31,50 +28,65 @@
     <!-- <p class="card-text">
             {{ post.body }}
         </p> -->
-</div>
-<div class="card-footer">
-    <div class="row" *ngFor="let option of options | async">
-        <div class="col-md-12" style="padding: 20px;">
-            <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <div class="row">
+    </div>
+    <div class="card-footer" style="margin: 0px; padding: 0px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
+            
+        
+        <mat-radio-group style="margin: 0px; padding: 0px;" aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="favoriteSeason">
+            <div *ngFor="let option of options | async" style="margin-left: 120px; padding: 0px; text-align: left;" >
+            <div class="row">
+            <div class="col-sm-6">
+                <mat-radio-button class="example-radio-button"  (click)="voteOption(option.id)" 
+                    [value]="option.id" >
+                    {{ option.text }}
+                    
+                </mat-radio-button>
+            </div>
+             
+            <div class="col-sm-6">
+                <span  style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
+                <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;" (click)="setOption(option)">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
+            </div>
+            </div>
+        </mat-radio-group>
 
-                            <div class="col-md-2 ">
-                                <mat-radio-button value="option" (click)="voteUp(option.id)">{{ option.text }}</mat-radio-button>
-                            </div>
+
+
+       <!-- <form [formGroup]="optionsForm">
+        <div class="row" *ngFor="let option of options | async" >
+            <mat-radio-group aria-label="Select an option" formControlName="type">
+            <div class="col-md-12" style="padding: 20px;">
+                <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+
+                                    <mat-radio-button (click)="voteOption(option.id)"  value="{{option.id}}">{{ option.text }}</mat-radio-button>
 
                             <div class="col md-6">
                                 {{option.votes}}
                             </div>
 
-                            <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
-                                (click)="setOption(option)">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <!-- <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="favoriteSeason">
-                                    <mat-radio-button class="example-radio-button" *ngFor="let option of options | async" [value]="option">
-                                        {{ option.text }}
-                                        <span style="text-align: right; color: darkred;"> {{option.votes}} </span>
-                                        <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;" (click)="setOption(option)">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                    </mat-radio-button>
-                                </mat-radio-group> -->
+                                <div class="col md-6">
+                                    {{countVotes(option.id)}} Owner: {{isOwner(option.id)}}
+                                </div>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+    </mat-radio-group>
+    </div>
+    </form> -->
     </div>
 </div>
-</div>
-<hr>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updatePoll()">
-        <i class="material-icons md-light">edit</i> edit
-    </button>
+</div>  
 
     <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deletePoll()">
         <i class="material-icons" style="align-content: center;">

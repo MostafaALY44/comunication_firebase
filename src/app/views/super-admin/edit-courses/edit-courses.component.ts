@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SaveDataComponent } from './save-data/save-data.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 @Component({
   selector: 'edit-courses',
@@ -12,8 +13,9 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 })
 export class EditCoursesComponent implements OnInit {
   routerLink:string="";
-  constructor(private fb: FormBuilder, public dialog:MatDialog, private router:ActivatedRoute) {
-    this.router.parent.parent.paramMap.subscribe((params: ParamMap)=>{
+  
+  constructor(private fb: FormBuilder, public dialog:MatDialog, private router:ActivatedRoute,route:Router) {
+    this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
       console.log(this.routerLink)
@@ -23,6 +25,8 @@ export class EditCoursesComponent implements OnInit {
       courseCode:['', Validators.required],
       newCourseCode: this.fb.array([])
     })
+
+    AuthenticationService.currentAdminLink= route.url;
   }
   setIndex=-1;
  

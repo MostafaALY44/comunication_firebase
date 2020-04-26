@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 @Component({
   selector: 'app-super-admin',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./super-admin.component.css']
 })
 export class SuperAdminComponent implements OnInit {
-
-  constructor() { }
+  link;
+  constructor(private authenticationService:AuthenticationService) { 
+   this.link= AuthenticationService.adminIdLink;
+  }
 
   ngOnInit() {
   }
-
+  logout(){
+    this.authenticationService.SignOut();
+  }
 }

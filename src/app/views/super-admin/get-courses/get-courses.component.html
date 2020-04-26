@@ -28,7 +28,7 @@
         <button  style=" outline: none; " mat-menu-item  type="button" class="btn btn-danger delete" (click)="deleteCourse(element)">
             <i class="material-icons" style="align-content: center;">
             delete_forever
-            </i> delete  </button> &nbsp;&nbsp;&nbsp;
+            </i> delete  </button> 
             <!-- <button   mat-menu-item  type="button" class="btn btn-warning edit color" (click)="updateCourse(element)">
                 <i class="material-icons md-light" >
                   edit
@@ -36,6 +36,8 @@
     </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
   </ng-template>
+  <br>
+  <mat-spinner *ngIf="showSpinner" align="center"></mat-spinner>

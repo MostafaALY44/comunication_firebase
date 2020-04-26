@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import 'firebase/firestore';
 import * as firebase from "firebase";
 import { environment } from 'src/environments/environment';
@@ -16,28 +16,89 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthenticationService  {
   //static user: Observable<User> ;
+static isAdmin:BehaviorSubject<boolean>=new BehaviorSubject(false);
+static isUser:boolean=false;
+static currentAdminLink:string="";
+static adminIdLink:string="";
 
   //user$: Observable<User>;
   constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore, private router:Router,private _snackBar: MatSnackBar) {
     //this.userData = angularFireAuth.authState;
     // Get the auth state, then fetch the Firestore user document or return null
     //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-    UserService.userObservable = this.angularFireAuth.authState.pipe(
+    UserService.userObservable=of(null);
+    let temp = this.angularFireAuth.authState.pipe(
       switchMap(user => {
+        console.log("LLLLLLLLL")
           // Logged in
+          AuthenticationService.isAdmin.next(false);
+          AuthenticationService.adminIdLink="";
         if (user) {
-          return this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
+           setTimeout(()=>{
+              user.getIdTokenResult().then((idTokenResult)=>{
+                if(idTokenResult.claims.admin)
+                  setTimeout(()=>{
+                    // console.log(idTokenResult.claims)
+                    // console.log(idTokenResult.claims.idUniversity, idTokenResult.claims.idCollege)
+                    AuthenticationService.adminIdLink=idTokenResult.claims.idUniversity+"/"+idTokenResult.claims.idCollege;
+                     UserService.userObservable =  of(null)
+                   AuthenticationService.isAdmin.next(true);
+                    //UserService.setUser();
+                    
+                  },0)
+              })
+            }, 0)
+    
+         UserService.userObservable= this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
-          return of(null);
+          UserService.userObservable=of(null);
+         // return of(null);
         }
+        return UserService.userObservable;
       })
+      
     )
+    
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   AuthenticationService.isAdmin.next(false);
+
+    //   console.log(user);
+    //     if (user) {
+    //       console.log(user);
+    //        setTimeout(()=>{
+    //           user.getIdTokenResult().then((idTokenResult)=>{
+    //             if(idTokenResult.claims.admin)
+    //               setTimeout(()=>{
+    //                  UserService.userObservable =  of(null)
+    //                AuthenticationService.isAdmin.next(true);
+    //                setTimeout(function(){
+    //                 //UserService.setUser();
+    //                     router.navigate(['admin']);
+    //               },2000)
+    //                 //UserService.setUser();
+                    
+    //               },10)
+    //           })
+    //         }, 10)
+    
+    //      UserService.userObservable= firestore.doc<User>(`users/${user.uid}`).valueChanges();
+    //     } else {
+    //       // Logged out
+    //       UserService.userObservable=of(null);
+    //      // return of(null);
+    //     }
+    // });
+    
+     UserService.userObservable=temp;
     UserService.setUser();
+    // console.log("mmmmmmmmmmmmmmmmmm")
 
 
   }
-
+consl(x){
+  console.log(x);
+}
    static goVerificate:boolean=false;
   /* Sign up */
   async SignUp(email: string, password: string) {
@@ -95,10 +156,26 @@ export class AuthenticationService  {
     
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
     if(!credential.user.emailVerified){
+      firebase.auth().currentUser.sendEmailVerification();
       this.SignOut();
       AuthenticationService.goVerificate=true;
         return ;
     }else AuthenticationService.goVerificate=false;
+    console.log(credential.user);
+    AuthenticationService.isUser=false;
+    if((await credential.user.getIdTokenResult()).claims.admin){
+      console.log("__________________________");
+      setTimeout(()=>{
+        //UserService.setUser();
+        this.router.navigate(['admin']);
+      },2000)
+      
+    }else{
+      console.log("++++++++++++++++++++++++++++");
+      AuthenticationService.isUser=true;
+      this.router.navigate(['user']);
+    }
+
     return this.updateUserData(credential.user);
   }
 

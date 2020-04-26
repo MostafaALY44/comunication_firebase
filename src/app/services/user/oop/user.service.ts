@@ -28,6 +28,7 @@ export class UserService implements OnDestroy {
   static user:User= new User();
   static indexNotification:string="";
   private static removeSubscribe;
+  static temp:Observable<User>;
   static getUser(){
     return UserService.user
   }
@@ -70,12 +71,19 @@ export class UserService implements OnDestroy {
 
 
 
- update(data){
-   this.firestore.doc('users/'+UserService.user.uid).update(data);
+ update(data): Promise<void>{
+  return this.firestore.doc('users/'+UserService.user.uid).update(data);
  }
-  getAll(){
+ delete(id):Promise<void>{
+   return this.firestore.doc('users/'+id).delete();
+ }
+  getAll(): Observable<User[]>{
     return this.firestore.collection<User>('users/').valueChanges();
-  
+ }
+
+ updatePerson(id,data): Promise<void>{
+   console.log(data , id)
+  return this.firestore.collection('users/').doc(id).update(data);
  }
 
 }

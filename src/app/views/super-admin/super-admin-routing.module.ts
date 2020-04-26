@@ -8,6 +8,7 @@ import { AdminBodyComponent } from './admin-body/admin-body.component';
 import { AddSuperAdminComponent } from './add-super-admin/add-super-admin.component';
 import { CoursesBodyComponent } from './courses-body/courses-body.component';
 import { GetCoursesComponent } from './get-courses/get-courses.component';
+import { ChangeAdminPasswordComponent } from './change-admin-password/change-admin-password.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
       },
       {
         path:'add-super-admin',component:AddSuperAdminComponent
+      },
+      {
+        path:'change-admin-password',component:ChangeAdminPasswordComponent
       }
     ]
   },
