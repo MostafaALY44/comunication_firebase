@@ -29,6 +29,11 @@ border-color: rgb(194, 248, 218); margin: 50px;">
               </mat-form-field>
         </a>
     </div>
+
+    <mat-radio-group [(ngModel)]="PersonRule" name="type">
+      <mat-radio-button value="instructor"   id="instructor{{idIndex}}" >instructor</mat-radio-button>
+      <mat-radio-button value="student"  id="student{{idIndex}}" checked>student</mat-radio-button>
+    </mat-radio-group>
     </div>
   </form >
 </mat-card>

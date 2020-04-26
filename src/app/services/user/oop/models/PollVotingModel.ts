@@ -8,6 +8,6 @@ export interface pollVotingModel{
 	id:string;
 	text:string;
 	votes:number;
-	vottedPerson:VottedPerson[];
+	vottedPerson?:VottedPerson[];
 	
 }

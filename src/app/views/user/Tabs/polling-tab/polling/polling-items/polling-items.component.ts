@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditPollingComponent } from '../edit-polling/edit-polling.component';
 import { EditOptionComponent } from '../edit-option/edit-option.component';
 import { PollingModel } from 'src/app/services/user/oop/models/PollingModel';
+import { element } from 'protractor';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -20,12 +22,15 @@ export class PollingItemsComponent implements OnInit {
 
   @Input() poll:PollingModel;
   currentUser;
+  optionsForm = new FormGroup({
+    type:new FormControl('')
+  });
   
   //options;
   constructor(public dialog:MatDialog) { 
 
     this.currentUser=UserService.getUser();
-    
+    console.log("xxxxxxxxxxxxxxxxx")
   }
 
   Currpoll;
@@ -33,10 +38,19 @@ export class PollingItemsComponent implements OnInit {
     this.Currpoll=poll;
   }
   
+  
   ngOnInit() {
-    
+    console.log(")))))))))))))))))))))))))))) ", this.poll.id)
+    console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
+    //this.getOptionDetails();
+    //this.optionsVoting = this.poll.options.get(this.poll.id);
+    this.poll.options.get(this.poll.id).forEach((option, key)=>{
+      if(option.isVoteThis)
+        this.favoriteSeason=key;
+    })
   }
+
   getDate(date){
     if(date != null)
       return date.toDate();
@@ -45,11 +59,42 @@ export class PollingItemsComponent implements OnInit {
   //flagDisplayOption:boolean = false;
 
   getOption(idPoll){
-    
+    //console.log(CourseService.polls.options)
+   // this.options= CourseService.polls.options.get(idPoll).asObservable();
     this.options= CourseService.polls.getVottings(idPoll);
    // console.log(this.options);
-   
   }
+
+  //optionsVoting:Map<string, {allVoted: number;isVoteThis: boolean;}> 
+  //currentVoteOption:string="";
+  // getOptionDetails(){
+  //   const userVote=this.poll.pollingVote.get(UserService.user.uid)
+  //   if(userVote){
+  //     this.favoriteSeason=userVote.idOption;
+  //   }
+  //     //this.currentVoteOption=userVote.idOption;
+  //   this.poll.pollingVote.forEach((element)=>{
+  //     if(this.optionsVoting.has(element.idOption))
+  //       this.optionsVoting.set(element.idOption, this.optionsVoting.get(element.idOption) +1);
+  //     else
+  //       this.optionsVoting.set(element.idOption, 1);
+  //   })
+  //   //console.log(this.poll.pollingVote)
+  //   //console.log(this.optionsVoting)
+  // }
+
+  countVotes(idOption){
+    const userVote=this.poll.options.get(this.poll.id).get(idOption)
+    if(userVote){
+      
+      //console.log(idOption, userVote)
+      //document.getElementById(idOption).focus()
+      return userVote.allVoted;
+    }
+    else return 0;
+  }
+
+  
   currentOption:pollVotingModel;
   setOption(option:pollVotingModel){
     this.currentOption=option;
@@ -71,6 +116,24 @@ export class PollingItemsComponent implements OnInit {
   updateOption(idPoll){
     CourseService.polls.votting.setCurrentIdPoll(idPoll);
     this.dialog.open(EditOptionComponent,{data:this.currentOption})
+  }
+  favoriteSeason
+  flag;
+  voteOption(idOption){
+    if(this.favoriteSeason== idOption){
+      console.log("*************** ")
+      setTimeout(()=>{ this.favoriteSeason=""},5)
+      
+      // if(this.optionsVoting.get(idOption)>1)
+      //   this.optionsVoting.set(idOption, this.optionsVoting.get(idOption) -1);
+      // else
+      //   this.optionsVoting.delete(idOption);
+      CourseService.polls.removeOption(this.poll.id, {"personId":UserService.user.uid,"optionId":idOption})
+      return 
+    }
+    CourseService.polls.addOption(this.poll.id, {"personId":UserService.user.uid,"optionId":idOption})
+    this.favoriteSeason=idOption;
+    console.log(this.favoriteSeason)
   }
 
 }
