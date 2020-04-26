@@ -21,10 +21,10 @@ export class GetCoursesComponent implements OnInit {
   constructor(private router:ActivatedRoute,private _snackBar: MatSnackBar,
     private courseFirebaseService:CourseFirebaseService,public dialog:MatDialog, route:Router) {
       AuthenticationService.currentAdminLink= route.url;
-    this.router.parent.parent.paramMap.subscribe((params: ParamMap)=>{
+   let removeSub= this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
-     // console.log(this.routerLink,"froooooooo")
+      // console.log(this.routerLink,"froooooooo")
     }).unsubscribe();
 
     this.dataSource=courseFirebaseService.getAll(this.routerLink);
@@ -44,13 +44,18 @@ export class GetCoursesComponent implements OnInit {
     if(date != null)
       return date.toDate();
   } 
+  showSpinner:boolean=false;
   deleteCourse(course){
-    this.courseFirebaseService.delete(this.routerLink,course["id"]);
-    this._snackBar.open(course.code, 'Deleted Successfully', { duration: 3000, });
+    this.showSpinner=true;
+    this.courseFirebaseService.delete(this.routerLink,course["id"]).then(del=>{
+      this.showSpinner=false;
+      this._snackBar.open(course.code, 'Deleted Successfully', { duration: 3000, });
+    })
+    
   }
-  updateCourse(course:Course){
-    this.dialog.open(UpdateCoursesComponent,{data:{'url':this.routerLink, 'courseCode':course["id"]}});
-  }
+  // updateCourse(course:Course){
+  //   this.dialog.open(UpdateCoursesComponent,{data:{'url':this.routerLink, 'courseCode':course["id"]}});
+  // }
  
   displayedColumns: string[] = ['code', 'date','action'];
 }

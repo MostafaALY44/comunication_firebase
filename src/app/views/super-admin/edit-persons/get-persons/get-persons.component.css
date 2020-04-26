@@ -1,0 +1,11 @@
+@media all and (min-width: 768px) {
+    tr td {
+        vertical-align: middle;
+   }
+    tr span:not([class]) {
+        padding: 1rem 1rem;
+   }
+}
+.pt-3-half {
+    padding-top: 1.4rem;
+    }

@@ -96,7 +96,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         
       }
     },50); 
-  }
+  } 
   removedData:number[]=[]
   reset(i:number, key:string, ii?:number){
     console.log(key)

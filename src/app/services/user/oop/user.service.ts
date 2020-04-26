@@ -71,12 +71,19 @@ export class UserService implements OnDestroy {
 
 
 
- update(data){
-   this.firestore.doc('users/'+UserService.user.uid).update(data);
+ update(data): Promise<void>{
+  return this.firestore.doc('users/'+UserService.user.uid).update(data);
  }
-  getAll(){
+ delete(id):Promise<void>{
+   return this.firestore.doc('users/'+id).delete();
+ }
+  getAll(): Observable<User[]>{
     return this.firestore.collection<User>('users/').valueChanges();
-  
+ }
+
+ updatePerson(id,data): Promise<void>{
+   console.log(data , id)
+  return this.firestore.collection('users/').doc(id).update(data);
  }
 
 }

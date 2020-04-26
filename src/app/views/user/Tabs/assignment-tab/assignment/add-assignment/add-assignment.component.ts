@@ -49,9 +49,11 @@ export class AddAssignmentComponent implements OnInit {
                  "title":this.newAssignment.value.title};
      
      
-      this.ser.addAssignment( this.data.courseId,data2);
+      this.ser.addAssignment( this.data.courseId,data2).then(()=>{
+        this._snackBar.open(this.newAssignment.value.title, 'Added Successfully', { duration: 3000, });
+      })
      // this.newAssignment.reset();
-      this._snackBar.open(this.newAssignment.value.title, 'Added Successfully', { duration: 3000, });
+      
     } 
   }
 

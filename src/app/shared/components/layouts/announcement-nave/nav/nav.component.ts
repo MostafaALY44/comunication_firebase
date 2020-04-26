@@ -7,6 +7,9 @@ import { UserService } from 'src/app/services/user/oop/user.service';
 import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { concatAll } from 'rxjs/operators';
+import { User } from 'src/app/services/auth/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -14,17 +17,21 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['../../../../../views/auth/sb-admin-2.min.css']
 })
 export class NavComponent implements OnInit {
-  currentUser;
+  currentUser:User;
   userLink:string="user";
+  isAdmin:boolean=false;
   constructor(private searchService:SearchInputService, private router:Router,
-     private authenticationService:AuthenticationService,private dialog:MatDialog,private angularFireAuth: AngularFireAuth) {
+     private authenticationService:AuthenticationService,private dialog:MatDialog) {
         if(this.isEqualAnnouncementsOrWelcom(this.router.url) ) 
           this.displaySearchInput=true;
         
           this.currentUser=UserService.getUser();
+          //console.log(this.currentUser)
+          this.isAdmin=false;
          let removeSubscribe= AuthenticationService.isAdmin.subscribe(admin=>{
             if(admin){
               this.userLink="admin";
+              this.isAdmin=admin;
               setTimeout(()=>{
                 removeSubscribe.unsubscribe();
               },0)
@@ -81,8 +88,17 @@ export class NavComponent implements OnInit {
   logout(){
     this.authenticationService.SignOut();
   }
+  
   changePassword(){
-    this.router.navigate(['user/change-password']); 
+    // AuthenticationService.isAdmin.subscribe(admin=>{
+      if(this.isAdmin)
+          this.router.navigate(['admin/'+AuthenticationService.adminIdLink+'/change-admin-password']);
+        
+      else 
+        this.router.navigate(['user/change-password']);
+      
+
+    // this.router.navigate(['user/change-password']); 
   }
 
   changeName(){
