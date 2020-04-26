@@ -1,5 +1,6 @@
-<mat-card style="border-style: solid;
-border-color: rgb(194, 248, 218); margin: 50px;">
+<!-- <mat-card style="border-style: solid;
+border-color: rgb(194, 248, 218); margin: 50px;"> -->
+<mat-card style="border-style: solid;margin: 20px; color:#1f1f7a; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
 
 <form >
   <div class="closs">
@@ -10,15 +11,26 @@ border-color: rgb(194, 248, 218); margin: 50px;">
   </button>
     <mat-form-field style="width: 20%;">
       <mat-label>email </mat-label>
-      <input matInput type="email" [(ngModel)]="email" (change)="onChangeEmail()" name="email" id="email{{idIndex}}">
+      <input matInput type="email"  [(ngModel)]="email" (change)="onChangeEmail()" name="email" id="email{{idIndex}}" required>
       <span matSuffix>@</span>
     </mat-form-field>
+    <small [hidden]="!emailHasError" style="color: red;">
+      Please enter a valid email address
+    </small>
+    
     
     <mat-form-field class="full-width">
       <mat-label>courses</mat-label>
-      <input matInput type="text" #course (keyup)="keyUp($event, course)"  id="courses{{idIndex}}" >
+      <input matInput type="text" #course (keyup)="keyUp($event, course)"  id="courses{{idIndex}}" required>
     </mat-form-field>
-    <div class="row">&nbsp;
+    <small [hidden]="coursesHasCourse" style="color: red;">
+      Please enter courses
+    </small>
+    <mat-radio-group [(ngModel)]="PersonRule" name="type{{idIndex}}">
+      <mat-radio-button value="instructor" (click)="instructor()"  id="instructor{{idIndex}}" >instructor</mat-radio-button>
+      <mat-radio-button value="student"  (click)="student()" id="student{{idIndex}}" checked>student</mat-radio-button>
+    </mat-radio-group>
+    <div class="row" style="margin-left: 30px;">&nbsp;
     <div *ngFor="let element of courses; let i=index">
         
         <a  (click)="changeCurrentCodeState(i)" > <br>
@@ -29,11 +41,8 @@ border-color: rgb(194, 248, 218); margin: 50px;">
               </mat-form-field>
         </a>
     </div>
-
-    <mat-radio-group [(ngModel)]="PersonRule" name="type">
-      <mat-radio-button value="instructor"   id="instructor{{idIndex}}" >instructor</mat-radio-button>
-      <mat-radio-button value="student"  id="student{{idIndex}}" checked>student</mat-radio-button>
-    </mat-radio-group>
+ 
+    
     </div>
   </form >
 </mat-card>

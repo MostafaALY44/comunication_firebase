@@ -35,11 +35,16 @@ export class CreatePersonFormComponent implements OnInit {
    }
 
    courses:string[]=[];
+   coursesHasCourse:boolean=false;
   
   ngOnInit() {
+    this.PersonRule="student";
     console.log("email"+this.idIndex)
     setTimeout(()=>{
-      document.getElementById("email"+this.idIndex).focus()
+      try{
+        document.getElementById("email"+this.idIndex).focus()
+      }catch(e){}
+      
     }, 100)
     //this.email=this.formData.email;
     //this.courses=this.formData.courses
@@ -72,9 +77,12 @@ export class CreatePersonFormComponent implements OnInit {
   }
   onChangeEmail(){
     if(this.isEmail(this.email)){
+      this.emailHasError=false;
       this.increment();
-    }else
+    }else{
+      this.emailHasError=true;
       this.decrement();
+    }
   }
   keyUp(char, courses){
     
@@ -93,7 +101,7 @@ export class CreatePersonFormComponent implements OnInit {
         this.courses.push(word)
         if(this.courses.length==1)
           this.increment();
-        
+        this.coursesHasCourse=true
           console.log("this.courses.forEach( ", this.courses)
         
           if(CreatePersonFormComponent.allPersonCourses.has(word))
@@ -119,6 +127,7 @@ export class CreatePersonFormComponent implements OnInit {
   currentElement:string;
   currentTemp:string="";
   email:string;
+  emailHasError:boolean=false;
   changeCurrentCodeState(i:number){
     //this.index=i;
     this.currentElement=this.courses[i];
@@ -146,14 +155,26 @@ export class CreatePersonFormComponent implements OnInit {
 
   destroyItSelfe(){
     if(!this.isFirstTime ){
+      console.log("OOOOOOOOOOO ", this.hisId)
+      for (let index = 0; index < CreatePersonFormComponent.allPersons.length; index++) {
+        if(CreatePersonFormComponent.allPersons[index].index == this.idIndex){
+          this.hisId=index;
+          break;
+        }
+      }
+
       CreatePersonFormComponent.allPersons[this.hisId].obj.courses.forEach(element=>{
         CreatePersonFormComponent.allPersonCourses.get(element).splice(
           CreatePersonFormComponent.allPersonCourses.get(element).findIndex(num=> num==this.hisId)
           ,1)
+          if(! CreatePersonFormComponent.allPersonCourses.get(element).length){
+            CreatePersonFormComponent.allPersonCourses.delete(element);
+          }
       })
       CreatePersonFormComponent.allPersons.splice(
       CreatePersonFormComponent.allPersons.findIndex(x=>x.id== this.hisId) 
       , 1);
+      
       
     }
     console.log(" CreatePersonFormComponent.allPersons ", CreatePersonFormComponent.allPersons)
@@ -190,35 +211,36 @@ index:number =CreatePersonFormComponent.allPersons.length-1;
 isFirstTime:boolean=true;
 hisId:number;
   onSubmit(){
+    console.log("))))))))))))))))))))");
     console.log({"roles":{[this.PersonRule]:true}});
-    // if(this.isFirstTime){
+    if(this.isFirstTime){
 
-    //   CreatePersonFormComponent.allPersons.push({"id":CreatePersonFormComponent.allPersons.length,
-    //    "obj":{email:this.email, courses:this.courses,
-    //     "roles":{[this.PersonRule]:true}}, "index":this.idIndex})
-    //     this.hisId=this.index =CreatePersonFormComponent.allPersonsIndexOriginLength;
-    //     CreatePersonFormComponent.allPersonsIndexOriginLength++;
-    //     this.isFirstTime=false;
-    // }else{
-    //   if(this.index < CreatePersonFormComponent.allPersons.length){
-    //     if(CreatePersonFormComponent.allPersons[this.index].id==this.hisId){
-    //       CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
-    //       "obj":{email:this.email, courses:this.courses,
-    //       "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
-    //     }else{
-    //       this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
-    //       CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
-    //       "obj":{email:this.email, courses:this.courses,
-    //       "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
-    //     }
-    //   }else{
-    //     this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
-    //       CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
-    //       "obj":{email:this.email, courses:this.courses,
-    //       "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
-    //   }
+      CreatePersonFormComponent.allPersons.push({"id":CreatePersonFormComponent.allPersons.length,
+       "obj":{email:this.email, courses:this.courses,
+        "roles":{[this.PersonRule]:true}}, "index":this.idIndex})
+        this.hisId=this.index =CreatePersonFormComponent.allPersonsIndexOriginLength;
+        CreatePersonFormComponent.allPersonsIndexOriginLength++;
+        this.isFirstTime=false;
+    }else{
+      if(this.index < CreatePersonFormComponent.allPersons.length){
+        if(CreatePersonFormComponent.allPersons[this.index].id==this.hisId){
+          CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
+          "obj":{email:this.email, courses:this.courses,
+          "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
+        }else{
+          this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
+          CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
+          "obj":{email:this.email, courses:this.courses,
+          "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
+        }
+      }else{
+        this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
+          CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
+          "obj":{email:this.email, courses:this.courses,
+          "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
+      }
       
-    // }
+    }
     
     
   }
@@ -244,10 +266,11 @@ hisId:number;
           return;
         this.isFocusRight=true;
         this.isFocusLeft=false;
+        this.PersonRule="student"
           //document.getElementById("instructor"+this.idIndex).blur();
-          document.getElementById("student"+this.idIndex).focus();
+          //document.getElementById("student"+this.idIndex).focus();
           //document.getElementById("instructor"+this.idIndex).blur();
-          
+          this.onSubmit();
         
       }, 0)
     }else if(event.key == "ArrowLeft"){
@@ -258,11 +281,11 @@ hisId:number;
           return;
         this.isFocusLeft=true;
         this.isFocusRight=false;
-        
+        this.PersonRule="instructor"
           //document.getElementById("student"+this.idIndex).blur()
-          document.getElementById("instructor"+this.idIndex).focus();
+          //document.getElementById("instructor"+this.idIndex).focus();
           //document.getElementById("student"+this.idIndex).blur()
-          
+          this.onSubmit();
         
       }, 0)
     }else if(event.key == "Escape"){
@@ -273,6 +296,15 @@ hisId:number;
   }
   isFocusLeft:boolean=false;
   isFocusRight:boolean=false;
-  PersonRule:string="";
+  PersonRule:string;
  
+  instructor(){
+    this.PersonRule="instructor";
+    this.onSubmit();
+  }
+
+  student(){
+    this.PersonRule="student";
+    this.onSubmit();
+  }
 }
