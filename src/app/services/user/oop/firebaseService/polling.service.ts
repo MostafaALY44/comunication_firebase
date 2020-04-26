@@ -47,8 +47,6 @@ export class PollingService implements CRUDForfirebase{
             }})
             options.set(id, tempx);
           }
-          
-          
           console.log("{{{{{{{{{{{{{{{{{ ", options)
           data.options=options
           data.pollingVote=temp;
