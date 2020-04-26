@@ -28,12 +28,16 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   }
   
   routerLink:string="";
+  idUniversity:string="";
+  idCollege:string="";
   removeSubscribe1;
   removeSubscribe2;
   checkCodesFromDB(){
     this.unsubscribeCheckCodesFromDB();
     this.removeSubscribe1=this.data.paramMap.subscribe((param:ParamMap)=>{
       this.routerLink = "universities/"+param.get('id1')+"/colleges/"+param.get('id2');
+      this.idUniversity=param.get('id1');
+      this.idCollege=param.get('id2');
     this.removeSubscribe2=this.courseService.getAllCodesAsMap(this.routerLink)
       .subscribe( mapData=>{
         this.coursesNotCreatedYet=[];
@@ -186,7 +190,9 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   
   onSubmit(){
     this.closeDialog()
-    let obj={"link":this.routerLink,
+
+    let obj={"link":{"idUniversity":this.idUniversity,
+              "idCollege":this.idCollege},
               "persons":this.withoutId(CreatePersonFormComponent.allPersons)
             };
     this.addPersonService.addPersons(obj)

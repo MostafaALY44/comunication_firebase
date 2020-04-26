@@ -100,13 +100,14 @@ export class CreatePersonsComponent implements OnInit {
   onSubmit(){
     let x = CreatePersonFormComponent.allPersons
     console.log(CreatePersonFormComponent.allPersonCourses)
+    console.log(CreatePersonFormComponent.allPersons)
     let ref = this.dialog.open(SavePersonsDataComponent,{data:{paramMap:this.router.parent.paramMap ,persons:CreatePersonFormComponent.allPersons}, height: '600px', width: '900px', disableClose: true})
     let removeSubscribe1=ref .afterClosed().subscribe((ss)=>{
       console.log("ssssssssssssssssss ",ss)
       ss.data.forEach(element => {
         this.remove(true, element)
       });
-      setTimeout(()=>{removeSubscribe1.unsubscribe},10)
+      setTimeout(()=>{removeSubscribe1.unsubscribe},0)
     })
     // this.router.parent.paramMap.subscribe((param:ParamMap)=>{
     //   let obj={"link":{"idUniversity":param.get('id1'),"idCollege":param.get('id2')},
