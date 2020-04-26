@@ -15,13 +15,13 @@ export class Polling implements CRUD {
   private pollingService: PollingService = new PollingService(this.firestore);
 
   constructor(private firestore: AngularFirestore) {
-
     this.votting = new PollVotting(this.firestore);
   }
 
   reset() {
     this.polles = [];
   }
+
   changeUrl(url: string) {
     this.url = url + '/polls';
     this.votting.changeUrl(this.url);
@@ -53,5 +53,4 @@ export class Polling implements CRUD {
     return this.votting.vottings;
   }
   pollForCreateAndUpdate(poll: PollingModel) { return { "text": poll.text, "deadLine": poll.deadLine, "pollingOwner": poll.pollingOwner } }
-
 }

@@ -35,7 +35,7 @@ export class AddCategoryComponent {
    let categoryName:string =this.addCategory.value.nameCategory;
     if(!this.isEmpty( categoryName) && !( CourseService.categories.categoriesMap.has(categoryName))){ 
       CourseService.categories.create( {"id":"" ,"name":  categoryName}).then(()=>{
-        this.openSnackBar(categoryName + ' Category ✅', 'Added Successfully')
+        this.openSnackBar(categoryName + ' Category ✅ ', 'Added Successfully')
       }).catch(()=>{
         this.openSnackBar(categoryName + ' Category ❌', 'error in add Category')
       })
