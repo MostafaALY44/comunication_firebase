@@ -1,9 +1,10 @@
+import { pollVotingModel, VottedPerson } from './../../../../../../services/user/oop/models/PollVotingModel';
+import { PollVotting } from './../../../../../../services/user/oop/class/PollVotting';
+import { CourseService } from './../../../../../../services/user/oop/course.service';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { PollingComponent } from '../polling.component';
 import { UserService } from 'src/app/services/user/oop/user.service';
-import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Observable } from 'rxjs';
-import { pollVotingModel } from 'src/app/services/user/oop/models/PollVotingModel';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPollingComponent } from '../edit-polling/edit-polling.component';
 import { EditOptionComponent } from '../edit-option/edit-option.component';
@@ -20,7 +21,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class PollingItemsComponent implements OnInit {
 
-  @Input() poll:PollingModel;
+  @Input() poll: PollingModel;
   currentUser;
   optionsForm = new FormGroup({
     type:new FormControl('')
@@ -34,8 +35,8 @@ export class PollingItemsComponent implements OnInit {
   }
 
   Currpoll;
-  setPoll(poll){
-    this.Currpoll=poll;
+  setPoll(poll) {
+    this.Currpoll = poll;
   }
   
   
@@ -45,22 +46,19 @@ export class PollingItemsComponent implements OnInit {
     this.getOption(this.poll.id);
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
-    if(this.poll.options.has(this.poll.id)){
-        this.poll.options.get(this.poll.id).forEach((option, key)=>{
-      
-        if(option.isVoteThis)
-           this.favoriteSeason=key;
+    if(this.poll.options.has(this.poll.id))
+    this.poll.options.get(this.poll.id).forEach((option, key)=>{
+      if(option.isVoteThis)
+        this.favoriteSeason=key;
     })
   }
-  }
+
 
   getDate(date){
     if(date != null)
       return date.toDate();
   }
-  options:Observable <pollVotingModel[]>;
-  //flagDisplayOption:boolean = false;
-
+  options
   getOption(idPoll){
     //console.log(CourseService.polls.options)
    // this.options= CourseService.polls.options.get(idPoll).asObservable();
@@ -106,21 +104,21 @@ export class PollingItemsComponent implements OnInit {
   
   }
 
-  deletePoll(){
+  deletePoll() {
     CourseService.polls.delete(this.Currpoll.id);
-   } 
-
-   deleteOption(idPoll){
-    CourseService.polls.votting.setCurrentIdPoll(idPoll);
-    CourseService.polls.votting.delete(this.currentOption.id); 
-  } 
-
-  updatePoll(){
-    this.dialog.open(EditPollingComponent,{data:this.Currpoll})
   }
-  updateOption(idPoll){
+
+  deleteOption(idPoll) {
     CourseService.polls.votting.setCurrentIdPoll(idPoll);
-    this.dialog.open(EditOptionComponent,{data:this.currentOption})
+    CourseService.polls.votting.delete(this.currentOption.id);
+  }
+
+  updatePoll() {
+    this.dialog.open(EditPollingComponent, { data: this.Currpoll })
+  }
+  updateOption(idPoll) {
+    CourseService.polls.votting.setCurrentIdPoll(idPoll);
+    this.dialog.open(EditOptionComponent, { data: this.currentOption })
   }
   favoriteSeason
   flag;
@@ -141,4 +139,14 @@ export class PollingItemsComponent implements OnInit {
     console.log(this.favoriteSeason)
   }
 
+
+  xxxxxx:pollVotingModel;
+  
+  voteUp(pollId) {
+   let xxxxxx = CourseService.polls.getVottings(pollId);
+
+    //let voteingModel:  pollVotingModel = {id:pollId, text:'test', votes:10, };
+    //CourseService.polls.votting.update(votId+"",this.voteingModel);
+    // console.log(JSON.stringify(xxxxxx))
+  }
 }

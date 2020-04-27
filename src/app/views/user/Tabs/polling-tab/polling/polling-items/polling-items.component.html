@@ -41,71 +41,95 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
             </div>
-            </div>
-            </div>
-        </mat-radio-group>
+
+            <!-- <p class="card-text">
+                {{ post.body }}
+            </p> -->
+        </div>
+        <div class="card-footer"
+            style="margin: 0px; padding: 0px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
 
 
+            <mat-radio-group style="margin: 0px; padding: 0px;" aria-labelledby="example-radio-group-label"
+                class="example-radio-group" [(ngModel)]="favoriteSeason">
+                <div *ngFor="let option of options | async" style="margin-left: 120px; padding: 0px; text-align: left;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mat-radio-button class="example-radio-button" (click)="voteOption(option.id)"
+                                [value]="option.id">
+                                {{ option.text }}
 
-       <!-- <form [formGroup]="optionsForm">
-        <div class="row" *ngFor="let option of options | async" >
-            <mat-radio-group aria-label="Select an option" formControlName="type">
-            <div class="col-md-12" style="padding: 20px;">
-                <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2">
-
-                                    <mat-radio-button (click)="voteOption(option.id)"  value="{{option.id}}">{{ option.text }}</mat-radio-button>
-
-                                </div>
-
-                                <div class="col md-6">
-                                    {{countVotes(option.id)}} Owner: {{isOwner(option.id)}}
-                                </div>
-
-                                <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;" (click)="setOption(option)">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                            </div>
-                           
-                            
-                       
+                            </mat-radio-button>
                         </div>
-                        
+
+                        <div class="col-sm-6">
+                            <span style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
+                            <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button
+                                [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;"
+                                (click)="setOption(option)">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </mat-radio-group>
+
+
+
+            <!-- <form [formGroup]="optionsForm">
+            <div class="row" *ngFor="let option of options | async" >
+                <mat-radio-group aria-label="Select an option" formControlName="type">
+                <div class="col-md-12" style="padding: 20px;">
+                    <div class="input-group mb-3" class="card text-center" style="margin-top: 20px;">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <mat-radio-button (click)="voteOption(option.id)"  value="{{option.id}}">{{ option.text }}</mat-radio-button>
+                                    </div>
+                                    <div class="col md-6">
+                                        {{countVotes(option.id)}} Owner: {{isOwner(option.id)}}
+                                    </div>
+                                    <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;" (click)="setOption(option)">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                               
+                                
+                           
+                            </div>
+                            
+                    </div>
                 </div>
             </div>
-
+            
+        </mat-radio-group>
         </div>
-        
-    </mat-radio-group>
-    </div>
-    </form> -->
+        </form> -->
+        </div>
     </div>
 </div>
-</div>  
 
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updatePoll()">
-                <i class="material-icons md-light">edit</i> edit
-            </button>
-    
-            <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deletePoll()">
-                <i class="material-icons" style="align-content: center;">
-                    delete_forever
-                </i> delete </button>
-        </mat-menu>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updatePoll()">
+        <i class="material-icons md-light">edit</i> edit
+    </button>
+
+    <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deletePoll()">
+        <i class="material-icons" style="align-content: center;">
+            delete_forever
+        </i> delete </button>
+</mat-menu>
 
 
-        <mat-menu #menu1="matMenu">
-            <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateOption(poll.id)">
-                <i class="material-icons md-light">edit</i> edit
-            </button>
-    
-            <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete" (click)="deleteOption(poll.id)">
-                <i class="material-icons" style="align-content: center;">
-                    delete_forever
-                </i> delete </button>
-        </mat-menu>
+<mat-menu #menu1="matMenu">
+    <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="updateOption(poll.id)">
+        <i class="material-icons md-light">edit</i> edit
+    </button>
 
+    <button style=" outline: none; " mat-menu-item type="button" class="btn btn-danger delete"
+        (click)="deleteOption(poll.id)">
+        <i class="material-icons" style="align-content: center;">
+            delete_forever
+        </i> delete </button>
+</mat-menu>

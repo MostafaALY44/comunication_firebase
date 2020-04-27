@@ -1,8 +1,12 @@
-<p>save-persons-data works!</p>
 you have {{coursesNotCreatedYet.length}} courses must be register first:
 <div *ngIf="needRegisterCourses()">
 {{coursesNotCreatedYet|json}}
 <button (click)="registerCourses()"> goto register Courses</button>
+</div>
+<div class="row">
+    <div *ngFor="let course of data.mapCourses | keyvalue">
+        <span  contenteditable="true"   (blur)="updateCode(course.key, $event)">{{course.key}}</span> &nbsp;&nbsp;
+    </div>
 </div>
 <!-- <mat-dialog-content> -->
     <div mat-dialog-title style="color: blue;" align="center">
@@ -13,14 +17,11 @@ you have {{coursesNotCreatedYet.length}} courses must be register first:
         <div *ngFor="let element of data.persons; let i=index">
         <!-- <mat-grid-tile colspan="4"> -->
         <a  (click)="changeCurrentFieldState(element.obj.email)" > 
-            
             <span *ngIf="!canEdit(element.obj.email)">{{element.obj.email}}</span>
-            
                 <mat-form-field *ngIf="canEdit(element.obj.email)">
                     <mat-label>Edit Course Code </mat-label>
                     <input matInput  type="email" id="!{{element.obj.email}}!" [(ngModel)]="changeCode" name="{{element.obj.email}}" (blur)="reset(i, 'email')" >
                   </mat-form-field>
-            
         </a>
     <!-- </mat-grid-tile> -->
     <div class="row">

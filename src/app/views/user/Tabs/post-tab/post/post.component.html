@@ -1,9 +1,8 @@
 <div style="margin-top: 20px;">
-            <app-new-post></app-new-post>
-
-        </div>
-    <div class="row" style="text-align: center;" >
-        <div class="col-md-12" *ngFor="let post of coursePosts.posts ">
-            <app-post-item [post]="post" ></app-post-item>
-        </div>
+    <app-new-post></app-new-post>
+</div>
+<div class="row" style="text-align: center;">
+    <div class="col-md-12" *ngFor="let post of coursePosts.posts ">
+        <app-post-item [post]="post"></app-post-item>
     </div>
+</div>

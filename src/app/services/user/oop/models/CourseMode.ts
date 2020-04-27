@@ -2,6 +2,7 @@ export interface NotificationModel{
     postsNumber:number;
     categoriesNumber:Map<string,number>;
     assignmentsNumber:number;
+    pollingsNumber?:number;
   }
   
 export class Course{

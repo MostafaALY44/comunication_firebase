@@ -104,10 +104,13 @@ export class CreatePersonFormComponent implements OnInit {
         this.coursesHasCourse=true
           console.log("this.courses.forEach( ", this.courses)
         
-          if(CreatePersonFormComponent.allPersonCourses.has(word))
+          if(CreatePersonFormComponent.allPersonCourses.has(word)){
+            console.log(this.hisId)
             CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId);
-          else
-          CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId]);
+          }else{
+            console.log(this.hisId)
+            CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId]);
+          }
         
         
         // if(CreatePersonFormComponent.allPersonCourses.has(word))
@@ -189,7 +192,17 @@ export class CreatePersonFormComponent implements OnInit {
       // let index=CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(element=> element===this.hisId)
       // if(index > -1)
       //   CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(index, 1);
+      CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(
+        CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(el=>el==this.hisId)
+        ,1)
       this.courses[i] = word;
+      if(CreatePersonFormComponent.allPersonCourses.has(word)){
+        console.log(this.hisId)
+        CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId);
+      }else{
+        console.log(this.hisId)
+        CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId]);
+      }
       // if(CreatePersonFormComponent.allPersonCourses.has(word))
       //   CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId)
       // else
