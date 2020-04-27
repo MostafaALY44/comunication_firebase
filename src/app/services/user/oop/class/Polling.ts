@@ -86,6 +86,6 @@ export class Polling implements CRUD , OnDestroy{
     })
     
   }
-    pollForCreateAndUpdate(poll:PollingModel){return {"text":poll.text,"deadLine" : poll.deadLine, "pollingOwner":poll.pollingOwner}}
+    pollForCreateAndUpdate(poll:PollingModel){return {"text":poll.text,"deadLine" : poll.deadLine, "pollingOwner":poll.pollingOwner,"userId":poll.userId}}
 
 }

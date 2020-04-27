@@ -49,16 +49,24 @@ export class AddPollingComponent implements OnInit {
   
     this.optionForms.push(option);
   }
-  
+  deleteId;
   deleteOption(i) {
+    this.deleteId=i;
     this.optionForms.removeAt(i)
   }
+  resetForm(form) {
 
+    form.reset();
+
+    Object.keys(form.controls).forEach(key => {
+      form.get(key).setErrors(null) ;
+    });
+}
   onSubmit(){
    // console.log(this.myForm)
     if(!this.isEmpty(this.myForm.value.poll) && this.myForm.value.options.length ){
       let data1:pollVotingModel;
-      let data:PollingModel={'id':"",'text' : this.myForm.value.poll, 'deadLine' : this.myForm.value.deadLine,'pollingOwner':this.currentUser.name};
+      let data:PollingModel={'id':"",'text' : this.myForm.value.poll, 'deadLine' : this.myForm.value.deadLine,'pollingOwner':this.currentUser.name,'userId':this.currentUser.uid};
      // console.log("____________")
       CourseService.polls.create(data).then(docRef=>{
 
@@ -69,7 +77,7 @@ export class AddPollingComponent implements OnInit {
         // console.log(data1[i]);
           CourseService.polls.votting.setCurrentIdPoll(docRef.id);
           CourseService.polls.votting.create(data1);
-      } 
+      }  
       });
     // this.myForm.reset();
     
@@ -87,6 +95,9 @@ export class AddPollingComponent implements OnInit {
     
      
     } 
+    this.deleteOption(this.deleteId);
+    this.resetForm(this.myForm)
+    
   }
 
 }

@@ -12,11 +12,11 @@
                 <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
             </div >
 
-            <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
+            <button *ngIf="poll.userId===currentUser.uid" mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div> 
-
+ 
         <!-- <p class="card-text">
             {{ post.body }}
         </p> -->
@@ -37,7 +37,7 @@
              
             <div class="col-sm-6">
                 <span  style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
-                <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;" (click)="setOption(option)">
+                <button *ngIf="poll.userId===currentUser.uid" mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;" (click)="setOption(option)">
                     <mat-icon>more_vert</mat-icon>
                 </button>
             </div>

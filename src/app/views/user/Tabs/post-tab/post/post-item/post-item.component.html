@@ -11,7 +11,7 @@
             <div class="col md-4">
                 <p>{{getDate(post.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
             </div>
-
+ 
             <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPost(post)">
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -75,7 +75,7 @@
                         </div>
                         </div>
                         
-                           <div class="col-md-2" *ngIf="comment.commentModel.commentOwner===currentUser.name" align="end" >
+                           <div class="col-md-2" *ngIf="comment.commentModel.userId===currentUser.uid" align="end" >
                             <button mat-icon-button [matMenuTriggerFor]="menu1" style=" outline: none;"
                                 (click)="setComment(comment.commentModel)">
                                 <mat-icon>more_vert</mat-icon>
@@ -158,7 +158,7 @@
 </div>
 
     <mat-menu #menu="matMenu">
-        <div *ngIf="post.postOwner===currentUser.name">
+        <div *ngIf="post.userId===currentUser.uid">
         <button mat-menu-item type="button" class="btn btn-warning edit color" (click)="editPost()">
             <i class="material-icons md-light">edit</i> edit
         </button>
@@ -170,7 +170,7 @@
             </i> delete </button>
  
         </div>
-        <div  *ngIf="post.postOwner!=currentUser.name">
+        <div  *ngIf="post.userId!=currentUser.uid">
             <button style=" outline: none; " mat-menu-item type="button"  (click)="report()" >
             <i class="material-icons" class="fa fa-minus-square" style="font-size:24px">
                 

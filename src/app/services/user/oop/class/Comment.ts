@@ -61,7 +61,7 @@ export class Comment implements CRUD{
 	}	 
 
 
-	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reacte" : comment.react, "commentOwner": comment.commentOwner}}
+	commentForCreateAndUpdate(comment:CommentModel){return {"body":comment.body,"reacte" : comment.react, "commentOwner": comment.commentOwner,"userId":comment.userId}}
  
 	
 }

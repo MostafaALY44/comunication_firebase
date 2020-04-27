@@ -12,5 +12,6 @@ export interface PostModel{
 	postOwner:string;
 	//reactedPerson:ReactedPerson[];
 	react:any;
+	userId:string;
 	
 }
