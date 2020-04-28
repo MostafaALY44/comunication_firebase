@@ -21,7 +21,7 @@ export class PollingFactoryService implements OnDestroy{
       this.coursePolling.reset();
       this.url=url;
       this.coursePolling.changeUrl(this.url);
-      this.removeUnsubscribe1=this.coursePolling.getAll().subscribe((polls)=>{this.coursePolling.polles=polls;this.coursePolling.setOptions()})
+      this.removeUnsubscribe1=this.coursePolling.getAll().subscribe((polls)=>{this.coursePolling.pollesBehaver.next(polls);})
    }
 
    ngOnDestroy(): void {

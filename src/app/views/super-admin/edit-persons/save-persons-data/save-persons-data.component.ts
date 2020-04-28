@@ -175,12 +175,15 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
 
   changeCode:string=""
   currentCode:string="";
-  changeCurrentFieldState(code:string){
+  currentId:string="";
+  changeCurrentFieldState(code:string, id:string){
+    console.log("IdIdIdIdIdIdIdId ",id)
     this.currentCode=code;
     this.changeCode=this.currentCode;
+    this.currentId=id;
     setTimeout(()=>{ // this will make the execution after the above boolean has changed
       try {
-        document.getElementById('!'+code+'!').focus();
+        document.getElementById('!'+id+'!').focus();
       } catch (error) {
         
       }
@@ -215,11 +218,14 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         
       else{
         const word :string=this.changeCode.trim();
-        if(!this.data.persons.find(element=> element.obj.email===word) && this.isEmail(word))
-          this.data.persons[i].obj.email=word;
+        console.log("word ",word)
+        if(!this.data.persons.find(element=> element.obj.email===word) && this.isEmail(word)){
+          console.log("word ",word)
+          this.data.persons[i].obj.email=word;}
       } 
     }else if(key == "courses"){
-      if(this.changeCode==""){
+      const word :string=this.changeCode.toUpperCase().trim();
+      if(this.changeCode=="" || this.data.persons[i].obj.courses.find(el=>el==word)){
         
         CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]).splice(
           CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]).findIndex(element=>element == this.data.persons[i].id)
@@ -235,7 +241,6 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         }
         //this.checkCodesFromDB();
       }else{
-        const word :string=this.changeCode.toUpperCase().trim();
         if(this.data.persons[i].obj.courses[ii] != word){
           
           //CreatePersonFormComponent.allPersonCourses.delete(this.data.persons[i].courses[ii])
@@ -267,11 +272,11 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         }
       } 
     }
-    this.currentCode=this.changeCode=''
+    this.currentCode=this.changeCode=this.currentId=''
     this.checkCodesFromDB();
   }
   canEdit(code:string):boolean{
-    return this.currentCode === code
+    return this.currentId === code
   }
   
   onSubmit(){

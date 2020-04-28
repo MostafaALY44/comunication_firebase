@@ -49,11 +49,11 @@ export class NotificationService implements OnDestroy{
       Object.keys(university[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
         this.removeSubscribe.push(this.getCourseFromDB(url2, courseKey).subscribe(course=>{
           console.log(course)
-          let x= course.postsNumber
-           - UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber
-            let y=course.assignmentsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].assignmentNumber
-            let temp=UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].categoriesNumber;
-            let tempMap=new Map<string, number>()
+          let x= course.postsNumber - UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].postNumber
+          let y=course.assignmentsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].assignmentNumber
+          let z=course.pollingsNumber -  UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].pollingNumber
+          let temp=UserService.user.univeristy[universityKey].colleages[collegeKey].courses[courseKey].categoriesNumber;
+          let tempMap=new Map<string, number>()
 
             if(temp)
             Object.keys(temp).forEach(categoryId=>{
@@ -103,6 +103,11 @@ export class NotificationService implements OnDestroy{
               y=(y<0)?0:y;
               object={...object, ...{"assignmentsNumber":y}}
               notification.assignmentsNumber=y
+            }
+            if(z){
+              z=(z<0)?0:z;
+              object={...object, ...{"bollingsNumber":z}}
+              notification.pollingsNumber=z
             }
         }))
         
