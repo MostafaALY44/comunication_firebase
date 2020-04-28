@@ -127,7 +127,7 @@ export class PostItemComponent implements OnInit {
   onSubmit(postId){
 
     if(!this.isEmpty(this.newComment.value.text)){
-      let data:CommentModel={"id":"" ,"react" : null, "body" :this.newComment.value.text,"commentOwner":this.currentUser.name};
+      let data:CommentModel={"id":"" ,"react" : null, "body" :this.newComment.value.text,"commentOwner":this.currentUser.name,'userId':this.currentUser.uid};
        CourseService.posts.comment.setCurrentIdPost(postId);
        CourseService.posts.comment.create(data);
 

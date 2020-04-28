@@ -18,14 +18,15 @@
                   </mat-form-field>
                 </p>
         </a>
+        <small *ngIf="isCodeExist(i)" style="color: red;">can't save code already exist</small>
         </mat-grid-tile>
     </mat-grid-list>
     
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="onNoClick()">Close</button>
-    <button mat-button  cdkFocusInitial (click)="onSubmit()">add ({{data.courses.length}})</button>
+    <button mat-button (click)=" closeDialog(false)">Close</button>
+    <button mat-button  cdkFocusInitial (click)="onSubmit(); closeDialog(true)">add ({{data.courses.length}})</button>
    
   </mat-dialog-actions>
   <br>

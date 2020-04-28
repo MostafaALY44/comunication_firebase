@@ -76,6 +76,6 @@ export class Post implements CRUD{
 
 	// }
 
-	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"react" : null, "body":post.body, "postOwner": post.postOwner}}
+	postForCreateAndUpdate(post:PostModel){return {"title":post.title,"react" : null, "body":post.body, "postOwner": post.postOwner,"userId":post.userId}}
 
 }

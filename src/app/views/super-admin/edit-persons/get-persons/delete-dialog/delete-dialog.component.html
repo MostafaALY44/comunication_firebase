@@ -1,0 +1,17 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      
+      <mat-card-title align="center">Warning !!!</mat-card-title>
+       
+    </mat-card-header> 
+    
+    <mat-card-content>
+        Do you want to delete all data of this person ??
+   
+    </mat-card-content>
+    <mat-card-actions>
+        <button type="button" (click)="onClose()" mat-button >Close</button>
+        <button type="button" (click)="delete()" class="btn-danger" mat-button mat-dialog-close>Delete</button>
+      
+    </mat-card-actions>
+  </mat-card>

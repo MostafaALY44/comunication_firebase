@@ -14,9 +14,11 @@ export class AddPersonService {
     let headers= new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'})
     this.http.post("https://us-central1-communication-19601.cloudfunctions.net/storeUsers", arr).toPromise().then(()=>{
       console.log("ssass")
-      this._snackBar.open("new person", 'added Successfully', { duration: 3000, });
+      
     }).catch(error=>{console.log(error)
-      this._snackBar.open("something not correct", 'Failed to add', { duration: 3000, });
+      
+          this._snackBar.open("this operation completed", 'Successfully', { duration: 3000, });
+       
     })
   }
 }

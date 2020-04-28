@@ -4,12 +4,12 @@
     <mat-form-field class="example-full-width">
         <mat-label>Course Code &nbsp;#1</mat-label>
         <input matInput formControlName="courseCode" autofocus>
-      </mat-form-field>
+      </mat-form-field><small *ngIf="showId(-1)" style="color: red;" >this code is already exist or you write it up.</small>
       <div formArrayName="newCourseCode" *ngFor="let elementCourseCode of newCourseCode.controls; let i=index">
         <mat-form-field class="example-full-width">
             <mat-label>Course Code &nbsp;#{{i+2}}</mat-label>
             <input id="{{i}}" class="toAdd" matInput [formControlName]="i" >
-          </mat-form-field>
+          </mat-form-field><small *ngIf="showId(i)" style="color: red;" >this code is already exist or you write it up.</small>
       </div>
   </div>
   

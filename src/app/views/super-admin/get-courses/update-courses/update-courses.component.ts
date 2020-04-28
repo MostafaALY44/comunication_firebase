@@ -18,7 +18,7 @@ export class UpdateCoursesComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) private data:{'url', 'courseCode'},private courseFirebaseService:CourseFirebaseService,private _snackBar: MatSnackBar) { 
 
 
-  }
+  } 
 
   ngOnInit() {
   }

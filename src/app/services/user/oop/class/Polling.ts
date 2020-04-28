@@ -8,10 +8,12 @@ import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { pollVotingModel } from '../models/PollVotingModel';
 import { OnDestroy } from '@angular/core';
 
-export class Polling implements CRUD , OnDestroy{
+export class Polling implements CRUD {
 
     votting:PollVotting;
-    polles:PollingModel[];
+    //polles:PollingModel[];
+    pollesBehaver:BehaviorSubject<PollingModel[]>= new BehaviorSubject<PollingModel[]>([]);
+    polles = this.pollesBehaver.asObservable();
     
     options:Map<string, BehaviorSubject<pollVotingModel[]>> = new Map<string, BehaviorSubject<pollVotingModel[]>>();
     private url:string;
@@ -20,14 +22,9 @@ export class Polling implements CRUD , OnDestroy{
 		
 		this.votting=new PollVotting(this.firestore);
 	}
-  ngOnDestroy(): void {
-    this.removeSubscribe.forEach(element=>{
-      element.unsubscribe()
-    })
-  }
  
     reset(){
-		this.polles=[];
+		this.pollesBehaver.next([]);
 	}
 	changeUrl(url:string){
 		this.url=url+'/polls';
@@ -67,25 +64,6 @@ export class Polling implements CRUD , OnDestroy{
 		return this.votting.vottings;
   }
   
-  removeSubscribe:Subscription[]=[];
-  setOptions(){
-    this.polles.forEach(element=>{
-      let xx=this.getVottings(element.id);
-      let optionObservable:BehaviorSubject<pollVotingModel[]>;
-      if(this.options.has(element.id))
-         optionObservable = this.options.get(element.id);
-      else
-        optionObservable = new BehaviorSubject<pollVotingModel[]>([]);
-      this.options.set(element.id, optionObservable);
-      this.removeSubscribe.push(xx.subscribe( vot=>{
-        //console.log(vot)
-          optionObservable.next(vot); 
-        }))
-      
-      
-    })
-    
-  }
     pollForCreateAndUpdate(poll:PollingModel){return {"text":poll.text,"deadLine" : poll.deadLine, "pollingOwner":poll.pollingOwner}}
 
 }

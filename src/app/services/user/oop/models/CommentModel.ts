@@ -8,5 +8,6 @@ export interface CommentModel{
 	id:string
 	body:string;
 	commentOwner:string;
-	react:any 
+	react:any ;
+	userId:string;
 }

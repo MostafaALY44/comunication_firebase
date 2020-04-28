@@ -31,7 +31,7 @@ export class PollingItemsComponent implements OnInit {
   //options;
   constructor(public dialog:MatDialog, private userService: UserService) { 
     this.currentUser=UserService.getUser();
-    console.log("xxxxxxxxxxxxxxxxx")
+    //console.log("xxxxxxxxxxxxxxxxx")
   }
 
   Currpoll;
@@ -41,27 +41,29 @@ export class PollingItemsComponent implements OnInit {
   
   
   ngOnInit() {
-    console.log(")))))))))))))))))))))))))))) ", this.poll.id)
-    console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
+    //console.log(")))))))))))))))))))))))))))) ", this.poll.id)
+    //console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
+    if(this.poll.options.has(this.poll.id))
     this.poll.options.get(this.poll.id).forEach((option, key)=>{
       if(option.isVoteThis)
         this.favoriteSeason=key;
     })
   }
 
+
   getDate(date){
     if(date != null)
       return date.toDate();
   }
   options
-  getOption(idPoll){
+  getOption(idPoll){ 
     //console.log(CourseService.polls.options)
    // this.options= CourseService.polls.options.get(idPoll).asObservable();
     this.options= CourseService.polls.getVottings(idPoll);
-   // console.log(this.options);
+    console.log(this.options);
   }
 
   //optionsVoting:Map<string, {allVoted: number;isVoteThis: boolean;}> 
@@ -83,6 +85,8 @@ export class PollingItemsComponent implements OnInit {
   // }
 
   countVotes(idOption){
+    if(!this.poll.options.has(this.poll.id))
+      return 0;
     const userVote=this.poll.options.get(this.poll.id).get(idOption)
     if(userVote){
       

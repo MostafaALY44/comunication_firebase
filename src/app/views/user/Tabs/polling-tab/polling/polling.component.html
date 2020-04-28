@@ -7,7 +7,7 @@
     <hr>
 
     <div class="row" style="text-align: center;" >
-        <div class="col-md-12" *ngFor="let poll of coursepolls.polles; trackBy:trackByPolling">
+        <div class="col-md-12" *ngFor="let poll of coursepolls; trackBy:trackByPolling">
             
             <polling-items [poll]="poll"></polling-items>
         </div>
