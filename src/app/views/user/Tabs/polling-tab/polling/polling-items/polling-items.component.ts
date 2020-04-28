@@ -31,7 +31,7 @@ export class PollingItemsComponent implements OnInit {
   constructor(public dialog:MatDialog) { 
 
     this.currentUser=UserService.getUser();
-    console.log("xxxxxxxxxxxxxxxxx")
+    //console.log("xxxxxxxxxxxxxxxxx")
   }
 
   Currpoll;
@@ -41,8 +41,8 @@ export class PollingItemsComponent implements OnInit {
   
   
   ngOnInit() {
-    console.log(")))))))))))))))))))))))))))) ", this.poll.id)
-    console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
+    //console.log(")))))))))))))))))))))))))))) ", this.poll.id)
+    //console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
@@ -59,11 +59,11 @@ export class PollingItemsComponent implements OnInit {
       return date.toDate();
   }
   options
-  getOption(idPoll){
+  getOption(idPoll){ 
     //console.log(CourseService.polls.options)
    // this.options= CourseService.polls.options.get(idPoll).asObservable();
     this.options= CourseService.polls.getVottings(idPoll);
-   // console.log(this.options);
+    console.log(this.options);
   }
 
   //optionsVoting:Map<string, {allVoted: number;isVoteThis: boolean;}> 

@@ -22,7 +22,7 @@ export class CourseService {
   static categories: Category;
   static assignments: Observable<Assignment[]>;
   static isCategoryLoad:Observable<boolean>;
-  static notification:{"posts":number,"assignments":number}={"posts":0,"assignments":0};
+  //static notification:{"posts":number,"assignments":number}={"posts":0,"assignments":0};
 
   static postFactoryService: PostFactoryService;
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);

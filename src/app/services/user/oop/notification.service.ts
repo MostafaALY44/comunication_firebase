@@ -13,7 +13,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class NotificationService implements OnDestroy{
   static notification:Map<string,NotificationModel>=new Map<string,NotificationModel>()
-  static currNotification:NotificationModel={"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":new Map<string,number>()};
+  static currNotification:NotificationModel={"postsNumber":0, "assignmentsNumber":0,
+                                             "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
   private userService:UserService=new UserService(this.firestore)
   constructor(private courseFirebaseService:CourseFirebaseService, private firestore: AngularFirestore) { }
  
@@ -66,7 +67,8 @@ export class NotificationService implements OnDestroy{
            let object={};
             let notification=NotificationService.notification.get(universityKey+collegeKey+courseKey)
             if(!notification){
-              NotificationService.notification.set(universityKey+collegeKey+courseKey, {"postsNumber":0, "assignmentsNumber":0, "categoriesNumber":new Map<string,number>()})
+              NotificationService.notification.set(universityKey+collegeKey+courseKey, {"postsNumber":0, "assignmentsNumber":0,
+                                                                             "categoriesNumber":new Map<string,number>(), "pollingsNumber":0})
               notification=NotificationService.notification.get(universityKey+collegeKey+courseKey)
             }
             console.log("course ",course.categoriesNumber)
@@ -106,7 +108,7 @@ export class NotificationService implements OnDestroy{
             }
             if(z){
               z=(z<0)?0:z;
-              object={...object, ...{"bollingsNumber":z}}
+              object={...object, ...{"pollingsNumber":z}}
               notification.pollingsNumber=z
             }
         }))

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { PollingModel } from 'src/app/services/user/oop/models/PollingModel';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { pollVotingModel } from 'src/app/services/user/oop/models/PollVotingModel';
+import { DocumentReference } from '@angular/fire/firestore/interfaces';
 
 @Component({
   selector: 'add-polling',
@@ -12,7 +13,7 @@ import { pollVotingModel } from 'src/app/services/user/oop/models/PollVotingMode
 })
 export class AddPollingComponent implements OnInit {
 
-  myForm;
+  myForm:FormGroup;
   currentUser;
   constructor(private fb:FormBuilder ) { 
     this.currentUser=UserService.getUser();
@@ -69,14 +70,25 @@ export class AddPollingComponent implements OnInit {
       let data:PollingModel={'id':"",'text' : this.myForm.value.poll, 'deadLine' : this.myForm.value.deadLine,'pollingOwner':this.currentUser.name,'userId':this.currentUser.uid};
      // console.log("____________")
       CourseService.polls.create(data).then(docRef=>{
-
-        console.log(this.myForm);
+        
+        
+        let lastOption:Promise<DocumentReference>
         for(let i=0;i<this.myForm.value.options.length;i++){
           data1={'id':"",'text':this.myForm.value.options[i].text, 'vottedPerson':[],'votes':0}
-          
+          console.log("data1 ",data1)
         // console.log(data1[i]);
+        setTimeout(()=>{
           CourseService.polls.votting.setCurrentIdPoll(docRef.id);
-          CourseService.polls.votting.create(data1);
+          lastOption=CourseService.polls.votting.create(data1);
+          if(i == this.myForm.value.options.length-1){
+            setTimeout(()=>{
+              lastOption.then(()=>{
+                this.optionForms.clear();
+                this.resetForm(this.myForm)
+              })
+            },0)
+          }
+        },0)
       }  
       });
     // this.myForm.reset();
@@ -85,9 +97,26 @@ export class AddPollingComponent implements OnInit {
     //   this.resetForm(this.myForm)
     // },7000)
     
+    // this.myForm.value.options.forEach(item => {
+    //   console.log(item);
+    //   data1.push({
+    //     text: item['text'],
+    //     votes: 0
+    //   })
+    //  // console.log(data1)
+    //  // CourseService.polls.votting.setCurrentIdPoll(pollId);
+    //   CourseService.polls.votting.create(data1);
+    // })
+
+    
+     
+    } 
+    
+    //this.deleteOption(this.deleteId);
+    //this.resetForm(this.myForm)
+    
     
   }
 
 }
 
-}
