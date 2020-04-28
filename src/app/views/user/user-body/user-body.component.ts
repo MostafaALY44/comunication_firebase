@@ -11,6 +11,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ChangeNameComponent } from '../change-name/change-name.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 interface Tree{
   name:string;
@@ -33,10 +34,15 @@ export class UserBodyComponent implements OnInit {
   courses : User;
   notification: NotificationModel;
   currentUser;
-  constructor( private userService:UserService, private messag:MessagingService, 
+  constructor( private userService:UserService, private messag:MessagingService,
+    router:Router, 
     private notificationService:NotificationService,private dialog:MatDialog) {//UserService
-
-    this.notificationService.setNotificationMap();
+      try {
+        this.notificationService.setNotificationMap();
+      } catch (error) {
+        router.navigate(['/user'])
+      }
+    
     
       UserService.userObservable.subscribe(user=>{
         this.treeUniversity=[]

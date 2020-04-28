@@ -16,22 +16,22 @@ you have {{coursesNotCreatedYet.length}} courses must be register first:
     <!-- <mat-grid-list cols="4" rowHeight="50px"> -->
         <div *ngFor="let element of data.persons; let i=index">
         <!-- <mat-grid-tile colspan="4"> -->
-        <a  (click)="changeCurrentFieldState(element.obj.email)" > 
-            <span *ngIf="!canEdit(element.obj.email)">{{element.obj.email}}</span>
-                <mat-form-field *ngIf="canEdit(element.obj.email)">
+        <a  (click)="changeCurrentFieldState(element.obj.email, element.obj.email+'element'+i)" > 
+            <span *ngIf="!canEdit(element.obj.email+'element'+i)">{{element.obj.email}}</span>
+                <mat-form-field *ngIf="canEdit(element.obj.email+'element'+i)">
                     <mat-label>Edit Course Code </mat-label>
-                    <input matInput  type="email" id="!{{element.obj.email}}!" [(ngModel)]="changeCode" name="{{element.obj.email}}" (blur)="reset(i, 'email')" >
+                    <input matInput  type="email" id="!{{element.obj.email}}element{{i}}!" [(ngModel)]="changeCode" name="{{element.obj.email}}" (blur)="reset(i, 'email')" >
                   </mat-form-field>
         </a>
     <!-- </mat-grid-tile> -->
     <div class="row">
         <div  *ngFor="let element2 of element.obj.courses; let ii=index">
         <!-- <mat-grid-tile rowHeight="50px"> -->
-            <a  (click)="changeCurrentFieldState(element2)" style="margin: 20px;"> 
-                <span *ngIf="!canEdit(element2)">{{element2}}</span>
-                <mat-form-field *ngIf="canEdit(element2)">
+            <a  (click)="changeCurrentFieldState(element2, i+element2+ii)" style="margin: 20px;"> 
+                <span *ngIf="!canEdit(i+element2+ii)">{{element2}}</span>
+                <mat-form-field *ngIf="canEdit(i+element2+ii)">
                     <mat-label>Edit Course Code </mat-label>
-                    <input matInput  type="text" id="!{{changeCode}}!"   [(ngModel)]="changeCode" name="element2" (blur)="reset(i, 'courses', ii)" autofocus>
+                    <input matInput  type="text" id="!{{i}}{{changeCode}}{{ii}}!"   [(ngModel)]="changeCode" name="element2" (blur)="reset(i, 'courses', ii)" autofocus>
                   </mat-form-field>
             </a>
         <!-- </mat-grid-tile> -->

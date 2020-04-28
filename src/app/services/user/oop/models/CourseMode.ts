@@ -10,6 +10,7 @@ export class Course{
     postsNumber:number;
     categoriesNumber:any;
     assignmentsNumber:number;
+    pollingsNumber?:number;
     deletePostsNumber:number;
     deleteAssignmentNumber:number;
 }

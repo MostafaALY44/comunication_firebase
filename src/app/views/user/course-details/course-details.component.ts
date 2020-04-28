@@ -89,6 +89,14 @@ removeSubscribe;notificationKey:string="";
         return counter;
    }
 
+   getBollingsNotification(){
+    NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
+    if( !NotificationService.currNotification)
+      return ;
+    if(NotificationService.currNotification.pollingsNumber)  
+      return  NotificationService.currNotification.pollingsNumber;
+   }
+
   ngOnDestroy(): void {
     if(this.removeSubscribe)
         this.removeSubscribe.unsubscribe();
