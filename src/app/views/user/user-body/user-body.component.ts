@@ -53,8 +53,6 @@ export class UserBodyComponent implements OnInit {
             let temp2:Tree[]=[];
             Object.keys(user.univeristy[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
               temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/post"})
-              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/material"})
-              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/assingment"})
             })
             temp1.push({"name":collegeKey, "children":temp2})
           })
@@ -87,8 +85,8 @@ getcoleageId(link:string):string{
     notification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
     })
-    if(notification.postsNumber+counter+notification.assignmentsNumber)
-      return notification.postsNumber+counter+notification.assignmentsNumber;
+    if(notification.postsNumber+counter+notification.assignmentsNumber+notification.pollingsNumber)
+      return notification.postsNumber+counter+notification.assignmentsNumber+notification.pollingsNumber;
   } 
   
 

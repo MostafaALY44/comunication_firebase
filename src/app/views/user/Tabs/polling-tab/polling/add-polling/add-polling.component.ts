@@ -80,25 +80,14 @@ export class AddPollingComponent implements OnInit {
       }  
       });
     // this.myForm.reset();
+    // setTimeout(()=>{
+    //   this.deleteOption(this.deleteId);
+    //   this.resetForm(this.myForm)
+    // },7000)
     
-    // this.myForm.value.options.forEach(item => {
-    //   console.log(item);
-    //   data1.push({
-    //     text: item['text'],
-    //     votes: 0
-    //   })
-    //  // console.log(data1)
-    //  // CourseService.polls.votting.setCurrentIdPoll(pollId);
-    //   CourseService.polls.votting.create(data1);
-    // })
-
-    
-     
-    } 
-    this.deleteOption(this.deleteId);
-    this.resetForm(this.myForm)
     
   }
 
 }
 
+}
