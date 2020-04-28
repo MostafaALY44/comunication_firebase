@@ -45,6 +45,7 @@ export class PollingItemsComponent implements OnInit {
     this.getOption(this.poll.id);
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
+    if(this.poll.options.has(this.poll.id))
     this.poll.options.get(this.poll.id).forEach((option, key)=>{
       if(option.isVoteThis)
         this.favoriteSeason=key;
@@ -84,6 +85,8 @@ export class PollingItemsComponent implements OnInit {
   // }
 
   countVotes(idOption){
+    if(!this.poll.options.has(this.poll.id))
+      return 0;
     const userVote=this.poll.options.get(this.poll.id).get(idOption)
     if(userVote){
       

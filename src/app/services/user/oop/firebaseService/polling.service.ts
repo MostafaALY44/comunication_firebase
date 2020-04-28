@@ -39,7 +39,7 @@ export class PollingService implements CRUDForfirebase{
             Object.keys(data.pollingVote).forEach((personKey)=>{
               console.log("{{{{{{{{{{{{{{{{{ ", data.pollingVote[personKey].idOption)
               if(tempx.has(data.pollingVote[personKey].idOption)){
-                tempx.get(personKey).allVoted++
+                tempx.get(data.pollingVote[personKey].idOption).allVoted++
                 //options.set(personKey, {"allVoted":options.get(personKey).allVoted+1, "isVoteThis":(UserService.user.uid==personKey)})
               }else{
                 tempx.set(data.pollingVote[personKey].idOption,  {"allVoted": 1, "isVoteThis":(UserService.user.uid==personKey)})

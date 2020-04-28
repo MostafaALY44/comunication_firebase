@@ -1,18 +1,29 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { element } from 'protractor';
 import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-save-data',
   templateUrl: './save-data.component.html',
   styleUrls: ['./save-data.component.css']
 })
-export class SaveDataComponent implements OnInit {
+export class SaveDataComponent implements OnInit, OnDestroy {
 
-  constructor(public dialogRef: MatDialogRef<SaveDataComponent>,private courseFirebaseService:CourseFirebaseService, @Inject(MAT_DIALOG_DATA) private data:{link:string,courses:string[]},private _snackBar: MatSnackBar) { 
+  allCourses:Map<string, boolean>=new Map<string, boolean>();
+  editData:Map<string, string>= new Map<string,string>();
+  removeSubscribe:Subscription;
+  constructor( private dialogRef: MatDialogRef<SaveDataComponent>,
+    private courseFirebaseService:CourseFirebaseService,
+     @Inject(MAT_DIALOG_DATA) private data:{link:string,courses:string[]},private _snackBar: MatSnackBar) { 
+      this.removeSubscribe= this.courseFirebaseService.getAllCodesAsMap(this.data.link)
+      .subscribe(courses=> this.allCourses=courses)
     console.log(data.courses.length)
+  }
+  ngOnDestroy(): void {
+    if(this.removeSubscribe)
+      this.removeSubscribe.unsubscribe();
   }
 
   changeCode:string=""
@@ -29,12 +40,28 @@ export class SaveDataComponent implements OnInit {
     },50); 
     
   }
+  closeDialog(isSendToDB:boolean){
+    this.dialogRef.close({data:{"editData":this.editData, "isSendToDB":isSendToDB}});
+  }
+
+  isCodeExist(index){
+    return index==this.codeExistId;
+  }
+
+  codeExistId:number=-1;
   reset(i:number){
-    if(this.changeCode=="")
+    this.codeExistId=-1;
+    if(this.changeCode==""){
+      this.editData.set(this.data.courses[i], "");
       this.data.courses.splice(i,1)
-    else{
-      if(!this.data.courses.find(element=> element===this.changeCode))
-        this.data.courses[i]=this.changeCode;
+    }else{
+      if(this.allCourses.has(this.changeCode)){
+        this.codeExistId=i;
+      }
+      else if(!this.data.courses.find(element=> element===this.changeCode)){
+        this.editData.set(this.data.courses[i], this.changeCode.trim().toUpperCase());
+        this.data.courses[i]=this.changeCode.trim().toUpperCase();
+      }
     }
       
  
@@ -42,9 +69,6 @@ export class SaveDataComponent implements OnInit {
   }
   canEdit(code:string):boolean{
     return this.currentCode === code
-  }
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
   showSpinner:boolean=false;
