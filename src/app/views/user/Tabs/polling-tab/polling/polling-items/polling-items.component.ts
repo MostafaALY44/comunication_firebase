@@ -53,6 +53,7 @@ export class PollingItemsComponent implements OnInit {
     })
   }
 
+
   getDate(date){
     if(date != null)
       return date.toDate();

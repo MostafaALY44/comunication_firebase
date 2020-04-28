@@ -68,9 +68,6 @@ export class UserService implements OnDestroy {
       UserService.removeSubscribe.unsubscribe();
   }
 
-
-
-
  update(data): Promise<void>{
   return this.firestore.doc('users/'+UserService.user.uid).update(data);
  }

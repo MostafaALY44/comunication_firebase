@@ -31,16 +31,24 @@ export class NewPostComponent implements OnInit {
         return false;
     return true;
   }
- 
+  resetForm(form: FormGroup) {
+
+    form.reset();
+
+    Object.keys(form.controls).forEach(key => {
+      form.get(key).setErrors(null) ;
+    });
+}
   onSubmit(){
     if(!this.isEmpty(this.newPost.value.body)){
 
-      let data:PostModel={"id" : "", "react" : null, "postOwner":this.currentUser.name, "title":this.newPost.value.title, "body": this.newPost.value.body};
+      let data:PostModel={"id" : "", "react" : null, "postOwner":this.currentUser.name,'userId':this.currentUser.uid, "title":this.newPost.value.title, "body": this.newPost.value.body};
       //let courseId;
      // this.route.parent.paramMap.subscribe((params : ParamMap) => courseId=params.get('id'));
       //this.ser.addCoursePost(courseId,data);
       CourseService.posts.create(data);
-      this.newPost.reset();
+      this.resetForm(this.newPost);
+      
     } 
   }
 

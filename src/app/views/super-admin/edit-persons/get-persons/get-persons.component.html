@@ -21,26 +21,32 @@
         <table class="table table-bordered table-responsive-md table-striped text-center">
           <tr>
             <th class="text-center">Email</th>
+            <th class="text-center">Role</th>
             <th class="text-center">Courses</th>
             <th class="text-center">Action</th>
           </tr>
           <tr *ngFor="let user of users|async " >
-            <td *ngIf="user.univeristy">
-                <span  contenteditable="true" id="email"  (blur)="updateEmail(user.email,user.uid, $event)">{{user.email}}</span>
+            <td *ngIf="user.univeristy && user.roles">
+                <span  contenteditable="true" id="email"  (blur)="updateEmail(user, $event)">{{user.email}}</span>
             </td>
     
-                        
+            <td *ngIf="user.univeristy && user.roles">
+              <span *ngFor="let role of user?.roles | keyvalue" >
+                <span  *ngIf="role.value">{{role.key}}</span>
+              </span>
+            </td>       
                          
-             <td *ngIf="user.univeristy">
+             <td *ngIf="user.univeristy && user.roles">
+               
                 <span *ngFor="let university of user?.univeristy | keyvalue" >
                      <span *ngFor=" let college of university?.value.colleages | keyvalue">
-                          <span  id="course" *ngFor="let course of college.value.courses | keyvalue" contenteditable="true"  (blur)="updateCourse(course,user.uid,$event)">{{course.key}}</span>&nbsp;&nbsp;
+                          <span  id="course" *ngFor="let course of college.value.courses | keyvalue" contenteditable="true"  (blur)="updateCourse(course,user.uid,$event)">{{course.key}} &nbsp;&nbsp;</span>
                         </span>
                 </span>
                              
                              
             </td>
-            <td *ngIf="user.univeristy">
+            <td *ngIf="user.univeristy && user.roles">
                 <span class="table-remove">
                      <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" (click)="remove(user)">Remove</button>
                  </span>
