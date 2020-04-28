@@ -11,18 +11,15 @@ import * as firebase from 'firebase';
   styleUrls: ['../sb-admin-2.min.css']
 })
 export class SignupComponent implements OnInit {
-// allUsers;
-  // constructor( private users :UserService,private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {
-  //   // this.users.getAll().subscribe(users=>{
-  //   //   this.allUsers=users;
-  //   // });
-  // }
-
-  // constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {}
 
   isUserAgree = false;
 
-  constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar,private router: Router) {}
+// allUsers;
+  constructor( private users :UserService,private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar,private router: Router) {
+    // this.users.getAll().subscribe(users=>{
+    //   this.allUsers=users;
+    // });
+  }
 
   ngOnInit() {
   }

@@ -12,9 +12,7 @@ export class PollingComponent implements OnInit {
   coursepolls:Polling;
 
   constructor() { 
-
     this.coursepolls=CourseService.polls;
-    
   }
 
   ngOnInit() {

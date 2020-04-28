@@ -53,10 +53,6 @@ const routes: Routes = [
     ]
   },
   {path: ':id', component: CourseDetailsComponent}
-  
-  
-
-  
 ];
 
 @NgModule({
