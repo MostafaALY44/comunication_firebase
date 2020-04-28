@@ -148,18 +148,17 @@ export class PollingItemsComponent implements OnInit {
 
   showVotedPersons(option) {
     let votedPersons = [];
-    console.log("====================> Test");
+    //console.log("====================> showVotedPersons(); is Called.");
     this.setOption(option);
     this.poll.pollingVote.forEach((value: { idOption: string; date: any; }, key: string) => {
       if (value.idOption == this.currentOption.id) {
         this.userService.getUserById(key).subscribe(user => {
-          console.log(user);
+          //console.log(user);
           votedPersons.push(user.name);
           votedPersons.push("مش موجود ");
         })
       }
     })
-
     this.dialog.open(VotedPersonsComponent, {
       data: votedPersons,
       height: '300px',
