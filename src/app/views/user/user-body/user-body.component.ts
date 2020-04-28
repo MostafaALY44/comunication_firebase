@@ -40,10 +40,10 @@ export class UserBodyComponent implements OnInit {
       try {
         this.notificationService.setNotificationMap();
       } catch (error) {
-        router.navigate(['/user'])
+        setTimeout(()=>{router.navigate(['/user'])},1000)
       }
     
-    
+    try {
       UserService.userObservable.subscribe(user=>{
         this.treeUniversity=[]
         this.courses=user;
@@ -67,6 +67,10 @@ export class UserBodyComponent implements OnInit {
       }
     )
     this.currentUser=UserService.getUser();
+    } catch (error) {
+      setTimeout(()=>{router.navigate(['/user'])},1000)
+    }
+      
   //  console.log( this.getuniversityId("ASU/science/math333/post"))
   //  console.log( this.getcoleageId("ASU/science/math333/post"))
   }
