@@ -225,7 +225,9 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
       } 
     }else if(key == "courses"){
       const word :string=this.changeCode.toUpperCase().trim();
-      if(this.changeCode=="" || this.data.persons[i].obj.courses.find(el=>el==word)){
+      let fI=this.data.persons[i].obj.courses.findIndex(el=>el==word)
+    
+      if(this.changeCode=="" || (fI != -1 && fI !=ii)){
         
         CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]).splice(
           CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]).findIndex(element=>element == this.data.persons[i].id)
