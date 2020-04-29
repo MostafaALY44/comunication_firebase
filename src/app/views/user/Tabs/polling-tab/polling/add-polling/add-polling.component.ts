@@ -77,7 +77,7 @@ export class AddPollingComponent implements OnInit {
           data1={'id':"",'text':this.myForm.value.options[i].text, 'vottedPerson':[],'votes':0}
           console.log("data1 ",data1)
         // console.log(data1[i]);
-        setTimeout(()=>{
+        
           CourseService.polls.votting.setCurrentIdPoll(docRef.id);
           lastOption=CourseService.polls.votting.create(data1);
           if(i == this.myForm.value.options.length-1){
@@ -88,10 +88,14 @@ export class AddPollingComponent implements OnInit {
               })
             },0)
           }
-        },0)
+       
       }  
       });
     // this.myForm.reset();
+    // setTimeout(()=>{
+    //   this.deleteOption(this.deleteId);
+    //   this.resetForm(this.myForm)
+    // },7000)
     
     // this.myForm.value.options.forEach(item => {
     //   console.log(item);

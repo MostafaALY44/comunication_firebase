@@ -93,8 +93,7 @@ static adminIdLink:string="";
      UserService.userObservable=temp;
     UserService.setUser();
     // console.log("mmmmmmmmmmmmmmmmmm")
-
-
+    
   }
 consl(x){
   console.log(x);

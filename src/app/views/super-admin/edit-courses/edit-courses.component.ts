@@ -70,7 +70,7 @@ export class EditCoursesComponent implements OnInit, OnDestroy {
 
   isCodeExist:number=-2;
   isIdExist(key:string):boolean{
-    if(this.allCourses.has(key) || this.allNewCourses.has(key)){
+    if(this.allCourses.has(key.trim()) || this.allNewCourses.has(key.trim())){
       if(this.setIndex==-1)
         this.isCodeExist=-1
       else

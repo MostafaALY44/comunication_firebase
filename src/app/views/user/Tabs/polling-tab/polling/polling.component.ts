@@ -18,6 +18,7 @@ export class PollingComponent implements OnInit, OnDestroy {
   removeSubscribe:Subscription;
   constructor(private userService:UserService) { 
    this.removeSubscribe=CourseService.polls.polles.subscribe(poll=>{
+     console.log("frrrrrrrrrrom poll  ",poll)
       this.coursepolls = poll;
       let obj={[UserService.indexNotification+".pollingNumber"]:this.coursepolls.length}  
       this.userService.update( obj)
@@ -33,20 +34,11 @@ export class PollingComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
   
-  trackByPolling(index){
-    if(this.coursepolls)
-      return (index < (this.coursepolls.length-1))? index:undefined
-    return undefined;
+  trackByPolling(index,poll){
+   
+    return poll? poll.id:undefined;
   }
 
-  // getOptionsMap(pollId){
-  //   this.coursepolls.polles..forEach((element)=>{
-  //     if(this.optionsVoting.has(element.idOption))
-  //       this.optionsVoting.set(element.idOption, this.optionsVoting.get(element.idOption) +1);
-  //     else
-  //       this.optionsVoting.set(element.idOption, 1);
-  //   })
-  // }
   
   
 }

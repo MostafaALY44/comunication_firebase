@@ -44,13 +44,15 @@ export class PollingItemsComponent implements OnInit {
     //console.log(")))))))))))))))))))))))))))) ", this.poll.id)
     //console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
+    
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
-    if (this.poll.options.has(this.poll.id))
-      this.poll.options.get(this.poll.id).forEach((option, key) => {
-        if (option.isVoteThis)
-          this.favoriteSeason = key;
-      })
+    if(this.poll.options.has(this.poll.id))
+    this.poll.options.get(this.poll.id).forEach((option, key)=>{
+      if(option.isVoteThis)
+        this.favoriteSeason=key;
+    })
+    
   }
 
 

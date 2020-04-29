@@ -42,9 +42,13 @@ export class AssignmentSolutionComponent implements OnInit {
                  "url":this.newSolution.value.Aurl,
                  "personId":this.currentUser.name
                  };
-      this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data);
+      this.service.addAssignmentSolution( this.data.courseId,this.data.assignmentId,data).then(()=>{
+        this._snackBar.open('Your solution', 'sent Successfully', { duration: 3000, });
+      }).catch(error=>{
+        this._snackBar.open('', error, { duration: 3000, });
+      })
      // this.newSolution.reset();
-     this._snackBar.open('Your solution', 'sent Successfully', { duration: 3000, });
+     
     } 
   }
 
