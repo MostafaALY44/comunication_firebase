@@ -25,12 +25,12 @@ export class PollingItemsComponent implements OnInit {
   @Input() poll: PollingModel;
   currentUser;
   optionsForm = new FormGroup({
-    type:new FormControl('')
+    type: new FormControl('')
   });
-  
+
   //options;
-  constructor(public dialog:MatDialog, private userService: UserService) { 
-    this.currentUser=UserService.getUser();
+  constructor(public dialog: MatDialog, private userService: UserService) {
+    this.currentUser = UserService.getUser();
     //console.log("xxxxxxxxxxxxxxxxx")
   }
 
@@ -38,31 +38,31 @@ export class PollingItemsComponent implements OnInit {
   setPoll(poll) {
     this.Currpoll = poll;
   }
-  
-  
+
+
   ngOnInit() {
     //console.log(")))))))))))))))))))))))))))) ", this.poll.id)
     //console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
     //this.getOptionDetails();
     //this.optionsVoting = this.poll.options.get(this.poll.id);
-    if(this.poll.options.has(this.poll.id))
-    this.poll.options.get(this.poll.id).forEach((option, key)=>{
-      if(option.isVoteThis)
-        this.favoriteSeason=key;
-    })
+    if (this.poll.options.has(this.poll.id))
+      this.poll.options.get(this.poll.id).forEach((option, key) => {
+        if (option.isVoteThis)
+          this.favoriteSeason = key;
+      })
   }
 
 
-  getDate(date){
-    if(date != null)
+  getDate(date) {
+    if (date != null)
       return date.toDate();
   }
   options
-  getOption(idPoll){ 
+  getOption(idPoll) {
     //console.log(CourseService.polls.options)
-   // this.options= CourseService.polls.options.get(idPoll).asObservable();
-    this.options= CourseService.polls.getVottings(idPoll);
+    // this.options= CourseService.polls.options.get(idPoll).asObservable();
+    this.options = CourseService.polls.getVottings(idPoll);
     console.log(this.options);
   }
 
@@ -84,12 +84,12 @@ export class PollingItemsComponent implements OnInit {
   //   //console.log(this.optionsVoting)
   // }
 
-  countVotes(idOption){
-    if(!this.poll.options.has(this.poll.id))
+  countVotes(idOption) {
+    if (!this.poll.options.has(this.poll.id))
       return 0;
-    const userVote=this.poll.options.get(this.poll.id).get(idOption)
-    if(userVote){
-      
+    const userVote = this.poll.options.get(this.poll.id).get(idOption)
+    if (userVote) {
+
       //console.log(idOption, userVote)
       //document.getElementById(idOption).focus()
       return userVote.allVoted;
@@ -97,11 +97,11 @@ export class PollingItemsComponent implements OnInit {
     else return 0;
   }
 
-  
-  currentOption:pollVotingModel;
-  setOption(option:pollVotingModel){
-    this.currentOption=option;
-  
+
+  currentOption: pollVotingModel;
+  setOption(option: pollVotingModel) {
+    this.currentOption = option;
+
   }
 
   deletePoll() {
@@ -122,28 +122,28 @@ export class PollingItemsComponent implements OnInit {
   }
   favoriteSeason
   flag;
-  voteOption(idOption){
-    if(this.favoriteSeason== idOption){
+  voteOption(idOption) {
+    if (this.favoriteSeason == idOption) {
       console.log("*************** ")
-      setTimeout(()=>{ this.favoriteSeason=""},5)
-      
+      setTimeout(() => { this.favoriteSeason = "" }, 5)
+
       // if(this.optionsVoting.get(idOption)>1)
       //   this.optionsVoting.set(idOption, this.optionsVoting.get(idOption) -1);
       // else
       //   this.optionsVoting.delete(idOption);
-      CourseService.polls.removeOption(this.poll.id, {"personId":UserService.user.uid,"optionId":idOption})
-      return 
+      CourseService.polls.removeOption(this.poll.id, { "personId": UserService.user.uid, "optionId": idOption })
+      return
     }
-    CourseService.polls.addOption(this.poll.id, {"personId":UserService.user.uid,"optionId":idOption})
-    this.favoriteSeason=idOption;
+    CourseService.polls.addOption(this.poll.id, { "personId": UserService.user.uid, "optionId": idOption })
+    this.favoriteSeason = idOption;
     console.log(this.favoriteSeason)
   }
 
 
-  xxxxxx:pollVotingModel;
-  
+  xxxxxx: pollVotingModel;
+
   voteUp(pollId) {
-   let xxxxxx = CourseService.polls.getVottings(pollId);
+    let xxxxxx = CourseService.polls.getVottings(pollId);
 
     //let voteingModel:  pollVotingModel = {id:pollId, text:'test', votes:10, };
     //CourseService.polls.votting.update(votId+"",this.voteingModel);
@@ -152,21 +152,30 @@ export class PollingItemsComponent implements OnInit {
 
   showVotedPersons(option) {
     let votedPersons = [];
+    let counter = 0;
     //console.log("====================> showVotedPersons(); is Called.");
     this.setOption(option);
-    this.poll.pollingVote.forEach((value: { idOption: string; date: any; }, key: string) => {
-      if (value.idOption == this.currentOption.id) {
-        this.userService.getUserById(key).subscribe(user => {
-          //console.log(user);
-          votedPersons.push(user.name);
-          votedPersons.push("مش موجود ");
-        })
+    // console.log("==================>" + this.poll.pollingVote.keys.length);
+    this.poll.pollingVote.forEach(
+      (value: { idOption: string; date: any; }, key: string) => {
+        // console.log("key.length ==============> "+value.idOption.length)
+        counter++;
+        if (value.idOption == this.currentOption.id) {
+          this.userService.getUserById(key).subscribe(
+            user => {
+              // console.log(user);
+              votedPersons.push(user.name);
+            }
+          )
+        }
+        //  console.log("counter ==============> "+counter);
+        console.log("==============> ", key, value);
       }
-    })
+    )
+    console.log(votedPersons[1]);
     this.dialog.open(VotedPersonsComponent, {
       data: votedPersons,
-      height: '300px',
-      width: '500px',
+      width: '500px'
     })
   }
 
