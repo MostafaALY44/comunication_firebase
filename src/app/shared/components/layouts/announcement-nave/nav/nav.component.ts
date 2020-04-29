@@ -64,7 +64,7 @@ export class NavComponent implements OnInit {
     }
     return false;
   }
-  
+   
   focusSearch(){
     this.searchService.isFocus=true; 
     this.router.navigate(['announcements/global']);

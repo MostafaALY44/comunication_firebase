@@ -47,10 +47,13 @@ export class UserBodyComponent implements OnInit {
       UserService.userObservable.subscribe(user=>{
         this.treeUniversity=[]
         this.courses=user;
-        Object.keys(user.univeristy).forEach((universityKey:any)=>{
+        if(user.univeristy)
+          Object.keys(user.univeristy).forEach((universityKey:any)=>{
           let temp1:Tree[]=[];
+        if(user.univeristy[universityKey].colleages)
           Object.keys(user.univeristy[universityKey].colleages).forEach((collegeKey:any)=>{
             let temp2:Tree[]=[];
+        if(user.univeristy[universityKey].colleages[collegeKey].courses)
             Object.keys(user.univeristy[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
               temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/post"})
             })
@@ -73,11 +76,15 @@ export class UserBodyComponent implements OnInit {
   //  console.log( this.getcoleageId("ASU/science/math333/post"))
   }
 getuniversityId(link:string):string{
- return link.slice(0,link.indexOf("/"));
+  if(link)
+    return link.slice(0,link.indexOf("/"));
+    else return ;
 } 
 getcoleageId(link:string):string{
+  if(link){
  let temp= link.slice(link.indexOf("/")+1);
   return temp.slice(0,temp.indexOf("/"));
+  }else return;
  }
   getNotification(id1:string, id2:string, id3:string){
     let notification=NotificationService.notification.get(id1+id2+id3)
