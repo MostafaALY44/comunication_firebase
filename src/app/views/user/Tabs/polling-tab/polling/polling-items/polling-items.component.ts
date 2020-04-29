@@ -1,3 +1,4 @@
+import { VotedPersonsComponent } from './../voted-persons/voted-persons.component';
 import { pollVotingModel, VottedPerson } from './../../../../../../services/user/oop/models/PollVotingModel';
 import { PollVotting } from './../../../../../../services/user/oop/class/PollVotting';
 import { CourseService } from './../../../../../../services/user/oop/course.service';
@@ -28,8 +29,7 @@ export class PollingItemsComponent implements OnInit {
   });
   
   //options;
-  constructor(public dialog:MatDialog) { 
-
+  constructor(public dialog:MatDialog, private userService: UserService) { 
     this.currentUser=UserService.getUser();
     //console.log("xxxxxxxxxxxxxxxxx")
   }
@@ -151,4 +151,27 @@ export class PollingItemsComponent implements OnInit {
     //CourseService.polls.votting.update(votId+"",this.voteingModel);
     // console.log(JSON.stringify(xxxxxx))
   }
+
+  showVotedPersons(option) {
+    let votedPersons = [];
+    //console.log("====================> showVotedPersons(); is Called.");
+    this.setOption(option);
+    this.poll.pollingVote.forEach((value: { idOption: string; date: any; }, key: string) => {
+      if (value.idOption == this.currentOption.id) {
+        this.userService.getUserById(key).subscribe(user => {
+          //console.log(user);
+          votedPersons.push(user.name);
+          votedPersons.push("مش موجود ");
+        })
+      }
+    })
+    this.dialog.open(VotedPersonsComponent, {
+      data: votedPersons,
+      height: '300px',
+      width: '500px',
+    })
+  }
+
+
+
 }

@@ -9,5 +9,4 @@ export interface pollVotingModel{
 	text:string;
 	votes:number;
 	vottedPerson?:VottedPerson[];
-	
 }
