@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(private authenticationService: AuthenticationService, private router:Router) {}
+  constructor(private authenticationService: AuthenticationService, private router:Router) {
+    
+  }
   ngOnInit() {
   }
 
@@ -70,4 +73,6 @@ export class LoginComponent implements OnInit {
     return this.authenticationService.isAuthenticated();
   }*/
 
+
+  
 }

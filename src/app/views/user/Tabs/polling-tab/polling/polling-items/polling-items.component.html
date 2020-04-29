@@ -28,16 +28,12 @@
                 class="example-radio-group" [(ngModel)]="favoriteSeason">
                 <div *ngFor="let option of options | async" style="margin-left: 120px; padding: 0px; text-align: left;">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <mat-radio-button class="example-radio-button" (click)="voteOption(option.id)"
                                 [value]="option.id">
                                 {{ option.text }}
                             </mat-radio-button>
                         </div>
-
-                        <div class="col-sm-7">
-                            <mat-icon type="button" (click)="showVotedPersons(option)"  placement="bottom" ngbTooltip="Show voted persons" style='color:rgb(69, 69, 170)'>how_to_vote</mat-icon>
-                            &nbsp;<span style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
                         <div class="col-sm-6">
                             <span style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
                             <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button
