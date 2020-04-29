@@ -72,6 +72,8 @@ import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/
     EditPollingComponent,
     EditOptionComponent,
     VotedPersonsComponent
+    
+
   ],
   entryComponents: [
     EditPostComponent,
