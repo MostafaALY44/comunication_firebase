@@ -7,4 +7,5 @@ export interface PollingModel{
 	options?:Map<string, Map<string, {"allVoted":number, "isVoteThis":boolean}>>
 	pollingVote?:Map<string, {"idOption":string, "date":any}>; 
 	userId:string;
+	date?:any;
 }  

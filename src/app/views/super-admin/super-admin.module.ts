@@ -14,7 +14,7 @@ import { ShowPostsComponent } from './review-reports/show-posts/show-posts.compo
 import { SavePersonsDataComponent } from './edit-persons/save-persons-data/save-persons-data.component';
 import { CreatePersonsComponent } from './edit-persons/create-persons/create-persons.component';
 import { CreatePersonFormComponent } from './edit-persons/create-persons/create-person-form/create-person-form.component';
-import { AddItherDetailsComponent } from './edit-persons/create-persons/add-ither-details/add-ither-details.component';
+
 import { GetCoursesComponent } from './get-courses/get-courses.component';
 import { CoursesBodyComponent } from './courses-body/courses-body.component';
 import { UpdateCoursesComponent } from './get-courses/update-courses/update-courses.component';
@@ -25,7 +25,7 @@ import { DeleteDialogComponent } from './edit-persons/get-persons/delete-dialog/
 @NgModule({
   declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, SavePersonsDataComponent,
      AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent, ShowPostsComponent, CreatePersonsComponent,
-     CreatePersonFormComponent, AddItherDetailsComponent,
+     CreatePersonFormComponent, 
       GetCoursesComponent, CoursesBodyComponent, UpdateCoursesComponent, ChangeAdminPasswordComponent, GetPersonsComponent, DeleteDialogComponent],
   entryComponents:[SaveDataComponent, ShowPostsComponent,UpdateCoursesComponent, SavePersonsDataComponent,DeleteDialogComponent],
   imports: [

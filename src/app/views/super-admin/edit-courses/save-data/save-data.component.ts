@@ -16,7 +16,7 @@ export class SaveDataComponent implements OnInit, OnDestroy {
   removeSubscribe:Subscription;
   constructor( private dialogRef: MatDialogRef<SaveDataComponent>,
     private courseFirebaseService:CourseFirebaseService,
-     @Inject(MAT_DIALOG_DATA) private data:{link:string,courses:string[]},private _snackBar: MatSnackBar) { 
+     @Inject(MAT_DIALOG_DATA) public data:{link:string,courses:string[]},private _snackBar: MatSnackBar) { 
       this.removeSubscribe= this.courseFirebaseService.getAllCodesAsMap(this.data.link)
       .subscribe(courses=> this.allCourses=courses)
     console.log(data.courses.length)

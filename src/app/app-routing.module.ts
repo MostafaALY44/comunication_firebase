@@ -43,15 +43,15 @@ const routes: Routes = [
       {path:'privacy', component:PrivacyComponent},
       {path:'terms-and-conditions', component:TermsAndConditionsComponent},
      
-      {
-        path:'announcements', 
-        children:[
-          {
-            path:'',
-            loadChildren: () => import('./views/pages/pages.module').then(m=>m.PagesModule),
-          }
-        ]
-    },
+    //   {
+    //     path:'announcements', 
+    //     children:[
+    //       {
+    //         path:'',
+    //         loadChildren: () => import('./views/pages/pages.module').then(m=>m.PagesModule),
+    //       }
+    //     ]
+    // },
     ]
   },
   {

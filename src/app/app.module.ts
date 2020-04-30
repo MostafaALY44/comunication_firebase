@@ -18,6 +18,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { HttpClientModule } from '@angular/common/http'
     AngularFirestore,
     AuthGuard,  
     AuthenticationService,
-    AngularFireAuthGuard 
+    AngularFireAuthGuard ,
+    
   ],
   bootstrap: [AppComponent]
 })

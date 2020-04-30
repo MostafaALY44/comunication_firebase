@@ -1,4 +1,4 @@
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTooltipConfig, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddCategoryComponent } from './Tabs/material-tab/material/add-category/add-category.component';
 import { MaterialService } from './../../services/user/oop/firebaseService/MaterialService';
 import { EditCategoryComponent } from './Tabs/material-tab/material/edit-category/edit-category.component';
@@ -99,9 +99,10 @@ import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/
     ReactiveFormsModule,
     FormsModule,
     ScrollingModule,
-    NgbModule
+    NgbModule,
+    NgbTooltipModule
   ],
-  providers:[CoursesService]
+  providers:[CoursesService,NgbTooltipConfig]
   
 })
 export class UserModule { }

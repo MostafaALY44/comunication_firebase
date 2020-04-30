@@ -19,7 +19,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   constructor(private addPersonService:AddPersonService, private courseService:CourseFirebaseService,
     private dialogRef: MatDialogRef<SavePersonsDataComponent>,
     private dialog:MatDialog,
-     @Inject(MAT_DIALOG_DATA) private data:{paramMap:Observable<ParamMap>, mapCourses:Map<string, number[]>,
+     @Inject(MAT_DIALOG_DATA) public data:{paramMap:Observable<ParamMap>, mapCourses:Map<string, number[]>,
     persons:{"id":number, "obj":{email:string, courses:string[], "roles":Roles}, "index": number }[]}) {
      this.checkCodesFromDB()
       

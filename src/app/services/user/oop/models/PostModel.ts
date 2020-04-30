@@ -13,5 +13,6 @@ export interface PostModel{
 	//reactedPerson:ReactedPerson[];
 	react:any;
 	userId:string;
+	date?:any;
 	
 }
