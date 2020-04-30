@@ -31,7 +31,6 @@ export class PostService {
     return this.firestore.collection<PostComment>('courses/'+courseId+'/posts').doc(postId).update(data);
   }
   public deletePost(courseId,postId){
-    //console.log('courses/'+courseId+'/posts/'+id);
     return this.firestore.collection<PostComment>('courses/'+courseId+'/posts').doc(postId).delete();
   }
 }

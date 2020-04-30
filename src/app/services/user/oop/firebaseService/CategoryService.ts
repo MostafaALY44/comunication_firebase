@@ -11,7 +11,6 @@ export class CategoryService implements CRUDForfirebase {
   constructor(private firestore: AngularFirestore) { }
 
   create(url: string, category: CategoryModel) {
-    // return this.firestore.collection(url).doc(category.name).set({});
     if (category)
     return this.firestore.collection(url).add({name:category.name});
     else
@@ -30,7 +29,6 @@ export class CategoryService implements CRUDForfirebase {
 
 
   delete(url: string, id: string) {
-    //console.log("qqqqqqqq ",url + '/' + id)
     return this.firestore.doc<CategoryModel>(url + '/' + id).delete();
   }
 

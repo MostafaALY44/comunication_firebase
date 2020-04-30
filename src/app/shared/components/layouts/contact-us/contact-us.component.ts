@@ -35,7 +35,6 @@ export class ContactUsComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.ContactUs)
     if(!this.isEmpty(this.ContactUs.value.name)){
       if(this.currentUser.uid){
           let data:ContactModel={"personId" : this.currentUser.uid, "name" :this.ContactUs.value.name,"email" :this.ContactUs.value.email, "message":this.ContactUs.value.message};

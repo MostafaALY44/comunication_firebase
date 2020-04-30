@@ -20,7 +20,6 @@ export class PollingService implements CRUDForfirebase{
     return this.firestore.doc<PollingModel>(url+'/'+id).valueChanges();
   }
   update(url: string, id: string, poll) {
-    console.log("PPPPPPPPPPPPPPPPPPP url+'/'+id: ", url+'/'+id, "poll",poll)
     return this.firestore.doc(url+'/'+id).update(poll);
   }
   delete(url: string, id: string) { 
@@ -37,19 +36,19 @@ export class PollingService implements CRUDForfirebase{
           if(data.pollingVote){
             let tempx= new Map<string,  {"allVoted":number, "isVoteThis":boolean}>();
             Object.keys(data.pollingVote).forEach((personKey)=>{
-             // console.log("{{{{{{{{{{{{{{{{{ ", data.pollingVote[personKey].idOption)
+             temp.set(personKey,  {"idOption":data.pollingVote[personKey].idOption, "date":data.pollingVote[personKey].date})
               if(tempx.has(data.pollingVote[personKey].idOption)){
                 tempx.get(data.pollingVote[personKey].idOption).allVoted++
                 //options.set(personKey, {"allVoted":options.get(personKey).allVoted+1, "isVoteThis":(UserService.user.uid==personKey)})
               }else{
                 tempx.set(data.pollingVote[personKey].idOption,  {"allVoted": 1, "isVoteThis":(UserService.user.uid==personKey)})
-                temp.set(personKey,  {"idOption":data.pollingVote[personKey].idOption, "date":data.pollingVote[personKey].date})
+                
             }})
             options.set(id, tempx);
           }
           
           
-          //console.log("{{{{{{{{{{{{{{{{{ ", options)
+          
           data.options=options
           data.pollingVote=temp;
           

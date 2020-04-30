@@ -39,7 +39,6 @@ export class CreatePersonFormComponent implements OnInit {
   
   ngOnInit() {
     this.PersonRule="student";
-    console.log("email"+this.idIndex)
     setTimeout(()=>{
       try{
         document.getElementById("email"+this.idIndex).focus()
@@ -102,23 +101,15 @@ export class CreatePersonFormComponent implements OnInit {
         if(this.courses.length==1)
           this.increment();
         this.coursesHasCourse=true
-          console.log("this.courses.forEach( ", this.courses)
         
           if(CreatePersonFormComponent.allPersonCourses.has(word)){
-            console.log(this.hisId)
             CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId);
           }else{
-            console.log(this.hisId)
             CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId]);
           }
         
         
-        // if(CreatePersonFormComponent.allPersonCourses.has(word))
-        //   CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId)
-        // else
-        //   CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId])
-         // CreatePersonFormComponent.allPersonCourses.set(word, true)
-        //console.log(CreatePersonFormComponent.allPersonCourses)
+        
       }
       
       courses.value=""
@@ -143,7 +134,6 @@ export class CreatePersonFormComponent implements OnInit {
   }
 
   canEdit(i:number):boolean{
-    //console.log("canEdit "+this.courses[i])
     return this.courses[i] == this.currentElement;
   }
 
@@ -158,7 +148,6 @@ export class CreatePersonFormComponent implements OnInit {
 
   destroyItSelfe(){
     if(!this.isFirstTime ){
-      console.log("OOOOOOOOOOO ", this.hisId)
       for (let index = 0; index < CreatePersonFormComponent.allPersons.length; index++) {
         if(CreatePersonFormComponent.allPersons[index].index == this.idIndex){
           this.hisId=index;
@@ -180,7 +169,6 @@ export class CreatePersonFormComponent implements OnInit {
       
       
     }
-    console.log(" CreatePersonFormComponent.allPersons ", CreatePersonFormComponent.allPersons)
     this.destroyItSelf.emit(true);
     //this.ngOnDestroy();
   }
@@ -197,10 +185,8 @@ export class CreatePersonFormComponent implements OnInit {
         ,1)
       this.courses[i] = word;
       if(CreatePersonFormComponent.allPersonCourses.has(word)){
-        console.log(this.hisId)
         CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId);
       }else{
-        console.log(this.hisId)
         CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId]);
       }
       // if(CreatePersonFormComponent.allPersonCourses.has(word))
@@ -224,8 +210,7 @@ index:number =CreatePersonFormComponent.allPersons.length-1;
 isFirstTime:boolean=true;
 hisId:number;
   onSubmit(){
-    console.log("))))))))))))))))))))");
-    console.log({"roles":{[this.PersonRule]:true}});
+    
     if(this.isFirstTime){
 
       CreatePersonFormComponent.allPersons.push({"id":CreatePersonFormComponent.allPersons.length,
@@ -260,7 +245,6 @@ hisId:number;
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
     if(this.disable)
       return;
     if(event.key == "ArrowDown"){
@@ -273,31 +257,24 @@ hisId:number;
       }, 100)
     }else if(event.key == "ArrowRight"){
       //this.PersonRule="student";
-      console.log(this.PersonRule);
       setTimeout(()=>{
         if(this.isFocusRight)
           return;
         this.isFocusRight=true;
         this.isFocusLeft=false;
         this.PersonRule="student"
-          //document.getElementById("instructor"+this.idIndex).blur();
-          //document.getElementById("student"+this.idIndex).focus();
-          //document.getElementById("instructor"+this.idIndex).blur();
+          
           this.onSubmit();
         
       }, 0)
     }else if(event.key == "ArrowLeft"){
-      //this.PersonRule="instructor";
-      console.log(this.PersonRule);
+      
       setTimeout(()=>{
         if(this.isFocusLeft)
           return;
         this.isFocusLeft=true;
         this.isFocusRight=false;
         this.PersonRule="instructor"
-          //document.getElementById("student"+this.idIndex).blur()
-          //document.getElementById("instructor"+this.idIndex).focus();
-          //document.getElementById("student"+this.idIndex).blur()
           this.onSubmit();
         
       }, 0)

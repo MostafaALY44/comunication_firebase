@@ -47,10 +47,10 @@ export class MaterialItemsComponent implements  OnDestroy {
             (params: ParamMap) => {
               if (this.removeUnsubscribe3)
                   this.removeUnsubscribe3.unsubscribe()
-              //console.log("????????????? ",CourseService.categories.categoriesMap)
+              
               if(CourseService.categories.categoriesMap.has(params.get('id'))){
                 this.materials = CourseService.categories.categoriesMap.get(params.get('id')).material;
-              //this.dataSource=CourseService.categories.categoriesMap.get(params.get('id')).material.material
+              
                 let currentCategoryId:string=CourseService.categories.categoriesMap.get(params.get('id')).id;
                 this.removeUnsubscribe3=this.materials.subscribeMaterialsFireStore().subscribe(materials=>{
                   this.dataSource=materials;
@@ -66,15 +66,15 @@ export class MaterialItemsComponent implements  OnDestroy {
                 }) 
               }else{
                 let r= router.url.slice(0, -params.get('id').length) 
-                //console.log(r)
+                
                 if(CourseService.categories.categoriesMap.size){
                 let ff=true;
                 CourseService.categories.categoriesMap.forEach((value:{id: string;material: Material;}, key:string)=>{
                   if(ff){
-                    ff=false;console.log("")
+                    ff=false;
                     router.navigate([r+key])
                   }
-                  //console.log(r)
+                  
                 })
               }else{
                 router.navigate([r])

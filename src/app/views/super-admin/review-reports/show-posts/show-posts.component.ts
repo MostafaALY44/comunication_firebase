@@ -13,15 +13,15 @@ import { Router } from '@angular/router';
 export class ShowPostsComponent implements OnInit {
 post:PostModel;
   constructor(@Inject(MAT_DIALOG_DATA) private data:{'url', 'postId'},private firestore:AngularFirestore) { 
-    //console.log(this.data.url,"+++++",this.data.postId)
+    
       new PostService(this.firestore).read(this.data.url,this.data.postId).subscribe(
       post=>{
-       // console.log(post)
+       
         this.post=post;
         
       }
     )
-    //console.log(this.post)
+    
   }
   getDate(date){
     if(date != null)

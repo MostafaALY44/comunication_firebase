@@ -79,7 +79,10 @@ export class CategoryFactoryService implements OnDestroy {
       })
     }
   }
-  
+  unsubscribe(){
+    if (this.removeUnsubscribe1)
+      this.removeUnsubscribe1.unsubscribe();
+  }
   isLoad():Observable<boolean>{
     return this.isCategoryLoad.asObservable();
   }

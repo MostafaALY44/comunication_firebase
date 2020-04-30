@@ -18,7 +18,6 @@ export class Comment implements CRUD{
 	postId:string;
 	setCurrentIdPost(postId:string){
 		this.postId=postId;
-		//console.log("setCurrentIdPost  "+this.url);
 	}
 
 	setIdCourse(courseId:string){
@@ -30,7 +29,6 @@ export class Comment implements CRUD{
 	    this.commentService.create(this.url+'/'+this.postId+'/comments', this.commentForCreateAndUpdate(comment))}
 	
 	read (commentId:string){
-	//	console.log("from comment "+this.url+'/'+this.postId+'/comments');
 		return this.commentService.read(this.url+'/'+this.postId+'/comments', commentId);
 	}
 	

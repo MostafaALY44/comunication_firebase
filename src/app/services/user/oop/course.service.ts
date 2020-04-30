@@ -29,9 +29,21 @@ export class CourseService {
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
   private pollingFactoryService: PollingFactoryService = new PollingFactoryService(this.firestore)
   //courseId;
+  static  removeSub :BehaviorSubject<boolean>=new BehaviorSubject(false);
   constructor(private firestore: AngularFirestore) { 
     CourseService.postFactoryService = new PostFactoryService(this.firestore)
     CourseService.assignments = this.allAssignments.asObservable(); 
+    CourseService.removeSub.asObservable().subscribe(isRemove=>{
+      if(isRemove){
+        if (this.removesubscribe)
+          this.removesubscribe.unsubscribe();
+        CourseService.postFactoryService.unsubscribe();
+        this.pollingFactoryService.unsbuscribe();
+        this.categoryFactoryService.unsubscribe();
+        CourseService.removeSub.next(false);
+      }
+
+    })
   }
 
   //setCouserId(courseId: string) {
@@ -42,29 +54,7 @@ export class CourseService {
     this.setCategories(url);
     this.setAssignment(url)
     this.setpolls(url);
-    // let course=UserService.loadedCourses.get(courseId)
-    // if(!course){
-    //   this.setPosts(courseId);
-    //   this.setCategories(courseId);
-    //   this.setAssignment(courseId)
-    //   console.log(course)
-    //   console.log(courseId)
-    //   let newCourse={  posts: Object.assign({},CourseService.posts),
-    //     categories: Object.assign({},CourseService.categories),
-    //     assignments: Object.assign({},CourseService.assignments),
-    //     isCategoryLoad: Object.assign({},CourseService.isCategoryLoad)
-    //   }
-    //   UserService.loadedCourses.set(courseId, newCourse)
-    //   //course=UserService.loadedCourses.get(courseId)
-    //   console.log(UserService.loadedCourses)
-      
-    // }else{
-    //   course=UserService.loadedCourses.get(courseId)
-    //   CourseService.posts=course.posts
-    //   CourseService.categories=course.categories
-    //   CourseService.isCategoryLoad=course.isCategoryLoad
-    //   CourseService.assignments=course.assignments
-    // }
+
     
   }
 

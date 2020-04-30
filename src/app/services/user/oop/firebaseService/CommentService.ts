@@ -14,12 +14,10 @@ export class CommentService implements CRUDForfirebase{
     }
 
     read(url: string, id: string) {
-        console.log(url+'/'+id)
         return this.firestore.doc<CommentModel>(url+'/'+id).valueChanges()
         
     }
     update(url: string, id: string, comment) {
-        console.log(url+'/'+id+"  ",comment)
         return this.firestore.doc<CommentModel>(url+'/'+id).update(comment);
     }
     delete(url: string, id: string) {

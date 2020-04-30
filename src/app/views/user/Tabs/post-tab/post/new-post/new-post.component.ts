@@ -43,9 +43,7 @@ export class NewPostComponent implements OnInit {
     if(!this.isEmpty(this.newPost.value.body)){
 
       let data:PostModel={"id" : "", "react" : null, "postOwner":this.currentUser.name,'userId':this.currentUser.uid, "title":this.newPost.value.title, "body": this.newPost.value.body};
-      //let courseId;
-     // this.route.parent.paramMap.subscribe((params : ParamMap) => courseId=params.get('id'));
-      //this.ser.addCoursePost(courseId,data);
+      
       CourseService.posts.create(data);
       this.resetForm(this.newPost);
       

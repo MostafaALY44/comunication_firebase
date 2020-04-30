@@ -22,7 +22,6 @@ export class EditCoursesComponent implements OnInit, OnDestroy {
     this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
-      console.log(this.routerLink)
     }) 
     this.removeSubscribe=this.courseFirebaseService.getAllCodesAsMap(this.routerLink).subscribe(courses=>
         this.allCourses= courses
@@ -109,11 +108,9 @@ export class EditCoursesComponent implements OnInit, OnDestroy {
     else
         this.isIdExist(this.registrationForm.value.newCourseCode[this.registrationForm.value.newCourseCode.length-1])
     
-    console.log(this.isCodeExist)
     if(this.isCodeExist!=-2)
       return;
     let courses:string[]=[];
-    console.log(this.registrationForm.value.newCourseCode)
     let arr=JSON.parse(JSON.stringify( this.registrationForm.value.newCourseCode))
     if(this.registrationForm.value.courseCode != "")
       arr.push(this.registrationForm.value.courseCode.trim().toUpperCase());

@@ -48,7 +48,7 @@ idCollege;
     
   }
   updateCourse(courseDetails,id, event: any){
-  //console.log(courseDetails)
+  
     let editField :string= event.target.textContent;
     let data;
       editField= editField.trim();

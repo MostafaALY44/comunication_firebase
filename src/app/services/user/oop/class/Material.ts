@@ -25,10 +25,7 @@ export class Material implements CRUD, OnDestroy{
 	}
 
 	create(material: MaterialModel) {
-		//if (material)
 			return this.materialService.create(this.url, material)
-		// else
-		// 	console.log("Creating new material is canceled");
 	}
 	
 	read (id:string){
@@ -44,7 +41,6 @@ export class Material implements CRUD, OnDestroy{
 	}
 
 	getAll(){
-		// console.log("getAll() from material "+ this.url)
 		return this.materialService.getAll(this.url);
 	}
 

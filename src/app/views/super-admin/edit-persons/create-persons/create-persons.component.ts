@@ -60,9 +60,7 @@ export class CreatePersonsComponent implements OnInit {
   remove(removeElement:boolean, index:number){
     if(removeElement){
       this.removed.set(index, true);
-      console.log("CreatePersonFormComponent.allPersons ",CreatePersonFormComponent.allPersons.length)
-      console.log("CreatePersonFormComponent.allPersonsOriginLength ",CreatePersonFormComponent.allPersonsIndexOriginLength)
-      console.log("index ",index)
+  
       if(index== this.pointerToLastIndex){
         this.pointerToLastIndex=0;
         this.removed.forEach((value:boolean, key:number)=>{
@@ -99,25 +97,17 @@ export class CreatePersonsComponent implements OnInit {
 
   onSubmit(){
     let x = CreatePersonFormComponent.allPersons
-    console.log(CreatePersonFormComponent.allPersonCourses)
-    console.log(CreatePersonFormComponent.allPersons)
+    
     let ref = this.dialog.open(SavePersonsDataComponent,
       {data:{paramMap:this.router.parent.paramMap , mapCourses:CreatePersonFormComponent.allPersonCourses,
         persons:CreatePersonFormComponent.allPersons}, height: '600px', width: '900px', disableClose: true})
     let removeSubscribe1=ref.afterClosed().subscribe((ss)=>{
-      console.log("ssssssssssssssssss ",ss)
       ss.data.forEach(element => {
         this.remove(true, element)
       });
       setTimeout(()=>{removeSubscribe1.unsubscribe},0)
     })
-    // this.router.parent.paramMap.subscribe((param:ParamMap)=>{
-    //   let obj={"link":{"idUniversity":param.get('id1'),"idCollege":param.get('id2')},
-    //           "persons":this.withoutId(CreatePersonFormComponent.allPersons)
-    //         };
-    //         console.log(obj)
-    //   this.addPersonService.addPersons(obj)
-    // }).unsubscribe();
+    
     
     
   }

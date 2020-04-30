@@ -86,7 +86,6 @@ import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/
     AddAssignmentComponent,
     ReportPostComponent,
     AddMaterialComponent,
-    //AddMaterialComponent,
     AddCategoryComponent,
     EditPollingComponent,
     EditOptionComponent,

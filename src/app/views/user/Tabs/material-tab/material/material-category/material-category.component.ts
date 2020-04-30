@@ -30,9 +30,9 @@ export class MaterialCategoryComponent {
     this.currentUser= UserService.getUser();
     
   }
-  currNotificationCategoriesNumber:Map<string, number>=NotificationService.currNotification.categoriesNumber
+  currNotificationCategoriesNumber:Map<string, number>=(NotificationService.currNotification.categoriesNumber)? NotificationService.currNotification.categoriesNumber:new Map<string, number>();
   getNotification(key:string){
-    //console.log(NotificationService.currNotification.categoriesNumber)
+    
     if(NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)>0)
         return NotificationService.currNotification.categoriesNumber.get(CourseService.categories.categoriesMap.get(key).id)
   }
@@ -41,7 +41,7 @@ export class MaterialCategoryComponent {
 
   selectedCategory(categoryId:string){
     this.targetCategoryId = categoryId;
-    console.log(categoryId);
+   
   }
 
   addCategory(){
@@ -55,24 +55,6 @@ export class MaterialCategoryComponent {
   updateCategory(key:string){
     this.dialog.open(EditCategoryComponent, { data: key});
   }
-  // updateCategory(targetCategoryId){
-  //   // let categoryKey =  this.route.firstChild.snapshot.paramMap.get('id');
-  //   //this.categories.get(categoryKey).unsubscribeMaterialsFireStore();
-  //   // this.router.navigate(['user/comp404/material']);
-  //   //CourseService.categories.update(targetCategoryId, {id:"", name:"test222"});
-  //   //this.router.navigate(['user/comp404/material/a']);
-
-  //   // let oldId = this.targetMaterial.id;
-  //   const dialogRef = this.dialog.open(EditCategoryComponent, { data: this.newCategory });
-    
-  //   dialogRef.afterClosed().subscribe(updatedCategoryItem => {
-  //     if (updatedCategoryItem)
-  //     CourseService.categories.update(targetCategoryId, updatedCategoryItem);
-  //     else
-  //     console.log("Category updating is canceled !!!");
-  //     //this.router.navigate(['user/comp404/material']);
-  //   });
-  // }
 
 
 }

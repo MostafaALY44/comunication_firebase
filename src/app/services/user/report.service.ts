@@ -27,11 +27,8 @@ export class ReportService {
     return this.firestore.collection<PostReport>('universities/'+universityId+'/colleges/'+collegeId+'/reports/').add(data);
   }
 
-  // public editPost(courseId, postId, data){
-  //   return this.firestore.collection<PostComment>('courses/'+courseId+'/posts').doc(postId).update(data);
-  // }
+  
   public deleteReport(universityId, collegeId,reportId){
-    //console.log('courses/'+courseId+'/posts/'+id);
     return this.firestore.collection<PostReport>('universities/'+universityId+'/colleges/'+collegeId+'/reports/').doc(reportId).delete();
   }
 }

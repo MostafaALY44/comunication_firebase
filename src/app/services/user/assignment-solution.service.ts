@@ -14,7 +14,6 @@ export class AssignmentSolutionService {
   constructor(private firestore: AngularFirestore) { }
 
   public getAssingmentSolution(idCourse, idAssignment):Observable<AssignmentSolution[]>{
-    //console.log('courses/'+idCourse+'/assignment');
     return this.firestore.collection<AssignmentSolution>(AssignmentService.url+'/assignment/'+idAssignment+'/solution').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() ;
@@ -33,7 +32,6 @@ export class AssignmentSolutionService {
     return this.firestore.collection<AssignmentSolution>(AssignmentService.url+'/assignment/'+assignmentId+'/solution').doc(solutionId).update(data);
   }
   public deleteAssignmentSolution(idCourse,assignmentId,solutionId){
-    //console.log('courses/'+courseId+'/posts/'+id);
     return this.firestore.collection<AssignmentSolution>(AssignmentService.url+'/assignment/'+assignmentId+'/solution').doc(solutionId).delete();
   }
 }

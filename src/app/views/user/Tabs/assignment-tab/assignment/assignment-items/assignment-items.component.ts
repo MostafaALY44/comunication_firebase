@@ -31,8 +31,7 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
     private userService:UserService) {
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
-     // this.assignments = service.getAssingment(this.courseId) });
-    //this.assignments.subscribe(x=>console.log(x));
+     
     
     this.assignments=CourseService.assignments;
     this.removesubscribe=CourseService.assignments.subscribe(assignments=>{
@@ -41,6 +40,7 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
         else this.isEmpty=false;
       let obj={[UserService.indexNotification+".assignmentNumber"]:assignments.length}
       this.userService.update( obj)
+      if(NotificationService.currNotification)
         NotificationService.currNotification.assignmentsNumber=0
     })
     this.dataSource=this.assignments;
@@ -79,7 +79,6 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   }
   currentAssign; 
   setAssignment(assignment){
-    console.log(assignment)
     this.currentAssign=assignment;
     
   }

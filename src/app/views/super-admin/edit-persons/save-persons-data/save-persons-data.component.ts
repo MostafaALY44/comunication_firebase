@@ -66,34 +66,25 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   }
 
   updateCode(key, event){
-    console.log(event.target.textContent)
     let arrTemp:number[]=[];
     
     this.data.mapCourses.get(key).forEach(elementId=>{
-      console.log("@@@@@@@@@@@@@ ",elementId)
       for (let index = 0; index < this.data.persons.length; index++) {
         if(this.data.persons[index].id == elementId){
-          console.log("this.data.persons[index].id == elementId",this.data.persons[index].id == elementId)
-          console.log(this.data.mapCourses)
-          console.log(this.data.mapCourses.get(key))
-          console.log(this.data.persons)
-          console.log(this.data.persons[index])
            for (let index2 = 0; index2 < this.data.persons[index].obj.courses.length; index2++) {
             if(this.data.persons[index].obj.courses[index2] == key){
-              console.log("#############  ",this.data.persons[index].obj.courses[index2])
               if(event.target.textContent.length){
                 this.data.persons[index].obj.courses[index2]= event.target.textContent;
                 if(this.data.mapCourses.has(event.target.textContent))
                   this.data.mapCourses.get(event.target.textContent).push(elementId)
                 else{
                   this.data.mapCourses.set(event.target.textContent, [elementId])
-                  //this.coursesNotCreatedYet.push(event.target.textContent)
+                  
                 }
               }else 
                 this.data.persons[index].obj.courses.splice(index2,1);
 
               arrTemp.push(elementId)
-              console.log(this.data.mapCourses)
               break;
             }   
            }
@@ -109,7 +100,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         ,1)
       if(!this.data.mapCourses.get(key).length){
         this.data.mapCourses.delete(key)
-        //this.coursesNotCreatedYet.splice(this.coursesNotCreatedYet.findIndex(el=>el==key) ,1)
+        
         this.setCoursesNotCreatedYet();
       }
     })
@@ -117,7 +108,6 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   
   registerCourses(){
     let x:string[]=JSON.parse(JSON.stringify( this.coursesNotCreatedYet))
-    console.log({link:this.routerLink ,courses: x});
     let ref=this.dialog.open(SaveDataComponent,{data:{link:this.routerLink ,courses: x}, height: '600px', width: '900px', disableClose: true})
     let removeSub=ref.afterClosed().subscribe((ss: {data:{editData:Map<string,string>, isSendToDB:boolean}} )=>{
       if(ss.data.isSendToDB ){
@@ -128,7 +118,6 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
             if(ids.findIndex(id=>id==this.data.persons[index].id ) >-1){
                for (let index2 = 0; index2 < this.data.persons[index].obj.courses.length; index2++) {
                 if(this.data.persons[index].obj.courses[index2] == key){
-                  console.log("#############  ",this.data.persons[index].obj.courses[index2])
                   if(value.length)
                     this.data.persons[index].obj.courses[index2]= value;
                   else
@@ -170,14 +159,12 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
     })
     return objTemp;
   }
-  //changeCurrentFieldState(email){}
-  //canEdit(index){}
+  
 
   changeCode:string=""
   currentCode:string="";
   currentId:string="";
   changeCurrentFieldState(code:string, id:string){
-    console.log("IdIdIdIdIdIdIdId ",id)
     this.currentCode=code;
     this.changeCode=this.currentCode;
     this.currentId=id;
@@ -192,18 +179,14 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   removedData:number[]=[]
   reset(i:number, key:string, ii?:number){
 
-    console.log(key)
     if(key == "email"){
-      console.log("this.changeCode ", this.changeCode)
       if(this.changeCode==""){
         this.removedData.push(this.data.persons[i].index)
         CreatePersonFormComponent.allPersons[i].obj.courses.forEach(element=>{
-          console.log(element)
           CreatePersonFormComponent.allPersonCourses.get(element).splice(
             CreatePersonFormComponent.allPersonCourses.get(element).findIndex(num=> num==CreatePersonFormComponent.allPersons[i].id)
             ,1)
         })
-        console.log("wwwwwwwwwwwwwwww" ,this.data.persons[i].obj.courses[ii])
         this.data.persons[i].obj.courses.forEach(element=>{
           CreatePersonFormComponent.allPersonCourses.get(element).splice(
             this.data.persons[i].id
@@ -218,9 +201,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
         
       else{
         const word :string=this.changeCode.trim();
-        console.log("word ",word)
         if(!this.data.persons.find(element=> element.obj.email===word) && this.isEmail(word)){
-          console.log("word ",word)
           this.data.persons[i].obj.email=word;}
       } 
     }else if(key == "courses"){
@@ -234,10 +215,8 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
           , 1)
           if(! CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]).length)
             CreatePersonFormComponent.allPersonCourses.delete(this.data.persons[i].obj.courses[ii])
-          console.log("this.courses ",CreatePersonFormComponent.allPersonCourses.get(this.data.persons[i].obj.courses[ii]))
         this.data.persons[i].obj.courses.splice(ii,1)
         if(!this.data.persons[i].obj.courses.length){
-          console.log("pppppppppppppppppppppp")
           this.removedData.push(this.data.persons[i].index)
           this.data.persons.splice(i,1)
         }
@@ -255,7 +234,6 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
             }
 
           if(!this.data.persons[i].obj.courses.find(element=>{element == word})){  
-            console.log("99999999999999 ",this.data.persons[i].obj.courses.find(element=>{console.log(element); element == word}))         
             this.data.persons[i].obj.courses[ii]=word;
             //CreatePersonFormComponent.allPersonCourses.set(this.data.persons[i].courses[ii], true)
             if(CreatePersonFormComponent.allPersonCourses.has(word))
@@ -264,7 +242,6 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
               CreatePersonFormComponent.allPersonCourses.set(word, [this.data.persons[i].id])
           //this.checkCodesFromDB();
           }else{// copy past code when input ""
-            console.log("ssssssssssssssssssssss")
             this.data.persons[i].obj.courses.splice(ii,1)
             if(!this.data.persons[i].obj.courses.length){
               this.removedData.push(i)

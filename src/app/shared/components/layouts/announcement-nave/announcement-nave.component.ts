@@ -17,19 +17,6 @@ export class AnnouncementNaveComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*isFocus:boolean=false;
-  urlBeforeNavigate:string='';
-  resiveIsFocusSearchEvent(event:boolean){
-    this.isFocus=event;
-    this.isFocusSearchEvent.emit(event);
-    console.log(this.router.url+"++++++++++++++"+event)
-    
-    if(event){
-      this.router.navigate(['announcements/local']);
-      this.urlBeforeNavigate=this.router.url;
-    }
-    else
-      this.router.navigate([this.urlBeforeNavigate])
-  }*/
+  
 
 }

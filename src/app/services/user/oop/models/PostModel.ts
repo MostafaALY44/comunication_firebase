@@ -7,10 +7,7 @@ export interface PostModel{
 	id:string
 	title:string
 	body:string;
-	//like:number;
-	//dislike:number;
 	postOwner:string;
-	//reactedPerson:ReactedPerson[];
 	react:any;
 	userId:string;
 	date?:any;

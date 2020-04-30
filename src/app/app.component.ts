@@ -8,7 +8,7 @@ import { AuthenticationService } from './services/auth/authentication.service';
 })
 export class AppComponent implements OnInit{
   constructor(authenticationService:AuthenticationService){
-    authenticationService.consl("from appppppppppppppppppppppp")
+    // authenticationService.consl("from appppppppppppppppppppppp")
 
   }
   ngOnInit(): void {

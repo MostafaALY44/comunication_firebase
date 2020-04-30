@@ -10,6 +10,7 @@ import { User } from './user.model';
 import { UserService } from '../user/oop/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CourseService } from '../user/oop/course.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,10 @@ static adminIdLink:string="";
 
   //user$: Observable<User>;
   constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore, private router:Router,private _snackBar: MatSnackBar) {
-    //this.userData = angularFireAuth.authState;
-    // Get the auth state, then fetch the Firestore user document or return null
-    //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    
     UserService.userObservable=of(null);
     let temp = this.angularFireAuth.authState.pipe(
       switchMap(user => {
-        console.log("LLLLLLLLL")
           // Logged in
           AuthenticationService.isAdmin.next(false);
           AuthenticationService.adminIdLink="";
@@ -38,8 +36,7 @@ static adminIdLink:string="";
               user.getIdTokenResult().then((idTokenResult)=>{
                 if(idTokenResult.claims.admin)
                   setTimeout(()=>{
-                    // console.log(idTokenResult.claims)
-                    // console.log(idTokenResult.claims.idUniversity, idTokenResult.claims.idCollege)
+                    
                     AuthenticationService.adminIdLink=idTokenResult.claims.idUniversity+"/"+idTokenResult.claims.idCollege;
                      UserService.userObservable =  of(null)
                    AuthenticationService.isAdmin.next(true);
@@ -60,44 +57,12 @@ static adminIdLink:string="";
       
     )
     
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   AuthenticationService.isAdmin.next(false);
-
-    //   console.log(user);
-    //     if (user) {
-    //       console.log(user);
-    //        setTimeout(()=>{
-    //           user.getIdTokenResult().then((idTokenResult)=>{
-    //             if(idTokenResult.claims.admin)
-    //               setTimeout(()=>{
-    //                  UserService.userObservable =  of(null)
-    //                AuthenticationService.isAdmin.next(true);
-    //                setTimeout(function(){
-    //                 //UserService.setUser();
-    //                     router.navigate(['admin']);
-    //               },2000)
-    //                 //UserService.setUser();
-                    
-    //               },10)
-    //           })
-    //         }, 10)
-    
-    //      UserService.userObservable= firestore.doc<User>(`users/${user.uid}`).valueChanges();
-    //     } else {
-    //       // Logged out
-    //       UserService.userObservable=of(null);
-    //      // return of(null);
-    //     }
-    // });
     
      UserService.userObservable=temp;
     UserService.setUser();
-    // console.log("mmmmmmmmmmmmmmmmmm")
     
   }
-consl(x){
-  console.log(x);
-}
+
    static goVerificate:boolean=false;
   /* Sign up */
   async SignUp(email: string, password: string) {
@@ -134,27 +99,11 @@ consl(x){
     } 
     return userRef.set(data, { merge: true })
   }
-  /*removeSubscribe;
-  isEmailVerified():boolean{
-    let verified:boolean=false;
-    // if(this.userData){
-    //   this.removeSubscribe=this.userData.subscribe(user=> { if(!!user)verified=user.emailVerified;this.doUnSubscribe()});
-    // }
-    console.log(this.isVerificateEmail)
-    return this.isVerificateEmail;
-  }*/
-
-  /*doUnSubscribe(){
-    setTimeout(() => {
-      this.removeSubscribe.unsubscribe;
-    }, 100);
-  }*/
+  
 
   /* Sign in */
   async SignIn(email: string, password: string) { 
-    console.log("nnnnnnnnnnnnnnnn")
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
-    console.log(credential.user);
     if(!credential.user.emailVerified){
       firebase.auth().currentUser.sendEmailVerification();
       this.SignOut();
@@ -164,14 +113,12 @@ consl(x){
     
     AuthenticationService.isUser=false;
     if((await credential.user.getIdTokenResult()).claims.admin){
-      console.log("__________________________");
       setTimeout(()=>{
         //UserService.setUser();
         this.router.navigate(['admin']);
       },2000)
       
     }else{
-      console.log("++++++++++++++++++++++++++++");
       AuthenticationService.isUser=true;
       this.router.navigate(['user']);
     }
@@ -200,10 +147,12 @@ consl(x){
   
   /* Sign out */
   SignOut() {
-    this.angularFireAuth.signOut().then(() =>
-    console.log("Sign out ")
-    //AuthenticationService.isVerificateEmail=false
-      ).catch(()=>console.log("signOut not done"));
+    AuthenticationService.isAdmin.asObservable().subscribe(admin=>{
+      if(!admin)
+        CourseService.removeSub.next(true);
+    }).unsubscribe();
+    
+    this.angularFireAuth.signOut();
   }  
 
   /*isAuthenticated(): boolean {
@@ -235,12 +184,10 @@ consl(x){
     // success, show some message
     this._snackBar.open('please check your Email to continue this process!' ,'', { duration: 5000, });
     this.router.navigate(['']);
-    // console.log("send successfully !!")
-    // window.alert("please check your Email to continue this process!")
+    
   },
   err => {
-    // handle errors
-    // console.log("error")
+    
     this._snackBar.open(err ,'', { duration: 5000, });
       this.router.navigate(['/auth/signup']);
   }

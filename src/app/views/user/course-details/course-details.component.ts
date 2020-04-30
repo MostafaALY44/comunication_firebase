@@ -68,23 +68,33 @@ removeSubscribe;notificationKey:string="";
 
    getPostNotification(){
       NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
-      if( !NotificationService.currNotification)
+      if( !NotificationService.currNotification){
+        NotificationService.currNotification={"postsNumber":0, "assignmentsNumber":0,
+        "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
         return ;
+      }
+        
       if(NotificationService.currNotification.postsNumber)
          return  NotificationService.currNotification.postsNumber;
    }
    getAssignmentNotification(){
     NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
-    if( !NotificationService.currNotification)
+    if( !NotificationService.currNotification){
+      NotificationService.currNotification={"postsNumber":0, "assignmentsNumber":0,
+      "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
       return ;
+    }
     if(NotificationService.currNotification.assignmentsNumber)  
       return  NotificationService.currNotification.assignmentsNumber;
    }
 
    getCatrgoriesNotification(){
     NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
-    if( !NotificationService.currNotification)
+    if( !NotificationService.currNotification){
+      NotificationService.currNotification={"postsNumber":0, "assignmentsNumber":0,
+      "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
       return ;
+    }
       let counter=0;
      NotificationService.currNotification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
@@ -95,8 +105,11 @@ removeSubscribe;notificationKey:string="";
 
    getBollingsNotification(){
     NotificationService.currNotification=NotificationService.notification.get(this.notificationKey)
-    if( !NotificationService.currNotification)
+    if( !NotificationService.currNotification){
+      NotificationService.currNotification={"postsNumber":0, "assignmentsNumber":0,
+      "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
       return ;
+    }
     if(NotificationService.currNotification.pollingsNumber)  
       return  NotificationService.currNotification.pollingsNumber;
    }

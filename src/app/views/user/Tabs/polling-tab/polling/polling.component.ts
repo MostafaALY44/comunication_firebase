@@ -18,11 +18,12 @@ export class PollingComponent implements OnInit, OnDestroy {
   removeSubscribe:Subscription;
   constructor(private userService:UserService) { 
    this.removeSubscribe=CourseService.polls.polles.subscribe(poll=>{
-     console.log("frrrrrrrrrrom poll  ",poll)
+     
       this.coursepolls = poll;
       let obj={[UserService.indexNotification+".pollingNumber"]:this.coursepolls.length}  
       this.userService.update( obj)
-      NotificationService.currNotification.pollingsNumber=0
+      if(NotificationService.currNotification)
+        NotificationService.currNotification.pollingsNumber=0
     });
     
   }

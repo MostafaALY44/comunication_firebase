@@ -35,7 +35,7 @@ export class AssignmentSolutionComponent implements OnInit {
   }
 
   onSubmit(){
-    //console.log(this.newSolution.value); 
+    
     if(!this.isEmpty(this.newSolution.value.Aurl)){
 
       let data={"note":this.newSolution.value.note,
@@ -47,7 +47,7 @@ export class AssignmentSolutionComponent implements OnInit {
       }).catch(error=>{
         this._snackBar.open('', error, { duration: 3000, });
       })
-     // this.newSolution.reset();
+     
      
     } 
   }

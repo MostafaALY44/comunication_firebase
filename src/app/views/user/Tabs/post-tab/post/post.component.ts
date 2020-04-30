@@ -17,17 +17,12 @@ export class PostComponent implements OnInit,OnDestroy {
    
   coursePosts:Post;
   
-  //removeSubscribe;
+  
   constructor(private ser: PostService, route:ActivatedRoute) {
-    //route.parent.paramMap.subscribe((params : ParamMap) =>  this.posts=this.ser.getCoursePosts( params.get('id')));
-    //this.posts.subscribe(x=>console.log(x));
-    //this.posts=this.postFactory.getPosts('/courses/comp204/posts');
-    //this.removeSubscribe=route.parent.paramMap.subscribe(() =>this.coursePosts=CourseService.posts)
-
-    //})
+    
     CourseService.subscribeTab("post");
     this.coursePosts=CourseService.posts;
-    console.log("CourseService.posts ",CourseService.categories.categoriesMap)
+    
   }
   ngOnDestroy(): void {
     //this.removeSubscribe.unsubscribe();

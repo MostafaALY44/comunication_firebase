@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { User } from 'src/app/services/auth/user.model';
 import { MessagingService } from 'src/app/services/auth/messaging.service';
@@ -24,7 +24,7 @@ interface Tree{
   templateUrl: './user-body.component.html',
   styleUrls: ['./user-body.component.css']
 })
-export class UserBodyComponent implements OnInit { 
+export class UserBodyComponent implements OnInit,OnDestroy { 
   treeControl = new NestedTreeControl<Tree>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Tree>();
   hasChild = (_: number, node: Tree) => !!node.children && node.children.length > 0;
@@ -34,6 +34,7 @@ export class UserBodyComponent implements OnInit {
   courses : User;
   notification: NotificationModel;
   currentUser;
+  removeSubscribe:Subscription;
   constructor( private userService:UserService, private messag:MessagingService,
     router:Router, 
     private notificationService:NotificationService,private dialog:MatDialog) {//UserService
@@ -44,10 +45,11 @@ export class UserBodyComponent implements OnInit {
       }
     
     try {
-      UserService.userObservable.subscribe(user=>{
+     this.removeSubscribe= UserService.userObservable.subscribe(user=>{
         this.treeUniversity=[]
         this.courses=user;
-        if(user.univeristy)
+        if(user)
+          if(user.univeristy)
           Object.keys(user.univeristy).forEach((universityKey:any)=>{
           let temp1:Tree[]=[];
         if(user.univeristy[universityKey].colleages)
@@ -62,7 +64,7 @@ export class UserBodyComponent implements OnInit {
           this.treeUniversity.push({"name":universityKey, "children":temp1})
         })
         this.dataSource.data = this.treeUniversity;
-        // console.log(this.dataSource.data);
+        
         this.treeControl.dataNodes = this.treeUniversity;
         this.treeControl.expandAll();
       }
@@ -72,8 +74,13 @@ export class UserBodyComponent implements OnInit {
       setTimeout(()=>{router.navigate(['/user'])},1000)
     }
       
-  //  console.log( this.getuniversityId("ASU/science/math333/post"))
-  //  console.log( this.getcoleageId("ASU/science/math333/post"))
+  
+  }
+  ngOnDestroy(): void {
+    this.notificationService.dounsubscribe();
+    if(this.removeSubscribe)
+      this.removeSubscribe.unsubscribe();
+
   }
 getuniversityId(link:string):string{
   if(link)
@@ -90,8 +97,7 @@ getcoleageId(link:string):string{
     let notification=NotificationService.notification.get(id1+id2+id3)
     if(!notification)
       return ;
-      //console.log("notification ", notification)
-    //return notification.postsNumber+notification.categoriesNumber+notification.assignmentsNumber;
+      
     let counter=0;
     notification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;

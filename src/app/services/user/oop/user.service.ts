@@ -27,7 +27,7 @@ export class UserService implements OnDestroy {
   static userObservable:Observable<User>
   static user:User= new User();
   static indexNotification:string="";
-  private static removeSubscribe;
+  public static removeSubscribe;
   static temp:Observable<User>;
   static getUser(){
     return UserService.user
@@ -39,7 +39,6 @@ export class UserService implements OnDestroy {
     UserService.removeSubscribe= UserService.userObservable.subscribe(user=>{
       if(user){
           UserService.user=user
-          //console.log("}}}}}}}}} "+UserService.user.emailVerified)
           UserService.hasGroups=user.univeristy
       }else UserService.user.emailVerified=false;
     })
@@ -49,14 +48,7 @@ export class UserService implements OnDestroy {
   static hasGroups =[]; 
  
   constructor(private firestore: AngularFirestore) {
-    //console.log("+++++++++++++++++++++++++++++++++++")
-    // this.removeSubscribe= UserService.userObservable.subscribe(user=>{
-    //   if(user){
-    //       UserService.user=user
-    //       console.log("}}}}}}}}} "+UserService.user.emailVerified)
-    //       UserService.hasGroups=user.universities
-    //   }else UserService.user.emailVerified=false;
-    // })
+    
   }
 
   getUserObservable():Observable<User>{
@@ -84,7 +76,6 @@ export class UserService implements OnDestroy {
   }
 
  updatePerson(id,data): Promise<void>{
-   console.log(data , id)
   return this.firestore.collection('users/').doc(id).update(data);
  }
 

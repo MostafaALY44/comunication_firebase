@@ -38,7 +38,7 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   onSubmit(){
-    //console.log(this.newAssignment.value);
+    
     if(!this.isEmpty(this.newAssignment.value.title)){
 
        let data2={"acceptAfterEnd" :this.newAssignment.value.accept,
@@ -52,7 +52,7 @@ export class AddAssignmentComponent implements OnInit {
       this.ser.addAssignment( this.data.courseId,data2).then(()=>{
         this._snackBar.open(this.newAssignment.value.title, 'Added Successfully', { duration: 3000, });
       })
-     // this.newAssignment.reset();
+     
       
     } 
   }

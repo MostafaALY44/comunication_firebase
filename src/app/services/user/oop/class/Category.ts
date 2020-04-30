@@ -21,7 +21,6 @@ export class Category implements CRUD {
     }
 
     getAll() {
-        console.log("!!!!!!!!!!!!!!!! "+this.url)
         return this.categoryService.getAll(this.url);
     }
 

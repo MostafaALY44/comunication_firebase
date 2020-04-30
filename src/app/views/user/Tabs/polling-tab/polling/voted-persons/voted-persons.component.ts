@@ -15,15 +15,9 @@ export class VotedPersonsComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) private data: any) {
 
     this.persons = this.data;
-
-    // if ( this.persons && this.persons.length > 0) {
-    //   this.persons = this.data;
-    // } else {
-    //   this.isEmpty = true;
-    // }
     
   }
-
+ 
   ngOnInit() {
   }
 

@@ -26,8 +26,7 @@ export class ReportPostComponent implements OnInit {
       this.universityId=  param.get('id1')//for ASU
       this.collegeId= param.get('id2')//for science
     })
-    //  console.log(this.universityId)
-    //  console.log(this.collegeId)
+    
     this.currentUser=UserService.getUser();
     
   }
@@ -50,10 +49,10 @@ export class ReportPostComponent implements OnInit {
 
   onSubmit(){
     if(!this.isEmpty(this.reportPost.value.report)){
-  //console.log("-------------------------------");
+  
       let idPost= this.data.post.id
       let data1={'personId':this.currentUser.uid,'postId':idPost,'report':this.reportPost.value.report,'postUrl':CourseService.posts.getUrl()}
-     // let reportText=this.reportPost.value.report;
+     
     this.data.urlparam.subscribe((param:Params)=>{
       this.universityId=  param.get('id1')//for ASU
       this.collegeId= param.get('id2')//for science

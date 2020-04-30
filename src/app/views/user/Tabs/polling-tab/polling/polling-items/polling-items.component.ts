@@ -28,7 +28,7 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
   //options;
   constructor(public dialog: MatDialog, private userService: UserService) {
     this.currentUser = UserService.getUser();
-    //console.log("xxxxxxxxxxxxxxxxx")
+    
   }
 
   removeSubscrib: Subscription;
@@ -44,12 +44,8 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    //console.log(")))))))))))))))))))))))))))) ", this.poll.id)
-    //console.log("(((((((((((((((((((((((((((( ", this.poll.options.get(this.poll.id))
     this.getOption(this.poll.id);
     
-    //this.getOptionDetails();
-    //this.optionsVoting = this.poll.options.get(this.poll.id);
     if(this.poll.options.has(this.poll.id))
     this.poll.options.get(this.poll.id).forEach((option, key)=>{
       if(option.isVoteThis)
@@ -65,29 +61,9 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
   }
   options
   getOption(idPoll) {
-    //console.log(CourseService.polls.options)
-    // this.options= CourseService.polls.options.get(idPoll).asObservable();
+    
     this.options = CourseService.polls.getVottings(idPoll);
-    console.log(this.options);
   }
-
-  //optionsVoting:Map<string, {allVoted: number;isVoteThis: boolean;}> 
-  //currentVoteOption:string="";
-  // getOptionDetails(){
-  //   const userVote=this.poll.pollingVote.get(UserService.user.uid)
-  //   if(userVote){
-  //     this.favoriteSeason=userVote.idOption;
-  //   }
-  //     //this.currentVoteOption=userVote.idOption;
-  //   this.poll.pollingVote.forEach((element)=>{
-  //     if(this.optionsVoting.has(element.idOption))
-  //       this.optionsVoting.set(element.idOption, this.optionsVoting.get(element.idOption) +1);
-  //     else
-  //       this.optionsVoting.set(element.idOption, 1);
-  //   })
-  //   //console.log(this.poll.pollingVote)
-  //   //console.log(this.optionsVoting)
-  // }
 
   countVotes(idOption) {
     if (!this.poll.options.has(this.poll.id))
@@ -95,8 +71,6 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
     const userVote = this.poll.options.get(this.poll.id).get(idOption)
     if (userVote) {
 
-      //console.log(idOption, userVote)
-      //document.getElementById(idOption).focus()
       return userVote.allVoted;
     }
     else return 0;
@@ -128,7 +102,6 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
   flag;
   voteOption(idOption) {
     if (this.favoriteSeason == idOption) {
-      console.log("*************** ")
       setTimeout(() => { this.favoriteSeason = "" }, 5)
 
       // if(this.optionsVoting.get(idOption)>1)
@@ -140,7 +113,6 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
     }
     CourseService.polls.addOption(this.poll.id, { "personId": UserService.user.uid, "optionId": idOption })
     this.favoriteSeason = idOption;
-    console.log(this.favoriteSeason)
   }
 
 
@@ -149,17 +121,13 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
   voteUp(pollId) {
     let xxxxxx = CourseService.polls.getVottings(pollId);
 
-    //let voteingModel:  pollVotingModel = {id:pollId, text:'test', votes:10, };
-    //CourseService.polls.votting.update(votId+"",this.voteingModel);
-    // console.log(JSON.stringify(xxxxxx))
   }
 
 
  
   showVotedPersons(option:pollVotingModel) {
     let votedPersons = [];
-    console.log(this.poll.pollingVote);
-
+ 
     this.poll.pollingVote.forEach(
       (value: { idOption: string; date: any; }, key: string) => {
         if (value.idOption == option.id) {

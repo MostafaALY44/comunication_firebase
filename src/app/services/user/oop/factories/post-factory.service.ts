@@ -45,12 +45,12 @@ export class PostFactoryService implements OnDestroy {
    }   
    private setPosts2(){
     this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{
-      //console.log ("oooooooooooooooooooooooooo: ",UserService.indexNotification+".postsNumber")
-      //console.log ("uuuuuuuuuuuuuuuuuuuuuuuuuu: ",this.url)
+      
        let obj={[UserService.indexNotification+".postNumber"]:posts.length}
         
       this.userService.update( obj)
-      NotificationService.currNotification.postsNumber=0
+      if(NotificationService.currNotification)
+        NotificationService.currNotification.postsNumber=0
       this.coursePost.posts=posts;})
    }   
 
@@ -66,55 +66,5 @@ export class PostFactoryService implements OnDestroy {
     if(this.removeUnsubscribe1)  
           this.removeUnsubscribe1.unsubscribe();
   }
-
-   /*getPosts(url?:string):Observable<PostModel[]>{
-     return this.postService.getAll(this.url);
-   }*/
-  //flag:boolean=false;
-  /*getPosts(url?:string):Observable<PostModel[]>{
-    let postNames=this.coursePost.getAll();
-      if(this.removeUnsubscribe1)  
-            this.removeUnsubscribe1.unsubscribe();
-    this.removeUnsubscribe1=postNames.subscribe((posts)=>{this.allposts.next(posts);});
-      return this.allposts.asObservable();
-      
-      /*this.flag =false;
-      posts.forEach(post=>{        
-      if(!(this.postsTemp.find(x=> x.post.id===post.id))){
-          this.flag=true;  
-          let x=new Post(this.url, post, this.firestore)
-          x.comments=this.getComments(post.id);
-          this.postsTemp.push(x)
-        }})
-      if(this.flag){
-        this.flag =false;
-        this.allposts.next(this.postsTemp);
-      }})*/
-      //return this.posts;
-    //}
-
-    /*getComments(id:string):Observable<Comment[]>{
-      //console.log(this.url+'/categories/'+id+'/comments/');
-      let  commentsTemp :Comment[]=[];
-      let commentsBehavior: BehaviorSubject<Comment[]>=new BehaviorSubject([]);
-      let flag:boolean=false
-  
-        this.removeUnsubscribe2=this.commentService.getAll(this.url+id+'/comments').subscribe(
-            comments=>{ 
-              flag=false;
-              comments.forEach(comment=>{
-              if(!(commentsTemp.find(x=> x.comment.id===comment.id))){
-                  commentsTemp.push(new Comment(this.url, this.firestore, comment))
-                  flag=true;
-                }
-               })
-               if(flag)
-                 commentsBehavior.next(commentsTemp);
-              })
-            //if(commentsTemp[0])
-            //console.log(commentsTemp.length)
-        
-        return commentsBehavior.asObservable();
-    }*/
 
   }

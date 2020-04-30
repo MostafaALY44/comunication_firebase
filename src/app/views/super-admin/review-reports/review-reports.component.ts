@@ -71,7 +71,7 @@ isEmpty:boolean=false;
    }
 
    showPost(url,postId){
-    // console.log(url, "_____ ",postId)
+    
     this.dialog.open(ShowPostsComponent,{data:{'url':url, 'postId':postId}});
     
    }

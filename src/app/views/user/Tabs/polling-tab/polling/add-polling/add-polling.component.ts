@@ -64,19 +64,18 @@ export class AddPollingComponent implements OnInit {
     });
 }
   onSubmit(){
-   // console.log(this.myForm)
+   
     if(!this.isEmpty(this.myForm.value.poll) && this.myForm.value.options.length ){
       let data1:pollVotingModel;
       let data:PollingModel={'id':"",'text' : this.myForm.value.poll, 'deadLine' : this.myForm.value.deadLine,'pollingOwner':this.currentUser.name,'userId':this.currentUser.uid};
-     // console.log("____________")
+     
       CourseService.polls.create(data).then(docRef=>{
         
         
         let lastOption:Promise<DocumentReference>
         for(let i=0;i<this.myForm.value.options.length;i++){
           data1={'id':"",'text':this.myForm.value.options[i].text, 'vottedPerson':[],'votes':0}
-          console.log("data1 ",data1)
-        // console.log(data1[i]);
+         
         
           CourseService.polls.votting.setCurrentIdPoll(docRef.id);
           lastOption=CourseService.polls.votting.create(data1);
@@ -91,31 +90,13 @@ export class AddPollingComponent implements OnInit {
        
       }  
       });
-    // this.myForm.reset();
-    // setTimeout(()=>{
-    //   this.deleteOption(this.deleteId);
-    //   this.resetForm(this.myForm)
-    // },7000)
     
-    // this.myForm.value.options.forEach(item => {
-    //   console.log(item);
-    //   data1.push({
-    //     text: item['text'],
-    //     votes: 0
-    //   })
-    //  // console.log(data1)
-    //  // CourseService.polls.votting.setCurrentIdPoll(pollId);
-    //   CourseService.polls.votting.create(data1);
-    // })
 
     
      
     } 
     
-    //this.deleteOption(this.deleteId);
-    //this.resetForm(this.myForm)
-    
-    
+   
   }
 
 }

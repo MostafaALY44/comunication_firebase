@@ -45,30 +45,6 @@ export class PostService implements CRUDForfirebase{
         this.update(url, id, {[`react.${personId}`] :firebase.firestore.FieldValue.delete()})
      }
     
-    // checkAction(actions:ReactedPerson[], personId, react:boolean):number{
-    //     let isFind = actions.find(element=> element.personId=== personId)
-    //     if(isFind){
-    //         if(isFind.action==react)
-    //             return -1 //not allow the same react
-    //         else{
-    //             return 1 //allow with different react
-    //         }
-    //     }else
-    //         return 0 //allow new react
-    // }
-
-
-    // reportPost(url: string, id: string, personId:string,report:string){
-    //    // console.log("+++++++++++++++++++++++++++++");
-    //     let removeSubscribe=this.read(url, id).subscribe( (post)=>{
-           
-    //             post.reportPost.push({"personId":personId, "report":report});
-    //            // console.log("post.reportPost "+post.reportPost)
-    //             this.update(url,id,post);
-    //             this.doUnsubscribe(removeSubscribe)
-    //     })
-           
-            
-    // }
+    
 
 }

@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DeleteDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,@Inject(MAT_DIALOG_DATA) private data,private userService:UserService,private _snackBar:MatSnackBar) {
-    // console.log(this.data)
+    
    }
 
   ngOnInit() {

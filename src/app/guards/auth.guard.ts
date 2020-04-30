@@ -8,12 +8,7 @@ import { UserService } from '../services/user/oop/user.service';
 @Injectable({
   providedIn: 'root'
 })
-/*class UserToken {}
-class Permissions {
-  canLoadChildren(user: UserToken, id: string, segments: UrlSegment[]): boolean {
-    return true;
-  }
-}*/
+
 
 //@Injectable()
 export class AuthGuard implements CanActivateChild   {
@@ -23,7 +18,7 @@ export class AuthGuard implements CanActivateChild   {
     return UserService.userObservable.pipe(
       take(1),
       map(user => (!!user && user.emailVerified)),      //map to boolean
-      tap(loggedIn => {//console.log("PPPPPPPPPPPPPPPPPPPPPPPPP")
+      tap(loggedIn => {
         if(AuthenticationService.goVerificate)
           this.router.navigate(['']);
 

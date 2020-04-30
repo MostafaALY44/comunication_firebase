@@ -11,14 +11,7 @@ import * as firebase from 'firebase';
   styleUrls: ['../sb-admin-2.min.css']
 })
 export class SignupComponent implements OnInit {
-// allUsers;
-  // constructor( private users :UserService,private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {
-  //   // this.users.getAll().subscribe(users=>{
-  //   //   this.allUsers=users;
-  //   // });
-  // }
 
-  // constructor(private authenticationService:AuthenticationService,private service: UserService,private _snackBar: MatSnackBar) {}
 
   isUserAgree = false;
 
@@ -28,22 +21,10 @@ export class SignupComponent implements OnInit {
   }
 
   email: string;
-  //name: string;
-  //password:string;
-  // isFound:boolean=false;
-  // check():boolean{
-  //   this.allUsers.forEach(user=>{
-  //       //console.log(user)
-  //       if(user.email===this.email && user.emailVerified) return this.isFound=true;
-  //       else return this.isFound=false;
-  //     })
-    
-  //   return;
-  // }
+  
   
   signUp() {
-    // console.log(this.check())
-    // if( !this.check())
+    
 
     firebase.auth().fetchSignInMethodsForEmail(this.email).then(methods => {
       if(methods.length>0) {
@@ -54,14 +35,9 @@ export class SignupComponent implements OnInit {
       this._snackBar.open(err,'', { duration: 5000, });
     })
         
-    // else this._snackBar.open('Your are Already registered!' ,'', { duration: 5000, });
-      
     
   }
 
-  // signIn() {
-  //   this.authenticationService.SignIn(this.email, this.password)    
-  // }
 
   signOut() { 
     

@@ -36,12 +36,12 @@ export class LoginComponent implements OnInit {
     this.password = this.login.value.password; 
     this.authenticationService.SignIn(this.email, this.password)
     .then(res => {
-      //console.log('Successfully signed in!');
+      
       this.router.navigate(['./user']);
       this.error='';
     })
     .catch(err => {
-      //console.log('Something is wrong:',err.message);
+      
       this.error="the email or password is wrong!";
     });
   }
@@ -50,29 +50,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.SignOut();
   }
 
-  /*email: string;
-  password: string;
-
-  constructor(public authenticationService: AuthenticationService) {}
-  ngOnInit() {   
-  }
-
-  signUp() {
-    this.authenticationService.SignUp(this.email, this.password);
-  }
-
-  signIn() {
-    this.authenticationService.SignIn(this.email, this.password)    
-  }
-
-  signOut() { 
-    this.authenticationService.SignOut();
-  }
-
-  isLogin():boolean{
-    return this.authenticationService.isAuthenticated();
-  }*/
-
+  
 
   
 }

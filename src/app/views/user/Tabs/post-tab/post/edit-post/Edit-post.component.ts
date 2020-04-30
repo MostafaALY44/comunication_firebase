@@ -33,10 +33,10 @@ export class EditPostComponent implements OnInit {
 
   onSubmit(){
     if(!this.isEmpty(this.newPost.value.body)){
-   // let courseId=this.data.courseId;
+   
       let idPost= this.data.id
       this.data= {"id" : this.data.id, "react" :this.data.react, "postOwner":this.data.postOwner,'userId':this.data.userId, "title":this.newPost.value.title, "body": this.newPost.value.body};
-      //this.ser.editPost(courseId, idPost, this.data.post);
+      
       CourseService.posts.update(idPost,this.data);
       
     }

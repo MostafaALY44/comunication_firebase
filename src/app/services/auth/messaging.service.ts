@@ -12,8 +12,8 @@ export class MessagingService implements OnDestroy{
   removeSubscribe1;removeSubscribe2;
   constructor(private afMessaging: AngularFireMessaging, private angularFirestore:AngularFirestore) { 
     this.removeSubscribe1=this.afMessaging.requestToken .subscribe(
-      (token) => { console.log('Permission granted! Save to the server!', token);this.saveToken(token) },
-      (error) => { console.error(error); },  
+      (token) => { this.saveToken(token) },
+      (error) => {  },  
     );
     this.receiveMessages();
     
@@ -26,14 +26,12 @@ export class MessagingService implements OnDestroy{
   }
   receiveMessages() {
     firebase.messaging().onMessage(payload => { 
-     console.log('Message received. ', payload.notification);
    });
   }
    listen(){
      this.receiveMessages();
-    // console.log("}}}}}}}}}}}}}}}}")
    this.removeSubscribe2=this.afMessaging.messages
-    .subscribe((message) => { console.log("+++++++++++++++++++++++++++++++++++++++",message); });
+    .subscribe((message) => {  });
 
   }
 
@@ -41,7 +39,6 @@ export class MessagingService implements OnDestroy{
    private saveToken( token): void {
     
     const currentTokens = UserService.user.fcmTokens || { }
-    console.log(currentTokens, token)
 
     // If token does not exist in firestore, update db
     if (!currentTokens[token]) {

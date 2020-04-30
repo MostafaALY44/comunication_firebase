@@ -24,7 +24,7 @@ export class GetCoursesComponent implements OnInit {
    let removeSub= this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.routerLink="universities/"+params.get('id1')+
       "/colleges/"+params.get('id2')
-      // console.log(this.routerLink,"froooooooo")
+      
     }).unsubscribe();
 
     this.dataSource=courseFirebaseService.getAll(this.routerLink);
@@ -53,9 +53,7 @@ export class GetCoursesComponent implements OnInit {
     })
     
   }
-  // updateCourse(course:Course){
-  //   this.dialog.open(UpdateCoursesComponent,{data:{'url':this.routerLink, 'courseCode':course["id"]}});
-  // }
+  
  
   displayedColumns: string[] = ['code', 'date','action'];
 }

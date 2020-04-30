@@ -11,7 +11,6 @@ export class MaterialService implements CRUDForfirebase{
     constructor(private firestore: AngularFirestore){}
 
     create(url:string, material:MaterialModel ) {
-        console.log('MaterialService create  '+url+'/'+material.id)
         material["date"]=firebase.firestore.FieldValue.serverTimestamp();
         return this.firestore.collection(url).doc(material.id).set(material)
     }
@@ -30,7 +29,6 @@ export class MaterialService implements CRUDForfirebase{
     }
     
     getAll(url:string):Observable<MaterialModel[]>{
-        //console.log("form material service getAll() url: "+url)
         return this.firestore.collection<MaterialModel>(url).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;

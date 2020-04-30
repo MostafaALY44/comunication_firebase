@@ -26,7 +26,6 @@ export class NavComponent implements OnInit {
           this.displaySearchInput=true;
         
           this.currentUser=UserService.getUser();
-          //console.log(this.currentUser)
           this.isAdmin=false;
          let removeSubscribe= AuthenticationService.isAdmin.subscribe(admin=>{
             if(admin){
@@ -50,7 +49,6 @@ export class NavComponent implements OnInit {
   }
 
   goVerificate():boolean{
-    //console.log(AuthenticationService.goVerificate)
     return AuthenticationService.goVerificate
   }
 

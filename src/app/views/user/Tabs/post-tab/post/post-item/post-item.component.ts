@@ -38,7 +38,7 @@ export class PostItemComponent implements OnInit {
 
   ngOnInit() {
      
-    //console.log(this.post.x instanceof  Map)
+    
     let react =this.post.react;
     let like:number=0;
     let counter:number=0;
@@ -56,7 +56,7 @@ export class PostItemComponent implements OnInit {
     })
     this.react={"like":like, "dislike": counter-like}
   }
-// console.log(CourseService.posts.comment.comments)
+
   }
   getDate(date){
     if(date != null)
@@ -84,7 +84,7 @@ export class PostItemComponent implements OnInit {
      this.removeSubscribe= CourseService.posts.getComments(postId)
     .subscribe(comment=>{
       this.comments=[];
-     // console.log(comment)
+    
       comment.forEach(element=>{
        let LikeComment:boolean=false;
        let disLikeComment:boolean=false;
@@ -102,7 +102,7 @@ export class PostItemComponent implements OnInit {
           if(element.react[person])
               like++;
         })
-       // console.log({...element,"isLike" :LikeComment,"isDisLike" :disLikeComment})
+       
         this.comments.push({"commentModel":element, "like":like, "dislike":counter-like, "isLike" :LikeComment,"isDisLike" :disLikeComment})
       })
     })
@@ -162,7 +162,7 @@ setComment(comment:CommentModel){
 
 }
 
-editComment(idPost){//console.log(this.Currcomment);
+editComment(idPost){
   CourseService.posts.comment.setCurrentIdPost(idPost);
   this.dialog.open(EditCommentComponent,{data:this.Currcomment})
 }

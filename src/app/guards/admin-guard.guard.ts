@@ -11,14 +11,11 @@ import { take, map, tap } from 'rxjs/operators';
 export class AdminGuardGuard implements CanActivateChild {
   constructor( private router:Router) {}
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-  //  console.log(AuthenticationService.isAdmin)
-  //  if(!AuthenticationService.isAdmin){
-  //    this.router.navigate(['page-not-found']);
-  //  }
+  
     return AuthenticationService.isAdmin.asObservable().pipe(
       take(1),
       map(admin => admin),
-      tap(loggedIn => {//console.log("PPPPPPPPPPPPPPPPPPPPPPPPP", loggedIn,AuthenticationService.isAdmin )
+      tap(loggedIn => {
       
         if(!loggedIn){
           setTimeout(()=>{
