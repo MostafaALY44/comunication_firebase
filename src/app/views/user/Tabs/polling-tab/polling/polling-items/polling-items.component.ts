@@ -1,16 +1,13 @@
 import { VotedPersonsComponent } from './../voted-persons/voted-persons.component';
-import { pollVotingModel, VottedPerson } from './../../../../../../services/user/oop/models/PollVotingModel';
-import { PollVotting } from './../../../../../../services/user/oop/class/PollVotting';
+import { pollVotingModel } from './../../../../../../services/user/oop/models/PollVotingModel';
 import { CourseService } from './../../../../../../services/user/oop/course.service';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { PollingComponent } from '../polling.component';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user/oop/user.service';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPollingComponent } from '../edit-polling/edit-polling.component';
 import { EditOptionComponent } from '../edit-option/edit-option.component';
 import { PollingModel } from 'src/app/services/user/oop/models/PollingModel';
-import { element } from 'protractor';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
@@ -20,7 +17,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './polling-items.component.html',
   styleUrls: ['./polling-items.component.css']
 })
-export class PollingItemsComponent implements OnInit {
+export class PollingItemsComponent implements OnInit, OnDestroy {
 
   @Input() poll: PollingModel;
   currentUser;
@@ -32,6 +29,12 @@ export class PollingItemsComponent implements OnInit {
   constructor(public dialog: MatDialog, private userService: UserService) {
     this.currentUser = UserService.getUser();
     //console.log("xxxxxxxxxxxxxxxxx")
+  }
+
+  removeSubscrib: Subscription;
+  ngOnDestroy(): void {
+    if(this.removeSubscrib)
+      this.removeSubscrib.unsubscribe();
   }
 
   Currpoll;
@@ -103,7 +106,6 @@ export class PollingItemsComponent implements OnInit {
   currentOption: pollVotingModel;
   setOption(option: pollVotingModel) {
     this.currentOption = option;
-
   }
 
   deletePoll() {
@@ -152,35 +154,28 @@ export class PollingItemsComponent implements OnInit {
     // console.log(JSON.stringify(xxxxxx))
   }
 
-  showVotedPersons(option) {
+
+ 
+  showVotedPersons(option:pollVotingModel) {
     let votedPersons = [];
-    let counter = 0;
-    //console.log("====================> showVotedPersons(); is Called.");
-    this.setOption(option);
-    // console.log("==================>" + this.poll.pollingVote.keys.length);
+    console.log(this.poll.pollingVote);
+
     this.poll.pollingVote.forEach(
       (value: { idOption: string; date: any; }, key: string) => {
-        // console.log("key.length ==============> "+value.idOption.length)
-        counter++;
-        if (value.idOption == this.currentOption.id) {
-          this.userService.getUserById(key).subscribe(
+        if (value.idOption == option.id) {
+          this.removeSubscrib = this.userService.getUserById(key).subscribe(
             user => {
-              // console.log(user);
               votedPersons.push(user.name);
             }
           )
         }
-        //  console.log("counter ==============> "+counter);
-        console.log("==============> ", key, value);
       }
     )
-    console.log(votedPersons[1]);
+    votedPersons.sort();
     this.dialog.open(VotedPersonsComponent, {
       data: votedPersons,
       width: '500px'
     })
   }
-
-
 
 }

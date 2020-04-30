@@ -11,11 +11,17 @@ export class VotedPersonsComponent implements OnInit {
 
   isEmpty: boolean = false;
 
-  persons = [];
+   persons:string[];
   constructor(@Inject(MAT_DIALOG_DATA) private data: any) {
+
     this.persons = this.data;
-    if (this.persons[0])
-      this.isEmpty = true;
+
+    // if ( this.persons && this.persons.length > 0) {
+    //   this.persons = this.data;
+    // } else {
+    //   this.isEmpty = true;
+    // }
+    
   }
 
   ngOnInit() {
