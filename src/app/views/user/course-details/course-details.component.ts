@@ -60,6 +60,10 @@ removeSubscribe;notificationKey:string="";
      })
      
     // routUser.navigate(['page-not-found'])
+    if(!NotificationService.currNotification){
+      NotificationService.currNotification={"postsNumber":0, "assignmentsNumber":0,
+                                             "categoriesNumber":new Map<string,number>(), "pollingsNumber":0};
+    }
    }
 
    getPostNotification(){

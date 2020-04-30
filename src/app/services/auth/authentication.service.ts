@@ -152,15 +152,16 @@ consl(x){
 
   /* Sign in */
   async SignIn(email: string, password: string) { 
-    
+    console.log("nnnnnnnnnnnnnnnn")
     const credential= await this.angularFireAuth.signInWithEmailAndPassword(email, password);
+    console.log(credential.user);
     if(!credential.user.emailVerified){
       firebase.auth().currentUser.sendEmailVerification();
       this.SignOut();
       AuthenticationService.goVerificate=true;
         return ;
     }else AuthenticationService.goVerificate=false;
-    console.log(credential.user);
+    
     AuthenticationService.isUser=false;
     if((await credential.user.getIdTokenResult()).claims.admin){
       console.log("__________________________");
