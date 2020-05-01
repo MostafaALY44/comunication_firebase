@@ -25,18 +25,21 @@ export class NotificationService implements OnDestroy{
   removeSubscribe:Subscription[]= [];
   setNotificationMap(){
     let url:string, url2:string;
-    
+    // if(!UserService.user)
+    //   return;
+    // if(!UserService.user.univeristy)
+    //   return;
     let university= UserService.user.univeristy
     
-    Object.keys(UserService.user.univeristy).forEach(( universityKey: any) => {
+  //   Object.keys(UserService.user.univeristy).forEach(( universityKey: any) => {
       
-      Object.keys(university[universityKey].colleages).forEach(( collegeKey: any) => {
+  //     Object.keys(university[universityKey].colleages).forEach(( collegeKey: any) => {
         
-        Object.keys(university[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
+  //       Object.keys(university[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
 
-      });
-    });
-  });
+  //     });
+  //   });
+  // });
  
   Object.keys(UserService.user.univeristy).forEach(( universityKey: any) => {
     url="universities/"+universityKey;
@@ -67,11 +70,11 @@ export class NotificationService implements OnDestroy{
             Object.keys(course.categoriesNumber).forEach(categoryKey=>{
               
               if(tempMap.has(categoryKey)){
-                notification.categoriesNumber.set(categoryKey, course.categoriesNumber[categoryKey] - tempMap.get(categoryKey));
+                let tempCategoryNum = (course.categoriesNumber[categoryKey] - tempMap.get(categoryKey))?course.categoriesNumber[categoryKey] - tempMap.get(categoryKey):0
+                notification.categoriesNumber.set(categoryKey, tempCategoryNum );
                 tempMap.delete(categoryKey)
               }else{
                 notification.categoriesNumber.set(categoryKey, course.categoriesNumber[categoryKey]);
-                
               }
             })
             

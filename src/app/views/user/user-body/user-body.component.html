@@ -1,4 +1,4 @@
-<div  style=" margin-top: 30px; margin-left: 20px; margin-right: 30px;">
+<div style=" margin-top: 30px; margin-left: 5px; margin-right: 20px;">
     
     <!-- {{testMap|json}}<br>
     <ul>
@@ -17,8 +17,6 @@
             </ul>
         </li>
     </ul><br>  -->
- 
-    
 
 
     <div class="row">
@@ -43,7 +41,7 @@
         </div>
         </div>
     </div> -->
-    <div class="col-md-3" >
+    <div class="col-xl-3" >
 
     <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
         <!-- This is the tree node template for expandable nodes -->
@@ -86,9 +84,10 @@
         </mat-nested-tree-node>
       </mat-tree>
     </div>
-        <div class="col-md-9">
+    
+        <div class="col-xl-9" >
+          
             <router-outlet></router-outlet>
         </div>
     
-</div>
 </div>

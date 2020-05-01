@@ -96,7 +96,7 @@ getcoleageId(link:string):string{
   getNotification(id1:string, id2:string, id3:string){
     let notification=NotificationService.notification.get(id1+id2+id3)
     if(!notification)
-      return ;
+      return 0;
       
     let counter=0;
     notification.categoriesNumber.forEach((value:number, key:string)=>{

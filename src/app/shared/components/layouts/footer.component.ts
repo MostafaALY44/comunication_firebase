@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   selector: 'app-footer',
   template: `
     <footer class="my-5 pt-5 text-muted text-center text-small">
-    <hr class="container">
+    <hr >
     <p class="mb-1">&copy; 2020-2019 FC</p>
 
     <ul class="list-inline">

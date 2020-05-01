@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { WelcomeService } from 'src/app/services/announcement/welcome.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -8,19 +8,23 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent implements OnDestroy {
 
   announcements;
   announcementId;
+  removeSubscribe:Subscription;
   constructor(private service :WelcomeService) { 
     //this.wordSearch= new BehaviorSubject<string>("default");;
-    this.service.getAnnouncement().subscribe(announcement=>{  
-      this.announcements=announcement});
+    this.removeSubscribe=this.service.getAnnouncement().subscribe(announcement=>{  
+      this.announcements=announcement})
    
   }
-  //wordSearch:BehaviorSubject<string>
-  ngOnInit() {
+  ngOnDestroy(): void {
+    if(this.removeSubscribe)
+      this.removeSubscribe.unsubscribe();
   }
+  //wordSearch:BehaviorSubject<string>
+
   isFocus:boolean=false;
   resiveIsFocusSearchEvent(event){
     this.isFocus=event;
