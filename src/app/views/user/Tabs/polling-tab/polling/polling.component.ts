@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user/oop/user.service';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
 import { PollingModel } from 'src/app/services/user/oop/models/PollingModel';
 import { Subscription } from 'rxjs';
+import { CourseDetailsComponent } from '../../../course-details/course-details.component';
 
 @Component({
   selector: 'polling',
@@ -17,6 +18,7 @@ export class PollingComponent implements OnInit, OnDestroy {
 
   removeSubscribe:Subscription;
   constructor(private userService:UserService) { 
+    CourseDetailsComponent.displayCourseName.next(false)
    this.removeSubscribe=CourseService.polls.polles.subscribe(poll=>{
      
       this.coursepolls = poll;
@@ -30,6 +32,7 @@ export class PollingComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if(this.removeSubscribe)
       this.removeSubscribe.unsubscribe();
+    CourseDetailsComponent.displayCourseName.next(true);
   }
 
   ngOnInit() {

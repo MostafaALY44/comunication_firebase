@@ -5,6 +5,7 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { element } from 'protractor';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-details',
@@ -12,12 +13,20 @@ import { NotificationService } from 'src/app/services/user/oop/notification.serv
   styleUrls: ['./course-details.component.css']
 })
 export class CourseDetailsComponent implements OnInit,OnDestroy {
-//course_id;
-removeSubscribe;notificationKey:string="";
+course_id:string;
+static displayCourseName:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(true);
+displayCourseName:boolean=true;
+removeSubscribe2:Subscription;
+
+removeSubscribe1;notificationKey:string="";
   constructor( route:ActivatedRoute, course:CourseService,routUser:Router) {
+    CourseDetailsComponent.displayCourseName.next(true);
+    this.removeSubscribe2=CourseDetailsComponent.displayCourseName.subscribe(can=>{
+      this.displayCourseName=can;
+    })
     //route.paramMap.subscribe((params : ParamMap) => ser.setCurrentId( params.get('id') ) );
    let flag:boolean=false;
-    this.removeSubscribe=route.paramMap.subscribe((params : ParamMap) =>{
+    this.removeSubscribe1=route.paramMap.subscribe((params : ParamMap) =>{
       //UserService.hasGroups= UserService.user.univeristy
         /*for(let university=0;university<UserService.hasGroups.length;university++){
           for(let college=0;college<UserService.hasGroups[university].colleges.length;college++){
@@ -33,7 +42,13 @@ removeSubscribe;notificationKey:string="";
           if(flag) break;
         }*/
        // { if(college.courseCodes.find(course=> course===params.get('id')))  }
-          
+       
+      //  route.children.subscribe((params2 : ParamMap)=>{
+      //    if(!params2)
+      //      routUser.navigate([routUser.url+"/post"])
+      //  }).unsubscribe();
+      
+        this.course_id=params.get('id3');
        Object.keys(UserService.hasGroups).forEach((universityKey :any)=>{
          
          if(universityKey!=params.get('id1'))
@@ -115,8 +130,10 @@ removeSubscribe;notificationKey:string="";
    }
 
   ngOnDestroy(): void {
-    if(this.removeSubscribe)
-        this.removeSubscribe.unsubscribe();
+    if(this.removeSubscribe1)
+        this.removeSubscribe1.unsubscribe();
+    if(this.removeSubscribe2)
+        this.removeSubscribe2.unsubscribe();
   }
 
   ngOnInit() {
