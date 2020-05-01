@@ -27,7 +27,7 @@ export class MaterialItemsComponent implements  OnDestroy {
   ///////////////////////////
  
   currentCategory: string;
-  targetMaterial: MaterialModel = {id:"name", date:"date", link:"link"};
+  targetMaterial: MaterialModel = {id:"name",userId:"userId", date:"date", link:"link"};
   private userService:UserService=new UserService(this.firestore)
   materials: Material;
   isDataLoad: boolean = false

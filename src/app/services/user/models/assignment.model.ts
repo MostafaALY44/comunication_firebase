@@ -5,4 +5,5 @@ interface Assignment{
     endDate : any;
     note :string;
     acceptAfterEnd:boolean;
+    userId?:string;
 }

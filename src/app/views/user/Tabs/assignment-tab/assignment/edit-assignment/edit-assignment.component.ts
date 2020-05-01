@@ -4,6 +4,7 @@ import { AssignmentService } from 'src/app/services/user/assignment.service';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -21,7 +22,10 @@ export class EditAssignmentComponent implements OnInit {
     Qurl : new FormControl(this.data.assignment.link,Validators.required)
     
   });
-  constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) { }
+  currentUser;
+  constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) { 
+    this.currentUser=UserService.getUser();
+  }
 
   ngOnInit() {
   } 
@@ -41,6 +45,7 @@ export class EditAssignmentComponent implements OnInit {
                             "link":this.newAssignment.value.Qurl,
                             "note":this.newAssignment.value.note,
                             "startDate":this.newAssignment.value.start,
+                            "userId":this.currentUser.uid,
                             "title":this.newAssignment.value.title};
       this.ser.editAssignment(courseId, idAssignent, this.data.assignment);
       this._snackBar.open(this.newAssignment.value.title, 'Updated Successfully', { duration: 3000, });

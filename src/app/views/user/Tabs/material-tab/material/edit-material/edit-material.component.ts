@@ -7,6 +7,7 @@ import { MaterialModel } from 'src/app/services/user/oop/models/MaterialModel.mo
 import { Observable } from 'rxjs';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'app-edit-material',
@@ -15,12 +16,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditMaterialComponent {
   editMaterial: FormGroup;
+  currentUser;
   constructor(@Inject(MAT_DIALOG_DATA) public data: {"material": MaterialModel, "UrlParam":Observable<ParamMap>}
   , private _snackBar: MatSnackBar) {
     this.editMaterial= new FormGroup({
       nameMaterial : new FormControl(data.material.id,Validators.required),
       linkMaterial : new FormControl(data.material.link,Validators.required)
     });
+    this.currentUser=UserService.getUser();
   }
 
   isEmpty(text:string):boolean{
@@ -40,7 +43,7 @@ export class EditMaterialComponent {
       let currentCategory:string="";
       this.data.UrlParam.subscribe((params: ParamMap) => currentCategory = params.get('id')).unsubscribe();
       let materialClass = CourseService.categories.categoriesMap.get(currentCategory).material;
-       materialClass.update(materialName, {"id":materialName, "link":this.editMaterial.value.linkMaterial, "date":""}).then(()=>{
+       materialClass.update(materialName, {"id":materialName,"userId":this.currentUser.uid, "link":this.editMaterial.value.linkMaterial, "date":""}).then(()=>{
         if(materialName != this.data.material.id)
             materialClass.delete(this.data.material.id)
          this.openSnackBar(materialName + ' Material 📝', 'edit Successfully')

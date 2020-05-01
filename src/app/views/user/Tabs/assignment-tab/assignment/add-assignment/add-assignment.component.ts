@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'add-assignment',
@@ -22,8 +23,10 @@ export class AddAssignmentComponent implements OnInit {
     
   });
    assignmentId;
+   currentUser;
   constructor(private ser: AssignmentService, private route:ActivatedRoute, @Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) {
-    //this.route.parent.paramMap.subscribe((params : ParamMap) =>  this.assignmentId=params.get('id'));
+    this.currentUser=UserService.getUser();
+
    }
 
   ngOnInit() {
@@ -46,6 +49,7 @@ export class AddAssignmentComponent implements OnInit {
                  "link":this.newAssignment.value.Qurl,
                  "note":this.newAssignment.value.note,
                  "startDate":this.newAssignment.value.start,
+                 "userId":this.currentUser.uid,
                  "title":this.newAssignment.value.title};
      
      

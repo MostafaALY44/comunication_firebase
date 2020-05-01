@@ -4,4 +4,5 @@ export class MaterialModel{
     id:string
     date : any;
     link : string;
+    userId:string;
 }

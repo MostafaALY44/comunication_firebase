@@ -6,6 +6,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'add-material',
@@ -15,11 +16,13 @@ import { Observable } from 'rxjs';
 export class AddMaterialComponent {
 
   addMaterial:FormGroup ;
+  currentUser;
   constructor(@Inject(MAT_DIALOG_DATA) private data:Observable<ParamMap>, private _snackBar: MatSnackBar ) { 
     this.addMaterial= new FormGroup({
       nameMaterial : new FormControl('', Validators.required),
       linkMaterial : new FormControl('', Validators.required),
     });
+    this.currentUser=UserService.getUser();
   }
  
   openSnackBar(message: string, action: string) {
@@ -39,7 +42,7 @@ export class AddMaterialComponent {
        let currentCategory:string="";
        this.data.subscribe((params: ParamMap) => currentCategory = params.get('id')).unsubscribe();
        let materialClass = CourseService.categories.categoriesMap.get(currentCategory).material;
-        materialClass.create({"id":materialName, "link":this.addMaterial.value.linkMaterial, "date":""}).then(()=>{
+        materialClass.create({"id":materialName,"userId":this.currentUser.uid, "link":this.addMaterial.value.linkMaterial, "date":""}).then(()=>{
           this.openSnackBar(materialName + ' Material ✅', 'Added Successfully')
         }).catch(()=>{
           this.openSnackBar(materialName + ' Material ❌', 'error in add Material')
