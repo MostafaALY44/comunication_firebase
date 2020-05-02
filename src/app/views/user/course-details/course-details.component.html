@@ -32,7 +32,8 @@
 
 <div class="tab-content" id="myTabContent" style="margin: 10px;">
     <div *ngIf="displayCourseName" style="margin-top: 20px;margin-left: 20px;">
-        <mat-card class="example-card" style=" border-radius: 10px 30px 10px; margin-top: 40px;">
+        <div *ngFor="let course of mycourse |async">
+        <mat-card *ngIf="course.code===course_id" class="example-card" style=" border-radius: 10px 30px 10px; margin-top: 40px;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image">
                 <mat-icon style='font-size:36px;color:#1f1f7a;'>collections_bookmark</mat-icon>
@@ -44,13 +45,13 @@
                 
             <mat-card-content>
               <p style="white-space:pre-wrap; font-size: 20px;">
-                {{mycourse}}
+                {{course.description}}
               </p>
             </mat-card-content>
             
           </mat-card>
           
-
+        </div>
         
     </div>
     <router-outlet></router-outlet>

@@ -23,7 +23,6 @@ routerLink;
 static displayCourseName:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(true);
 displayCourseName:boolean=true;
 removeSubscribe2:Subscription;
-removeSubscribe3:Subscription;
 CurrentUser;
 
 removeSubscribe1;notificationKey:string="";
@@ -40,14 +39,8 @@ removeSubscribe1;notificationKey:string="";
       
       
         this.course_id=params.get('id3');
-        
         this.routerLink="universities/"+params.get('id1')+"/colleges/"+params.get('id2')
-        this.removeSubscribe3= this.courseFirebaseService.getAll(this.routerLink).subscribe(courses=>{
-          courses.forEach(course=>{
-            if(course.code===this.course_id)
-                this.mycourse=course.description
-          })
-        })
+        this.mycourse= this.courseFirebaseService.getAll(this.routerLink);
        Object.keys(UserService.hasGroups).forEach((universityKey :any)=>{
          
          if(universityKey!=params.get('id1'))
@@ -133,9 +126,6 @@ removeSubscribe1;notificationKey:string="";
         this.removeSubscribe1.unsubscribe();
     if(this.removeSubscribe2)
         this.removeSubscribe2.unsubscribe();
-
-    if(this.removeSubscribe3)
-        this.removeSubscribe3.unsubscribe();
   }
 
   ngOnInit() {
