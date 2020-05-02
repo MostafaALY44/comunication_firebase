@@ -27,30 +27,32 @@ export class PollingService implements CRUDForfirebase{
   }
 
   getAll(url:string){
-    let temp= new Map<string,  {"idOption":string, "date":any}>();
-    let options = new Map<string, Map<string, {"allVoted":number, "isVoteThis":boolean}>>();
+    
+    //let options = new Map<string, Map<string, {"allVoted":number, "isVoteThis":boolean}>>();
     return this.firestore.collection<PollingModel>(url).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() ;
           const id = a.payload.doc.id; 
+          let temp= new Map<string,  {"idOption":string, "date":any}>();
+          let options= new Map<string,  {"allVoted":number, "isVoteThis":boolean}>();
           if(data.pollingVote){
-            let tempx= new Map<string,  {"allVoted":number, "isVoteThis":boolean}>();
             Object.keys(data.pollingVote).forEach((personKey)=>{
              temp.set(personKey,  {"idOption":data.pollingVote[personKey].idOption, "date":data.pollingVote[personKey].date})
-              if(tempx.has(data.pollingVote[personKey].idOption)){
-                tempx.get(data.pollingVote[personKey].idOption).allVoted++
+              
+              if(options.has(data.pollingVote[personKey].idOption)){
+                options.get(data.pollingVote[personKey].idOption).allVoted++
                 //options.set(personKey, {"allVoted":options.get(personKey).allVoted+1, "isVoteThis":(UserService.user.uid==personKey)})
               }else{
-                tempx.set(data.pollingVote[personKey].idOption,  {"allVoted": 1, "isVoteThis":(UserService.user.uid==personKey)})
+                options.set(data.pollingVote[personKey].idOption,  {"allVoted": 1, "isVoteThis":(UserService.user.uid==personKey)})
                 
             }})
-            options.set(id, tempx);
           }
           
           
           
           data.options=options
-          data.pollingVote=temp;
+          data.pollingVote= temp
+         
           
           return { id, ...data };
         })) 

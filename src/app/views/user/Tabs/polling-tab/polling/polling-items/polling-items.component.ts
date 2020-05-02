@@ -31,10 +31,10 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
     
   }
 
-  removeSubscrib: Subscription;
+  removeSubscrib: Subscription[]=[];
   ngOnDestroy(): void {
     if(this.removeSubscrib)
-      this.removeSubscrib.unsubscribe();
+      this.unsubscribe();
   }
 
   Currpoll;
@@ -45,11 +45,12 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getOption(this.poll.id);
-    
-    if(this.poll.options.has(this.poll.id))
-    this.poll.options.get(this.poll.id).forEach((option, key)=>{
-      if(option.isVoteThis)
+
+    this.poll.options.forEach((option, key)=>{
+      if(option.isVoteThis){
         this.favoriteSeason=key;
+        return;
+      }
     })
     
   }
@@ -61,16 +62,12 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
   }
   options
   getOption(idPoll) {
-    
     this.options = CourseService.polls.getVottings(idPoll);
   }
 
   countVotes(idOption) {
-    if (!this.poll.options.has(this.poll.id))
-      return 0;
-    const userVote = this.poll.options.get(this.poll.id).get(idOption)
+    const userVote = this.poll.options.get(idOption)
     if (userVote) {
-
       return userVote.allVoted;
     }
     else return 0;
@@ -115,35 +112,33 @@ export class PollingItemsComponent implements OnInit, OnDestroy {
     this.favoriteSeason = idOption;
   }
 
-
-  xxxxxx: pollVotingModel;
-
-  voteUp(pollId) {
-    let xxxxxx = CourseService.polls.getVottings(pollId);
-
+  unsubscribe(){
+    this.removeSubscrib.forEach(element=>
+        element.unsubscribe()
+      )
+    this.removeSubscrib=[];
   }
-
-
  
   showVotedPersons(option:pollVotingModel) {
     let votedPersons = [];
- 
+    
     this.poll.pollingVote.forEach(
       (value: { idOption: string; date: any; }, key: string) => {
         if (value.idOption == option.id) {
-          this.removeSubscrib = this.userService.getUserById(key).subscribe(
+          this.removeSubscrib.push( this.userService.getUserById(key).subscribe(
             user => {
               votedPersons.push(user.name);
             }
-          )
+          ))
         }
       }
     )
     votedPersons.sort();
-    this.dialog.open(VotedPersonsComponent, {
+    let ref=this.dialog.open(VotedPersonsComponent, {
       data: votedPersons,
       width: '500px'
     })
+    ref.afterClosed().subscribe(()=>this.unsubscribe()).unsubscribe();
   }
 
 }

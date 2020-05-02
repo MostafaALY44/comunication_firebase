@@ -26,6 +26,8 @@ export class NewPostComponent implements OnInit {
   ngOnInit() {
   }
   isEmpty(text:string):boolean{
+    if(!text)
+      return false;
     for(let i=0;i<text.length;i++)
       if(text[i] != " ")
         return false;

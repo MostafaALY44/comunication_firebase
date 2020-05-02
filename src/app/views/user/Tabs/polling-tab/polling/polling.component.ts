@@ -20,7 +20,7 @@ export class PollingComponent implements OnInit, OnDestroy {
    this.removeSubscribe=CourseService.polls.polles.subscribe(poll=>{
      
       this.coursepolls = poll;
-      let obj={[UserService.indexNotification+".pollingNumber"]:this.coursepolls.length}  
+      let obj={[UserService.indexNotification+".pollingNumber"]:poll.length}  
       this.userService.update( obj)
       if(NotificationService.currNotification)
         NotificationService.currNotification.pollingsNumber=0

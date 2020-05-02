@@ -1,20 +1,20 @@
-
-<div class="card text-center" style="margin-top: 20px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;width: 53rem;">
+<div class="card text-center w-60" style="margin-top: 20px; border-color: #cce0ff;  border-radius: 20px 60px 20px 60px;">
     <div class="card-body">
         <div class="row">
-            <div class="col md-2">
-                <i class="fa fa-user-circle" style="font-size:48px; color:#1f1f7a"></i>&nbsp;<div style="font-size: 20px;">{{post.postOwner}}</div>
+            <div class="col-md-3">
+                <i class="fa fa-user-circle" style="font-size:40px; color:#1f1f7a"></i>&nbsp;
+                <div style="font-size: 15px; font-style: oblique; color: rgb(104, 102, 102);"><b>{{post.postOwner|titlecase}}</b></div>
             </div>
-            <div class="col md-6 card-title" >
-                <h5>{{post.title}}</h5>
+            <div class="col-md-5 card-title" >
+                <b>{{post.title}}</b>
             </div>
-            <div class="col md-4">
-                <p>{{getDate(post.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
+            <div class="col-md-4" style="color: rgb(83, 82, 82);">
+                {{getDate(post.date) |date:'yyyy/MM/dd h:mm:ss a'}}
+                <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPost(post)"  align="end">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
             </div>
- 
-            <button mat-icon-button [matMenuTriggerFor]="menu" style=" outline: none;" (click)="setPost(post)">
-                <mat-icon>more_vert</mat-icon>
-            </button>
+            
         </div>
 
         <p class="card-text">
@@ -25,25 +25,25 @@
         <div class="row">
             <div class="col-md-4">
                
-                <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:36px ; color:#1f1f7a"></i>
-                <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:36px; color:#1f1f7a"></i>
+                <i *ngIf="!isLike" type="button"  (click)="addLike( post.id)" class="fa fa-thumbs-o-up" style="font-size:30px ; color:#1f1f7a"></i>
+                <i *ngIf="isLike" type="button" (click)="removeLike( post.id)" class="fa fa-thumbs-up" style="font-size:30px; color:#1f1f7a"></i>
                 {{ react.like }}
             </div>
             <div class="col-md-4">
                 
-                <i type="button" (click)="getComment(post.id)" class="material-icons" style="font-size:36px; color:#1f1f7a">comment</i>
+                <i type="button" (click)="getComment(post.id)" class="material-icons" style="font-size:30px; color:#1f1f7a">comment</i>
             </div>
             <div class="col-md-4">
                 
-                    <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:36px; color:#1f1f7a"></i>
-                    <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:36px; color:#1f1f7a"></i>
+                    <i *ngIf="!isDisLike" type="button" (click)="addDisLike( post.id)" style="margin-top: 20px;" class="fa fa-thumbs-o-down" style="font-size:30px; color:#1f1f7a"></i>
+                    <i *ngIf="isDisLike" type="button" (click)="removedislike( post.id)" class="fa fa-thumbs-down" style="font-size:30px; color:#1f1f7a"></i>
                  {{ react.dislike }}
             </div>
            
         </div>
         <form [formGroup]="newComment" (ngSubmit)="onSubmit(post.id)">
             <div class="row">
-                <div class="col-md-12" style="padding: 20px;">
+                <div class="col-md-12" >
                     <div class="input-group mb-3">
 
                         <div class="input-group-prepend">
@@ -156,6 +156,7 @@
 </div>
 
 </div>
+
 
     <mat-menu #menu="matMenu">
         <div *ngIf="post.userId===currentUser.uid">

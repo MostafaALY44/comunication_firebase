@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="card text-center w-70"
         style="margin-top: 20px; border-color: #CCE0FF;  border-radius: 20px 60px 20px 60px;">
         <div class="card-body">
@@ -28,7 +28,7 @@
                 class="example-radio-group" [(ngModel)]="favoriteSeason">
                 <div *ngFor="let option of options | async" style="margin-left: 120px; padding: 0px; text-align: left;">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <mat-radio-button class="example-radio-button" (click)="voteOption(option.id)"
                                 [value]="option.id">
                                 {{ option.text }}
@@ -37,9 +37,10 @@
 
                         <div class="col-sm-6">
                             <mat-icon type="button" (click)="showVotedPersons(option)"  placement="bottom" ngbTooltip="Show voted persons" style='color:rgb(69, 69, 170)'>how_to_vote</mat-icon>
-                            &nbsp;<span style=" color: darkred;padding-left: 10px;"> {{countVotes(option.id)}} </span>
+                            &nbsp;<span style=" color: darkred;"> {{countVotes(option.id)}} </span>
+                            &nbsp;
                             <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button
-                                [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;padding-left: 290px;"
+                                [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;"
                                 (click)="setOption(option)">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
