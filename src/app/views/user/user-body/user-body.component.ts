@@ -57,7 +57,7 @@ export class UserBodyComponent implements OnInit,OnDestroy {
             let temp2:Tree[]=[];
         if(user.univeristy[universityKey].colleages[collegeKey].courses)
             Object.keys(user.univeristy[universityKey].colleages[collegeKey].courses).forEach(( courseKey: any) => {
-              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey+"/post"})
+              temp2.push({"name":courseKey, "link":universityKey+"/"+collegeKey+"/"+courseKey})
             })
             temp1.push({"name":collegeKey, "children":temp2})
           })

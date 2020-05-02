@@ -41,13 +41,13 @@ export class PollingService implements CRUDForfirebase{
               
               if(options.has(data.pollingVote[personKey].idOption)){
                 options.get(data.pollingVote[personKey].idOption).allVoted++
+                options.get(data.pollingVote[personKey].idOption).isVoteThis=(UserService.user.uid==personKey);
                 //options.set(personKey, {"allVoted":options.get(personKey).allVoted+1, "isVoteThis":(UserService.user.uid==personKey)})
               }else{
                 options.set(data.pollingVote[personKey].idOption,  {"allVoted": 1, "isVoteThis":(UserService.user.uid==personKey)})
                 
             }})
           }
-          
           
           
           data.options=options

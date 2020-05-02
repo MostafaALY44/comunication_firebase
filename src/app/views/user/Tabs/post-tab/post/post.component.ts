@@ -7,6 +7,7 @@ import { Post } from 'src/app/services/user/oop/class/Post';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
+import { CourseDetailsComponent } from '../../../course-details/course-details.component';
 
 @Component({
   selector: 'app-post',
@@ -19,7 +20,7 @@ export class PostComponent implements OnInit,OnDestroy {
   
   
   constructor(private ser: PostService, route:ActivatedRoute) {
-    
+    CourseDetailsComponent.displayCourseName.next(false)
     CourseService.subscribeTab("post");
     this.coursePosts=CourseService.posts;
     
@@ -27,6 +28,7 @@ export class PostComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     //this.removeSubscribe.unsubscribe();
     CourseService.unsubscribeTab("post");
+    CourseDetailsComponent.displayCourseName.next(true);
   }
 
   ngOnInit() {
