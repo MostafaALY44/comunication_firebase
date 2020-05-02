@@ -39,6 +39,7 @@ import { AddPollingComponent } from './Tabs/polling-tab/polling/add-polling/add-
 import { EditPollingComponent } from './Tabs/polling-tab/polling/edit-polling/edit-polling.component';
 import { EditOptionComponent } from './Tabs/polling-tab/polling/edit-option/edit-option.component';
 import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/voted-persons.component';
+import { DescriptionComponent } from './course-details/description/description.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/
     AddPollingComponent,
     EditPollingComponent,
     EditOptionComponent,
-    VotedPersonsComponent
+    VotedPersonsComponent,
+    DescriptionComponent
     
 
   ],

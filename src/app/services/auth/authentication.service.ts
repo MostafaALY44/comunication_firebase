@@ -92,7 +92,7 @@ static adminIdLink:string="";
       },
       universities:[{name:"Ain Shams University", id:"", colleges:[{name:"faculty of science", id:"",
       courseCodes:[{code:"",  postsNumber:0, categoriesNumber:0, assignmentsNumber:0, deletePostsNumber:0,
-      deleteAssignmentNumber:0}]
+      deleteAssignmentNumber:0,description:""}]
     }]}],
       fcmTokens:{},
       univeristy:{}

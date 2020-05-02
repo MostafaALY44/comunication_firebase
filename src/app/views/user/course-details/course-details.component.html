@@ -22,11 +22,36 @@
             text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Polling</a>
             <span class="badge badge-primary badge-pill " style="background-color :#1f1f7a;">{{getBollingsNotification() }}</span>
     </li>
+    <li class="nav-item" *ngIf="CurrentUser.roles.instructor">
+        <a class="nav-link" routerLinkActive="active activeee" id="description-tab" data-toggle="tab" routerLink="description" role="tab" aria-controls="contact"
+            aria-selected="false" style="border-color: #cce0ff;
+            text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Description</a>
+            
+    </li>
 </ul>
 
 <div class="tab-content" id="myTabContent" style="margin: 10px;">
-    <div *ngIf="displayCourseName">
-        {{course_id}}
+    <div *ngIf="displayCourseName" style="margin-top: 20px;margin-left: 20px;">
+        <mat-card class="example-card" style=" border-radius: 10px 30px 10px; margin-top: 40px;">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image">
+                <mat-icon style='font-size:36px;color:#1f1f7a;'>collections_bookmark</mat-icon>
+              </div>
+              
+              <mat-card-title>{{course_id}}</mat-card-title>
+              
+            </mat-card-header>
+                
+            <mat-card-content>
+              <p style="white-space:pre-wrap; font-size: 20px;">
+                {{mycourse}}
+              </p>
+            </mat-card-content>
+            
+          </mat-card>
+          
+
+        
     </div>
     <router-outlet></router-outlet>
     <!-- {{course_id}} -->

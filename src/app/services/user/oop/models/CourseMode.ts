@@ -13,4 +13,5 @@ export class Course{
     pollingsNumber?:number;
     deletePostsNumber:number;
     deleteAssignmentNumber:number;
+    description:string;
 }

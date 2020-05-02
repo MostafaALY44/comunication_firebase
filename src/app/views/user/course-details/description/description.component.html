@@ -1,0 +1,13 @@
+<form [formGroup]="myForm" >
+    <mat-card class="row w-70" style=" border-radius: 10px 30px 10px; margin-top: 40px;" >
+        <mat-form-field class="example-full-width">
+            <mat-label>Type Description of Course </mat-label>
+            <textarea matInput placeholder="Type Description ..." formControlName="description"  [class.is-invalid]="myForm.get('description').invalid && 
+            myForm.get('description').touched"></textarea>
+          </mat-form-field>
+        <br>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!myForm.valid" style="margin-top: 10px;">Add</button>
+</mat-card>
+
+  </form>
+

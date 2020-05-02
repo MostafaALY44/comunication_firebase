@@ -5,7 +5,10 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { element } from 'protractor';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { Course } from 'src/app/services/user/oop/models/CourseMode';
+import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
+import { User } from 'src/app/services/auth/user.model';
 
 @Component({
   selector: 'app-course-details',
@@ -14,12 +17,19 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 export class CourseDetailsComponent implements OnInit,OnDestroy {
 course_id:string;
+routerLink;
+ mycourse;
+ 
 static displayCourseName:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(true);
 displayCourseName:boolean=true;
 removeSubscribe2:Subscription;
+removeSubscribe3:Subscription;
+CurrentUser;
 
 removeSubscribe1;notificationKey:string="";
-  constructor( route:ActivatedRoute, course:CourseService,routUser:Router) {
+  constructor( route:ActivatedRoute, course:CourseService,private routUser:Router,private courseFirebaseService:CourseFirebaseService) {
+    this.CurrentUser=UserService.getUser();
+    // console.log( this.routUser.url.slice(this.routUser.url.lastIndexOf("/")+1))
     CourseDetailsComponent.displayCourseName.next(true);
     this.removeSubscribe2=CourseDetailsComponent.displayCourseName.subscribe(can=>{
       this.displayCourseName=can;
@@ -27,28 +37,17 @@ removeSubscribe1;notificationKey:string="";
     //route.paramMap.subscribe((params : ParamMap) => ser.setCurrentId( params.get('id') ) );
    let flag:boolean=false;
     this.removeSubscribe1=route.paramMap.subscribe((params : ParamMap) =>{
-      //UserService.hasGroups= UserService.user.univeristy
-        /*for(let university=0;university<UserService.hasGroups.length;university++){
-          for(let college=0;college<UserService.hasGroups[university].colleges.length;college++){
-            if(UserService.hasGroups[university].colleges[college].courseCodes
-                .find(course=> (course.code===params.get('id3')
-                && UserService.hasGroups[university].colleges[college].id===params.get('id2')
-                && UserService.hasGroups[university].id===params.get('id1')))){
-              flag=true;
-              break;
-            }
-
-          }
-          if(flag) break;
-        }*/
-       // { if(college.courseCodes.find(course=> course===params.get('id')))  }
-       
-      //  route.children.subscribe((params2 : ParamMap)=>{
-      //    if(!params2)
-      //      routUser.navigate([routUser.url+"/post"])
-      //  }).unsubscribe();
+      
       
         this.course_id=params.get('id3');
+        
+        this.routerLink="universities/"+params.get('id1')+"/colleges/"+params.get('id2')
+        this.removeSubscribe3= this.courseFirebaseService.getAll(this.routerLink).subscribe(courses=>{
+          courses.forEach(course=>{
+            if(course.code===this.course_id)
+                this.mycourse=course.description
+          })
+        })
        Object.keys(UserService.hasGroups).forEach((universityKey :any)=>{
          
          if(universityKey!=params.get('id1'))
@@ -134,9 +133,13 @@ removeSubscribe1;notificationKey:string="";
         this.removeSubscribe1.unsubscribe();
     if(this.removeSubscribe2)
         this.removeSubscribe2.unsubscribe();
+
+    if(this.removeSubscribe3)
+        this.removeSubscribe3.unsubscribe();
   }
 
   ngOnInit() {
+   
   }
 
 }

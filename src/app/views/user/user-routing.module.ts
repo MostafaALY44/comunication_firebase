@@ -11,6 +11,7 @@ import { ReviewSolutionComponent } from './Tabs/assignment-tab/assignment/review
 import { ChangePasswordComponent } from '../auth/change-password/change-password.component';
 
 import { PollingComponent } from './Tabs/polling-tab/polling/polling.component';
+import { DescriptionComponent } from './course-details/description/description.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
           {
             path:'polling',
             component: PollingComponent,
+          },
+          {
+            path:'description',
+            component: DescriptionComponent,
           }
         ]
       }
