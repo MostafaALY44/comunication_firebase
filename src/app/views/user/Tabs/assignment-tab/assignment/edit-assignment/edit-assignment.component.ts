@@ -20,7 +20,7 @@ export class EditAssignmentComponent implements OnInit {
     accept : new FormControl(this.data.assignment.acceptAfterEnd),
     note : new FormControl(this.data.assignment.note), 
     Qurl : new FormControl(this.data.assignment.link,Validators.required)
-    
+     
   });
   currentUser;
   constructor(private ser: AssignmentService, private route:ActivatedRoute,@Inject(MAT_DIALOG_DATA) private data:any,private _snackBar: MatSnackBar) { 
