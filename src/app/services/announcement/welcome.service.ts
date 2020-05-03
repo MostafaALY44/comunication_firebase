@@ -9,6 +9,9 @@ import { map } from 'rxjs/operators';
 })
 export class WelcomeService {
 
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+
+  
   constructor(private firestore: AngularFirestore) { }
   public getAnnouncement():Observable<WelcomeModel[]>{
     return this.firestore.collection<WelcomeModel>('announcement/welcome/advertisements/').snapshotChanges().pipe(
