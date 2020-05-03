@@ -1,22 +1,15 @@
-
-
-
 <!--head>
-    <!--meta charset="utf-8">
+    meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
     <title>Jumbotron Template · Bootstrap</title>
-
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/"-->
-
-    <!-- Bootstrap core CSS -->
-    <!--link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+<!-- Bootstrap core CSS -->
+<!--link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"-->
-
-
-    <!--style>
+<!--style>
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -25,29 +18,22 @@
             -ms-user-select: none;
             user-select: none;
         }
-
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
         }
     </style>
-    <!-- Custom styles for this template -->
-    <!-- <link href="D:\Faculty Of Science ASU\Level 4 2019-2020\3.Graduation project\2.Angular\FC-frontend\GraduationProject\node_modules\bootstrap\dist\css\bootstrap.min.css" rel="stylesheet"> -->
+     Custom styles for this template -->
+<!-- <link href="D:\Faculty Of Science ASU\Level 4 2019-2020\3.Graduation project\2.Angular\FC-frontend\GraduationProject\node_modules\bootstrap\dist\css\bootstrap.min.css" rel="stylesheet"> -->
 <!--/head-->
-
 <!--app-nav (isFocusSearchEvent) ="resiveIsFocusSearchEvent($event)" (wordSearchEvent)="resiveWordSearchEvent($event)"></app-nav-->
-
 <!--div *ngIf="isFocus"><app-announcements-display [wordSearch]="wordSearch"></app-announcements-display></div-->
-<!--div *ngIf="!isFocus"-->
 
-
-
-<div *ngIf="!isFocus"> 
-<!-- Main jumbotron for a primary marketing message or call to action -->
+<div *ngIf="!isFocus">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container-fluid jumbotron">
         <div class="container">
-            
             <h1 class="display-4">
                 <img src="assets/images/logo.png" alt="faculty communication logo"> &nbsp;&nbsp;
                 <b style="font-style: oblique">Faculty Communication!</b></h1>
@@ -62,9 +48,14 @@
         <!-- Example row of columns -->
         <div class="row">
             <div class="col-md-4" *ngFor="let announcement of announcements">
-                <h2>{{announcement.title}}</h2>
-                <p>{{announcement.body}} </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                <div class="card" style="width: 18rem;">
+                    <img [src]="announcement.imgUrl" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{announcement.title}}</h5>
+                      <p class="card-text">{{announcement.body}}</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
             </div>
             <!-- <div class="col-md-4">
                 <h2>Laravel Sessions</h2>
@@ -82,4 +73,4 @@
             </div> -->
         </div>
     </div> <!-- /container -->
-</div> <!--/div *ngIf="!isFocus" -->
+</div>
