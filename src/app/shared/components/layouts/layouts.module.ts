@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router'
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,8 @@ import { AboutComponent } from './about/about.component';
 import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { AdBannerComponent } from './welcome/dynamic-section/ad-banner/ad-banner.component';
+import { AnnouncementDetailsComponent } from './welcome/announcement-details/announcement-details.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +33,13 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
     AboutComponent,
     ChangeNameComponent,
     PrivacyComponent,
-    TermsAndConditionsComponent
+    TermsAndConditionsComponent,
+    AdBannerComponent,
+    AnnouncementDetailsComponent
   ],
   entryComponents: [
-    
-    ChangeNameComponent
+    ChangeNameComponent,
+    AnnouncementDetailsComponent
   ],
 
   imports: [
@@ -42,7 +47,8 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
     RouterModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class LayoutsModule { }
