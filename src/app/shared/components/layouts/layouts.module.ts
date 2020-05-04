@@ -18,6 +18,7 @@ import { ChangeNameComponent } from 'src/app/views/user/change-name/change-name.
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { AdBannerComponent } from './welcome/dynamic-section/ad-banner/ad-banner.component';
+import { AnnouncementDetailsComponent } from './welcome/announcement-details/announcement-details.component';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,12 @@ import { AdBannerComponent } from './welcome/dynamic-section/ad-banner/ad-banner
     ChangeNameComponent,
     PrivacyComponent,
     TermsAndConditionsComponent,
-    AdBannerComponent
+    AdBannerComponent,
+    AnnouncementDetailsComponent
   ],
   entryComponents: [
-    
-    ChangeNameComponent
+    ChangeNameComponent,
+    AnnouncementDetailsComponent
   ],
 
   imports: [
