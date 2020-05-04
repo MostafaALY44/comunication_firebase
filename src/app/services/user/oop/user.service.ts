@@ -69,6 +69,11 @@ export class UserService implements OnDestroy {
   getAll(): Observable<User[]>{
     return this.firestore.collection<User>('users/').valueChanges();
  }
+ getAllByUniversity(idUniversity,idCollege): Observable<User[]>{
+  return this.firestore.collection<User>('users/',ref=>ref
+  .where(`univeristy.${idUniversity}.colleages.${idCollege}`,'>',{})
+  ).valueChanges();
+}
 
 
   getUserById(userId: string): Observable<User> {

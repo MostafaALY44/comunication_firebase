@@ -49,10 +49,7 @@ const routes: Routes = [
             path:'polling',
             component: PollingComponent,
           },
-          {
-            path:'description',
-            component: DescriptionComponent,
-          }
+          
         ]
       }
     ]

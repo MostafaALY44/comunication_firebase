@@ -60,7 +60,9 @@ export class CreatePersonFormComponent implements OnInit {
     else
       this.isformDataDone.emit(false)
   }
-
+  click(){
+    this.onSubmit()
+  }
   private decrement(){
     if( this.tempInputsFieldNumber > 0)
       this.tempInputsFieldNumber--;
@@ -174,15 +176,21 @@ export class CreatePersonFormComponent implements OnInit {
   }
 
   reset(i:number){
+    console.log(i)
     const word :string=this.currentTemp.trim().toUpperCase();
     if(word.length && !this.isEmpty(word)){
       //CreatePersonFormComponent.allPersonCourses.delete(this.courses[i])
       // let index=CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(element=> element===this.hisId)
       // if(index > -1)
       //   CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(index, 1);
-      CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(
-        CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(el=>el==this.hisId)
+      console.log(this.courses[i])
+      console.log(CreatePersonFormComponent.allPersonCourses)
+      if(CreatePersonFormComponent.allPersonCourses.has(this.courses[i]))
+          CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(
+          CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(el=>el==this.hisId)
         ,1)
+        if(! CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).length )
+            CreatePersonFormComponent.allPersonCourses.delete(this.courses[i])
       this.courses[i] = word;
       if(CreatePersonFormComponent.allPersonCourses.has(word)){
         CreatePersonFormComponent.allPersonCourses.get(word).push(this.hisId);
@@ -194,6 +202,7 @@ export class CreatePersonFormComponent implements OnInit {
       // else
       //   CreatePersonFormComponent.allPersonCourses.set(word, [this.hisId])
     }else{
+      console.log(this.courses[i])
       // let index=CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).findIndex(element=> element===this.hisId)
       // if(index > -1)
       //   CreatePersonFormComponent.allPersonCourses.get(this.courses[i]).splice(index, 1);
@@ -202,7 +211,7 @@ export class CreatePersonFormComponent implements OnInit {
       if(!this.courses.length)
         this.decrement();
     }
-    
+    console.log("index" , i)
     this.currentElement=""
   }
 
@@ -210,9 +219,9 @@ index:number =CreatePersonFormComponent.allPersons.length-1;
 isFirstTime:boolean=true;
 hisId:number;
   onSubmit(){
-    
+    console.log(this.PersonRule)
     if(this.isFirstTime){
-
+console.log("if 111");
       CreatePersonFormComponent.allPersons.push({"id":CreatePersonFormComponent.allPersons.length,
        "obj":{email:this.email, courses:this.courses,
         "roles":{[this.PersonRule]:true}}, "index":this.idIndex})
@@ -220,18 +229,25 @@ hisId:number;
         CreatePersonFormComponent.allPersonsIndexOriginLength++;
         this.isFirstTime=false;
     }else{
+      console.log("else 111");
       if(this.index < CreatePersonFormComponent.allPersons.length){
+        console.log("if 222");
         if(CreatePersonFormComponent.allPersons[this.index].id==this.hisId){
+          console.log("if 333");
+          
           CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
           "obj":{email:this.email, courses:this.courses,
           "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
+          console.log(CreatePersonFormComponent.allPersons[this.index])
         }else{
+          console.log("else 333");
           this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
           CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
           "obj":{email:this.email, courses:this.courses,
           "roles":{[this.PersonRule]:true}}, "index":this.idIndex}
         }
       }else{
+        console.log("else 222");
         this.index=CreatePersonFormComponent.allPersons.findIndex(element=> element.id===this.hisId)
           CreatePersonFormComponent.allPersons[this.index]={"id":this.hisId,
           "obj":{email:this.email, courses:this.courses,
@@ -240,7 +256,7 @@ hisId:number;
       
     }
     
-    
+    // this.email= CreatePersonFormComponent.allPersons[this.index].obj.email;
   }
 
   @HostListener('window:keyup', ['$event'])

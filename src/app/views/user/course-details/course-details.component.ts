@@ -9,6 +9,8 @@ import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { Course } from 'src/app/services/user/oop/models/CourseMode';
 import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
 import { User } from 'src/app/services/auth/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DescriptionComponent } from './description/description.component';
 
 @Component({
   selector: 'app-course-details',
@@ -18,7 +20,7 @@ import { User } from 'src/app/services/auth/user.model';
 export class CourseDetailsComponent implements OnInit,OnDestroy {
 course_id:string;
 routerLink;
- mycourse;
+ mycourse:Observable<Course>;
  
 static displayCourseName:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(true);
 displayCourseName:boolean=true;
@@ -26,7 +28,7 @@ removeSubscribe2:Subscription;
 CurrentUser;
 
 removeSubscribe1;notificationKey:string="";
-  constructor( route:ActivatedRoute, course:CourseService,private routUser:Router,private courseFirebaseService:CourseFirebaseService) {
+  constructor( route:ActivatedRoute, course:CourseService,private routUser:Router,private courseFirebaseService:CourseFirebaseService,private dialog:MatDialog) {
     this.CurrentUser=UserService.getUser();
     // console.log( this.routUser.url.slice(this.routUser.url.lastIndexOf("/")+1))
     CourseDetailsComponent.displayCourseName.next(true);
@@ -40,7 +42,7 @@ removeSubscribe1;notificationKey:string="";
       
         this.course_id=params.get('id3');
         this.routerLink="universities/"+params.get('id1')+"/colleges/"+params.get('id2')
-        this.mycourse= this.courseFirebaseService.getAll(this.routerLink);
+        this.mycourse= this.courseFirebaseService.read(this.routerLink,this.course_id)
        Object.keys(UserService.hasGroups).forEach((universityKey :any)=>{
          
          if(universityKey!=params.get('id1'))
@@ -130,6 +132,12 @@ removeSubscribe1;notificationKey:string="";
 
   ngOnInit() {
    
+  }
+  editDescription(){
+    this.dialog.open(DescriptionComponent, {data:{"course":this.mycourse,"id":this.course_id,"link":this.routerLink},
+    height: '300px',
+    width: '400px',
+  })
   }
 
 }

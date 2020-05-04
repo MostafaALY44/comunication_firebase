@@ -91,7 +91,8 @@ import { DescriptionComponent } from './course-details/description/description.c
     AddCategoryComponent,
     EditPollingComponent,
     EditOptionComponent,
-    VotedPersonsComponent
+    VotedPersonsComponent,
+    DescriptionComponent
   ],
   imports: [
     CommonModule,

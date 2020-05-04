@@ -13,7 +13,7 @@
             
             <textarea matInput placeholder="Type your post content here ..." aria-label="With textarea" 
             [class.is-invalid]="newPost.get('body').invalid && 
-            newPost.get('body').touched" formControlName="body"></textarea>
+            newPost.get('body').touched" matTextareaAutosize formControlName="body"></textarea>
           </mat-form-field>
 
         <small 
