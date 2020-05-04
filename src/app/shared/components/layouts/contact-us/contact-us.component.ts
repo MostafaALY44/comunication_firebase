@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ContactModel } from 'src/app/services/user/oop/models/contactModel';
 import { ContactService } from 'src/app/services/user/contact.service';
 import { RegistrationContactService } from 'src/app/services/user/registration-contact.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { RegistrationContactService } from 'src/app/services/user/registration-c
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-
+  
   ContactUs = new FormGroup({
     name : new FormControl('',Validators.required),
     email : new FormControl('',Validators.required),
@@ -20,10 +21,10 @@ export class ContactUsComponent implements OnInit {
     type:new FormControl('',Validators.required)
   });
   currentUser;
-  constructor(private Problemservice: ContactService, private Registrationservice: RegistrationContactService) {
+  constructor(private _snackBar: MatSnackBar,private Problemservice: ContactService, private Registrationservice: RegistrationContactService) {
     this.currentUser=UserService.getUser();
 
-   }
+   } 
 
   ngOnInit() {
   }
@@ -39,10 +40,14 @@ export class ContactUsComponent implements OnInit {
       if(this.currentUser.uid){
           let data:ContactModel={"personId" : this.currentUser.uid, "name" :this.ContactUs.value.name,"email" :this.ContactUs.value.email, "message":this.ContactUs.value.message};
         if(this.ContactUs.value.type==="1"){
-          this.Problemservice.addContact(data);
+          this.Problemservice.addContact(data).then(()=>{
+            this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
+          })
           this.ContactUs.reset();}
       else if(this.ContactUs.value.type==="2"){
-        this.Registrationservice.addContact(data);
+        this.Registrationservice.addContact(data).then(()=>{
+          this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
+        })
         this.ContactUs.reset();
       }
     }else {
@@ -50,10 +55,14 @@ export class ContactUsComponent implements OnInit {
       let data:ContactModel={ "name" :this.ContactUs.value.name,"email" :this.ContactUs.value.email, "message":this.ContactUs.value.message};
       
       if(this.ContactUs.value.type==="1"){
-        this.Problemservice.addContact(data);
+        this.Problemservice.addContact(data).then(()=>{
+          this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
+        })
         this.ContactUs.reset();}
     else if(this.ContactUs.value.type==="2"){
-      this.Registrationservice.addContact(data);
+      this.Registrationservice.addContact(data).then(()=>{
+        this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
+      })
       this.ContactUs.reset();
     }
     }

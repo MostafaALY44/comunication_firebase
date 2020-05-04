@@ -26,7 +26,7 @@ border-color: rgb(194, 248, 218); margin: 50px;"> -->
     <small [hidden]="coursesHasCourse" style="color: red;">
       Please enter courses
     </small>
-    <mat-radio-group [(ngModel)]="PersonRule" name="type{{idIndex}}">
+    <mat-radio-group [(ngModel)]="PersonRule" name="type{{idIndex}}" >
       <mat-radio-button value="instructor" (click)="instructor()"  id="instructor{{idIndex}}" >instructor</mat-radio-button>
       <mat-radio-button value="student"  (click)="student()" id="student{{idIndex}}" checked>student</mat-radio-button>
     </mat-radio-group>

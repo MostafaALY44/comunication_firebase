@@ -23,6 +23,7 @@ you have {{coursesNotCreatedYet.length}} courses must be register first:
                     <input matInput  type="email" id="!{{element.obj.email}}element{{i}}!" [(ngModel)]="changeCode" name="{{element.obj.email}}" (blur)="reset(i, 'email')" >
                   </mat-form-field>
         </a>
+        {{element.obj.roles|json}}
     <!-- </mat-grid-tile> -->
     <div class="row">
         <div  *ngFor="let element2 of element.obj.courses; let ii=index">

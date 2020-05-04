@@ -16,17 +16,26 @@ import { element } from 'protractor';
 })
 export class SavePersonsDataComponent implements OnInit, OnDestroy {
   coursesNotCreatedYet:string[]=[];
+  
   constructor(private addPersonService:AddPersonService, private courseService:CourseFirebaseService,
     private dialogRef: MatDialogRef<SavePersonsDataComponent>,
     private dialog:MatDialog,
      @Inject(MAT_DIALOG_DATA) public data:{paramMap:Observable<ParamMap>, mapCourses:Map<string, number[]>,
-    persons:{"id":number, "obj":{email:string, courses:string[], "roles":Roles}, "index": number }[]}) {
-     this.checkCodesFromDB()
+      persons:{"id":number, "obj":{email:string, courses:string[], "roles":Roles}, "index": string }[]}) {
+        this.data.persons=JSON.parse(JSON.stringify(CreatePersonFormComponent.allPersons))
+        
+        let courseMapTemp=new Map<string,number[]>()
+        this.data.mapCourses.forEach((value,key)=>{
+          courseMapTemp.set(key,value);
+        
+        })
+        this.data.mapCourses=courseMapTemp;
+        this.checkCodesFromDB()
       
     }
   ngOnDestroy(): void {
     this.unsubscribeCheckCodesFromDB();
-  }
+  } 
   
   routerLink:string="";
   idUniversity:string="";
@@ -141,7 +150,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   }
   
   closeDialog(){
-    this.dialogRef.close({data:this.removedData});
+    this.dialogRef.close({data:this.removedData, isAdd:false});
   }
 
   isEmail(email):boolean{
@@ -181,7 +190,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
 
     if(key == "email"){
       if(this.changeCode==""){
-        this.removedData.push(this.data.persons[i].index)
+        this.removedData.push(+this.data.persons[i].index)
         CreatePersonFormComponent.allPersons[i].obj.courses.forEach(element=>{
           CreatePersonFormComponent.allPersonCourses.get(element).splice(
             CreatePersonFormComponent.allPersonCourses.get(element).findIndex(num=> num==CreatePersonFormComponent.allPersons[i].id)
@@ -217,7 +226,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
             CreatePersonFormComponent.allPersonCourses.delete(this.data.persons[i].obj.courses[ii])
         this.data.persons[i].obj.courses.splice(ii,1)
         if(!this.data.persons[i].obj.courses.length){
-          this.removedData.push(this.data.persons[i].index)
+          this.removedData.push(+this.data.persons[i].index)
           this.data.persons.splice(i,1)
         }
         //this.checkCodesFromDB();
@@ -259,7 +268,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   }
   
   onSubmit(){
-    this.closeDialog()
+    this.dialogRef.close({isAdd:true});
 
     let obj={"link":{"idUniversity":this.idUniversity,
               "idCollege":this.idCollege},

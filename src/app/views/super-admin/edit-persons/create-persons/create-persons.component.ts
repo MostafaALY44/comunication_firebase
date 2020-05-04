@@ -102,10 +102,21 @@ export class CreatePersonsComponent implements OnInit {
       {data:{paramMap:this.router.parent.paramMap , mapCourses:CreatePersonFormComponent.allPersonCourses,
         persons:CreatePersonFormComponent.allPersons}, height: '600px', width: '900px', disableClose: true})
     let removeSubscribe1=ref.afterClosed().subscribe((ss)=>{
-      ss.data.forEach(element => {
-        this.remove(true, element)
-      });
-      setTimeout(()=>{removeSubscribe1.unsubscribe},0)
+      
+      if(ss.isAdd){
+        console.log(ss)
+        CreatePersonFormComponent.reset();
+          this.createPersonComponents=[];
+          
+         this.pointerToLastIndex=0;
+        this.removed.clear();
+        this.canAddNewForm=true;
+        
+      }else
+        ss.data.forEach(element => {
+          this.remove(true, element)
+        });
+       setTimeout(()=>{removeSubscribe1.unsubscribe},0)
     })
     
     

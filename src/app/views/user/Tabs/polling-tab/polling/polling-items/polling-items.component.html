@@ -13,7 +13,7 @@
                 <div class="col md-4">
                     <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
                 </div>
-                <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button [matMenuTriggerFor]="menu"
+                <button *ngIf="poll.userId===currentUser.uid" mat-icon-button [matMenuTriggerFor]="menu"
                     style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
                     <mat-icon>more_vert</mat-icon>
                 </button>
@@ -39,7 +39,7 @@
                             <mat-icon type="button" (click)="showVotedPersons(option)"  placement="bottom" ngbTooltip="Show voted persons" style='color:rgb(69, 69, 170)'>how_to_vote</mat-icon>
                             &nbsp;<span style=" color: darkred;"> {{countVotes(option.id)}} </span>
                             &nbsp;
-                            <button *ngIf="poll.pollingOwner===currentUser.name" mat-icon-button
+                            <button *ngIf="poll.userId===currentUser.uid" mat-icon-button
                                 [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;"
                                 (click)="setOption(option)">
                                 <mat-icon>more_vert</mat-icon>

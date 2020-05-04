@@ -23,8 +23,8 @@ idCollege;
       this.idUniversity=params.get('id1')
       this.idCollege=params.get('id2')
     }).unsubscribe();
-      this.users=this.userService.getAll() 
-
+      this.users=this.userService.getAllByUniversity(this.idUniversity,this.idCollege)
+      
   }
 
   updateEmail(user, event: any) {
