@@ -1,4 +1,4 @@
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router'
 import { CommonModule } from '@angular/common';
@@ -46,7 +46,8 @@ import { AnnouncementDetailsComponent } from './welcome/announcement-details/ann
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
-  ]
+    NgbCarouselModule
+  ],
+  providers:[NgbCarouselConfig]
 })
 export class LayoutsModule { }
