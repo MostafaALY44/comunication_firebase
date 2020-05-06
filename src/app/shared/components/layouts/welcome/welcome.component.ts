@@ -18,16 +18,15 @@ interface BannerImage {
 export class WelcomeComponent implements OnDestroy {
 
   images: BannerImage[] = [
-    { url: 'assets/images/lab1.jpg', caption: '' },
-    { url: 'assets/images/lab2.jpg', caption: '' },
-    { url: 'assets/images/lab3.jpg', caption: '' },
-    { url: 'assets/images/lab4.jpg', caption: '' },
-    { url: 'assets/images/lab5.jpg', caption: '' },
-    { url: 'assets/images/lab6.jpg', caption: '' },
-    { url: 'assets/images/lab7.jpg', caption: '' },
-    { url: 'assets/images/lab8.jpg', caption: '' },
-    { url: 'assets/images/lab9.jpg', caption: '' },
-    { url: 'assets/images/books.jpg', caption: '' }
+    { url: 'assets/images/lab1.jpg', caption: 'We put students first, and value craft and simplicity in our work.' },
+    { url: 'assets/images/lab2.jpg', caption: 'We bring you closer to the Faculty and things you need' },
+    { url: 'assets/images/lab3.jpg', caption: 'Collaborate with your colleagues across the course using question post and comments.' },
+    { url: 'assets/images/lab4.jpg', caption: 'Our App inspire creativity in the Faculty, helping over hundreds of studens create and share.'},
+    { url: 'assets/images/lab6.jpg', caption: 'Read our latest announcements and events into this Welcome page' },
+    { url: 'assets/images/lab7.jpg', caption: 'Download the Course Lectures and other materials for use on your study, or for other purpose.' },
+    { url: 'assets/images/lab8.jpg', caption: 'Faculty Communication App has focus on simplicity.'},
+    { url: 'assets/images/lab9.jpg', caption: 'Our App inspire creativity in the Faculty, helping over hundreds of studens create and share.' },
+    { url: 'assets/images/books.jpg', caption: 'Join us!' }
   ];
 
   announcements;
@@ -41,7 +40,7 @@ export class WelcomeComponent implements OnDestroy {
     })
 
     //NgbCarouselConfig
-    config.interval = 5000;
+    config.interval = 10000;
     config.wrap = true;
     config.keyboard = true;
     config.pauseOnHover = false;
