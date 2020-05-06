@@ -3,6 +3,11 @@
     <div class="card-body">
         <h5 class="card-title">{{courseDetails.title}}</h5>
         <p class="card-text">{{courseDetails.body}}</p>
+
+
+        <a [href]="courseDetails.url" target="_blank" >{{courseDetails.urlDiscription}}</a>
+
+
         <p class="card-text"><small
                 class="text-muted">{{courseDetails.date.toDate() | date:'yyyy/MM/dd h:mm:ss a'}}</small></p>
     </div>

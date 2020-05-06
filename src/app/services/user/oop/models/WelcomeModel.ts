@@ -3,4 +3,6 @@ export class WelcomeModel{
     title:string;
     body:string;
     date:any;
+    urls:string;
+    urlDiscription:string;
  }
