@@ -34,7 +34,14 @@ export class ContactUsComponent implements OnInit {
         return false;
     return true;
   }
+  resetForm(form: FormGroup) {
 
+    form.reset();
+
+    Object.keys(form.controls).forEach(key => {
+      form.get(key).setErrors(null) ;
+    });
+}
   onSubmit(){
     if(!this.isEmpty(this.ContactUs.value.name)){
       if(this.currentUser.uid){
@@ -43,12 +50,13 @@ export class ContactUsComponent implements OnInit {
           this.Problemservice.addContact(data).then(()=>{
             this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
           })
-          this.ContactUs.reset();}
+          this.resetForm(this.ContactUs);
+        }
       else if(this.ContactUs.value.type==="2"){
         this.Registrationservice.addContact(data).then(()=>{
           this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
         })
-        this.ContactUs.reset();
+        this.resetForm(this.ContactUs);
       }
     }else {
 
@@ -58,12 +66,12 @@ export class ContactUsComponent implements OnInit {
         this.Problemservice.addContact(data).then(()=>{
           this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
         })
-        this.ContactUs.reset();}
+        this.resetForm(this.ContactUs);}
     else if(this.ContactUs.value.type==="2"){
       this.Registrationservice.addContact(data).then(()=>{
         this._snackBar.open('Your message' , 'sent Successfully', { duration: 3000, });
       })
-      this.ContactUs.reset();
+      this.resetForm(this.ContactUs);
     }
     }
 
