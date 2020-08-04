@@ -31,13 +31,17 @@ export class LoginComponent implements OnInit {
     this.password = '';
   }
   error:string='';
+  showSpinner:boolean=false;
+
   signIn() {
+    this.showSpinner=true;
     this.email = this.login.value.email; 
     this.password = this.login.value.password; 
     this.authenticationService.SignIn(this.email, this.password)
     .then(res => {
       
       this.router.navigate(['./user']);
+      this.showSpinner=false;
       this.error='';
     })
     .catch(err => {

@@ -24,7 +24,7 @@ export class AssignmentService {
   }
 
   public addAssignment(courseId, data){ 
-    //data["date"]=firebase.firestore.FieldValue.serverTimestamp();
+    data["date"]=firebase.firestore.FieldValue.serverTimestamp();
     return this.firestore.collection<Assignment>(AssignmentService.url+'/assignment').add(data);
   }
 

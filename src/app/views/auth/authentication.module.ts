@@ -9,6 +9,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { SignupComponent } from './signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { MaterialModule } from 'src/app/material.module';
 
 
 
@@ -27,7 +28,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     FormsModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MaterialModule
   ]
 })
 export class AuthModule { }

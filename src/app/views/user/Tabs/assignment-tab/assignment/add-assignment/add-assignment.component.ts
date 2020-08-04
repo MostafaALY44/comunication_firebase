@@ -15,7 +15,7 @@ export class AddAssignmentComponent implements OnInit {
   
   newAssignment = new FormGroup({
     title : new FormControl('',Validators.required),
-    start : new FormControl('',Validators.required),
+   
     end : new FormControl('',Validators.required),
     accept : new FormControl(''),
     note : new FormControl(''),
@@ -48,7 +48,7 @@ export class AddAssignmentComponent implements OnInit {
                  "endDate":this.newAssignment.value.end,
                  "link":this.newAssignment.value.Qurl,
                  "note":this.newAssignment.value.note,
-                 "startDate":this.newAssignment.value.start,
+                 
                  "userId":this.currentUser.uid,
                  "title":this.newAssignment.value.title};
      

@@ -1,4 +1,7 @@
-
+<div *ngIf="showSpinner;else NoSpin">
+    <mat-spinner  align="center"></mat-spinner>
+</div>
+<ng-template #NoSpin>
   <div class="card text-center" style="margin-top: 20px;" *ngIf="post;else elseBlock">
     <div class="card-body">
         <div class="row">
@@ -41,5 +44,6 @@
 <ng-template #elseBlock>
     <div align="center" style="margin-top: 2%;"><h3>This post was deleted.</h3></div>
 </ng-template>
-
+</ng-template>
     <button mat-button mat-dialog-close>Close</button>
+

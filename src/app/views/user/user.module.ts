@@ -6,7 +6,7 @@ import { EditMaterialComponent } from './Tabs/material-tab/material/edit-materia
 import { NewPostComponent } from './Tabs/post-tab/post/new-post/new-post.component';
 import { PostItemComponent } from './Tabs/post-tab/post/post-item/post-item.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserBodyComponent } from './user-body/user-body.component';
@@ -74,6 +74,7 @@ import { DescriptionComponent } from './course-details/description/description.c
     EditOptionComponent,
     VotedPersonsComponent,
     DescriptionComponent
+  
     
 
   ],
@@ -104,7 +105,7 @@ import { DescriptionComponent } from './course-details/description/description.c
     NgbModule,
     NgbTooltipModule
   ],
-  providers:[CoursesService,NgbTooltipConfig]
+  providers:[CoursesService,NgbTooltipConfig,DatePipe]
   
 })
 export class UserModule { }

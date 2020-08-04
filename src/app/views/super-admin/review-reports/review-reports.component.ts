@@ -1,7 +1,7 @@
-import { Component, OnInit, TemplateRef, Inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ReportService } from 'src/app/services/user/report.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PostReport } from 'src/app/services/user/models/report.model';
 import { CourseService } from 'src/app/services/user/oop/course.service';
 import { PostService } from 'src/app/services/user/oop/firebaseService/PostService';
@@ -19,7 +19,7 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
   templateUrl: './review-reports.component.html',
   styleUrls: ['./review-reports.component.css']
 })
-export class ReviewReportsComponent implements OnInit {
+export class ReviewReportsComponent implements OnInit,OnDestroy {
 
    reports:Observable<PostReport[]>;
    universityId;
@@ -44,13 +44,17 @@ export class ReviewReportsComponent implements OnInit {
 
   displayedColumns: string[] = ['report', 'date', 'personId','show','action'];
 isEmpty:boolean=false;
+removeSubscribe:Subscription;
   ngOnInit() {
-   this.reports.subscribe(report=>{
+    this.removeSubscribe= this.reports.subscribe(report=>{
       if(report.length===0)
          this.isEmpty=true;
     })
   }
-
+  ngOnDestroy(): void {
+    if(this.removeSubscribe)
+        this.removeSubscribe.unsubscribe();
+  }
   getDate(date){
     if(date != null)
       return date.toDate();

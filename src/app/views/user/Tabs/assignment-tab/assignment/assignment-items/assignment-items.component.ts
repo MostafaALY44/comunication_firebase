@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { NotificationService } from 'src/app/services/user/oop/notification.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'assignment-items',
@@ -27,8 +28,12 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
   currentUser;
   removesubscribe;
   isEmpty:boolean=false;
+  myDate = new Date();
+  //newDates;
+  disablebutton:boolean=false;
   constructor(private service:AssignmentService, route:ActivatedRoute, private dialog:MatDialog,private _snackBar: MatSnackBar,
-    private userService:UserService) {
+    private userService:UserService,private datePipe: DatePipe) {
+      //this.newDates = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     route.parent.paramMap.subscribe((params : ParamMap) =>{  
       this.courseId=params.get('id')});
      
@@ -42,6 +47,21 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
       this.userService.update( obj)
       if(NotificationService.currNotification)
         NotificationService.currNotification.assignmentsNumber=0
+        // assignments.forEach(assignment=>{
+          
+        //   let newDate = new Date(assignment.endDate);
+        //   // console.log(this.myDate.getTime(),">")
+        //   // console.log(newDate.getTime(),">",this.myDate.getTime())
+        //   if(newDate.getTime()>=this.myDate.getTime()){
+        //     console.log(this.myDate.getTime(),">");
+        //      this.disablebutton=true;
+        //   } else{
+        //     this.disablebutton=false;
+        //     console.log(this.disablebutton)
+        //   } 
+         
+         
+        // })
     })
     this.dataSource=this.assignments;
     this.currentUser= UserService.getUser();
@@ -97,11 +117,17 @@ export class AssignmentItemsComponent implements OnInit , OnDestroy{
     this.dialog.open(EditAssignmentComponent,{data:{"assignment":this.currentAssign,"courseId":this.courseId}})
   }
 
-  displayedColumns: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result', 'actions'];
+  displayedColumns: string[] = ['name', 'date','end_date', 'note', 'link', 'result', 'actions'];
 
-  displayedColumns1: string[] = ['name', 'start_date','end_date', 'note', 'link', 'result'];
+  displayedColumns1: string[] = ['name', 'date','end_date', 'note', 'link', 'result'];
   
-  
+  checkEndDate(endDate):boolean{
+    let newDate = new Date(endDate);
+    // console.log(newDate)
+    // console.log(this.myDate)
+    if(newDate>=this.myDate) return true;
+    else return false;
+  }
 
 }
 

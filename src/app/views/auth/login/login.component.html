@@ -51,8 +51,11 @@
                       <label class="custom-control-label" for="customCheck">Remember Me</label>
                     </div>
                   </div>
-                  <button type="button" (click)="signIn()" routerLink="../../user" class="btn btn-primary btn-user btn-block">
-                    <b>Login </b>
+                  <button  type="button" (click)="signIn()" routerLink="../../user" class="btn btn-primary btn-user btn-block">
+                    <b>Login 
+                     
+                    </b>
+                    <span style="display: inline-block;margin-left: 20px;"> <mat-spinner *ngIf="showSpinner" [diameter]="25"></mat-spinner></span>
                   </button>
                   
                 </form>
