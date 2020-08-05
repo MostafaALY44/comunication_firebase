@@ -5,4 +5,5 @@ export class WelcomeModel{
     date:any;
     urls:string;
     urlDiscription:string;
+    url:string;
  }

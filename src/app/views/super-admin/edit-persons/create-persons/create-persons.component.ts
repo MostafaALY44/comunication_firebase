@@ -5,18 +5,24 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Roles } from 'src/app/services/auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SavePersonsDataComponent } from '../save-persons-data/save-persons-data.component';
-
-
+import * as XLSX from 'xlsx';
+import { templateJitUrl } from '@angular/compiler';
 @Component({
   selector: 'app-create-persons',
   templateUrl: './create-persons.component.html',
   styleUrls: ['./create-persons.component.css']
 })
 export class CreatePersonsComponent implements OnInit {
-
+  idUniversity;
+  idCollege;
   constructor(private addPersonService:AddPersonService,  private router:ActivatedRoute,
     private dialog:MatDialog) {
       CreatePersonFormComponent.reset();
+
+      this.router.parent.paramMap.subscribe((params: ParamMap)=>{
+        this.idUniversity=params.get('id1')
+        this.idCollege=params.get('id2')
+      }).unsubscribe();
      }
 
   ngOnInit() {
@@ -123,4 +129,121 @@ export class CreatePersonsComponent implements OnInit {
     
   }
 
+//   arrayBuffer:any;
+// file:File;
+// incomingfile(event) 
+//   {
+//   this.file= event.target.files[0]; 
+//   }
+
+//  Upload() {
+//       let fileReader = new FileReader();
+//         fileReader.onload = (e) => {
+//             this.arrayBuffer = fileReader.result;
+//             var data = new Uint8Array(this.arrayBuffer);
+//             var arr = new Array();
+//             for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+//             var bstr = arr.join("");
+//             var workbook = XLSX.read(bstr, {type:"binary"});
+//             var first_sheet_name = workbook.SheetNames[0];
+//             var worksheet = workbook.Sheets[first_sheet_name];
+//             console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+//         }
+//         fileReader.readAsArrayBuffer(this.file);
+        
+// }
+exceltoJson = {};
+
+  onFileChange(event: any) {
+    this.exceltoJson = {};
+    let headerJson = {};
+    /* wire up file reader */
+    const target: DataTransfer = <DataTransfer>(event.target);
+    // if (target.files.length !== 1) {
+    //   throw new Error('Cannot use multiple files');
+    // }
+    const reader: FileReader = new FileReader();
+    reader.readAsBinaryString(target.files[0]);
+    //console.log("filename", target.files[0].name);
+    this.exceltoJson['filename'] = target.files[0].name;
+    reader.onload = (e: any) => {
+      /* create workbook */
+      const binarystr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
+      // console.log(wb.SheetNames,"    ", wb.Sheets)
+      for (var i = 0; i < wb.SheetNames.length; ++i) {
+        const wsname: string = wb.SheetNames[i];
+        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
+        this.exceltoJson[`sheet${i + 1}`] = data;
+        // console.log(data);
+        const headers = this.get_header_row(ws);
+        headerJson[`header${i + 1}`] = headers;
+        //  console.log("json",headers)
+        // console.log(this.exceltoJson[`sheet${i + 1}`])
+        for (let index = 0; index < this.exceltoJson[`sheet${i + 1}`].length; index++) {
+        // console.log(this.exceltoJson[`sheet${i + 1}`][index])
+           this.exceltoJson[`sheet${i + 1}`][index]['courses']=this.splitCourses(this.exceltoJson[`sheet${i + 1}`][index]['courses'])
+        }
+      }
+      this.exceltoJson['headers'] = headerJson;
+      
+      
+      console.log(this.exceltoJson);
+    };
+    
+  }
+
+  get_header_row(sheet) {
+    var headers = [];
+    var range = XLSX.utils.decode_range(sheet['!ref']);
+    var C, R = range.s.r; /* start in the first row */
+    /* walk every column in the range */
+    for (C = range.s.c; C <= range.e.c; ++C) {
+      var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
+      // console.log("cell",cell)
+      var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
+      if (cell && cell.t) {
+        hdr = XLSX.utils.format_cell(cell);
+        headers.push(hdr);
+      }
+    }
+    return headers;
+  }
+
+  splitCourses(obj:string){
+   let temp:string[]=[];
+   let course:string="";
+  //  console.log(obj)
+      for (let index = 0; index < obj.length; index++) {
+        if(obj[index]!== ","){
+          if(obj[index]!== " "){
+            course+=obj[index];
+          }
+        }else{
+            temp.push(course);
+            course="";
+        }
+
+      }
+      temp.push(course);
+      // console.log(temp)
+      return temp;
+  }
+  onAdd(){
+    
+    // for (let index = 0; index < this.exceltoJson['filename'].length; index++) {
+      // console.log( this.exceltoJson[`sheet${index + 1}`],index + 1)
+      for (let i = 0; i < this.exceltoJson['sheet1'].length; i++) {
+        let obj={"link":{"idUniversity":this.idUniversity,
+              "idCollege":this.idCollege},
+              "persons":this.exceltoJson[`sheet${i + 1}`]
+            };
+            console.log(obj)
+            this.addPersonService.addPersons(obj)
+          // }
+    }
+    
+    
+  }
 }
