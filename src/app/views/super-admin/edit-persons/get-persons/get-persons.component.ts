@@ -7,6 +7,7 @@ import {  ActivatedRoute, ParamMap } from '@angular/router';
 import * as firebase from 'firebase';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { AddPersonService } from '../../service/add-person.service';
 
 @Component({
   selector: 'app-get-persons',
@@ -18,13 +19,18 @@ users: Observable<User[]>;
 editField:string;
 idUniversity;
 idCollege;
-  constructor (private userService:UserService,private _snackBar: MatSnackBar ,private router:ActivatedRoute,public dialog:MatDialog) { 
+  constructor (private addPersonService:AddPersonService ,private userService:UserService,private _snackBar: MatSnackBar ,private router:ActivatedRoute,public dialog:MatDialog) { 
     this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.idUniversity=params.get('id1')
       this.idCollege=params.get('id2')
     }).unsubscribe();
-      this.users=this.userService.getAllByUniversity(this.idUniversity,this.idCollege)
-      
+      // this.users=this.userService.getAllByUniversity(this.idUniversity,this.idCollege)
+       this.addPersonService.getUserColleges().then((usersData:Observable<User[]>)=>{
+        this.users = usersData;
+        this.users.subscribe(user=>{
+          console.log(user)
+        })
+      })
   }
 
   updateEmail(user, event: any) {
@@ -34,7 +40,7 @@ idCollege;
     if(editField!=user.email){
       if(editField===""){
         // this.remove(user);
-        this.dialog.open(DeleteDialogComponent,{data:user}).beforeClose().subscribe(email=>{
+        this.dialog.open(DeleteDialogComponent,{data:{'user':user,'idUniversity':this.idUniversity,'idCollege':this.idCollege}}).beforeClose().subscribe(email=>{
           document.getElementById("email").innerText=user.email;
         });
       }else{
@@ -75,10 +81,13 @@ idCollege;
   } 
 
   remove(id: any) {
-    
-    this.userService.delete(id.uid).then(()=>{
-      this._snackBar.open(id.email, 'Deleted Successfully', { duration: 3000, });
-    })
+     
+    // this.userService.delete(id.uid).then(()=>{
+    //   this._snackBar.open(id.email, 'Deleted Successfully', { duration: 3000, });
+    // })
+    let data={'universityId': this.idUniversity , 'collegeId':this.idCollege,'userId':id.uid}
+   
+    this.addPersonService.deletePersons(data);
 
   }
 
