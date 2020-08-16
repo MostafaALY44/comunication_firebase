@@ -7,6 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { SavePersonsDataComponent } from '../save-persons-data/save-persons-data.component';
 import * as XLSX from 'xlsx';
 import { templateJitUrl } from '@angular/compiler';
+import { NotValidEmailsComponent } from './not-valid-emails/not-valid-emails.component';
+import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService/course-firebase.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-create-persons',
   templateUrl: './create-persons.component.html',
@@ -15,14 +18,22 @@ import { templateJitUrl } from '@angular/compiler';
 export class CreatePersonsComponent implements OnInit {
   idUniversity;
   idCollege;
+  routerLink;
+  myCourses:Map<string,boolean>=new Map();
   constructor(private addPersonService:AddPersonService,  private router:ActivatedRoute,
-    private dialog:MatDialog) {
+    private dialog:MatDialog,private courseService:CourseFirebaseService,private _snackBar: MatSnackBar) {
       CreatePersonFormComponent.reset();
 
       this.router.parent.paramMap.subscribe((params: ParamMap)=>{
+        this.routerLink = "universities/"+params.get('id1')+"/colleges/"+params.get('id2');
         this.idUniversity=params.get('id1')
         this.idCollege=params.get('id2')
       }).unsubscribe();
+
+     const removeSubscribe= this.courseService.getAllCodesAsMap(this.routerLink).subscribe(courses=>{
+          this.myCourses=courses;
+          removeSubscribe.unsubscribe();
+      })
      }
 
   ngOnInit() {
@@ -152,9 +163,14 @@ export class CreatePersonsComponent implements OnInit {
 //         fileReader.readAsArrayBuffer(this.file);
         
 // }
+showAddButton:boolean=true;
+enterCatch:boolean=false;
 exceltoJson = {};
 sheetNumbers:Number=0;
   onFileChange(event: any) {
+    try {
+      
+    
     this.exceltoJson = {};
     let headerJson = {};
     /* wire up file reader */
@@ -192,12 +208,19 @@ sheetNumbers:Number=0;
       this.exceltoJson['headers'] = headerJson;
       
       
-      console.log(this.exceltoJson);
-    };
-    
+        
+      };
+      
+        
+    } catch (error) {
+      this._snackBar.open("Invalid Format !!", 'operation failed !', { duration: 6000, });
+    }
   }
 
   get_header_row(sheet) {
+    try {
+      
+    
     var headers = [];
     var range = XLSX.utils.decode_range(sheet['!ref']);
     var C, R = range.s.r; /* start in the first row */
@@ -211,10 +234,18 @@ sheetNumbers:Number=0;
         headers.push(hdr);
       }
     }
-    return headers;
+    
+      return headers;
+    } catch (error) {
+      this.showAddButton=false;
+      this._snackBar.open("Invalid Format !!", 'operation failed !', { duration: 6000, });
+   }
   }
 
   splitCourses(obj:string){
+    try {
+      
+    
    let temp:string[]=[];
    let course:string="";
   //  console.log(obj)
@@ -231,22 +262,63 @@ sheetNumbers:Number=0;
       }
       temp.push(course);
       // console.log(temp)
+      
       return temp;
+    } catch (error) {
+      this.showAddButton=false;
+      this._snackBar.open("Invalid Format !!", 'operation failed !', { duration: 6000, });
+    }
   }
+  notValidEmails=[];
+  notRegisteredCourses=[];
   onAdd(){
     
      for (let index = 0; index < this.sheetNumbers; index++) {
-       console.log( this.exceltoJson['sheet1'].length)
+      
       for (let i = 0; i < this.exceltoJson[`sheet${index + 1}`].length; i++) {
-        let obj={"link":{"idUniversity":this.idUniversity,
-              "idCollege":this.idCollege},
-              "persons":this.exceltoJson[`sheet${index + 1}`]
-            };
-            console.log(obj)
-            this.addPersonService.addPersons(obj)
+        
+        if(!this.isEmail(this.exceltoJson[`sheet${index + 1}`][i]['email'])){
+              this.notValidEmails.push(this.exceltoJson[`sheet${index + 1}`][i]['email']);
+             this.exceltoJson[`sheet${index + 1}`].splice(i,1);
+             i--;
+        }else{
+          for (let j = 0; j < this.exceltoJson[`sheet${index + 1}`][i]['courses'].length; j++) {
+            
+              if(!(this.myCourses.has(this.exceltoJson[`sheet${index + 1}`][i]['courses'][j]))){
+                if(!this.notRegisteredCourses.includes(this.exceltoJson[`sheet${index + 1}`][i]['courses'][j]))
+                  this.notRegisteredCourses.push(this.exceltoJson[`sheet${index + 1}`][i]['courses'][j])
+                  
+              }
+         
+          }
+     
            }
+          }
      }
-    
+    for (let index = 0; index < this.sheetNumbers; index++){
+      let AddCourses:number=0;
+      
+      this.notRegisteredCourses.forEach(elemet=>{
+       this.courseService.create(this.routerLink,elemet).then(()=>{
+         AddCourses++;
+         if(this.notRegisteredCourses.length===AddCourses){
+           let obj={"link":{"idUniversity":this.idUniversity,
+                   "idCollege":this.idCollege},
+                   "persons":this.exceltoJson[`sheet${index + 1}`]
+                 };
+     
+          this.addPersonService.addPersons(obj)
+          setTimeout(() => {
+            this.showAddButton=true;
+          }, 2000);
+          
+        }
+       }).catch(error=>console.log(error))
+     })
+    }
+    if(this.notValidEmails.length>0){
+      this.dialog.open(NotValidEmailsComponent,{data:this.notValidEmails})
+    }
     
   }
 }

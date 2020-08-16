@@ -7,8 +7,8 @@
 </div>
 <div style="margin-top: 30px;margin-left: 30px;box-shadow: darkslategray;" >
     <h3>You can upload Exel sheet to add persons from here ! </h3>
-    <h4>Note : type email , courses and role in row </h4>
+    <h4>Note : type email , courses and roles in row </h4>
     <!-- <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx"> -->
     <input type="file" (change)="onFileChange($event)">
-    <button type="button" class="btn btn-info" (click)="onAdd()" >Add </button>
+    <button *ngIf="showAddButton" type="button" class="btn btn-info" (click)="onAdd()" >Add </button>
 </div>

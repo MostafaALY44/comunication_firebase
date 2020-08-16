@@ -21,13 +21,14 @@ import { UpdateCoursesComponent } from './get-courses/update-courses/update-cour
 import { ChangeAdminPasswordComponent } from './change-admin-password/change-admin-password.component';
 import { GetPersonsComponent } from './edit-persons/get-persons/get-persons.component';
 import { DeleteDialogComponent } from './edit-persons/get-persons/delete-dialog/delete-dialog.component';
+import { NotValidEmailsComponent } from './edit-persons/create-persons/not-valid-emails/not-valid-emails.component';
 
 @NgModule({
   declarations: [EditCoursesComponent, EditPersonsComponent, ReviewReportsComponent, SavePersonsDataComponent,
      AddSuperAdminComponent, AdminBodyComponent, SaveDataComponent, ShowPostsComponent, CreatePersonsComponent,
      CreatePersonFormComponent, 
-      GetCoursesComponent, CoursesBodyComponent, UpdateCoursesComponent, ChangeAdminPasswordComponent, GetPersonsComponent, DeleteDialogComponent],
-  entryComponents:[SaveDataComponent, ShowPostsComponent,UpdateCoursesComponent, SavePersonsDataComponent,DeleteDialogComponent],
+      GetCoursesComponent, CoursesBodyComponent, UpdateCoursesComponent, ChangeAdminPasswordComponent, GetPersonsComponent, DeleteDialogComponent, NotValidEmailsComponent],
+  entryComponents:[SaveDataComponent, ShowPostsComponent,UpdateCoursesComponent, SavePersonsDataComponent,DeleteDialogComponent,NotValidEmailsComponent],
   imports: [
     CommonModule,
     SuperAdminRoutingModule,
