@@ -153,7 +153,7 @@ export class CreatePersonsComponent implements OnInit {
         
 // }
 exceltoJson = {};
-
+sheetNumbers:Number=0;
   onFileChange(event: any) {
     this.exceltoJson = {};
     let headerJson = {};
@@ -171,11 +171,13 @@ exceltoJson = {};
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
       // console.log(wb.SheetNames,"    ", wb.Sheets)
+      this.sheetNumbers=wb.SheetNames.length;
       for (var i = 0; i < wb.SheetNames.length; ++i) {
         const wsname: string = wb.SheetNames[i];
         const ws: XLSX.WorkSheet = wb.Sheets[wsname];
         const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
         this.exceltoJson[`sheet${i + 1}`] = data;
+        
         // console.log(data);
         const headers = this.get_header_row(ws);
         headerJson[`header${i + 1}`] = headers;
@@ -184,6 +186,7 @@ exceltoJson = {};
         for (let index = 0; index < this.exceltoJson[`sheet${i + 1}`].length; index++) {
         // console.log(this.exceltoJson[`sheet${i + 1}`][index])
            this.exceltoJson[`sheet${i + 1}`][index]['courses']=this.splitCourses(this.exceltoJson[`sheet${i + 1}`][index]['courses'])
+           this.exceltoJson[`sheet${i + 1}`][index]['roles']={[`${this.exceltoJson[`sheet${i + 1}`][index]['roles']}`]:true}
         }
       }
       this.exceltoJson['headers'] = headerJson;
@@ -232,17 +235,17 @@ exceltoJson = {};
   }
   onAdd(){
     
-    // for (let index = 0; index < this.exceltoJson['filename'].length; index++) {
-      // console.log( this.exceltoJson[`sheet${index + 1}`],index + 1)
-      for (let i = 0; i < this.exceltoJson['sheet1'].length; i++) {
+     for (let index = 0; index < this.sheetNumbers; index++) {
+       console.log( this.exceltoJson['sheet1'].length)
+      for (let i = 0; i < this.exceltoJson[`sheet${index + 1}`].length; i++) {
         let obj={"link":{"idUniversity":this.idUniversity,
               "idCollege":this.idCollege},
-              "persons":this.exceltoJson[`sheet${i + 1}`]
+              "persons":this.exceltoJson[`sheet${index + 1}`]
             };
             console.log(obj)
             this.addPersonService.addPersons(obj)
-          // }
-    }
+           }
+     }
     
     
   }

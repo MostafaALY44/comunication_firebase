@@ -49,7 +49,7 @@ export class AddPersonService {
       }
         getUserColleges(){
           
-         
+         let token:string="";
           return firebase.auth().currentUser.getIdToken().then(idToken=>{
             const headers= new HttpHeaders({'Authorization': 'Bearer ' + idToken })
            return this.http.get("https://us-central1-communication-19601.cloudfunctions.net/getUsers" ,{'headers':headers})
@@ -57,7 +57,7 @@ export class AddPersonService {
         
 
       }
-      // :{'email':string, 'courses':any[],'roles':any}[]
+      // :{'email':string, 'courses':any[],'roles':any,'userId':string}[]
       
 
 }

@@ -26,7 +26,7 @@
             <th class="text-center">Courses</th>
             <th class="text-center">Action</th>
           </tr>
-          <tr *ngFor="let user of users|async " >
+          <tr *ngFor="let user of users ;trackBy:trackByUser " >
             
             <!-- <td *ngIf="user.univeristy && user.roles"> -->
             <td>

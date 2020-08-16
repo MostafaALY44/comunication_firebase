@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user/oop/user.service';
-import { Observable } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 import { User } from 'src/app/services/auth/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {  ActivatedRoute, ParamMap } from '@angular/router';
@@ -14,25 +14,46 @@ import { AddPersonService } from '../../service/add-person.service';
   templateUrl: './get-persons.component.html',
   styleUrls: ['./get-persons.component.css']
 })
-export class GetPersonsComponent implements OnInit {
-users: Observable<User[]>;
+export class GetPersonsComponent implements OnInit,OnDestroy {
+users: User[];
 editField:string;
 idUniversity;
 idCollege;
+removeSubcribe1:Subscription;
+removeSubcribe2:Subscription;
   constructor (private addPersonService:AddPersonService ,private userService:UserService,private _snackBar: MatSnackBar ,private router:ActivatedRoute,public dialog:MatDialog) { 
     this.router.parent.paramMap.subscribe((params: ParamMap)=>{
       this.idUniversity=params.get('id1')
       this.idCollege=params.get('id2')
     }).unsubscribe();
       // this.users=this.userService.getAllByUniversity(this.idUniversity,this.idCollege)
-       this.addPersonService.getUserColleges().then((usersData:Observable<User[]>)=>{
-        this.users = usersData;
-        this.users.subscribe(user=>{
-          console.log(user)
+      this.addPersonService.getUserColleges().then((usersData:Observable<User[]>)=>{
+        this.removeSubcribe2= usersData.subscribe(users=>{
+           this.users=users;
+           this.removeSubcribe2.unsubscribe()
+         })
+      })
+     this.removeSubcribe1= interval(10000).subscribe(()=>{
+        this.addPersonService.getUserColleges().then((usersData:Observable<User[]>)=>{
+          this.removeSubcribe2= usersData.subscribe(users=>{
+             this.users=users;
+           })
+         
         })
       })
+     
   }
+  ngOnDestroy(): void {
+    if(this.removeSubcribe2)
+      this.removeSubcribe2.unsubscribe();
 
+      if(this.removeSubcribe1)
+      this.removeSubcribe1.unsubscribe();
+     
+  }
+  trackByUser(index,user){
+    return user? user.userId:undefined;
+  }
   updateEmail(user, event: any) {
     const editField = event.target.textContent;
     let data;
@@ -85,8 +106,8 @@ idCollege;
     // this.userService.delete(id.uid).then(()=>{
     //   this._snackBar.open(id.email, 'Deleted Successfully', { duration: 3000, });
     // })
-    let data={'universityId': this.idUniversity , 'collegeId':this.idCollege,'userId':id.uid}
-   
+    let data={'universityId': this.idUniversity , 'collegeId':this.idCollege,'userId':id.userId}
+   console.log(id)
     this.addPersonService.deletePersons(data);
 
   }
