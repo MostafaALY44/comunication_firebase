@@ -41,10 +41,29 @@
               <p style="white-space:pre-wrap; font-size: 20px;">
                 {{(mycourse|async)?.description}}
               </p>
+
+              <hr>
+                <mat-card-header style="margin-top: 30px;">
+                  <div mat-card-avatar class="example-header-image">
+                    <mat-icon style='font-size:36px;color:#1f1f7a;'>contacts</mat-icon>
+                  </div>
+                  
+                  <mat-card-title>Contacts  &nbsp;&nbsp;&nbsp;  <mat-icon type="button" *ngIf="CurrentUser.roles.instructor" placement="bottom" ngbTooltip="Add Or Edit contacts" (click)="editContacts();">edit</mat-icon></mat-card-title>
+                  
+                </mat-card-header>
+                    
+                <mat-card-content>
+                  <p style="white-space:pre-wrap; font-size: 20px;">
+                    {{(mycourse|async)?.contacts}}
+                  </p>
+                </mat-card-content>
+                
+
+
             </mat-card-content>
             
           </mat-card>
-
+          
     </div>
     <router-outlet></router-outlet>
     <!-- {{course_id}} -->

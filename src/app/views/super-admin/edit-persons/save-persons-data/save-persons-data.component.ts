@@ -8,6 +8,7 @@ import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService
 import { CreatePersonFormComponent } from '../create-persons/create-person-form/create-person-form.component';
 import { SaveDataComponent } from '../../edit-courses/save-data/save-data.component';
 import { element } from 'protractor';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-save-persons-data',
@@ -17,7 +18,7 @@ import { element } from 'protractor';
 export class SavePersonsDataComponent implements OnInit, OnDestroy {
   coursesNotCreatedYet:string[]=[];
   
-  constructor(private addPersonService:AddPersonService, private courseService:CourseFirebaseService,
+  constructor(private addPersonService:AddPersonService, private _snackBar: MatSnackBar,private courseService:CourseFirebaseService,
     private dialogRef: MatDialogRef<SavePersonsDataComponent>,
     private dialog:MatDialog,
      @Inject(MAT_DIALOG_DATA) public data:{paramMap:Observable<ParamMap>, mapCourses:Map<string, number[]>,
@@ -268,6 +269,9 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
   }
   
   onSubmit(){
+    if(this.coursesNotCreatedYet.length>0){
+      this._snackBar.open("you Must add NotRegestered courses !", 'operation failed !', { duration: 5000, });
+    }else{
     this.dialogRef.close({isAdd:true});
 
     let obj={"link":{"idUniversity":this.idUniversity,
@@ -275,6 +279,7 @@ export class SavePersonsDataComponent implements OnInit, OnDestroy {
               "persons":this.withoutId(CreatePersonFormComponent.allPersons)
             };
     this.addPersonService.addPersons(obj)
+    }
   }
 
 }

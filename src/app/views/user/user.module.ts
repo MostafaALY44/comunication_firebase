@@ -40,6 +40,7 @@ import { EditPollingComponent } from './Tabs/polling-tab/polling/edit-polling/ed
 import { EditOptionComponent } from './Tabs/polling-tab/polling/edit-option/edit-option.component';
 import { VotedPersonsComponent } from './Tabs/polling-tab/polling/voted-persons/voted-persons.component';
 import { DescriptionComponent } from './course-details/description/description.component';
+import { DoctorContactsComponent } from './course-details/doctor-contacts/doctor-contacts.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { DescriptionComponent } from './course-details/description/description.c
     EditPollingComponent,
     EditOptionComponent,
     VotedPersonsComponent,
-    DescriptionComponent
+    DescriptionComponent,
+    DoctorContactsComponent
   
     
 
@@ -93,7 +95,8 @@ import { DescriptionComponent } from './course-details/description/description.c
     EditPollingComponent,
     EditOptionComponent,
     VotedPersonsComponent,
-    DescriptionComponent
+    DescriptionComponent,
+    DoctorContactsComponent
   ],
   imports: [
     CommonModule,

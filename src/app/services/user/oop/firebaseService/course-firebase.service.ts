@@ -14,7 +14,7 @@ export class CourseFirebaseService implements CRUDForfirebase{
   constructor(private firestore: AngularFirestore) { }
   create(url: string, id) {
     let course:Course= {code:id, postsNumber:0, categoriesNumber:0, assignmentsNumber:0, deletePostsNumber:0,
-      deleteAssignmentNumber:0,description:""}
+      deleteAssignmentNumber:0,description:"",contacts:""}
       course["date"]=firebase.firestore.FieldValue.serverTimestamp();
     return this.firestore.collection(url+'/courses/').doc(id).set(course)
   }

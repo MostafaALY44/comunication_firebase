@@ -14,4 +14,5 @@ export class Course{
     deletePostsNumber:number;
     deleteAssignmentNumber:number;
     description:string;
+    contacts:string;
 }

@@ -11,6 +11,7 @@ import { CourseFirebaseService } from 'src/app/services/user/oop/firebaseService
 import { User } from 'src/app/services/auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DescriptionComponent } from './description/description.component';
+import { DoctorContactsComponent } from './doctor-contacts/doctor-contacts.component';
 
 @Component({
   selector: 'app-course-details',
@@ -108,6 +109,7 @@ removeSubscribe1;notificationKey:string="";
      NotificationService.currNotification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
     });
+    counter=(counter<0) ? 0 : counter; 
     if(counter)
         return counter;
    }
@@ -140,4 +142,10 @@ removeSubscribe1;notificationKey:string="";
   })
   }
 
+  editContacts(){
+    this.dialog.open(DoctorContactsComponent, {data:{"course":this.mycourse,"id":this.course_id,"link":this.routerLink},
+    height: '300px',
+    width: '400px',
+  })
+  }
 }

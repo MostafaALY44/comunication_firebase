@@ -1,0 +1,15 @@
+<form >
+    
+    <mat-form-field style="margin-top: 20px;" class="example-full-width">
+        <mat-label>Type contacts like email and phone Number</mat-label>
+        <textarea matInput placeholder="Type contacts like email and phone Number" matTextareaAutosize name="contacts" [(ngModel)]=contacts></textarea>
+      </mat-form-field>
+    <br>
+   <div style="margin-top: 50px;">
+      <button  mat-button mat-dialog-close>Close</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" style="margin-top: 10px;" mat-dialog-close>Add</button>
+    </div>
+
+
+
+</form>

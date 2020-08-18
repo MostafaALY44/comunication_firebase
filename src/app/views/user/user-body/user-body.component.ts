@@ -101,7 +101,9 @@ getcoleageId(link:string):string{
     let counter=0;
     notification.categoriesNumber.forEach((value:number, key:string)=>{
       counter+=value;
+
     })
+   counter=(counter<0) ? 0 : counter; 
     if(notification.postsNumber+counter+notification.assignmentsNumber+notification.pollingsNumber)
       return notification.postsNumber+counter+notification.assignmentsNumber+notification.pollingsNumber;
   } 
