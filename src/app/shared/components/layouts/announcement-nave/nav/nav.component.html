@@ -39,9 +39,13 @@
 <div *ngIf="goVerificate()"  style="background-color: yellow;" class="navbar; ">
     <div style=" text-align: center;" > you must confirm your email first</div>
 </div>
+<!-- 
+<i class="fa fa-user-circle" style="font-size:40px; color:#444444"></i>&nbsp;
+<div style="font-size: 15px; font-style: oblique; color: #444444;"><b>{{displayName()}}</b></div> -->
+
 <div class="d-flex flex-column flex-md-row align-items-center p-2 bg-light shadow">
     &nbsp;&nbsp;&nbsp;<a class="my-0 mr-md-auto font-weight-normal" routerLink="/"><img style="width: 50px;height: 45px;" src="assets/images/logo.png" alt="faculty communication logo"></a>
-    <a *ngIf="isEmailVerified()" class="my-0 mr-md-auto font-weight-normal" routerLink="/{{userLink}}"><font size="4"> {{displayEmail() }}</font></a>
+    <a *ngIf="isEmailVerified()" class="my-0 mr-md-auto font-weight-normal" routerLink="/{{userLink}}" style="text-decoration:none"><div style="font-size: 15px; color:#FF6347;"><i class="fa fa-user-circle"></i>&nbsp;<span style="color: #444444; font-weight: bold;">{{displayName()}}</span></div></a>
     <!-- <form *ngIf="displaySearchInput" class="my-0 mr-md-auto font-weight-normal" >
             <mat-form-field style="width: 330px;">
             <input name="searchWord" [(ngModel)]="searchWord" matInput placeholder="Search for a specific announcement" (input)="wordSearch($event.target.value)" (focus)="focusSearch()" >
@@ -58,8 +62,8 @@
     </nav>
     <nav class="my-2 my-md-0 mr-md-3"  *ngIf="isEmailVerified()">
         <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
-            <i type="button" [matMenuTriggerFor]="menu" class="material-icons" style="font-size:17px; color: cornflowerblue;">settings
-                <span class="material-icons" style="font-size:17px; color: cornflowerblue;">
+            <i type="button" [matMenuTriggerFor]="menu" class="material-icons" style="font-size:17px; color: #FF6347;">settings
+                <span class="material-icons" style="font-size:17px; color: #FF6347;">
                     arrow_drop_down
                     </span>
             </i>&nbsp;&nbsp;
@@ -68,7 +72,8 @@
                 <a (click)= "changeName()" mat-menu-item>Change your Name</a>
                 <a (click)="changePassword()" mat-menu-item>Change your password</a>
             </mat-menu>
-        <a class=" p-2 text-dark" (click)="logout()" routerLink="/" >Logout</a>
+            
+        <a (click)="logout()" routerLink="/" style="text-decoration:none"> <mat-icon style="color: #FF6347;">exit_to_app</mat-icon></a>
     </nav>
   </div> 
 

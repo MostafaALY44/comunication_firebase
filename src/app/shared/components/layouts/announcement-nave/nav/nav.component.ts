@@ -48,6 +48,10 @@ export class NavComponent implements OnInit {
     return UserService.user.email;
   }
 
+  displayName():string{
+    return UserService.user.name;
+  }
+
   goVerificate():boolean{
     return AuthenticationService.goVerificate
   }
@@ -84,7 +88,10 @@ export class NavComponent implements OnInit {
   }
 
   logout(){
-    this.authenticationService.SignOut();
+    if(confirm("Are you sure to Logout "+ UserService.user.name + " !!! ")) {
+      this.authenticationService.SignOut();
+    }
+   
   }
   
   changePassword(){

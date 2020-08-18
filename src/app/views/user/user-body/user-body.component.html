@@ -53,8 +53,8 @@
               <button mat-icon-button disabled></button>
               
               
-              <a routerLink="{{node.link}}" style="text-decoration: none;"><li  routerLinkActive="active activeee" class="list-group-item forCoursesLinks" style="border-color: #cce0ff;  padding-right: 54px; padding-left: 30px; border-radius: 10px 30px 10px; width: 182px;text-align: center;"><font size="3">{{node.name}}  </font> 
-                <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;margin-left: 1px;margin-right: 0px;">{{getNotification(getuniversityId(node.link), getcoleageId(node.link), node.name) }}</span>
+              <a routerLink="{{node.link}}" style="text-decoration: none;"><li  routerLinkActive="active activeee" class="list-group-item forCoursesLinks" style="border-color: #cce0ff;  padding-right: 54px; padding-left: 30px; border-radius: 10px 30px 10px; width: 182px;text-align: center;"> <span style="font-size: 15px; color: #444444;">{{node.name}}</span> 
+                <span class="badge badge-primary badge-pill" style="background-color :#FF6347;margin-left: 1px;margin-right: 0px;">{{getNotification(getuniversityId(node.link), getcoleageId(node.link), node.name) }}</span>
               </li>
               
               
@@ -73,7 +73,7 @@
                 <mat-icon class="mat-icon-rtl-mirror" style="border: none; outline: none;">
                   {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
-                <font size="4"><b style="color :#1f1f7a">{{node.name}}</b></font>
+                <font size="4"><b style="color :#FF6347">{{node.name}} </b></font>
               </button>
               
             </div>

@@ -35,7 +35,7 @@ ul div a:hover{
 }
 #cssmenu {
   width: auto;
-  border-bottom: 3px solid #47c9af;
+  border-bottom: 3px solid #FF9B49 ;
   font-family: Raleway, sans-serif;
   line-height: 1;
 }
@@ -103,5 +103,5 @@ ul div a:hover{
 #cssmenu > ul > a.active > li:after,
 #cssmenu > ul > a:hover > li:after,
 #cssmenu > ul > a > li:hover:after {
-  background: #47c9af;
+  background: #FF6347;
 }

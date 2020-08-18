@@ -48,8 +48,10 @@ export class MaterialCategoryComponent {
     this.dialog.open(AddCategoryComponent);
   }
 
-  deleteCategory(targetCategoryId){
-    CourseService.categories.delete(targetCategoryId);
+  deleteCategory(targetCategoryId,categoryName){
+    if(confirm("Are you sure to delete "+ categoryName + " Category")) {
+      CourseService.categories.delete(targetCategoryId);
+    }
   }
 
   updateCategory(key:string){

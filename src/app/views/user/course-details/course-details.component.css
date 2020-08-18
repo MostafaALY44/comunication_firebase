@@ -1,8 +1,8 @@
 ul a.activeee{
-    background-color: #33ffad;
-    color: #0033cc;
+    background-color: #FF6347;
+    color: #444444;
 }
 
 a:hover{
-    background-color:#ccffcc
+    background-color:#FF9B49
 }

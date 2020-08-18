@@ -1,4 +1,4 @@
-<div class="p-3 mb-2 bg-info text-white" style="font-size: 20dp; font-weight: bold;">
+<div class="p-3 mb-2  text-white" style="font-size: 20dp; font-weight: bold;background: #FF6347;">
   Voted Persons
 </div>
 
@@ -6,13 +6,13 @@
   <p style="font-size: large;">
     No votes yet for this option.
   </p>
-  <i class="fa fa-exclamation-triangle" style="font-size:50px;color:rgb(45, 76, 160)"></i>
+  <i class="fa fa-exclamation-triangle" style="font-size:50px;color:#444444"></i>
 </div>
 
 <ng-template #elseBlock>
   <mat-list>
     <mat-list-item *ngFor="let person of persons">
-      <mat-icon matListIcon>person_pin</mat-icon>
+      <mat-icon matListIcon style="color: #FF6347;">person_pin</mat-icon>
       <h3 matLine> {{person}} </h3>
     </mat-list-item>
   </mat-list>

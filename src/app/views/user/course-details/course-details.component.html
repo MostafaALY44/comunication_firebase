@@ -2,25 +2,25 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item"  >
         <a class="nav-link" routerLinkActive="active activeee"  id="home-tab" data-toggle="tab" routerLink="post" role="tab" aria-controls="post"
-            aria-selected="true" style="border-color: #cce0ff; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Posts</a>
-            <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;">{{getPostNotification() }}</span>
+            aria-selected="true" style="border-color: #FFBD4A; color: #444444; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Posts</a>
+            <span class="badge badge-primary badge-pill" style="background-color :#444444;">{{getPostNotification() }}</span>
     </li>
     <li class="nav-item">
         <a class="nav-link" routerLinkActive="active activeee" id="profile-tab" data-toggle="tab" routerLink="material" role="tab" aria-controls="profile"
-            aria-selected="false" style="border-color: #cce0ff; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Material</a>
-            <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;">{{getCatrgoriesNotification() }}</span>
+            aria-selected="false" style="border-color: #FFBD4A;color: #444444; text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Material</a>
+            <span class="badge badge-primary badge-pill" style="background-color :#444444;">{{getCatrgoriesNotification() }}</span>
     </li>
     <li class="nav-item">
         <a class="nav-link" routerLinkActive="active activeee" id="contact-tab" data-toggle="tab" routerLink="assingment" role="tab" aria-controls="contact"
-            aria-selected="false" style="border-color: #cce0ff;
+            aria-selected="false" style="border-color: #FFBD4A;color: #444444;
             text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Assingment</a>
-            <span class="badge badge-primary badge-pill " style="background-color :#1f1f7a;">{{getAssignmentNotification() }}</span>
+            <span class="badge badge-primary badge-pill " style="background-color :#444444;">{{getAssignmentNotification() }}</span>
     </li>
     <li class="nav-item">
         <a class="nav-link" routerLinkActive="active activeee" id="polling-tab" data-toggle="tab" routerLink="polling" role="tab" aria-controls="contact"
-            aria-selected="false" style="border-color: #cce0ff;
+            aria-selected="false" style="border-color: #FFBD4A;color: #444444;
             text-align: center; padding-right: 50px; padding-left: 50px; border-radius: 10px 30px 10px;">Polling</a>
-            <span class="badge badge-primary badge-pill " style="background-color :#1f1f7a;">{{getBollingsNotification() }}</span>
+            <span class="badge badge-primary badge-pill " style="background-color :#444444;">{{getBollingsNotification() }}</span>
     </li>
 </ul>
 
@@ -30,7 +30,7 @@
         <mat-card  class="example-card" style=" border-radius: 10px 30px 10px; margin-top: 40px;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image">
-                <mat-icon style='font-size:36px;color:#1f1f7a;'>collections_bookmark</mat-icon>
+                <mat-icon style='font-size:36px;color:#444444;'>collections_bookmark</mat-icon>
               </div>
               
               <mat-card-title>{{course_id}}  &nbsp;&nbsp;&nbsp;  <mat-icon type="button" *ngIf="CurrentUser.roles.instructor" placement="bottom" ngbTooltip="Add Or Edit description" (click)="editDescription();">edit</mat-icon></mat-card-title>
@@ -45,7 +45,7 @@
               <hr>
                 <mat-card-header style="margin-top: 30px;">
                   <div mat-card-avatar class="example-header-image">
-                    <mat-icon style='font-size:36px;color:#1f1f7a;'>contacts</mat-icon>
+                    <mat-icon style='font-size:36px;color:#444444;'>contacts</mat-icon>
                   </div>
                   
                   <mat-card-title>Contacts  &nbsp;&nbsp;&nbsp;  <mat-icon type="button" *ngIf="CurrentUser.roles.instructor" placement="bottom" ngbTooltip="Add Or Edit contacts" (click)="editContacts();">edit</mat-icon></mat-card-title>

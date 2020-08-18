@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
     <hr >
     <p class="mb-1">&copy; 2020-2019 FC</p>
 
-    <ul class="list-inline">
-        <li class="list-inline-item"><a (click)="redirect()" routerLink="contact-us">Contact Us</a></li>&nbsp;&nbsp;
-        <li class="list-inline-item"><a (click)="redirecta()" routerLink="about">About</a></li>&nbsp;&nbsp;
-        <li class="list-inline-item"><a (click)="privacyRedirect()" routerLink="privacy">Privacy</a></li>&nbsp;&nbsp;
-        <li class="list-inline-item"><a (click)="termsRedirect()" routerLink="terms-and-conditions">Terms</a></li>
+    <ul class="list-inline" >
+        <li class="list-inline-item"><a style="color:#444444;text-decoration:none" (click)="redirect()" routerLink="contact-us">Contact Us</a></li>&nbsp;&nbsp;
+        <li class="list-inline-item"><a style="color:#444444;text-decoration:none" (click)="redirecta()" routerLink="about">About</a></li>&nbsp;&nbsp;
+        <li class="list-inline-item"><a style="color:#444444;text-decoration:none" (click)="privacyRedirect()" routerLink="privacy">Privacy</a></li>&nbsp;&nbsp;
+        <li class="list-inline-item"><a style="color:#444444;text-decoration:none" (click)="termsRedirect()" routerLink="terms-and-conditions">Terms</a></li>
     </ul>
     
     </footer>

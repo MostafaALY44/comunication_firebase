@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <div class="card text-center w-70"
-        style="margin-top: 20px; border-color: #CCE0FF;  border-radius: 20px 60px 20px 60px;">
+        style="margin-top: 20px; border-color: #f0a365;  border-radius: 20px 60px 20px 60px;">
         <div class="card-body">
             <div class="row">
                 <div class="col md-2">
-                    <i class="fa fa-user-circle" style="font-size:40px; color:#1f1f7a"></i>&nbsp;<div
-                        style="font-size: 15px; color:#1f1f7a">{{poll.pollingOwner}}</div>
+                    <i class="fa fa-user-circle" style="font-size:40px; color:#444444"></i>&nbsp;<div
+                        style="font-size: 15px; color:#444444">{{poll.pollingOwner}}</div>
                 </div>
                 <div class="col md-6">
                     <h5>{{poll.text}}</h5>
@@ -14,7 +14,7 @@
                     <p>{{getDate(poll.date) |date:'yyyy/MM/dd h:mm:ss a'}}</p>
                 </div>
                 <button *ngIf="poll.userId===currentUser.uid" mat-icon-button [matMenuTriggerFor]="menu"
-                    style=" outline: none; color:#1f1f7a" (click)="setPoll(poll)">
+                    style=" outline: none; color:#444444" (click)="setPoll(poll)">
                     <mat-icon>more_vert</mat-icon>
                 </button>
             </div>
@@ -23,7 +23,7 @@
             </p> -->
         </div>
         <div class="card-footer"
-            style="margin: 0px; padding: 0px; border-color: #CCE0FF;  border-radius: 20px 60px 20px 60px;">
+            style="margin: 0px; padding: 0px; border-color: #FF9B49;  border-radius: 20px 60px 20px 60px;">
             <mat-radio-group style="margin: 0px; padding: 0px;" aria-labelledby="example-radio-group-label"
                 class="example-radio-group" [(ngModel)]="favoriteSeason">
                 <div *ngFor="let option of options | async" style="margin-left: 120px; padding: 0px; text-align: left;">
@@ -36,11 +36,11 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <mat-icon type="button" (click)="showVotedPersons(option)"  placement="bottom" ngbTooltip="Show voted persons" style='color:rgb(69, 69, 170)'>how_to_vote</mat-icon>
-                            &nbsp;<span style=" color: darkred;"> {{countVotes(option.id)}} </span>
+                            <mat-icon type="button" (click)="showVotedPersons(option)"  placement="bottom" ngbTooltip="Show voted persons" style='color:#fd4d2e'>how_to_vote</mat-icon>
+                            &nbsp;<span style=" color: #fd4d2e;"> {{countVotes(option.id)}} </span>
                             &nbsp;
                             <button *ngIf="poll.userId===currentUser.uid" mat-icon-button
-                                [matMenuTriggerFor]="menu1" style=" outline: none; color:#1f1f7a;"
+                                [matMenuTriggerFor]="menu1" style=" outline: none; color:#444444;"
                                 (click)="setOption(option)">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
