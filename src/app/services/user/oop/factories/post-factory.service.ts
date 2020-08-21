@@ -29,12 +29,12 @@ export class PostFactoryService implements OnDestroy {
   private url:string;
   constructor( private firestore: AngularFirestore) {}
    private userService:UserService=new UserService(this.firestore)
-   changeUrl(url:string){
+   changeUrl(url:string, postType:string){
       if(this.removeUnsubscribe1)  
         this.removeUnsubscribe1.unsubscribe();
       this.coursePost.reset();
       this.url=url;
-      this.coursePost.changeUrl(this.url); 
+      this.coursePost.changeUrl(this.url,postType); 
       this.setPosts();
    }
 

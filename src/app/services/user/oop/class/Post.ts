@@ -25,8 +25,9 @@ export class Post implements CRUD{
 	getUrl(){
 		return this.url;
 	}
-	changeUrl(url:string){
-		this.url=url+'/posts';
+	changeUrl(url:string, postType:string){
+
+		this.url=url+postType;
 		this.comment.changeUrl(this.url);
 	}
 	create (post:PostModel){    

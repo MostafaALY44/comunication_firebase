@@ -8,6 +8,7 @@ import { CourseService } from 'src/app/services/user/oop/course.service';
 import { PostModel } from 'src/app/services/user/oop/models/PostModel';
 import { CommentModel } from 'src/app/services/user/oop/models/CommentModel';
 import { CourseDetailsComponent } from '../../../course-details/course-details.component';
+import { UserService } from 'src/app/services/user/oop/user.service';
 
 @Component({
   selector: 'app-post',
@@ -17,12 +18,13 @@ import { CourseDetailsComponent } from '../../../course-details/course-details.c
 export class PostComponent implements OnInit,OnDestroy {
    
   coursePosts:Post;
-  
+  currentUser;
   
   constructor(private ser: PostService, route:ActivatedRoute) {
     CourseDetailsComponent.displayCourseName.next(false)
     CourseService.subscribeTab("post");
     this.coursePosts=CourseService.posts;
+    this.currentUser=UserService.user;
     
   }
   ngOnDestroy(): void {
@@ -32,11 +34,33 @@ export class PostComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
+    
+
   }
 
   
   getComments(id){
     return this.coursePosts.getComments(id);
   }
+  getStudentPosts(){
+    CourseService.SelectStudentPostType();
+    this.coursePosts=CourseService.posts;
+    let tag1= document.getElementById('1');
+    tag1.classList.remove("active");
+    let tag2= document.getElementById('2');
+    tag2.classList.add("active");
+    
+  }
+  getPostsWithDoctor(){
+    CourseService.SelectPostType();
+     this.coursePosts=CourseService.posts;
+    let tag1= document.getElementById('2');
+    tag1.classList.remove("active");
+    let tag2= document.getElementById('1');
+    tag2.classList.add("active");
+    
+  }
+
+  
 
 }
