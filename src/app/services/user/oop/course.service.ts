@@ -63,7 +63,7 @@ export class CourseService {
     
   }
 
-  static subscribeTab(tabName:"post"|"material"|"assignment"|"StudentPost"){
+  static subscribeTab(tabName:string){
     switch(tabName){
       case "post":
         CourseService.postFactoryService.subscribe();
@@ -80,7 +80,7 @@ export class CourseService {
     }
   };
 
-  static unsubscribeTab(tabName:"post"|"category"|"assignment"|"StudentPost"){
+  static unsubscribeTab(tabName:string){
     switch(tabName){
       case "post":
         CourseService.postFactoryService.unsubscribe();

@@ -12,6 +12,7 @@ export class Post implements CRUD{
 	comment:Comment;
 	//posts: Observable<PostModel[]>;
 	posts: PostModel[];
+	checkPost:boolean=false;
 	private postService:PostService=new PostService(this.firestore)
 	private url:string;
 	constructor(private firestore: AngularFirestore){
@@ -50,8 +51,8 @@ export class Post implements CRUD{
 		return this.postService.addReact(this.url, postId, personId,true)
 	}
 
-	getAll(){
-		return this.postService.getAll(this.url);
+	getAll(limit:number){
+		return this.postService.getAll(this.url,limit);
 	}
 
 	addDislike(personId:string, postId:string){

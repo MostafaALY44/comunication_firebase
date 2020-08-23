@@ -49,18 +49,18 @@ ul div a:hover{
   font-size: 0;
   text-align: center;
 }
-#cssmenu.align-center > ul > a {
+#cssmenu.align-center > ul >div> a {
   display: inline-block;
   float: none;
 }
-#cssmenu.align-right > ul > a {
+#cssmenu.align-right > ul >div> a {
   float: right;
 }
-#cssmenu.align-right > ul > a > li {
+#cssmenu.align-right > ul >div> a > li {
   margin-right: 0;
   margin-left: -4px;
 }
-#cssmenu > ul > a > li {
+#cssmenu > ul >div> a > li {
   z-index: 2;
   padding: 18px 25px 12px 25px;
   font-size: 15px;
@@ -74,12 +74,12 @@ ul div a:hover{
   transition: all .2s ease;
   margin-right: -4px;
 }
-#cssmenu > ul > a.active > li,
-#cssmenu > ul > a:hover > li,
-#cssmenu > ul > a > li:hover {
+#cssmenu > ul >div> a.active > li,
+#cssmenu > ul >div> a:hover > li,
+#cssmenu > ul >div> a > li:hover {
   color: #ffffff;
 }
-#cssmenu > ul > a > li:after {
+#cssmenu > ul >div> a > li:after {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -100,8 +100,8 @@ ul div a:hover{
   transform: perspective(5px) rotateX(2deg);
   transform-origin: bottom;
 }
-#cssmenu > ul > a.active > li:after,
-#cssmenu > ul > a:hover > li:after,
-#cssmenu > ul > a > li:hover:after {
+#cssmenu > ul >div> a.active > li:after,
+#cssmenu > ul >div> a:hover > li:after,
+#cssmenu > ul >div> a > li:hover:after {
   background: #47c9af;
 }

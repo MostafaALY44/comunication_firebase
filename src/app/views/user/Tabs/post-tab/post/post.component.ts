@@ -19,17 +19,18 @@ export class PostComponent implements OnInit,OnDestroy {
    
   coursePosts:Post;
   currentUser;
-  
+  IsShowMore:boolean=false;
   constructor(private ser: PostService, route:ActivatedRoute) {
     CourseDetailsComponent.displayCourseName.next(false)
-    CourseService.subscribeTab("post");
+    CourseService.subscribeTab(this.postType);
     this.coursePosts=CourseService.posts;
     this.currentUser=UserService.user;
+    this.IsShowMore=this.coursePosts.checkPost;
     
   }
   ngOnDestroy(): void {
     //this.removeSubscribe.unsubscribe();
-    CourseService.unsubscribeTab("post");
+    CourseService.unsubscribeTab(this.postType);
     CourseDetailsComponent.displayCourseName.next(true);
   }
 
@@ -43,24 +44,35 @@ export class PostComponent implements OnInit,OnDestroy {
     return this.coursePosts.getComments(id);
   }
   getStudentPosts(){
+    PostFactoryService.limit=2;
+    this.postType="StudentPost";
     CourseService.SelectStudentPostType();
     this.coursePosts=CourseService.posts;
     let tag1= document.getElementById('1');
     tag1.classList.remove("active");
     let tag2= document.getElementById('2');
     tag2.classList.add("active");
-    
+    // this.coursePosts.checkPost=false;
+    this.IsShowMore=this.coursePosts.checkPost;
   }
   getPostsWithDoctor(){
+    PostFactoryService.limit=2;
+    this.postType="post";
     CourseService.SelectPostType();
      this.coursePosts=CourseService.posts;
     let tag1= document.getElementById('2');
     tag1.classList.remove("active");
     let tag2= document.getElementById('1');
     tag2.classList.add("active");
-    
+    // this.coursePosts.checkPost=false;
+    this.IsShowMore=this.coursePosts.checkPost;
   }
-
-  
+postType:string="post";
+  showMore(){
+    PostFactoryService.limit+=2;
+    CourseService.unsubscribeTab(this.postType);
+    CourseService.subscribeTab(this.postType);
+    this.IsShowMore=this.coursePosts.checkPost;
+  }  
 
 }

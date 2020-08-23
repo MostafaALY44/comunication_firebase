@@ -15,15 +15,15 @@ export class PostService implements CRUDForfirebase{
     read(url: string, id: string) {
         return this.firestore.doc<PostModel>(url+'/'+id).valueChanges();
     }
-    update(url: string, id: string, post) {;
+    update(url: string, id: string, post) {
         return this.firestore.doc(url+'/'+id).update(post);
     }
     delete(url: string, id: string) {
         return this.firestore.doc(url+'/'+id).delete();
     }
 
-    getAll(url:string){
-        return this.firestore.collection<PostModel>(url).snapshotChanges().pipe(
+    getAll(url:string,limit:number){
+        return this.firestore.collection<PostModel>(url,ref=>ref.orderBy("date","desc").limit(limit)).snapshotChanges().pipe(
             map(actions => actions.map(a => {
               const data = a.payload.doc.data() ;
               const id = a.payload.doc.id; 
