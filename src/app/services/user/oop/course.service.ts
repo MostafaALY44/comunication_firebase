@@ -17,7 +17,8 @@ import { PollingFactoryService } from './factories/polling-factory.service';
 export class CourseService {
 
   static posts: Post; 
-  
+  static studentPosts:Post;
+  static doctorStudentPosts: Post;
   static polls: Polling;
   static categories: Category;
   static assignments: Observable<Assignment[]>;
@@ -25,6 +26,7 @@ export class CourseService {
   //static notification:{"posts":number,"assignments":number}={"posts":0,"assignments":0};
 
   static postFactoryService: PostFactoryService;
+   static studentPostFactoryService: PostFactoryService;
   private categoryFactoryService: CategoryFactoryService = new CategoryFactoryService(this.firestore);
   private allAssignments: BehaviorSubject<Assignment[]> = new BehaviorSubject([]);
   private pollingFactoryService: PollingFactoryService = new PollingFactoryService(this.firestore)
@@ -32,12 +34,14 @@ export class CourseService {
   static  removeSub :BehaviorSubject<boolean>=new BehaviorSubject(false);
   constructor(private firestore: AngularFirestore) { 
     CourseService.postFactoryService = new PostFactoryService(this.firestore)
+     CourseService.studentPostFactoryService = new PostFactoryService(this.firestore)
     CourseService.assignments = this.allAssignments.asObservable(); 
     CourseService.removeSub.asObservable().subscribe(isRemove=>{
       if(isRemove){
         if (this.removesubscribe)
           this.removesubscribe.unsubscribe();
         CourseService.postFactoryService.unsubscribe();
+        CourseService.studentPostFactoryService.unsubscribe();
         this.pollingFactoryService.unsbuscribe();
         this.categoryFactoryService.unsubscribe();
         CourseService.removeSub.next(false);
@@ -46,11 +50,12 @@ export class CourseService {
     })
   }
 
-  //setCouserId(courseId: string) {
+   static courseId:string="";
     setUrl(url: string) {
-    //this.courseId = courseId;
+    CourseService.courseId = url;
     AssignmentService.url=url
     this.setPosts(url);
+    this.setStudentPosts(url);
     this.setCategories(url);
     this.setAssignment(url)
     this.setpolls(url);
@@ -58,10 +63,15 @@ export class CourseService {
     
   }
 
-  static subscribeTab(tabName:"post"|"material"|"assignment"){
+  static subscribeTab(tabName:string){
     switch(tabName){
       case "post":
         CourseService.postFactoryService.subscribe();
+        // CourseService.studentPostFactoryService.subscribe();
+        break;
+      case "StudentPost":
+        
+        CourseService.studentPostFactoryService.subscribe();
         break;
       case "material":
         //this.categoryFactoryService.subscribe();
@@ -70,10 +80,15 @@ export class CourseService {
     }
   };
 
-  static unsubscribeTab(tabName:"post"|"category"|"assignment"){
+  static unsubscribeTab(tabName:string){
     switch(tabName){
       case "post":
         CourseService.postFactoryService.unsubscribe();
+        // CourseService.studentPostFactoryService.unsubscribe();
+        break;
+      case "StudentPost":
+       
+        CourseService.studentPostFactoryService.unsubscribe();
         break;
       case "category":
         //this.categoryFactoryService.unsubscribe();
@@ -82,11 +97,32 @@ export class CourseService {
     }
   };
 
-  setPosts(courseId: string) {
-    CourseService.postFactoryService.changeUrl( courseId)
-    CourseService.posts = CourseService.postFactoryService.coursePost;
+  setPosts(courseId?: string) {
+   if(courseId){
+     CourseService.courseId= courseId;
+   }
+    CourseService.postFactoryService.changeUrl( CourseService.courseId,'/posts')
+    CourseService.doctorStudentPosts = CourseService.postFactoryService.coursePost;
+    CourseService.SelectPostType();
   }
-  
+  setStudentPosts(courseId?: string){
+    if(courseId){
+     CourseService.courseId= courseId;
+    }
+    CourseService.studentPostFactoryService.changeUrl( CourseService.courseId,'/studentPosts')
+    
+    CourseService.studentPosts = CourseService.studentPostFactoryService.coursePost;
+    // CourseService.SelectStudentPostType();
+  }
+
+  static SelectStudentPostType(){
+    CourseService.posts = CourseService.studentPosts;
+  }
+
+  static SelectPostType(){
+    CourseService.posts = CourseService.doctorStudentPosts;
+    
+  }
   setCategories(courseId: string) {
     this.categoryFactoryService.changeUrl( courseId);
     CourseService.categories = this.categoryFactoryService.category;

@@ -20,6 +20,7 @@ export class PostFactoryService implements OnDestroy {
   removeUnsubscribe1;
   //removeUnsubscribe2;
   public coursePost:Post=new Post(this.firestore) ;
+  // public checkShow:Post=new Post(this.firestore);
   //private allposts: BehaviorSubject<PostModel[]>=new BehaviorSubject([]);
   //posts: Observable<Post[]>;
   //private postsTemp :Post[]=[];
@@ -27,25 +28,36 @@ export class PostFactoryService implements OnDestroy {
   //private postService:PostService =new PostService(this.firestore);
   //private commentService:CommentService = new CommentService(this.firestore);
   private url:string;
+  static limit:number=2;
+  // static checkLengthOfPosts:boolean=false;
   constructor( private firestore: AngularFirestore) {}
    private userService:UserService=new UserService(this.firestore)
-   changeUrl(url:string){
+   changeUrl(url:string, postType:string){
       if(this.removeUnsubscribe1)  
         this.removeUnsubscribe1.unsubscribe();
       this.coursePost.reset();
       this.url=url;
-      this.coursePost.changeUrl(this.url); 
+      this.coursePost.changeUrl(this.url,postType); 
+      this.coursePost.checkPost=false;
       this.setPosts();
+      
+      PostFactoryService.limit=2;
+      
+      
    }
 
   private setPosts(){
-    this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{
+    this.removeUnsubscribe1=this.coursePost.getAll(PostFactoryService.limit).subscribe((posts)=>{
       this.coursePost.posts=posts;
+      console.log(this.coursePost.posts.length)
+      if(posts.length===0)
+        this.coursePost.checkPost=true;
       })
    }   
    private setPosts2(){
-    this.removeUnsubscribe1=this.coursePost.getAll().subscribe((posts)=>{
-      
+    this.removeUnsubscribe1=this.coursePost.getAll(PostFactoryService.limit).subscribe((posts)=>{
+      if(posts.length<PostFactoryService.limit) this.coursePost.checkPost=true;
+
        let obj={[UserService.indexNotification+".postNumber"]:posts.length}
         
       this.userService.update( obj)

@@ -14,6 +14,7 @@ import { ReportPostComponent } from '../report-post/report-post.component';
 import { UserService } from 'src/app/services/user/oop/user.service';
 import { element } from 'protractor';
 import { User } from 'src/app/services/auth/user.model';
+import { PostFactoryService } from 'src/app/services/user/oop/factories/post-factory.service';
 
 
 
@@ -30,6 +31,7 @@ export class PostItemComponent implements OnInit {
   constructor( public dialog:MatDialog , private route : ActivatedRoute ,private router:Router) {
     //route.parent.paramMap.subscribe((params : ParamMap) =>  this.courseId=params.get('id'));
     this.currentUser=UserService.getUser();
+    
    }
    currentIdPostComment;
    isLike:boolean=false;

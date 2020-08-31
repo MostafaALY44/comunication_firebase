@@ -47,9 +47,10 @@ export class LoginComponent implements OnInit {
     .catch(err => {
       
       this.error="the email or password is wrong!";
+      this.showSpinner=false;
     });
   }
-
+  
   signOut() {
     this.authenticationService.SignOut();
   }

@@ -1,10 +1,37 @@
+
 <div class="container-fluid" style="text-align: center;">
-<div style="margin-top: 20px;">
-    <app-new-post></app-new-post>
-</div>
 
+    <!-- <button (click)="getPostsWithDoctor()">withDoctor</button>
+    <button (click)="getStudentPosts()">studentOnly</button> -->
 
-    <div  *ngFor="let post of coursePosts.posts ">
-        <app-post-item [post]="post"></app-post-item>
+    <div  id='cssmenu' *ngIf="currentUser.roles.student">
+        <ul >
+          <div class ="row">
+          <a id='1' class="active , col" type="button" (click)="getPostsWithDoctor()"  style="text-decoration: none;"> 
+            <li > Doctors And Students
+          
+                <!-- <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;margin-left: 8px;">{{getNotification(category.key) }}</span> -->
+             </li>
+         </a>
+          
+          <a id='2' class="col" type="button" (click)="getStudentPosts()"  style="text-decoration: none;">
+            <li> Students Only 
+          
+                <!-- <span class="badge badge-primary badge-pill" style="background-color :#1f1f7a;margin-left: 8px;">{{getNotification(category.key) }}</span> -->
+               </li> 
+         </a> 
+        </div>
+       </ul>
+     </div>
+
+    <div style="margin-top: 20px;">
+        <app-new-post></app-new-post>
     </div>
+
+
+    <div  *ngFor="let post of coursePosts.posts">
+        <app-post-item [post]="post"></app-post-item>
+        
+    </div>
+    <button type="button" class="btn btn-outline-info" *ngIf="!IsShowMore" (click)="showMore()" style="margin-top: 20px; padding-left: 400px ; padding-right: 400px;border-radius: 10px 30px 10px;">see more </button>
 </div>
